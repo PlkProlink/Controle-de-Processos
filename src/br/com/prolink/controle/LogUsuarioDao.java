@@ -27,6 +27,9 @@ public class LogUsuarioDao {
         Date dt = new Date();
         String data = sdf.format(dt);
         
+        //Date data = sdf.parse(data)
+        
+        //converter usando o substring
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
         String ano = data.substring(6);
