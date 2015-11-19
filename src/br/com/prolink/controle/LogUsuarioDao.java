@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+//*Class criada para registrar ações dos usuarios,insert, update and delete
+
 package br.com.prolink.controle;
 
 import br.com.prolink.inicio.*;
