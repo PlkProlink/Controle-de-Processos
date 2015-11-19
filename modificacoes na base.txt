@@ -1,0 +1,51 @@
+-- alterar todos os campos que pedem nome do cliente para tamanho 150
+-- atualizar codigo, remover todos os tipos e alterar para andamento
+
+drop table if exists log_usuario;
+
+create table log_usuario(
+cod int auto_increment primary key,
+Data date,
+Hora time,
+Usuario varchar(50),
+Tela varchar(50),
+Acao varchar(50),
+Descricao varchar(100),
+Processo varchar(100),
+Apelido varchar(10),
+Cliente varchar(150),
+Endereco varchar(50),
+Hostname varchar(50));
+
+create table departamento (
+cod int(11) auto_increment primary key,
+nome varchar(50));
+	
+alter table cadastrodeprocesso add Apelido varchar(40);
+
+alter table login add (Nome varchar(50),
+Nivel int(11));
+
+-- regularizacao
+	alter table arquivamentodoprocesso add Tipo varchar(50);
+	alter table enviartermoderesponsabilidadeparacomercial add Tipo varchar(50);
+
+-- fiscal
+	alter table validarprefilfiscal add Tipo varchar(50);
+	alter table distribuirfuncionariointerno add Tipo varchar(50);
+
+-- contabil
+	alter table gerarplanodecontas add Tipo varchar(50);
+
+-- financeiro
+alter table lancamentodedadosnaplancobranca add Tipo varchar(50);
+alter table emissaoboleto add Tipo varchar(50);
+alter table entrarnocontrolcontroleos add Tipo varchar(50);
+
+-- dp
+alter table cadastrodosdependentesdosociaadm add Tipo Varchar(50);
+alter table implantardadosfolhapg add Tipo Varchar(50);
+alter table cadastrosocioadmcontrol add Tipo Varchar(50);
+
+-- recepcao
+alter table documentos_recebidos add Departamento varchar(50);
