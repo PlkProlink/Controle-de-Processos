@@ -1,5 +1,8 @@
 package br.com.prolink.cadastros.enviodocumentos;
 
+import br.com.prolink.cadastros.enviodocumentos.internas.EnviadosIntCofins;
+import br.com.prolink.cadastros.enviodocumentos.internas.EnviadosIntDas;
+import br.com.prolink.cadastros.enviodocumentos.internas.EnviadosIntBoletos;
 import br.com.prolink.cadastros.enviodocumentos.envios.*;
 import br.com.prolink.inicio.*;
 import java.text.SimpleDateFormat;

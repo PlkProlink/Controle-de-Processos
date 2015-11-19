@@ -1,4 +1,4 @@
-package br.com.prolink.cadastros.enviodocumentos.envios;
+package br.com.prolink.cadastros.enviodocumentos.internas;
 
 
 import br.com.prolink.cadastros.enviodocumentos.*;
