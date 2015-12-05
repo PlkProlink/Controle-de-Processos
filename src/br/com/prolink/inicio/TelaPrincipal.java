@@ -12,16 +12,20 @@ Tiago Dias de Souza tiagoice@hotmail.com
 */
 package br.com.prolink.inicio;
 
-import br.com.prolink.cadastros.enviodocumentos.DocumentosEnviados;
+import br.com.prolink.cadastros.enviodocumentos.*;
+import br.com.prolink.documentos.*;
 import br.com.prolink.departamentos.*;
 import br.com.prolink.cadastros.*;
 import br.com.prolink.usuario.*;;
 import br.com.prolink.login.*;
 import br.com.prolink.recepcao.*;
-
-
-
 import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Tiago Dias
+ */
+
 
 public class TelaPrincipal extends javax.swing.JFrame {
     
@@ -90,11 +94,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         barraGuias = new javax.swing.JMenuBar();
         jmCadastro = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jmClientes = new javax.swing.JMenuItem();
+        jmPerfil = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenu6 = new javax.swing.JMenu();
-        jmCadUsuario = new javax.swing.JMenuItem();
+        jmUsuario = new javax.swing.JMenuItem();
         jmDepartamento = new javax.swing.JMenuItem();
         jmControledeAcesso = new javax.swing.JMenuItem();
         jmAlteraSenha = new javax.swing.JMenuItem();
@@ -157,10 +161,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpDepartamentos.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
         jpDepartamentos.setOpaque(false);
 
-        btnComercial.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnComercial.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnComercial.setText("Comercial");
         btnComercial.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnComercial.setBorderPainted(false);
         btnComercial.setMaximumSize(new java.awt.Dimension(80, 23));
         btnComercial.setPreferredSize(new java.awt.Dimension(80, 23));
         btnComercial.addActionListener(new java.awt.event.ActionListener() {
@@ -169,60 +172,54 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnContabil.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnContabil.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnContabil.setText("Contabil");
         btnContabil.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnContabil.setBorderPainted(false);
         btnContabil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnContabilActionPerformed(evt);
             }
         });
 
-        btnContratos.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnContratos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnContratos.setText("Contratos");
         btnContratos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnContratos.setBorderPainted(false);
         btnContratos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnContratosActionPerformed(evt);
             }
         });
 
-        btnPessoal.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnPessoal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnPessoal.setText("Dep.Pessoal");
         btnPessoal.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnPessoal.setBorderPainted(false);
         btnPessoal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPessoalActionPerformed(evt);
             }
         });
 
-        btnFinanceiro.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnFinanceiro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnFinanceiro.setText("Financeiro");
         btnFinanceiro.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnFinanceiro.setBorderPainted(false);
         btnFinanceiro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFinanceiroActionPerformed(evt);
             }
         });
 
-        btnFiscal.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnFiscal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnFiscal.setText("Fiscal");
         btnFiscal.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnFiscal.setBorderPainted(false);
         btnFiscal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFiscalActionPerformed(evt);
             }
         });
 
-        btnRegularizacao.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnRegularizacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnRegularizacao.setText("Regularização");
         btnRegularizacao.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnRegularizacao.setBorderPainted(false);
         btnRegularizacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegularizacaoActionPerformed(evt);
@@ -271,45 +268,45 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpOutros.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
         jpOutros.setOpaque(false);
 
-        btnArqEnviados.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        btnArqEnviados.setText("Arq.Enviados");
+        btnArqEnviados.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnArqEnviados.setText("Doc.Enviados");
         btnArqEnviados.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnArqEnviados.setBorderPainted(false);
         btnArqEnviados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnArqEnviadosActionPerformed(evt);
             }
         });
 
-        btnRelatorios.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnRelatorios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnRelatorios.setText("Relatórios");
         btnRelatorios.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnRelatorios.setBorderPainted(false);
         btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRelatoriosActionPerformed(evt);
             }
         });
 
-        btnDocumentos.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnDocumentos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDocumentos.setText("Documentos");
         btnDocumentos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnDocumentos.setBorderPainted(false);
+        btnDocumentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDocumentosActionPerformed(evt);
+            }
+        });
 
-        btnAdministracao.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnAdministracao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAdministracao.setText("Acessos");
         btnAdministracao.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnAdministracao.setBorderPainted(false);
         btnAdministracao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdministracaoActionPerformed(evt);
             }
         });
 
-        btnMensagem.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnMensagem.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnMensagem.setText("Mensagem");
         btnMensagem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnMensagem.setBorderPainted(false);
         btnMensagem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMensagemActionPerformed(evt);
@@ -361,20 +358,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpProcessos.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
         jpProcessos.setOpaque(false);
 
-        btnClassificacao.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnClassificacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnClassificacao.setText("Perfis");
         btnClassificacao.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnClassificacao.setBorderPainted(false);
         btnClassificacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClassificacaoActionPerformed(evt);
             }
         });
 
-        btnNovoProcesso.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnNovoProcesso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnNovoProcesso.setText("Novo");
         btnNovoProcesso.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnNovoProcesso.setBorderPainted(false);
         btnNovoProcesso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoProcessoActionPerformed(evt);
@@ -409,20 +404,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpRececepcao.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
         jpRececepcao.setOpaque(false);
 
-        btnConfirmarDocumento.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnConfirmarDocumento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnConfirmarDocumento.setText("Confirmar");
         btnConfirmarDocumento.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnConfirmarDocumento.setBorderPainted(false);
         btnConfirmarDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfirmarDocumentoActionPerformed(evt);
             }
         });
 
-        btnNovoDocumentoRec.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnNovoDocumentoRec.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnNovoDocumentoRec.setText("Novo");
         btnNovoDocumentoRec.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnNovoDocumentoRec.setBorderPainted(false);
         btnNovoDocumentoRec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoDocumentoRecActionPerformed(evt);
@@ -489,67 +482,72 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpBarraInfo.setFont(new java.awt.Font("Cambria", 0, 12)); // NOI18N
 
         txt_finalizada.setBackground(new java.awt.Color(255, 255, 255));
-        txt_finalizada.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        txt_finalizada.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_finalizada.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_finalizada.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        lbFinalizada.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbFinalizada.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbFinalizada.setText("Finalizada:");
 
         txt_ativada.setBackground(new java.awt.Color(255, 255, 255));
-        txt_ativada.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        txt_ativada.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_ativada.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_ativada.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        lbAtivada.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbAtivada.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbAtivada.setText("Ativada:");
 
-        lbClassificacao.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbClassificacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbClassificacao.setText("Classificação:");
 
-        lbNome.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbNome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbNome.setText("Nome:");
 
-        lbCodigo.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbCodigo.setText("Cod:");
 
         txt_usuario.setBackground(new java.awt.Color(255, 255, 255));
-        txt_usuario.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txt_usuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_usuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txt_usuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_usuario.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         txt_departamento.setBackground(new java.awt.Color(255, 255, 255));
-        txt_departamento.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txt_departamento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_departamento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txt_departamento.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_departamento.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        lb_apelido.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lb_apelido.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lb_apelido.setText("Apelido:");
 
-        btnModificarData.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnModificarData.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnModificarData.setText("Modificar");
         btnModificarData.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnModificarData.setContentAreaFilled(false);
+        btnModificarData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarDataActionPerformed(evt);
+            }
+        });
 
-        txtData.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txtData.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
-        txtHora.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txtHora.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtHora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         txt_classificacao.setBackground(new java.awt.Color(255, 255, 255));
-        txt_classificacao.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        txt_classificacao.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_classificacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_classificacao.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         txt_nome.setBackground(new java.awt.Color(255, 255, 255));
-        txt_nome.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        txt_nome.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_nome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_nome.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         txt_id.setBackground(new java.awt.Color(255, 255, 255));
-        txt_id.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        txt_id.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_id.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_id.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         txt_codigo.setBackground(new java.awt.Color(255, 255, 255));
-        txt_codigo.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        txt_codigo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_codigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_codigo.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         javax.swing.GroupLayout jpBarraInfoLayout = new javax.swing.GroupLayout(jpBarraInfo);
         jpBarraInfo.setLayout(jpBarraInfoLayout);
@@ -569,7 +567,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_nome, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                        .addComponent(txt_nome, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbClassificacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -634,39 +632,45 @@ public class TelaPrincipal extends javax.swing.JFrame {
         barraGuias.setBackground(new java.awt.Color(245, 245, 245));
 
         jmCadastro.setText("Cadastro");
-        jmCadastro.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        jmCadastro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jMenu5.setText("Clientes");
-        jMenu5.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jMenu5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jMenuItem1.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        jMenuItem1.setText("Gerenciar");
-        jMenu5.add(jMenuItem1);
+        jmClientes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jmClientes.setText("Gerenciar");
+        jmClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmClientesActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jmClientes);
 
-        jMenuItem2.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        jMenuItem2.setText("Perfis");
-        jMenu5.add(jMenuItem2);
+        jmPerfil.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jmPerfil.setText("Perfis");
+        jMenu5.add(jmPerfil);
 
         jmCadastro.add(jMenu5);
         jmCadastro.add(jSeparator1);
 
         jMenu6.setText("Usuários");
-        jMenu6.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jMenu6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jmCadUsuario.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        jmCadUsuario.setText("Gerenciar");
-        jMenu6.add(jmCadUsuario);
+        jmUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jmUsuario.setText("Gerenciar");
+        jMenu6.add(jmUsuario);
 
-        jmDepartamento.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jmDepartamento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jmDepartamento.setText("Departamento");
         jMenu6.add(jmDepartamento);
 
-        jmControledeAcesso.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jmControledeAcesso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jmControledeAcesso.setText("Controle de Acesso");
         jMenu6.add(jmControledeAcesso);
 
         jmCadastro.add(jMenu6);
 
+        jmAlteraSenha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jmAlteraSenha.setText("Alterar Senha");
         jmAlteraSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -675,7 +679,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jmCadastro.add(jmAlteraSenha);
 
-        jmTrocadeUsuario.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jmTrocadeUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jmTrocadeUsuario.setText("Trocar de Usuário");
         jmTrocadeUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -687,75 +691,75 @@ public class TelaPrincipal extends javax.swing.JFrame {
         barraGuias.add(jmCadastro);
 
         jmRecepcao.setText("Recepção");
-        jmRecepcao.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        jmRecepcao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jMenuItem6.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jMenuItem6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem6.setText("Cadastrar Entrada");
         jmRecepcao.add(jMenuItem6);
         jmRecepcao.add(jSeparator2);
 
-        jMenuItem7.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jMenuItem7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem7.setText("Confirmar Recebimento");
         jmRecepcao.add(jMenuItem7);
         jmRecepcao.add(jSeparator3);
 
-        jMenuItem8.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jMenuItem8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem8.setText("Relação de Recebimentos");
         jmRecepcao.add(jMenuItem8);
 
         barraGuias.add(jmRecepcao);
 
         jmControle.setText("Controle");
-        jmControle.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        jmControle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        menu_arquivos.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        menu_arquivos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_arquivos.setText("Arquivos");
         jmControle.add(menu_arquivos);
         jmControle.add(jSeparator4);
 
-        menu_comercial.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        menu_comercial.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_comercial.setText("Comercial");
         jmControle.add(menu_comercial);
         jmControle.add(jSeparator5);
 
-        menu_contabil.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        menu_contabil.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_contabil.setText("Contabil");
         jmControle.add(menu_contabil);
         jmControle.add(jSeparator6);
 
-        menu_contratos.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        menu_contratos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_contratos.setText("Contratos");
         jmControle.add(menu_contratos);
         jmControle.add(jSeparator7);
 
-        menu_deppessoal.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        menu_deppessoal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_deppessoal.setText("Dep.Pessoal");
         jmControle.add(menu_deppessoal);
         jmControle.add(jSeparator8);
 
-        menu_documentos.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        menu_documentos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_documentos.setText("Documentos");
         jmControle.add(menu_documentos);
         jmControle.add(jSeparator9);
 
-        menu_financeiro.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        menu_financeiro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_financeiro.setText("Financeiro");
         jmControle.add(menu_financeiro);
         jmControle.add(jSeparator10);
 
-        menu_fiscal.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        menu_fiscal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_fiscal.setText("Fiscal");
         jmControle.add(menu_fiscal);
         jmControle.add(jSeparator11);
 
-        menu_regulazicacao.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        menu_regulazicacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_regulazicacao.setText("Regularização");
         jmControle.add(menu_regulazicacao);
 
         barraGuias.add(jmControle);
 
         jmRelatorios.setText("Relatórios");
-        jmRelatorios.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        jmRelatorios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jmRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmRelatoriosMouseClicked(evt);
@@ -764,18 +768,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu8.setText("Processos");
 
-        jMenuItem18.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jMenuItem18.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem18.setText("Individual");
         jMenu8.add(jMenuItem18);
         jMenu8.add(jSeparator12);
 
-        jMenuItem19.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jMenuItem19.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem19.setText("Geral");
         jMenu8.add(jMenuItem19);
 
         jmRelatorios.add(jMenu8);
 
-        jMenuItem21.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jMenuItem21.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem21.setText("Gráficos");
         jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -787,7 +791,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         barraGuias.add(jmRelatorios);
 
         jmAtivar.setText("Ativar Empresa");
-        jmAtivar.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        jmAtivar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jmAtivar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmAtivarMouseClicked(evt);
@@ -796,7 +800,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         barraGuias.add(jmAtivar);
 
         jmSobre.setText("Sobre");
-        jmSobre.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        jmSobre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jmSobre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jmSobreMouseClicked(evt);
@@ -806,7 +810,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jmSair.setText("Sair");
         jmSair.setFocusable(false);
-        jmSair.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        jmSair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         barraGuias.add(jmSair);
 
         setJMenuBar(barraGuias);
@@ -831,8 +835,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmSobreMouseClicked
-            sobre = new Sobre();
-            sobre.setVisible(true);
+        sobre = new Sobre();
+        sobre.setVisible(true);
         
     }//GEN-LAST:event_jmSobreMouseClicked
 
@@ -842,7 +846,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
         JOptionPane.showMessageDialog(null, "Modulo em Desenvolvimento!");
-        dispose();
     }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     private void jmTrocadeUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmTrocadeUsuarioActionPerformed
@@ -852,24 +855,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmTrocadeUsuarioActionPerformed
 
     private void btnRegularizacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegularizacaoActionPerformed
-//*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
-        if(txt_codigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
-            Ativador ativador = new Ativador();
-            ativador.setVisible(true);
-        }
-        else{
-            regularizacao = new Regularizacao();
-            //Chamando a tela, enviando os dados do cliente para a tela solicitada
-            regularizacao.txt_codigo.setText(Ativador.processo);
-            regularizacao.txt_nome.setText(Ativador.nome);
-            regularizacao.txt_id.setText(Ativador.id);
-            regularizacao.txt_usuario.setText(Login.usuario);
-            
-            regularizacao.setVisible(true);
-            //JOptionPane.showMessageDialog(null, "A tela solicitada já se encontra aberta!");
-            
-        }
+        regularizacao();
     }//GEN-LAST:event_btnRegularizacaoActionPerformed
 
     private void timer1OnTime(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timer1OnTime
@@ -883,53 +869,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void btnNovoProcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoProcessoActionPerformed
-        cadClientes = new CadastroClientes();
-        cadClientes.setVisible(true);
-        
+        clientes();
     }//GEN-LAST:event_btnNovoProcessoActionPerformed
 
     private void btnClassificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClassificacaoActionPerformed
-        classificacao = new CadastroClassificacao();
-        classificacao.setVisible(true);
-        
+        perfil();
     }//GEN-LAST:event_btnClassificacaoActionPerformed
 
     private void btnFiscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiscalActionPerformed
-        fiscal = new Fiscal();
-        fiscal.txt_codigo.setText(Ativador.processo);
-        fiscal.txt_nome.setText(Ativador.nome);
-        fiscal.txt_id.setText(Ativador.id);
-        fiscal.txt_usuario.setText(Login.usuario);
-        fiscal.setVisible(true);
+        fiscal();
+        
     }//GEN-LAST:event_btnFiscalActionPerformed
 
     private void btnNovoDocumentoRecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoDocumentoRecActionPerformed
-        conferirdoc = new ConferirDocumento();
-        conferirdoc.setVisible(true);
-        
+        recepcao_documentos();
     }//GEN-LAST:event_btnNovoDocumentoRecActionPerformed
 
     private void btnComercialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComercialActionPerformed
-
+        comercial();
     }//GEN-LAST:event_btnComercialActionPerformed
 
     private void btnContabilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContabilActionPerformed
-        //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
-        if(txt_codigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
-            Ativador ma = new Ativador();
-            ma.setVisible(true);
-        }
-        else{   
-            contabil = new Contabil();
-            //Chamando a tela, enviando os dados do cliente para a tela solicitada
-            contabil.txt_codigo.setText(Ativador.processo);
-            contabil.txt_nome.setText(Ativador.nome);
-            contabil.txt_id.setText(Ativador.id);
-            contabil.txt_usuario.setText(Login.usuario);
-            
-            contabil.setVisible(true);
-        }
+        contabil();
     }//GEN-LAST:event_btnContabilActionPerformed
 
     private void btnMensagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensagemActionPerformed
@@ -937,64 +898,50 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMensagemActionPerformed
 
     private void btnContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContratosActionPerformed
-
+        contratos();
     }//GEN-LAST:event_btnContratosActionPerformed
 
     private void btnPessoalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPessoalActionPerformed
-        
+        dp();
     }//GEN-LAST:event_btnPessoalActionPerformed
 
     private void btnFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanceiroActionPerformed
-        financeiro = new Financeiro();
-        financeiro.txt_codigo.setText(Ativador.processo);
-        financeiro.txt_nome.setText(Ativador.nome);
-        financeiro.txt_id.setText(Ativador.id);
-        financeiro.txt_usuario.setText(Login.usuario);
-            
-        financeiro.setVisible(true);
+        financeiro();
     }//GEN-LAST:event_btnFinanceiroActionPerformed
 
     private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
-            cadUsuario = new CadastroUsuarios();
-            cadUsuario.setVisible(true);
-
+        usuarios();
     }//GEN-LAST:event_btnAdministracaoActionPerformed
 
     private void btnConfirmarDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarDocumentoActionPerformed
-           listaDocumentos = new ListagemDocumentos();
-            listaDocumentos.setVisible(true);
-        
+        recepcao_confirmar();
     }//GEN-LAST:event_btnConfirmarDocumentoActionPerformed
 
     private void jmAtivarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmAtivarMouseClicked
-            Ativador ativador = new Ativador();
-            ativador.setVisible(true);
+        Ativador ativador = new Ativador();
+        ativador.setVisible(true);
     }//GEN-LAST:event_jmAtivarMouseClicked
 
     private void jmAlteraSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAlteraSenhaActionPerformed
-            ts = new TrocadeSenha();
-            ts.setVisible(true);
-  
+        ts = new TrocadeSenha();
+        ts.setVisible(true);
     }//GEN-LAST:event_jmAlteraSenhaActionPerformed
 
     private void btnArqEnviadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArqEnviadosActionPerformed
-        if(txt_codigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Ative uma empresa!");
-            Ativador ativador = new Ativador();
-            ativador.setVisible(true);
-        }
-        else{
-            docEnv = new DocumentosEnviados();
-            
-            docEnv.txtCodigo.setText(Ativador.processo);
-            docEnv.txtNome.setText(Ativador.nome);
-            docEnv.txtID.setText(Ativador.id);
-            docEnv.txtUsuario.setText(Login.usuario);
-            
-            docEnv.setVisible(true);
-            
-        }
+        enviar_documentos();
     }//GEN-LAST:event_btnArqEnviadosActionPerformed
+
+    private void jmClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmClientesActionPerformed
+        clientes();
+    }//GEN-LAST:event_jmClientesActionPerformed
+
+    private void btnDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocumentosActionPerformed
+        documentos();
+    }//GEN-LAST:event_btnDocumentosActionPerformed
+
+    private void btnModificarDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarDataActionPerformed
+        clientes();
+    }//GEN-LAST:event_btnModificarDataActionPerformed
     
     /**
      *
@@ -1032,10 +979,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu8;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
@@ -1054,16 +999,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator9;
     private javax.swing.JMenuItem jmAlteraSenha;
     private javax.swing.JMenu jmAtivar;
-    private javax.swing.JMenuItem jmCadUsuario;
     private javax.swing.JMenu jmCadastro;
+    private javax.swing.JMenuItem jmClientes;
     private javax.swing.JMenu jmControle;
     private javax.swing.JMenuItem jmControledeAcesso;
     private javax.swing.JMenuItem jmDepartamento;
+    private javax.swing.JMenuItem jmPerfil;
     private javax.swing.JMenu jmRecepcao;
     private javax.swing.JMenu jmRelatorios;
     private javax.swing.JMenu jmSair;
     private javax.swing.JMenu jmSobre;
     private javax.swing.JMenuItem jmTrocadeUsuario;
+    private javax.swing.JMenuItem jmUsuario;
     private javax.swing.JPanel jpBarraInfo;
     private javax.swing.JPanel jpDepartamentos;
     private javax.swing.JPanel jpOutros;
@@ -1101,7 +1048,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     Fiscal fiscal;
     Contabil contabil;
     Financeiro financeiro;
-    //Contratos contratos;
+    DepPessoal dp;
+    Contratos contratos;
+    Comercial comercial;
     CadastroUsuarios cadUsuario;
     CadastroClientes cadClientes;
     CadastroClassificacao classificacao;
@@ -1110,6 +1059,191 @@ public class TelaPrincipal extends javax.swing.JFrame {
     ConferirDocumento conferirdoc;
     ListagemDocumentos listaDocumentos;
     DocumentosEnviados docEnv;
+    Documentos documentos;
     Sobre sobre;
     LoginTrocadeAcesso trocarAcesso;
+
+    public void contabil(){
+        //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
+        if(txt_codigo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            Ativador ma = new Ativador();
+            ma.setVisible(true);
+        }
+        else{   
+            contabil = new Contabil();
+            //Chamando a tela, enviando os dados do cliente para a tela solicitada
+            contabil.txt_codigo.setText(Ativador.processo);
+            contabil.txt_nome.setText(Ativador.nome);
+            contabil.txt_id.setText(Ativador.id);
+            contabil.txt_usuario.setText(Login.usuario);
+            
+            contabil.setVisible(true);
+        }
+    }
+    public void regularizacao(){
+        //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
+        if(txt_codigo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            Ativador ativador = new Ativador();
+            ativador.setVisible(true);
+        }
+        else{
+            regularizacao = new Regularizacao();
+            //Chamando a tela, enviando os dados do cliente para a tela solicitada
+            regularizacao.txt_codigo.setText(Ativador.processo);
+            regularizacao.txt_nome.setText(Ativador.nome);
+            regularizacao.txt_id.setText(Ativador.id);
+            regularizacao.txt_usuario.setText(Login.usuario);
+            
+            regularizacao.setVisible(true);
+            //JOptionPane.showMessageDialog(null, "A tela solicitada já se encontra aberta!");
+            
+        }
+    }
+    public void financeiro(){
+        if(txt_codigo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            Ativador ma = new Ativador();
+            ma.setVisible(true);
+        }
+        else{
+        financeiro = new Financeiro();
+        financeiro.txt_codigo.setText(Ativador.processo);
+        financeiro.txt_nome.setText(Ativador.nome);
+        financeiro.txt_id.setText(Ativador.id);
+        financeiro.txt_usuario.setText(Login.usuario);
+            
+        financeiro.setVisible(true);
+        }
+    }
+    public void comercial(){
+        //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
+        if(txt_codigo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            Ativador ma = new Ativador();
+            ma.setVisible(true);
+        }
+        else{   
+            comercial = new Comercial();
+            //Chamando a tela, enviando os dados do cliente para a tela solicitada
+            comercial.txtCodigo.setText(Ativador.processo);
+            comercial.txtNome.setText(Ativador.nome);
+            comercial.txtId.setText(Ativador.id);
+            comercial.txtUsuario.setText(Login.usuario);
+            
+            comercial.setVisible(true);
+        }
+    }
+    public void fiscal(){
+        //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
+        if(txt_codigo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            Ativador ma = new Ativador();
+            ma.setVisible(true);
+        }
+        else{   
+            fiscal = new Fiscal();
+            fiscal.txt_codigo.setText(Ativador.processo);
+            fiscal.txt_nome.setText(Ativador.nome);
+            fiscal.txt_id.setText(Ativador.id);
+            fiscal.txt_usuario.setText(Login.usuario);
+            fiscal.setVisible(true);
+        }
+    }
+    public void contratos(){
+        //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
+        if(txt_codigo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            Ativador ma = new Ativador();
+            ma.setVisible(true);
+        }
+        else{   
+            contratos = new Contratos();
+            //Chamando a tela, enviando os dados do cliente para a tela solicitada
+            contratos.txtCodigo.setText(Ativador.processo);
+            contratos.txtNome.setText(Ativador.nome);
+            contratos.txtId.setText(Ativador.id);
+            contratos.txtUsuario.setText(Login.usuario);
+            
+            contratos.setVisible(true);
+        }
+    }
+    public void dp(){
+        //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
+        if(txt_codigo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            Ativador ma = new Ativador();
+            ma.setVisible(true);
+        }
+        else{   
+            dp = new DepPessoal();
+            //Chamando a tela, enviando os dados do cliente para a tela solicitada
+            dp.txtCodigo.setText(Ativador.processo);
+            dp.txtNome.setText(Ativador.nome);
+            dp.txtId.setText(Ativador.id);
+            dp.txtUsuario.setText(Login.usuario);
+            
+            dp.setVisible(true);
+        }
+    }
+    public void clientes(){
+        cadClientes = new CadastroClientes();
+        cadClientes.setVisible(true);
+
+    }
+    public void perfil(){
+        classificacao = new CadastroClassificacao();
+        classificacao.setVisible(true);
+        
+    }
+    public void documentos(){
+       if(txt_codigo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Ative uma empresa!");
+            Ativador ativador = new Ativador();
+            ativador.setVisible(true);
+        }
+        else{
+            documentos = new Documentos();
+            
+            documentos.txtCodigo.setText(Ativador.processo);
+            documentos.txtNome.setText(Ativador.nome);
+            documentos.txtID.setText(Ativador.id);
+            documentos.txtUsuario.setText(Login.usuario);
+            
+            documentos.setVisible(true);
+            
+        }
+    }
+    public void enviar_documentos(){
+        if(txt_codigo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Ative uma empresa!");
+            Ativador ativador = new Ativador();
+            ativador.setVisible(true);
+        }
+        else{
+            docEnv = new DocumentosEnviados();
+            
+            docEnv.txtCodigo.setText(Ativador.processo);
+            docEnv.txtNome.setText(Ativador.nome);
+            docEnv.txtID.setText(Ativador.id);
+            docEnv.txtUsuario.setText(Login.usuario);
+            
+            docEnv.setVisible(true);
+            
+        }
+    }
+    public void recepcao_documentos(){
+        conferirdoc = new ConferirDocumento();
+        conferirdoc.setVisible(true);
+    }
+    public void recepcao_confirmar(){
+        listaDocumentos = new ListagemDocumentos();
+        listaDocumentos.setVisible(true);
+    }
+    public void usuarios(){
+        cadUsuario = new CadastroUsuarios();
+        cadUsuario.setVisible(true);
+    }
+
 }

@@ -13,11 +13,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import br.com.prolink.inicio.*;
-
+/**
+ *
+ * @author Tiago Dias
+ */
 
 public class Regularizacao extends javax.swing.JFrame {
     //conexão com as tabelas necessarias
-    Conexao con_cliente, con_regularizacao, con_termo, con_arquivo;
+    Conexao con_regularizacao, con_termo, con_arquivo;
     //maskara para o JFormattedTextField
     MaskFormatter formatoArquivo, formatoTermo;
     //Formatador para data
@@ -27,15 +30,14 @@ public class Regularizacao extends javax.swing.JFrame {
            termo, arquivo, codTermo_backup, obsTermo_backup, dataTermo_backup, tipoTermo_backup,
            codArquivo_backup, obsArquivo_backup, dataArquivo_backup, tipoArquivo_backup;
     
+    
     /**
      *
      */
     public Regularizacao() {
         initComponents();
         //instanciando as conexoes e executando o metodo conecta
-        con_cliente = new Conexao();
-        con_cliente.conecta();
-        
+
         con_termo = new Conexao();
         con_termo.conecta();
         
@@ -51,18 +53,20 @@ public class Regularizacao extends javax.swing.JFrame {
         //chamando metodo que preencha tela de status
         bloqueia_tela_termo();
         bloqueia_tela_arquivo();
+        
         preencher_status();
         atualizar_cadastro_cliente();
         //bloqueando edição do campo codigo
         limpar_tela_arquivo();
         limpar_tela_termo();
+        
         tb_arquivo.setAutoCreateRowSorter(true);
         tb_termo.setAutoCreateRowSorter(true);
         
-        //txt_codigo.setText(processo);
-        //txt_nome.setText(nome);
-        //txt_id.setText(id);
-        //txt_usuario.setText(usuario);
+        txt_codigo.setText(processo);
+        txt_nome.setText(nome);
+        txt_id.setText(id);
+        txt_usuario.setText(usuario);
         
         if(!Login.nivel.equals("1") && !Login.departamento.equalsIgnoreCase("Regularização")){
             
@@ -116,7 +120,6 @@ public class Regularizacao extends javax.swing.JFrame {
         btnSalvarTermo = new javax.swing.JButton();
         btnCancelarTermo = new javax.swing.JButton();
         btnExcluirTermo = new javax.swing.JButton();
-        btnFecharTermo = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         tb_termo = new javax.swing.JTable();
         btnNovoTermo = new javax.swing.JButton();
@@ -139,7 +142,6 @@ public class Regularizacao extends javax.swing.JFrame {
         btnSalvarArquivo = new javax.swing.JButton();
         btnCancelarArquivo = new javax.swing.JButton();
         btnExcluirArquivo = new javax.swing.JButton();
-        btnFecharArquivo = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         tb_arquivo = new javax.swing.JTable();
         btnNovoArquivo = new javax.swing.JButton();
@@ -275,6 +277,7 @@ public class Regularizacao extends javax.swing.JFrame {
         lb_tipo_termo.setText("Tipo:");
 
         cb_tipo_termo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Novo Andamento", "Finalizado" }));
+        cb_tipo_termo.setToolTipText("c");
 
         txt_obs_termo.setColumns(20);
         txt_obs_termo.setLineWrap(true);
@@ -309,19 +312,12 @@ public class Regularizacao extends javax.swing.JFrame {
             }
         });
 
-        btnFecharTermo.setText("Fechar");
-        btnFecharTermo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharTermoActionPerformed(evt);
-            }
-        });
-
         tb_termo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nº", "Processo", "Data", "Tipo", "Observação", "Usuario"
+                "Nº", "Data", "Processo", "Observação", "Situação", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
@@ -345,6 +341,13 @@ public class Regularizacao extends javax.swing.JFrame {
             }
         });
         jScrollPane8.setViewportView(tb_termo);
+        if (tb_termo.getColumnModel().getColumnCount() > 0) {
+            tb_termo.getColumnModel().getColumn(0).setMaxWidth(30);
+            tb_termo.getColumnModel().getColumn(1).setMaxWidth(70);
+            tb_termo.getColumnModel().getColumn(2).setMaxWidth(90);
+            tb_termo.getColumnModel().getColumn(4).setMaxWidth(150);
+            tb_termo.getColumnModel().getColumn(5).setMaxWidth(100);
+        }
 
         btnNovoTermo.setText("Novo");
         btnNovoTermo.addActionListener(new java.awt.event.ActionListener() {
@@ -357,39 +360,37 @@ public class Regularizacao extends javax.swing.JFrame {
         jpEnvioTermo.setLayout(jpEnvioTermoLayout);
         jpEnvioTermoLayout.setHorizontalGroup(
             jpEnvioTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpEnvioTermoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbcod_termo)
-                .addGap(115, 115, 115)
-                .addComponent(txt_cod_termo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpEnvioTermoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_andamento_arquivo1)
-                .addGap(111, 111, 111)
-                .addComponent(txt_data_termo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lb_tipo_termo)
-                .addGap(18, 18, 18)
-                .addComponent(cb_tipo_termo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpEnvioTermoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_obs_termo)
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpEnvioTermoLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(btnNovoTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterarTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalvarTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelarTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcluirTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFecharTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jpEnvioTermoLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jpEnvioTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpEnvioTermoLayout.createSequentialGroup()
+                        .addComponent(lbcod_termo)
+                        .addGap(115, 115, 115)
+                        .addComponent(txt_cod_termo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpEnvioTermoLayout.createSequentialGroup()
+                        .addComponent(lb_andamento_arquivo1)
+                        .addGap(111, 111, 111)
+                        .addComponent(txt_data_termo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lb_tipo_termo)
+                        .addGap(18, 18, 18)
+                        .addComponent(cb_tipo_termo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpEnvioTermoLayout.createSequentialGroup()
+                        .addComponent(lb_obs_termo)
+                        .addGap(73, 73, 73)
+                        .addGroup(jpEnvioTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpEnvioTermoLayout.createSequentialGroup()
+                                .addComponent(btnNovoTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterarTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvarTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelarTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluirTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane9)))))
         );
         jpEnvioTermoLayout.setVerticalGroup(
             jpEnvioTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,31 +402,28 @@ public class Regularizacao extends javax.swing.JFrame {
                         .addComponent(lbcod_termo))
                     .addComponent(txt_cod_termo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addGroup(jpEnvioTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpEnvioTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jpEnvioTermoLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(lb_andamento_arquivo1))
-                    .addComponent(txt_data_termo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_data_termo, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addGroup(jpEnvioTermoLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(lb_tipo_termo))
-                    .addGroup(jpEnvioTermoLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(cb_tipo_termo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cb_tipo_termo))
                 .addGap(16, 16, 16)
                 .addGroup(jpEnvioTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_obs_termo)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(8, 8, 8)
                 .addGroup(jpEnvioTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpEnvioTermoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCancelarTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSalvarTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnAlterarTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnNovoTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCancelarTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluirTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFecharTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                    .addComponent(btnExcluirTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -443,6 +441,7 @@ public class Regularizacao extends javax.swing.JFrame {
         lb_tipo_arquivo.setText("Tipo:");
 
         cb_tipo_arquivo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Novo Andamento", "Finalizado" }));
+        cb_tipo_arquivo.setToolTipText("Se desejar finalizar o andamento, selecione finalizar!");
 
         lb_obs_arquivo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lb_obs_arquivo.setText("Observação:");
@@ -480,19 +479,12 @@ public class Regularizacao extends javax.swing.JFrame {
             }
         });
 
-        btnFecharArquivo.setText("Fechar");
-        btnFecharArquivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharArquivoActionPerformed(evt);
-            }
-        });
-
         tb_arquivo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nº", "Processo", "Data", "Tipo", "Observação", "Usuario"
+                "Nº", "Data", "Processo", "Observação", "Situação", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
@@ -516,6 +508,13 @@ public class Regularizacao extends javax.swing.JFrame {
             }
         });
         jScrollPane6.setViewportView(tb_arquivo);
+        if (tb_arquivo.getColumnModel().getColumnCount() > 0) {
+            tb_arquivo.getColumnModel().getColumn(0).setMaxWidth(30);
+            tb_arquivo.getColumnModel().getColumn(1).setMaxWidth(70);
+            tb_arquivo.getColumnModel().getColumn(2).setMaxWidth(90);
+            tb_arquivo.getColumnModel().getColumn(4).setMaxWidth(150);
+            tb_arquivo.getColumnModel().getColumn(5).setMaxWidth(100);
+        }
 
         btnNovoArquivo.setText("Novo");
         btnNovoArquivo.addActionListener(new java.awt.event.ActionListener() {
@@ -528,39 +527,37 @@ public class Regularizacao extends javax.swing.JFrame {
         jpArquivo.setLayout(jpArquivoLayout);
         jpArquivoLayout.setHorizontalGroup(
             jpArquivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpArquivoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbcod_arquivo)
-                .addGap(115, 115, 115)
-                .addComponent(txt_cod_arquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpArquivoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_data_arquivo)
-                .addGap(111, 111, 111)
-                .addComponent(txt_data_arquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lb_tipo_arquivo)
-                .addGap(18, 18, 18)
-                .addComponent(cb_tipo_arquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpArquivoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_obs_arquivo)
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpArquivoLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(btnNovoArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalvarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcluirArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFecharArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jpArquivoLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jpArquivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpArquivoLayout.createSequentialGroup()
+                        .addComponent(lbcod_arquivo)
+                        .addGap(115, 115, 115)
+                        .addComponent(txt_cod_arquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpArquivoLayout.createSequentialGroup()
+                        .addComponent(lb_data_arquivo)
+                        .addGap(111, 111, 111)
+                        .addComponent(txt_data_arquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lb_tipo_arquivo)
+                        .addGap(18, 18, 18)
+                        .addComponent(cb_tipo_arquivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpArquivoLayout.createSequentialGroup()
+                        .addComponent(lb_obs_arquivo)
+                        .addGap(73, 73, 73)
+                        .addGroup(jpArquivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpArquivoLayout.createSequentialGroup()
+                                .addComponent(btnNovoArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluirArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane7)))))
         );
         jpArquivoLayout.setVerticalGroup(
             jpArquivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -572,31 +569,28 @@ public class Regularizacao extends javax.swing.JFrame {
                         .addComponent(lbcod_arquivo))
                     .addComponent(txt_cod_arquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addGroup(jpArquivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpArquivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jpArquivoLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(lb_data_arquivo))
-                    .addComponent(txt_data_arquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_data_arquivo, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addGroup(jpArquivoLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(lb_tipo_arquivo))
-                    .addGroup(jpArquivoLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(cb_tipo_arquivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cb_tipo_arquivo))
                 .addGap(16, 16, 16)
                 .addGroup(jpArquivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_obs_arquivo)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(8, 8, 8)
                 .addGroup(jpArquivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpArquivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCancelarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSalvarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnAlterarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnNovoArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCancelarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluirArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFecharArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                    .addComponent(btnExcluirArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -679,9 +673,9 @@ public class Regularizacao extends javax.swing.JFrame {
                 con_arquivo.executeSQL(sql);
                 con_arquivo.resultset.first();
                 
-                String cliente = "Tem certeza que deseja excluir um cadastro da tabela Arquivo com cliente : " +con_arquivo.resultset.getString("Cliente")+"?";
+                String cliente = "Tem certeza que deseja excluir um registro do cliente : " +con_arquivo.resultset.getString("Cliente")+"?";
                 //pegando o status atual do cliente Em aberto ou Finalizado
-                String operacao = con_arquivo.resultset.getString("Tipo");
+                String operacao = con_arquivo.resultset.getString("Andamentoarquivar");
                 
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
@@ -689,23 +683,24 @@ public class Regularizacao extends javax.swing.JFrame {
                     int conseguiu_excluir = con_arquivo.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
+                        limpar_tela_arquivo();
+                        limpar_tabela_arquivo();
+                        preencher_jtable_arquivo();
+                        
                         if("Finalizado".equals(operacao)){
                             try{
                                 con_arquivo.executeSQL("select * from arquivamentodoprocesso where NumeroProcesso='"+processo+"' and Andamentoarquivar='Finalizado'");
-                            if(!con_arquivo.resultset.first()){
-                                con_regularizacao.statement.executeUpdate("UPDATE regularizacao set AndamentoArquivarProcesso='Em Aberto' where Numerodoprocesso="+processo);
+                                if(!con_arquivo.resultset.first()){
+                                    con_regularizacao.statement.executeUpdate("UPDATE regularizacao set AndamentoArquivarProcesso='Em Aberto' where Numerodoprocesso="+processo);
+                                    preencher_status();
+                                    atualizar_cadastro_cliente();
+                     
                             }
                             }catch(SQLException erro){
                                 JOptionPane.showMessageDialog(null, "Erro ao localizar dados na tabela Regularização>Arquivo.\n"+erro);
                             }
                         }
-                        
-                    limpar_tela_arquivo();
-                    limpar_tabela_arquivo();
-                    preencher_jtable_arquivo();
-                    preencher_status();
-                    atualizar_cadastro_cliente();
-                        
+                      
                     }
                 }
             }catch(SQLException erro){
@@ -726,7 +721,6 @@ public class Regularizacao extends javax.swing.JFrame {
         }
         else if(cb_tipo_arquivo.getSelectedItem().equals("")){
             JOptionPane.showMessageDialog(null, "Campo Tipo não pode ficar em branco!");
-            cb_tipo_arquivo.requestFocus();
         }
         else if(!txt_cod_arquivo.getText().equals("")){
             try{
@@ -743,8 +737,7 @@ public class Regularizacao extends javax.swing.JFrame {
                 new java.sql.Date(data.getTime())+"',"+
                 "Obsevacao='"+txt_obs_arquivo.getText()+"',"+
                 "Usuario= '"+usuario+"',"+
-                "Andamentoarquivar='"+andamento+"',"+
-                "Tipo='"+cb_tipo_arquivo.getSelectedItem()+"' "+
+                "Andamentoarquivar='"+andamento+"' "+
                 "where CodArquivamento = "+txt_cod_arquivo.getText();
 
                 con_arquivo.statement.executeUpdate(sql);
@@ -775,16 +768,13 @@ public class Regularizacao extends javax.swing.JFrame {
                     andamentoarquivo = "Em Aberto";
                 }
                 String gry = "insert into arquivamentodoprocesso ("+
-                "NumeroProcesso, Departamento, DatadeCadastroAndamento, Obsevacao, "+
-                "Cliente, Usuario, AndamentoArquivar, Tipo) values ('"+
+                "NumeroProcesso, DatadeCadastroAndamento, Obsevacao, "+
+                "Usuario, AndamentoArquivar) values ('"+
                 processo+"','"+
-                "Envio Arquivamento de Processo','"+
                 new java.sql.Date(dataarquivo.getTime())+"','"+
                 txt_obs_arquivo.getText()+"','"+
-                nome+"','"+
                 usuario+"','"+
-                andamentoarquivo+"','"+
-                cb_tipo_arquivo.getSelectedItem()+"')";
+                andamentoarquivo+"')";
 
                 con_arquivo.exeQuery(gry);
                 
@@ -803,10 +793,6 @@ public class Regularizacao extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnSalvarArquivoActionPerformed
 
-    private void btnFecharArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharArquivoActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnFecharArquivoActionPerformed
-
     private void btnAlterarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarArquivoActionPerformed
         cria_backup_arquivo();
         desbloqueia_tela_arquivo();
@@ -823,19 +809,31 @@ public class Regularizacao extends javax.swing.JFrame {
                 String sql = "select * from enviartermoderesponsabilidadeparacomercial where CodEnviartermoderesponsaparaComercial= "+txt_cod_termo.getText();
                 con_termo.executeSQL(sql);
                 con_termo.resultset.first();
-                String cliente = "Tem certeza que deseja excluir um cadastro da tabela Termo com cliente : " +con_termo.resultset.getString("Cliente")+"?";
+                String operacao = con_termo.resultset.getString("AndamentoEnvioTermoResponsabiidadeparaComercial");
+                String cliente = "Tem certeza que deseja excluir um registro do cliente : " +nome+"?";
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
                     sql = "DELETE FROM enviartermoderesponsabilidadeparacomercial Where CodEnviartermoderesponsaparaComercial ="+txt_cod_termo.getText();
                     int conseguiu_excluir = con_termo.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
+                        limpar_tela_termo();
+                        limpar_tabela_termo();
+                        preencher_jtable_termo();
+                        if("Finalizado".equals(operacao)){
+                            con_termo.executeSQL("select * from enviartermoderesponsabilidadeparacomercial where NumeroProcesso='"+processo+"' and AndamentoEnvioTermoResponsabiidadeparaComercial='Finalizado'");
+                            if(!con_termo.resultset.first()){
+                                try{
+                                    con_regularizacao.statement.executeUpdate("update regularizacao set AndamentoEnviarTernoReponsaParaComercial='Em Aberto' where Numerodoprocesso='"+processo+"'");
+                                    
+                                    preencher_status();
+                                    atualizar_cadastro_cliente();
+                                }catch(SQLException erro){
+                                    JOptionPane.showMessageDialog(null, "Erro ao atualizar a tabela Regularizacao" +erro);
+                                }
+                            }
+                        }
                     
-                    limpar_tela_termo();
-                    limpar_tabela_termo();
-                    preencher_jtable_termo();
-                    preencher_status();
-                    atualizar_cadastro_cliente();
                     }
                 }
             }catch(SQLException erro){
@@ -857,7 +855,6 @@ public class Regularizacao extends javax.swing.JFrame {
         }
         else if(cb_tipo_termo.getSelectedItem().equals("")){
             JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
-            cb_tipo_termo.requestFocus();
         }
         else if(!txt_codigo.getText().equals("")){
             try{
@@ -876,8 +873,7 @@ public class Regularizacao extends javax.swing.JFrame {
                 new java.sql.Date(datatermo.getTime())+"',"+
                 "Obsevacao='"+txt_obs_termo.getText()+"',"+
                 "Usuario= '"+usuario+"',"+
-                "AndamentoEnvioTermoResponsabiidadeparaComercial='"+andamentotermo+"',"+
-                "Tipo='"+cb_tipo_termo.getSelectedItem()+"' "+
+                "AndamentoEnvioTermoResponsabiidadeparaComercial='"+andamentotermo+"' "+
                 "where CodEnviartermoderesponsaparaComercial = "+txt_cod_termo.getText();
 
                 con_termo.statement.executeUpdate(sql);
@@ -911,17 +907,14 @@ public class Regularizacao extends javax.swing.JFrame {
                 }
 
                     String gry = "insert into enviartermoderesponsabilidadeparacomercial ("+
-                    "NumeroProcesso, Departamento, DataCadastroAndamento, Obsevacao,"+
-                    "Cliente, Usuario, AndamentoEnvioTermoResponsabiidadeparaComercial, Tipo) values ('"+
+                    "NumeroProcesso, DataCadastroAndamento, Obsevacao,"+
+                    "Usuario, AndamentoEnvioTermoResponsabiidadeparaComercial) values ('"+
                     processo+"','"+
                     "Envio Termo para Comercial','"+
                     new java.sql.Date(datatermo.getTime())+"','"+
                     txt_obs_termo.getText()+"','"+
-                    txt_nome.getText()+"','"+
-                    txt_usuario.getText()+"','"+
-                    andamentotermo+"','"+
-                    cb_tipo_termo.getSelectedItem()+"')";
-
+                    usuario+"','"+
+                    andamentotermo+"',)";
                     con_termo.exeQuery(gry);
                     
                     JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
@@ -939,10 +932,6 @@ public class Regularizacao extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSalvarTermoActionPerformed
 
-    private void btnFecharTermoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharTermoActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnFecharTermoActionPerformed
-
     private void btnAlterarTermoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarTermoActionPerformed
         cria_backup_termo();
         desbloqueia_tela_termo();
@@ -951,9 +940,9 @@ public class Regularizacao extends javax.swing.JFrame {
     private void tb_termoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_termoMouseClicked
         Integer linha = tb_termo.getSelectedRow();
         String codigo = (String)tb_termo.getValueAt(linha, 0);
-        String data = (String)tb_termo.getValueAt(linha, 2);
-        String tipo = (String)tb_termo.getValueAt(linha, 3);
-        String observacao = (String)tb_termo.getValueAt(linha, 4);
+        String data = (String)tb_termo.getValueAt(linha, 1);
+        String observacao = (String)tb_termo.getValueAt(linha, 3);
+        String tipo = (String)tb_termo.getValueAt(linha, 4);
         
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -961,21 +950,23 @@ public class Regularizacao extends javax.swing.JFrame {
         String recebedataTabela = dia+mes+ano;
         
         txt_data_termo.setText(recebedataTabela);
-        
-        txt_cod_termo.setText(codigo);
-        cb_tipo_termo.setSelectedItem(tipo);
         txt_obs_termo.setText(observacao);
+        txt_cod_termo.setText(codigo);
         
-        
+        if(tipo.equals("Finalizado")){
+            cb_tipo_termo.setSelectedItem("Finalizado");
+        }
+        else
+            cb_tipo_termo.setSelectedItem("Novo Andamento");
         
     }//GEN-LAST:event_tb_termoMouseClicked
 
     private void tb_arquivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_arquivoMouseClicked
         Integer linha = tb_arquivo.getSelectedRow();
         String codigo = (String)tb_arquivo.getValueAt(linha, 0);
-        String data = (String)tb_arquivo.getValueAt(linha, 2);
-        String tipo = (String)tb_arquivo.getValueAt(linha, 3);
-        String observacao = (String)tb_arquivo.getValueAt(linha, 4);
+        String data = (String)tb_arquivo.getValueAt(linha, 1);
+        String observacao = (String)tb_arquivo.getValueAt(linha, 3);
+        String tipo = (String)tb_arquivo.getValueAt(linha, 4);
         
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -983,10 +974,15 @@ public class Regularizacao extends javax.swing.JFrame {
         String recebedataTabela = dia+mes+ano;
         
         txt_data_arquivo.setText(recebedataTabela);
-        
         txt_cod_arquivo.setText(codigo);
-        cb_tipo_arquivo.setSelectedItem(tipo);
         txt_obs_arquivo.setText(observacao);
+        
+        if(tipo.equalsIgnoreCase("Finalizado")){
+            cb_tipo_arquivo.setSelectedItem("Finalizado");
+        }
+        else
+            cb_tipo_arquivo.setSelectedItem("Novo Andamento");
+        
     }//GEN-LAST:event_tb_arquivoMouseClicked
 
     private void btnNovoTermoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoTermoActionPerformed
@@ -1020,8 +1016,6 @@ public class Regularizacao extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelarTermo;
     private javax.swing.JButton btnExcluirArquivo;
     private javax.swing.JButton btnExcluirTermo;
-    private javax.swing.JButton btnFecharArquivo;
-    private javax.swing.JButton btnFecharTermo;
     private javax.swing.JButton btnNovoArquivo;
     private javax.swing.JButton btnNovoTermo;
     private javax.swing.JButton btnSalvarArquivo;
@@ -1091,10 +1085,10 @@ public class Regularizacao extends javax.swing.JFrame {
             while (con_termo.resultset.next())
                 modelo.addRow(new Object [] {
                     con_termo.resultset.getString("CodEnviartermoderesponsaparaComercial"),
-                    con_termo.resultset.getString("NumeroProcesso"),
                     sdf.format(con_termo.resultset.getTime("DataCadastroAndamento")),
-                    con_termo.resultset.getString("Tipo"),                    
+                    con_termo.resultset.getString("NumeroProcesso"),
                     con_termo.resultset.getString("Obsevacao"),
+                    con_termo.resultset.getString("AndamentoEnvioTermoResponsabiidadeparaComercial"),
                     con_termo.resultset.getString("Usuario")});
             con_termo.resultset.first();
         }   catch (SQLException erro){
@@ -1121,10 +1115,10 @@ public class Regularizacao extends javax.swing.JFrame {
             while (con_arquivo.resultset.next())
                 modelo.addRow(new Object [] {
                     con_arquivo.resultset.getString("CodArquivamento"),
-                    con_arquivo.resultset.getString("NumeroProcesso"),
                     sdf.format(con_arquivo.resultset.getTime("DatadeCadastroAndamento")),
-                    con_arquivo.resultset.getString("Tipo"),
+                    con_arquivo.resultset.getString("NumeroProcesso"),
                     con_arquivo.resultset.getString("Obsevacao"),
+                    con_arquivo.resultset.getString("Andamentoarquivar"),
                     con_arquivo.resultset.getString("Usuario")});
             con_arquivo.resultset.first();
         }catch(SQLException erro){
@@ -1160,20 +1154,23 @@ public class Regularizacao extends javax.swing.JFrame {
             String sql = "select * from regularizacao WHERE Numerodoprocesso='"+processo+"'";
             //
             con_regularizacao.executeSQL(sql);
-            con_regularizacao.resultset.first();
-            
-            txt_status_termo.setText(con_regularizacao.resultset.getString("AndamentoEnviarTernoReponsaParaComercial"));
-            txt_status_arquivo.setText(con_regularizacao.resultset.getString("AndamentoArquivarProcesso"));
-        
+                if(con_regularizacao.resultset.first()){
+
+                termo = con_regularizacao.resultset.getString("AndamentoEnviarTernoReponsaParaComercial");
+                arquivo = con_regularizacao.resultset.getString("AndamentoArquivarProcesso");
+
+                txt_status_termo.setText(termo);
+                txt_status_arquivo.setText(arquivo);
+            }
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null, "Falha ao atualizar status!" +erro);
         }
-        if(txt_status_termo.getText().equals("Finalizado") && txt_status_arquivo.getText().equals("Finalizado"))
+        if(termo.equals("Finalizado") && arquivo.equals("Finalizado"))
         {
             try{
                 String sql = "UPDATE cadastrodeprocesso set AndamentoRegularizacao ='Concluido' "+
                              "where Numerodoprocesso = " +processo;
-                             con_cliente.statement.executeUpdate(sql);
+                             con_regularizacao.statement.executeUpdate(sql);
 
                              txt_andamento_regularizacao.setText("Concluido");
             }catch(Exception erro){
@@ -1182,7 +1179,7 @@ public class Regularizacao extends javax.swing.JFrame {
         }
         else if(txt_status_termo.getText().equals("Em Aberto") || txt_status_arquivo.getText().equals("Em Aberto"))
         {
-            txt_andamento_regularizacao.setText("Em andamento");
+            txt_andamento_regularizacao.setText("Em Aberto");
         }
     }
 
@@ -1193,7 +1190,7 @@ public class Regularizacao extends javax.swing.JFrame {
         txt_cod_termo.setText("");
         txt_obs_termo.setText("");
         txt_cod_termo.setEditable(false);
-        cb_tipo_termo.setSelectedItem("Novo Andamento");
+        cb_tipo_termo.setSelectedItem("");
         Date data = new Date();
         String datahoje = sdf.format(data);
         txt_data_termo.setText(datahoje);
@@ -1206,7 +1203,7 @@ public class Regularizacao extends javax.swing.JFrame {
     public void limpar_tela_arquivo(){
         txt_cod_arquivo.setEditable(false);
         txt_cod_arquivo.setText("");
-        cb_tipo_arquivo.setSelectedItem("Novo Andamento");
+        cb_tipo_arquivo.setSelectedItem("");
         txt_obs_arquivo.setText("");
         Date data = new Date();
         String datahoje = sdf.format(data);
@@ -1267,7 +1264,7 @@ public class Regularizacao extends javax.swing.JFrame {
     public void atualizar_regularizacao_termo(){
     if(cb_tipo_termo.getSelectedItem().equals("Finalizado")){
             try{
-                con_regularizacao.statement.executeUpdate("Update regularizacao set AndamentoEnviarTernoReponsaParaComercial='Finalizado' where Numerodoprocesso="+processo );
+                con_regularizacao.statement.executeUpdate("Update regularizacao set AndamentoEnviarTernoReponsaParaComercial='Finalizado' where Numerodoprocesso='"+processo+"'" );
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Regularização>Termo: \n" +erro);
             }
@@ -1309,19 +1306,20 @@ public class Regularizacao extends javax.swing.JFrame {
     }
 }
     private void atualizar_cadastro_cliente() {
-    if(txt_status_termo.getText().equals("Em Aberto") || txt_status_arquivo.getText().equals("Em Aberto")){
+    if(txt_status_termo.getText().equalsIgnoreCase("Em Aberto") && txt_status_arquivo.getText().equalsIgnoreCase("Em Aberto")){
         try{
                 String sql = "update cadastrodeprocesso set AndamentoRegularizacao='Em Aberto' where codNumerodoProcesso="+processo;
-                con_cliente.statement.executeUpdate(sql);
+                con_regularizacao.statement.executeUpdate(sql);
                 
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null, "Falha ao atualizar o cadastro do cliente!\n"+erro);
         }
+        
     }
-    else if(txt_status_termo.getText().equals("Finalizado") || txt_status_arquivo.getText().equals("Finalizado")){
+    else if(txt_status_termo.getText().equalsIgnoreCase("Finalizado") && txt_status_arquivo.getText().equalsIgnoreCase("Finalizado")){
         try{
                 String sql = "update cadastrodeprocesso set AndamentoRegularizacao='Finalizado' where codNumerodoProcesso="+processo;
-                con_cliente.statement.executeUpdate(sql);
+                con_regularizacao.statement.executeUpdate(sql);
                 
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null, "Falha ao atualizar o cadastro do cliente!\n"+erro);
@@ -1365,6 +1363,7 @@ public class Regularizacao extends javax.swing.JFrame {
      *
      */
     public void bloqueia_tela_arquivo(){
+        txt_cod_arquivo.setEditable(false);
         txt_obs_arquivo.setEditable(false);
         cb_tipo_arquivo.setEditable(false);
         txt_data_arquivo.setEditable(false);
@@ -1403,6 +1402,7 @@ public class Regularizacao extends javax.swing.JFrame {
      *
      */
     public void bloqueia_tela_termo(){
+        txt_cod_termo.setEditable(false);
         txt_obs_termo.setEditable(false);
         cb_tipo_termo.setEditable(false);
         txt_data_termo.setEditable(false);

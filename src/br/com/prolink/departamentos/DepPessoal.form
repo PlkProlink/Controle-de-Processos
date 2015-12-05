@@ -110,7 +110,7 @@
               <Font name="Verdana" size="22" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Controle Dep. Pessoal"/>
+            <Property name="text" type="java.lang.String" value="Controle Folha"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
         </Component>
@@ -203,6 +203,7 @@
         </Component>
         <Container class="javax.swing.JTabbedPane" name="jtbGuiaDP">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="0"/>
             </Property>
@@ -443,43 +444,44 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbCodSocio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
-                          <Component id="txtCodSocio" min="-2" pref="70" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbDataSocio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
-                          <Component id="txtDataSocio" min="-2" pref="70" max="-2" attributes="0"/>
-                          <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                          <Component id="lbTipoSocio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="cbTipoSocio" min="-2" pref="130" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbObsSocio" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
-                          <Component id="jScrollPane9" min="-2" pref="490" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
-                          <Component id="btnNovoSocio" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnAlterarSocio" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnSalvarSocio" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnCancelarSocio" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnExcluirSocio" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnFecharSocio" min="-2" pref="75" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="jScrollPane8" min="-2" pref="646" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="lbCodSocio" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
+                                  <Component id="txtCodSocio" min="-2" pref="70" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="lbDataSocio" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
+                                  <Component id="txtDataSocio" min="-2" pref="70" max="-2" attributes="0"/>
+                                  <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                                  <Component id="lbTipoSocio" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="cbTipoSocio" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbObsSocio" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="btnNovoSocio" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnAlterarSocio" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnSalvarSocio" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnCancelarSocio" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnExcluirSocio" min="-2" pref="75" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jScrollPane9" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -500,32 +502,30 @@
                                   <Component id="lbDataSocio" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="txtDataSocio" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
                                   <Component id="lbTipoSocio" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                  <Component id="cbTipoSocio" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="cbTipoSocio" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lbObsSocio" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane9" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="btnSalvarSocio" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                                   <Component id="btnNovoSocio" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                                   <Component id="btnAlterarSocio" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btnCancelarSocio" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnExcluirSocio" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnFecharSocio" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnCancelarSocio" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="btnExcluirSocio" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Component id="jScrollPane8" min="-2" pref="170" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -580,6 +580,7 @@
                         <StringItem index="1" value="Finalizado"/>
                       </StringArray>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Se desejar finalizar o andamento, selecione finalizado"/>
                   </Properties>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane9">
@@ -638,14 +639,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirSocioActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnFecharSocio">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Fechar"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFecharSocioActionPerformed"/>
-                  </Events>
-                </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane8">
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -658,16 +651,26 @@
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
                             <Column editable="false" title="N&#xba;" type="java.lang.String"/>
-                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Data" type="java.lang.String"/>
-                            <Column editable="false" title="Tipo" type="java.lang.String"/>
+                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Observa&#xe7;&#xe3;o" type="java.lang.String"/>
+                            <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
                             <Column editable="false" title="Usuario" type="java.lang.String"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="30" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="70" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="90" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -677,22 +680,12 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="150" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -728,43 +721,44 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbCodDependentes" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
-                          <Component id="txtCodDependentes" min="-2" pref="70" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbDataDependetes" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
-                          <Component id="txtDataDependentes" min="-2" pref="70" max="-2" attributes="0"/>
-                          <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                          <Component id="lbTipoDependentes" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="cbTipoDependentes" min="-2" pref="130" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbObsDependentes" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
-                          <Component id="jScrollPane7" min="-2" pref="490" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
-                          <Component id="btnNovoDependentes" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnAlterarDependentes" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnSalvarDependentes" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnCancelarDependentes" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnExcluirDependentes" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnFecharDependentes" min="-2" pref="75" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="jScrollPane6" min="-2" pref="646" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="lbCodDependentes" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
+                                  <Component id="txtCodDependentes" min="-2" pref="70" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="lbDataDependetes" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
+                                  <Component id="txtDataDependentes" min="-2" pref="70" max="-2" attributes="0"/>
+                                  <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                                  <Component id="lbTipoDependentes" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="cbTipoDependentes" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbObsDependentes" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="btnNovoDependentes" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnAlterarDependentes" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnSalvarDependentes" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnCancelarDependentes" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnExcluirDependentes" min="-2" pref="75" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jScrollPane7" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -785,32 +779,30 @@
                                   <Component id="lbDataDependetes" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="txtDataDependentes" linkSize="6" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
                                   <Component id="lbTipoDependentes" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                  <Component id="cbTipoDependentes" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="cbTipoDependentes" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lbObsDependentes" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane7" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="btnSalvarDependentes" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                                   <Component id="btnAlterarDependentes" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                                   <Component id="btnNovoDependentes" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btnCancelarDependentes" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnExcluirDependentes" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnFecharDependentes" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnCancelarDependentes" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="btnExcluirDependentes" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Component id="jScrollPane6" min="-2" pref="170" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -857,6 +849,7 @@
                         <StringItem index="1" value="Finalizado"/>
                       </StringArray>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Se desejar finalizar o andamento, selecione finalizado"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbObsDependentes">
@@ -923,14 +916,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirDependentesActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnFecharDependentes">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Fechar"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFecharDependentesActionPerformed"/>
-                  </Events>
-                </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane6">
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -943,16 +928,26 @@
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
                             <Column editable="false" title="N&#xba;" type="java.lang.String"/>
-                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Data" type="java.lang.String"/>
-                            <Column editable="false" title="Tipo" type="java.lang.String"/>
+                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Observa&#xe7;&#xe3;o" type="java.lang.String"/>
+                            <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
                             <Column editable="false" title="Usuario" type="java.lang.String"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="30" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="70" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="90" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -962,22 +957,12 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="150" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -1013,43 +998,44 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbCodFolha" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
-                          <Component id="txtCodFolha" min="-2" pref="70" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbDataFolha" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
-                          <Component id="txtDataFolha" min="-2" pref="70" max="-2" attributes="0"/>
-                          <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                          <Component id="lbTipoFolha" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="cbTipoFolha" min="-2" pref="130" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbObsFolha" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
-                          <Component id="jScrollPane10" min="-2" pref="490" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
-                          <Component id="btnNovoFolha" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnAlterarFolha" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnSalvarFolha" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnCancelarFolha" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnExcluirFolha" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnFecharFolha" min="-2" pref="75" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="jScrollPane11" alignment="0" min="-2" pref="646" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbCodFolha" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
+                                  <Component id="txtCodFolha" min="-2" pref="70" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbDataFolha" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
+                                  <Component id="txtDataFolha" min="-2" pref="70" max="-2" attributes="0"/>
+                                  <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                                  <Component id="lbTipoFolha" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="cbTipoFolha" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbObsFolha" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="btnNovoFolha" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnAlterarFolha" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnSalvarFolha" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnCancelarFolha" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnExcluirFolha" min="-2" pref="75" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jScrollPane10" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -1074,28 +1060,24 @@
                                   <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
                                   <Component id="lbTipoFolha" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                  <Component id="cbTipoFolha" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="cbTipoFolha" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lbObsFolha" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane10" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="btnNovoFolha" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="btnSalvarFolha" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="btnSalvarFolha" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <Component id="btnNovoFolha" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <Component id="btnAlterarFolha" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="btnCancelarFolha" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="btnExcluirFolha" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btnCancelarFolha" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnExcluirFolha" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnFecharFolha" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="btnAlterarFolha" min="-2" pref="33" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Component id="jScrollPane11" min="-2" pref="170" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -1121,9 +1103,12 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JFormattedTextField" name="txtDataFolha">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value=""/>
+                  </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoFolha);"/>
-                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {&#xd;&#xa;    formatoFolha = new MaskFormatter(&quot;##/##/####&quot;);&#xd;&#xa;}catch(Exception erro){&#xd;&#xa;    JOptionPane.showMessageDialog(null ,&quot;N&#xe3;o foi possivel receber a data em Controle: &quot; +erro);&#xd;&#xa;}"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {&#xd;     formatoFolha = new MaskFormatter(&quot;##/##/####&quot;);&#xd; }catch(Exception erro){&#xd;     JOptionPane.showMessageDialog(null ,&quot;N&#xe3;o foi possivel receber a data: &quot; +erro);&#xd; }"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbTipoFolha">
@@ -1142,6 +1127,7 @@
                         <StringItem index="1" value="Finalizado"/>
                       </StringArray>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Se desejar finalizar o andamento, selecione finalizado"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbObsFolha">
@@ -1208,14 +1194,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirFolhaActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnFecharFolha">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Fechar"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFecharFolhaActionPerformed"/>
-                  </Events>
-                </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane11">
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -1228,16 +1206,26 @@
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
                             <Column editable="false" title="N&#xba;" type="java.lang.String"/>
-                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Data" type="java.lang.String"/>
-                            <Column editable="false" title="Tipo" type="java.lang.String"/>
+                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Observa&#xe7;&#xe3;o" type="java.lang.String"/>
+                            <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
                             <Column editable="false" title="Usuario" type="java.lang.String"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="30" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="70" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="90" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -1247,22 +1235,12 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="150" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>

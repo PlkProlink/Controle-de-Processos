@@ -9,7 +9,7 @@ import br.com.prolink.inicio.*;
 
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class Sobre extends javax.swing.JFrame {
 

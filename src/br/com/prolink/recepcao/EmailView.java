@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class EmailView extends javax.swing.JFrame {
 

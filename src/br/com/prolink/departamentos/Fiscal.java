@@ -14,7 +14,7 @@ import javax.swing.text.MaskFormatter;
 import br.com.prolink.inicio.*;
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class Fiscal extends javax.swing.JFrame {
     //conexão com as tabelas necessarias
@@ -53,6 +53,7 @@ public class Fiscal extends javax.swing.JFrame {
         //chamando metodo que preencha tela de status
         preencher_status();
         atualiza_cadastrocliente();
+        
         limpar_tela_distribuir();
         limpar_tela_perfil();
         
@@ -68,6 +69,7 @@ public class Fiscal extends javax.swing.JFrame {
             
             bt_excluir_distribuir.setEnabled(false);
             btnSalvarDistribuir.setEnabled(false);
+            
             btExcluirPerfil.setEnabled(false);
             btnSalvarPerfil.setEnabled(false);
             
@@ -116,7 +118,6 @@ public class Fiscal extends javax.swing.JFrame {
         btnSalvarPerfil = new javax.swing.JButton();
         bt_alterar_perfil = new javax.swing.JButton();
         btExcluirPerfil = new javax.swing.JButton();
-        btnFecharPerfil = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         tb_perfil = new javax.swing.JTable();
         btNovoPerfil = new javax.swing.JButton();
@@ -139,7 +140,6 @@ public class Fiscal extends javax.swing.JFrame {
         btnAlterarDist = new javax.swing.JButton();
         btnCancelarDistribuir = new javax.swing.JButton();
         bt_excluir_distribuir = new javax.swing.JButton();
-        bt_fechar_distribuir = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         tb_distribuir = new javax.swing.JTable();
         btnNovoDist = new javax.swing.JButton();
@@ -175,6 +175,7 @@ public class Fiscal extends javax.swing.JFrame {
         txt_id.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_id.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jtbGuiaFiscal.setToolTipText("Se desejar finalizar o andamento, selecione finalizar!");
         jtbGuiaFiscal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jpSitFisc.setBackground(new java.awt.Color(245, 245, 245));
@@ -276,6 +277,7 @@ public class Fiscal extends javax.swing.JFrame {
         lb_tipo_perfil.setText("Tipo:");
 
         cb_tipo_perfil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Novo Andamento", "Finalizado" }));
+        cb_tipo_perfil.setToolTipText("Se desejar finalizar o andamento, selecione finalizar!");
 
         txt_obs_perfil.setColumns(20);
         txt_obs_perfil.setLineWrap(true);
@@ -310,19 +312,12 @@ public class Fiscal extends javax.swing.JFrame {
             }
         });
 
-        btnFecharPerfil.setText("Fechar");
-        btnFecharPerfil.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharPerfilActionPerformed(evt);
-            }
-        });
-
         tb_perfil.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nº", "Processo", "Data", "Tipo", "Observação", "Usuario"
+                "Nº", "Data", "Processo", "Observação", "Situação", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
@@ -346,6 +341,13 @@ public class Fiscal extends javax.swing.JFrame {
             }
         });
         jScrollPane8.setViewportView(tb_perfil);
+        if (tb_perfil.getColumnModel().getColumnCount() > 0) {
+            tb_perfil.getColumnModel().getColumn(0).setMaxWidth(30);
+            tb_perfil.getColumnModel().getColumn(1).setMaxWidth(70);
+            tb_perfil.getColumnModel().getColumn(2).setMaxWidth(90);
+            tb_perfil.getColumnModel().getColumn(4).setMaxWidth(150);
+            tb_perfil.getColumnModel().getColumn(5).setMaxWidth(100);
+        }
 
         btNovoPerfil.setText("Novo");
         btNovoPerfil.addActionListener(new java.awt.event.ActionListener() {
@@ -358,39 +360,37 @@ public class Fiscal extends javax.swing.JFrame {
         jpPerfil.setLayout(jpPerfilLayout);
         jpPerfilLayout.setHorizontalGroup(
             jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPerfilLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbcod_perfil)
-                .addGap(115, 115, 115)
-                .addComponent(txt_cod_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpPerfilLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_andamento_perfil)
-                .addGap(111, 111, 111)
-                .addComponent(txt_data_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lb_tipo_perfil)
-                .addGap(18, 18, 18)
-                .addComponent(cb_tipo_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpPerfilLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_obs_perfil)
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpPerfilLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(btNovoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bt_alterar_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalvarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(btCancelarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btExcluirPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFecharPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jpPerfilLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPerfilLayout.createSequentialGroup()
+                        .addComponent(lbcod_perfil)
+                        .addGap(115, 115, 115)
+                        .addComponent(txt_cod_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpPerfilLayout.createSequentialGroup()
+                        .addComponent(lb_andamento_perfil)
+                        .addGap(111, 111, 111)
+                        .addComponent(txt_data_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lb_tipo_perfil)
+                        .addGap(18, 18, 18)
+                        .addComponent(cb_tipo_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpPerfilLayout.createSequentialGroup()
+                        .addComponent(lb_obs_perfil)
+                        .addGap(73, 73, 73)
+                        .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpPerfilLayout.createSequentialGroup()
+                                .addComponent(btNovoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(bt_alterar_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btCancelarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btExcluirPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane9)))))
         );
         jpPerfilLayout.setVerticalGroup(
             jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,24 +410,20 @@ public class Fiscal extends javax.swing.JFrame {
                     .addGroup(jpPerfilLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(lb_tipo_perfil))
-                    .addGroup(jpPerfilLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(cb_tipo_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cb_tipo_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_obs_perfil)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btNovoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btNovoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(bt_alterar_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bt_alterar_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btExcluirPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btCancelarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSalvarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnFecharPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                        .addComponent(btnSalvarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -445,6 +441,7 @@ public class Fiscal extends javax.swing.JFrame {
         lb_tipo_distribuir.setText("Tipo:");
 
         cb_tipo_distribuir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Novo Andamento", "Finalizado" }));
+        cb_tipo_distribuir.setToolTipText("Se desejar finalizar o andamento, selecione finalizar!");
 
         lb_obs_distribuir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lb_obs_distribuir.setText("Observação:");
@@ -482,19 +479,12 @@ public class Fiscal extends javax.swing.JFrame {
             }
         });
 
-        bt_fechar_distribuir.setText("Fechar");
-        bt_fechar_distribuir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_fechar_distribuirActionPerformed(evt);
-            }
-        });
-
         tb_distribuir.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nº", "Processo", "Data", "Tipo", "Observação", "Usuario"
+                "Nº", "Data", "Processo", "Observação", "Situação", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
@@ -518,6 +508,13 @@ public class Fiscal extends javax.swing.JFrame {
             }
         });
         jScrollPane6.setViewportView(tb_distribuir);
+        if (tb_distribuir.getColumnModel().getColumnCount() > 0) {
+            tb_distribuir.getColumnModel().getColumn(0).setMaxWidth(30);
+            tb_distribuir.getColumnModel().getColumn(1).setMaxWidth(70);
+            tb_distribuir.getColumnModel().getColumn(2).setMaxWidth(90);
+            tb_distribuir.getColumnModel().getColumn(4).setMaxWidth(150);
+            tb_distribuir.getColumnModel().getColumn(5).setMaxWidth(100);
+        }
 
         btnNovoDist.setText("Novo");
         btnNovoDist.addActionListener(new java.awt.event.ActionListener() {
@@ -530,39 +527,37 @@ public class Fiscal extends javax.swing.JFrame {
         jpDistribuir.setLayout(jpDistribuirLayout);
         jpDistribuirLayout.setHorizontalGroup(
             jpDistribuirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpDistribuirLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbcod_distribuir)
-                .addGap(115, 115, 115)
-                .addComponent(txt_cod_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpDistribuirLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_data_distribuir)
-                .addGap(111, 111, 111)
-                .addComponent(txt_data_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lb_tipo_distribuir)
-                .addGap(18, 18, 18)
-                .addComponent(cb_tipo_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpDistribuirLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_obs_distribuir)
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpDistribuirLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(btnNovoDist, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterarDist, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(btnSalvarDistribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelarDistribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bt_excluir_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bt_fechar_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jpDistribuirLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jpDistribuirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpDistribuirLayout.createSequentialGroup()
+                        .addComponent(lbcod_distribuir)
+                        .addGap(115, 115, 115)
+                        .addComponent(txt_cod_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpDistribuirLayout.createSequentialGroup()
+                        .addComponent(lb_data_distribuir)
+                        .addGap(111, 111, 111)
+                        .addComponent(txt_data_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lb_tipo_distribuir)
+                        .addGap(18, 18, 18)
+                        .addComponent(cb_tipo_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpDistribuirLayout.createSequentialGroup()
+                        .addComponent(lb_obs_distribuir)
+                        .addGap(73, 73, 73)
+                        .addGroup(jpDistribuirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpDistribuirLayout.createSequentialGroup()
+                                .addComponent(btnNovoDist, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterarDist, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvarDistribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelarDistribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(bt_excluir_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane7)))))
         );
         jpDistribuirLayout.setVerticalGroup(
             jpDistribuirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -582,23 +577,20 @@ public class Fiscal extends javax.swing.JFrame {
                     .addGroup(jpDistribuirLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(lb_tipo_distribuir))
-                    .addGroup(jpDistribuirLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(cb_tipo_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cb_tipo_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(jpDistribuirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_obs_distribuir)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpDistribuirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnNovoDist, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpDistribuirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnCancelarDistribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSalvarDistribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAlterarDist, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(bt_excluir_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bt_fechar_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                        .addComponent(btnAlterarDist, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bt_excluir_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -682,7 +674,7 @@ public class Fiscal extends javax.swing.JFrame {
                 String sql = "select * from distribuirfuncionariointerno where CodDistribuirFuncionarioInterno= "+txt_cod_distribuir.getText();
                 con_distribuir.executeSQL(sql);
                 con_distribuir.resultset.first();
-                String operacao = con_distribuir.resultset.getString("Tipo");
+                String operacao = con_distribuir.resultset.getString("AndamentoDistribuirFuncionarioInterno");
                 String cliente = "Tem certeza que deseja excluir um cadastro da tabela Distribuição com cliente : " +con_perfil.resultset.getString("Cliente")+"?";
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
@@ -690,6 +682,10 @@ public class Fiscal extends javax.swing.JFrame {
                     int conseguiu_excluir = con_distribuir.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
+                        limpar_tabela_distribuir();
+                        preencher_jtable_distribuir();
+                        limpar_tela_distribuir();
+                        
                         if("Finalizado".equalsIgnoreCase(operacao)){
                             try{
                                 con_distribuir.executeSQL("select * from distribuirfuncionariointerno where Numerodoprocesso='"+processo+"' and Tipo='Finalizado'");
@@ -697,9 +693,6 @@ public class Fiscal extends javax.swing.JFrame {
                                     try{
                                         con_fiscal.statement.executeUpdate("UPDATE fiscal set AndamenoDistribuirFuncionarioInterno='Em Aberto' where Numerodoprocesso='" +processo+"'");
 
-                                        limpar_tabela_distribuir();
-                                        preencher_jtable_distribuir();
-                                        limpar_tela_distribuir();
                                         preencher_status();
                                         atualiza_cadastrocliente();
                                         
@@ -731,10 +724,6 @@ public class Fiscal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnAlterarDistActionPerformed
 
-    private void bt_fechar_distribuirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_fechar_distribuirActionPerformed
-        dispose();
-    }//GEN-LAST:event_bt_fechar_distribuirActionPerformed
-
     private void btnSalvarDistribuirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarDistribuirActionPerformed
         //nao permitir que a primeira data fique vazia
         if(txt_data_distribuir.getText().equals("  /  /    ") || txt_data_distribuir.getText().trim().length()<10){
@@ -742,7 +731,6 @@ public class Fiscal extends javax.swing.JFrame {
         }
         else if(cb_tipo_distribuir.getSelectedItem().equals("")){
             JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
-            cb_tipo_distribuir.requestFocus();
         }
         else if(!txt_cod_distribuir.getText().isEmpty()){
             try{
@@ -760,8 +748,7 @@ public class Fiscal extends javax.swing.JFrame {
                 new java.sql.Date(data.getTime())+"',"+
                 "Obsevacao='"+txt_obs_distribuir.getText()+"',"+
                 "Usuario= '"+usuario+"',"+
-                "AndamentoDistribuirFuncionarioInterno='"+andamento+"',"+
-                "Tipo='"+cb_tipo_distribuir.getSelectedItem()+"' "+
+                "AndamentoDistribuirFuncionarioInterno='"+andamento+"' "+
                 "where CodDistribuirFuncionarioInterno = "+txt_cod_distribuir.getText();
 
                 con_distribuir.statement.executeUpdate(sql);
@@ -774,7 +761,7 @@ public class Fiscal extends javax.swing.JFrame {
                 limpar_tabela_distribuir();
                 preencher_jtable_distribuir();    
             }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao atualizar os dados da tabela Termo: \n " +erro);
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar os dados da tabela Distribuição: \n " +erro);
             } catch (ParseException ex) {
                 JOptionPane.showMessageDialog(null, "Você digitou uma data não valida!\n"+ex);
             }
@@ -794,13 +781,11 @@ public class Fiscal extends javax.swing.JFrame {
                     }
                 String gry = "insert into distribuirfuncionariointerno ("+
                 "NumeroProcesso, DatadeCadastroAndamento, Obsevacao, "+
-                "Cliente, Usuario, AndamentoDistribuirFuncionarioInterno, Tipo) values ('" +processo+"','"+
+                "Usuario, AndamentoDistribuirFuncionarioInterno) values ('" +processo+"','"+
                 new java.sql.Date(data.getTime())+"','"+
                 txt_obs_distribuir.getText()+"','"+
-                nome+"','"+
                 usuario+"','"+
-                andamentoarquivo+"','"+
-                cb_tipo_distribuir.getSelectedItem()+"')";
+                andamentoarquivo+"')";
 
                 con_distribuir.exeQuery(gry);
                 JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
@@ -811,7 +796,7 @@ public class Fiscal extends javax.swing.JFrame {
                 limpar_tabela_distribuir();
                 preencher_jtable_distribuir();
             }catch(ParseException | HeadlessException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Arquivo: "+erro);
+                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Distribuição: "+erro);
             }
         }
     }//GEN-LAST:event_btnSalvarDistribuirActionPerformed
@@ -827,7 +812,7 @@ public class Fiscal extends javax.swing.JFrame {
                 String sql = "select * from validarprefilfiscal where CodValidarPerfilFiscal= "+txt_cod_perfil.getText();
                 con_perfil.executeSQL(sql);
                 con_perfil.resultset.first();
-                String operacao = con_perfil.resultset.getString("Tipo");
+                String operacao = con_perfil.resultset.getString("AndamentoValidarPerfilFiscal");
                 String cliente = "Tem certeza que deseja excluir um cadastro da tabela Perfil com cliente : " +con_perfil.resultset.getString("Cliente")+"?";
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
@@ -835,6 +820,11 @@ public class Fiscal extends javax.swing.JFrame {
                     int conseguiu_excluir = con_perfil.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
+                        
+                        limpar_tela_perfil();
+                        limpar_tabela_perfil();
+                        preencher_jtable_perfil();
+                        
                         if("Finalizado".equalsIgnoreCase(operacao)){
                             try{
                                 con_perfil.executeSQL("select * validarprefilfiscal where NumeroProcesso='"+processo+"' and Tipo='Finalizado'");
@@ -842,9 +832,6 @@ public class Fiscal extends javax.swing.JFrame {
                                     try{
                                     con_fiscal.statement.executeUpdate("UPDATE fiscal set AndamentoValidarPerfilFiscal='Em Aberto' where Numerodoprocesso='" +processo+"'");
 
-                                    limpar_tela_perfil();
-                                    limpar_tabela_perfil();
-                                    preencher_jtable_perfil();
                                     preencher_status();
                                     atualiza_cadastrocliente();
                                     
@@ -877,7 +864,6 @@ public class Fiscal extends javax.swing.JFrame {
         }
         else if(cb_tipo_perfil.getSelectedItem().equals("")){
             JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
-            cb_tipo_perfil.requestFocus();
         }
         //evitando erros com cadastro ja salvo antes
         else if(txt_cod_perfil.getText().equals("")){
@@ -896,13 +882,11 @@ public class Fiscal extends javax.swing.JFrame {
 
                     String gry = "insert into validarprefilfiscal ("+
                     "NumeroProcesso, DatadeCadastroAndamento, Obsevacao,"+
-                    "Cliente, Usuario, AndamentoValidarPerfilFiscal, Tipo) values ('"+processo+"','"+
+                    "Usuario, AndamentoValidarPerfilFiscal) values ('"+processo+"','"+
                     new java.sql.Date(dataperfil.getTime())+"','"+
                     txt_obs_perfil.getText()+"','"+
-                    nome+"','"+
                     usuario+"','"+
-                    andamentotermo+"','"+
-                    cb_tipo_perfil.getSelectedItem()+"')";
+                    andamentotermo+"')";
 
                     con_perfil.exeQuery(gry);
                     
@@ -915,7 +899,7 @@ public class Fiscal extends javax.swing.JFrame {
                     preencher_jtable_perfil();
                     
             }catch(ParseException | HeadlessException add){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Termo: "+add);
+                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Perfil Fiscal: "+add);
             }
         }
         else if(!txt_cod_perfil.getText().equals("")){
@@ -934,10 +918,8 @@ public class Fiscal extends javax.swing.JFrame {
                     String sql = "UPDATE validarprefilfiscal set DatadeCadastroAndamento='"+
                     new java.sql.Date(dataperfil.getTime())+"',"+
                     "Obsevacao='"+txt_obs_perfil.getText()+"',"+
-                    "Cliente='"+nome+"',"+
                     "Usuario='"+usuario+"',"+
-                    "AndamentoValidarPerfilFiscal='"+andamentotermo+"',"+
-                    "Tipo"+cb_tipo_perfil.getSelectedItem()+"'"+
+                    "AndamentoValidarPerfilFiscal='"+andamentotermo+"' "+
                     "where NumeroProcesso="+processo;
                     con_perfil.statement.executeUpdate(sql);
                     
@@ -950,16 +932,12 @@ public class Fiscal extends javax.swing.JFrame {
                     preencher_jtable_perfil();
                     
             }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Perfil: "+erro);
+                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Perfil Fiscal: "+erro);
             }catch(ParseException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Perfil (Campo data) "+erro);
+                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Perfil Fiscal(Campo data) "+erro);
             }
         }
     }//GEN-LAST:event_btnSalvarPerfilActionPerformed
-
-    private void btnFecharPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharPerfilActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnFecharPerfilActionPerformed
     
     private void btCancelarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarPerfilActionPerformed
         restaurar_backup_perfil();
@@ -969,9 +947,9 @@ public class Fiscal extends javax.swing.JFrame {
     private void tb_perfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_perfilMouseClicked
         Integer linha = tb_perfil.getSelectedRow();
         String codigo = (String)tb_perfil.getValueAt(linha, 0);
-        String data = (String)tb_perfil.getValueAt(linha, 2);
-        String tipo = (String)tb_perfil.getValueAt(linha, 3);
-        String observacao = (String)tb_perfil.getValueAt(linha, 4);
+        String data = (String)tb_perfil.getValueAt(linha, 1);
+        String observacao = (String)tb_perfil.getValueAt(linha, 3);
+        String tipo = (String)tb_perfil.getValueAt(linha, 4);
         
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -981,8 +959,12 @@ public class Fiscal extends javax.swing.JFrame {
         txt_data_perfil.setText(recebedataTabela);
         
         txt_cod_perfil.setText(codigo);
-        cb_tipo_perfil.setSelectedItem(tipo);
         txt_obs_perfil.setText(observacao);
+        if(tipo.equalsIgnoreCase("Finalizado")){
+            cb_tipo_perfil.setSelectedItem("Finalizado");
+        }
+        else
+            cb_tipo_perfil.setSelectedItem("Em Aberto");
         
         
         
@@ -991,9 +973,9 @@ public class Fiscal extends javax.swing.JFrame {
     private void tb_distribuirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_distribuirMouseClicked
         Integer linha = tb_distribuir.getSelectedRow();
         String codigo = (String)tb_distribuir.getValueAt(linha, 0);
-        String data = (String)tb_distribuir.getValueAt(linha, 2);
-        String tipo = (String)tb_distribuir.getValueAt(linha, 3);
-        String observacao = (String)tb_distribuir.getValueAt(linha, 4);
+        String data = (String)tb_distribuir.getValueAt(linha, 1);
+        String observacao = (String)tb_distribuir.getValueAt(linha, 3);
+        String tipo = (String)tb_distribuir.getValueAt(linha, 4);
         
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -1003,8 +985,13 @@ public class Fiscal extends javax.swing.JFrame {
         txt_data_distribuir.setText(recebedataTabela);
         
         txt_cod_distribuir.setText(codigo);
-        cb_tipo_distribuir.setSelectedItem(tipo);
         txt_obs_distribuir.setText(observacao);
+        
+        if(tipo.equalsIgnoreCase("Finalizado")){
+            cb_tipo_distribuir.setSelectedItem("Finalizado");
+        }
+        else
+            cb_tipo_distribuir.setSelectedItem("Em Aberto");
     }//GEN-LAST:event_tb_distribuirMouseClicked
 
     private void btNovoPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoPerfilActionPerformed
@@ -1037,10 +1024,8 @@ public class Fiscal extends javax.swing.JFrame {
     private javax.swing.JButton btNovoPerfil;
     private javax.swing.JButton bt_alterar_perfil;
     private javax.swing.JButton bt_excluir_distribuir;
-    private javax.swing.JButton bt_fechar_distribuir;
     private javax.swing.JButton btnAlterarDist;
     private javax.swing.JButton btnCancelarDistribuir;
-    private javax.swing.JButton btnFecharPerfil;
     private javax.swing.JButton btnNovoDist;
     private javax.swing.JButton btnSalvarDistribuir;
     private javax.swing.JButton btnSalvarPerfil;
@@ -1109,10 +1094,10 @@ public class Fiscal extends javax.swing.JFrame {
             while (con_perfil.resultset.next())
                 modelo.addRow(new Object [] {
                     con_perfil.resultset.getString("CodValidarPerfilFiscal"),
-                    con_perfil.resultset.getString("NumeroProcesso"),
                     sdf.format(con_perfil.resultset.getTime("DatadeCadastroAndamento")),
-                    con_perfil.resultset.getString("Tipo"),                    
+                    con_perfil.resultset.getString("NumeroProcesso"),
                     con_perfil.resultset.getString("Obsevacao"),
+                    con_perfil.resultset.getString("AndamentoValidarPerfilFiscal"), 
                     con_perfil.resultset.getString("Usuario")});
             con_perfil.resultset.first();
         }   catch (SQLException erro){
@@ -1139,14 +1124,14 @@ public class Fiscal extends javax.swing.JFrame {
             while (con_distribuir.resultset.next())
                 modelo.addRow(new Object [] {
                     con_distribuir.resultset.getString("CodDistribuirFuncionarioInterno"),
-                    con_distribuir.resultset.getString("NumeroProcesso"),
                     sdf.format(con_distribuir.resultset.getTime("DatadeCadastroAndamento")),
-                    con_distribuir.resultset.getString("Tipo"),
+                    con_distribuir.resultset.getString("NumeroProcesso"),
                     con_distribuir.resultset.getString("Obsevacao"),
+                    con_distribuir.resultset.getString("AndamentoDistribuirFuncionarioInterno"),
                     con_distribuir.resultset.getString("Usuario")});
             con_distribuir.resultset.first();
         }catch(SQLException erro){
-          JOptionPane.showMessageDialog(null,"Erro ao listar na Tabela Responsavel "+erro);
+          JOptionPane.showMessageDialog(null,"Erro ao listar na Tabela Distribuir "+erro);
         }
     }
 
@@ -1260,7 +1245,7 @@ public class Fiscal extends javax.swing.JFrame {
         txt_cod_perfil.setText("");
         txt_obs_perfil.setText("");
         txt_cod_perfil.setEditable(false);
-        cb_tipo_perfil.setSelectedItem("Novo Andamento");
+        cb_tipo_perfil.setSelectedItem("");
         Date data = new Date();
         String datahoje = sdf.format(data);
         txt_data_perfil.setText(datahoje);
@@ -1273,7 +1258,7 @@ public class Fiscal extends javax.swing.JFrame {
     public void limpar_tela_distribuir(){
         txt_cod_distribuir.setEditable(false);
         txt_cod_distribuir.setText("");
-        cb_tipo_distribuir.setSelectedItem("Novo Andamento");
+        cb_tipo_distribuir.setSelectedItem("");
         txt_obs_distribuir.setText("");
         Date data = new Date();
         String datahoje = sdf.format(data);
@@ -1302,7 +1287,7 @@ public class Fiscal extends javax.swing.JFrame {
                     //consulta se existe algum registro finalizado
                     con_perfil.executeSQL("select * from DistribuirFuncionarioInterno where NumeroProcesso='"+processo+"'and AndamentoDistribuirFuncionarioInterno='Finalizado'");
                     
-                    if(!con_perfil.resultset.last()){
+                    if(!con_perfil.resultset.first()){
                         try{
                 
                         String sql = "UPDATE fiscal set AndamenoDistribuirFuncionarioInterno ='Em Aberto' where Numerodoprocesso='" +processo+"'";
@@ -1350,7 +1335,7 @@ public class Fiscal extends javax.swing.JFrame {
                     //consulta se existe algum registro finalizado
                     con_perfil.executeSQL("select * from validarprefilfiscal where NumeroProcesso='"+processo+"'and AndamentoValidarPerfilFiscal='Finalizado'");
                     
-                    if(!con_perfil.resultset.last()){
+                    if(!con_perfil.resultset.first()){
                         try{
                 
                         String sql = "UPDATE fiscal set AndamentoValidarPerfilFiscal ='Em Aberto' where Numerodoprocesso='" +processo+"'";
@@ -1411,7 +1396,6 @@ public class Fiscal extends javax.swing.JFrame {
      *
      */
     public void desbloquear_tela_perfil(){
-        txt_cod_perfil.setEditable(false);
         txt_data_perfil.setEditable(true);
         cb_tipo_perfil.setEditable(true);
         txt_obs_perfil.setEditable(true);
@@ -1451,7 +1435,6 @@ public class Fiscal extends javax.swing.JFrame {
      *
      */
     public void desbloquear_tela_distribuir(){
-        txt_cod_distribuir.setEditable(false);
         txt_data_distribuir.setEditable(true);
         cb_tipo_distribuir.setEditable(true);
         txt_obs_distribuir.setEditable(true);

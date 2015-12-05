@@ -10,7 +10,7 @@ import br.com.prolink.inicio.TelaPrincipal;
 
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class LoginTrocadeAcesso extends javax.swing.JFrame {
     int conta=0;

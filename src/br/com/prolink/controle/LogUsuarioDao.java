@@ -13,7 +13,10 @@ import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-
+/**
+ *
+ * @author Tiago Dias
+ */
 
 public class LogUsuarioDao {
     Conexao con_log;

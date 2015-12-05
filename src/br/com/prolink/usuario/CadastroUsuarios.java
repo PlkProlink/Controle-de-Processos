@@ -12,7 +12,7 @@ import br.com.prolink.inicio.TelaPrincipal;
 
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class CadastroUsuarios extends javax.swing.JFrame {
 
@@ -227,6 +227,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
         btnGravar.setBackground(new java.awt.Color(245, 245, 245));
         btnGravar.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         btnGravar.setText("Gravar");
+        btnGravar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGravarActionPerformed(evt);
@@ -236,6 +237,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
         btn_excluir.setBackground(new java.awt.Color(245, 245, 245));
         btn_excluir.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         btn_excluir.setText("Excluir");
+        btn_excluir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_excluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_excluirActionPerformed(evt);
@@ -245,6 +247,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
         bt_novo.setBackground(new java.awt.Color(245, 245, 245));
         bt_novo.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         bt_novo.setText("Novo");
+        bt_novo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bt_novo.setMaximumSize(new java.awt.Dimension(65, 30));
         bt_novo.setMinimumSize(new java.awt.Dimension(65, 30));
         bt_novo.setPreferredSize(new java.awt.Dimension(65, 30));
@@ -257,6 +260,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
         btnCancelar.setBackground(new java.awt.Color(245, 245, 245));
         btnCancelar.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnCancelar.setMaximumSize(new java.awt.Dimension(65, 30));
         btnCancelar.setMinimumSize(new java.awt.Dimension(65, 30));
         btnCancelar.setPreferredSize(new java.awt.Dimension(90, 40));
@@ -269,6 +273,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
         btnFechar.setBackground(new java.awt.Color(245, 245, 245));
         btnFechar.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         btnFechar.setText("Fechar");
+        btnFechar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnFechar.setMaximumSize(new java.awt.Dimension(65, 30));
         btnFechar.setMinimumSize(new java.awt.Dimension(65, 30));
         btnFechar.setPreferredSize(new java.awt.Dimension(90, 40));
@@ -281,6 +286,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
         btnAlterar.setBackground(new java.awt.Color(245, 245, 245));
         btnAlterar.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         btnAlterar.setText("Alterar");
+        btnAlterar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);

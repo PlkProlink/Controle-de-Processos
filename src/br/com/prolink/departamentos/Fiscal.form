@@ -204,6 +204,7 @@
         </Component>
         <Container class="javax.swing.JTabbedPane" name="jtbGuiaFiscal">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Se desejar finalizar o andamento, selecione finalizar!"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="0"/>
             </Property>
@@ -401,43 +402,44 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbcod_perfil" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
-                          <Component id="txt_cod_perfil" min="-2" pref="70" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lb_andamento_perfil" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
-                          <Component id="txt_data_perfil" min="-2" pref="70" max="-2" attributes="0"/>
-                          <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                          <Component id="lb_tipo_perfil" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="cb_tipo_perfil" min="-2" pref="130" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lb_obs_perfil" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
-                          <Component id="jScrollPane9" min="-2" pref="490" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
-                          <Component id="btNovoPerfil" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="bt_alterar_perfil" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnSalvarPerfil" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Component id="btCancelarPerfil" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btExcluirPerfil" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnFecharPerfil" min="-2" pref="75" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="jScrollPane8" min="-2" pref="646" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="lbcod_perfil" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
+                                  <Component id="txt_cod_perfil" min="-2" pref="70" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="lb_andamento_perfil" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
+                                  <Component id="txt_data_perfil" min="-2" pref="70" max="-2" attributes="0"/>
+                                  <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                                  <Component id="lb_tipo_perfil" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="cb_tipo_perfil" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lb_obs_perfil" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="btNovoPerfil" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="bt_alterar_perfil" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnSalvarPerfil" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btCancelarPerfil" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btExcluirPerfil" min="-2" pref="75" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jScrollPane9" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -462,30 +464,24 @@
                                   <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
                                   <Component id="lb_tipo_perfil" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                  <Component id="cb_tipo_perfil" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="cb_tipo_perfil" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lb_obs_perfil" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane9" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btNovoPerfil" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="btNovoPerfil" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="bt_alterar_perfil" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="btExcluirPerfil" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                                   <Component id="btCancelarPerfil" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                                   <Component id="btnSalvarPerfil" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btnFecharPerfil" min="-2" pref="33" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Component id="jScrollPane8" min="-2" pref="170" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -540,6 +536,7 @@
                         <StringItem index="1" value="Finalizado"/>
                       </StringArray>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Se desejar finalizar o andamento, selecione finalizar!"/>
                   </Properties>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane9">
@@ -590,14 +587,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btExcluirPerfilActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnFecharPerfil">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Fechar"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFecharPerfilActionPerformed"/>
-                  </Events>
-                </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane8">
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -610,16 +599,26 @@
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
                             <Column editable="false" title="N&#xba;" type="java.lang.String"/>
-                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Data" type="java.lang.String"/>
-                            <Column editable="false" title="Tipo" type="java.lang.String"/>
+                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Observa&#xe7;&#xe3;o" type="java.lang.String"/>
+                            <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
                             <Column editable="false" title="Usuario" type="java.lang.String"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="30" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="70" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="90" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -629,22 +628,12 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="150" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -688,43 +677,44 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbcod_distribuir" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
-                          <Component id="txt_cod_distribuir" min="-2" pref="70" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lb_data_distribuir" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
-                          <Component id="txt_data_distribuir" min="-2" pref="70" max="-2" attributes="0"/>
-                          <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                          <Component id="lb_tipo_distribuir" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="cb_tipo_distribuir" min="-2" pref="130" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lb_obs_distribuir" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
-                          <Component id="jScrollPane7" min="-2" pref="490" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
-                          <Component id="btnNovoDist" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnAlterarDist" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Component id="btnSalvarDistribuir" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnCancelarDistribuir" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="bt_excluir_distribuir" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="bt_fechar_distribuir" min="-2" pref="75" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="jScrollPane6" min="-2" pref="646" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="lbcod_distribuir" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
+                                  <Component id="txt_cod_distribuir" min="-2" pref="70" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="lb_data_distribuir" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
+                                  <Component id="txt_data_distribuir" min="-2" pref="70" max="-2" attributes="0"/>
+                                  <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                                  <Component id="lb_tipo_distribuir" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="cb_tipo_distribuir" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lb_obs_distribuir" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="btnNovoDist" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnAlterarDist" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnSalvarDistribuir" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnCancelarDistribuir" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="bt_excluir_distribuir" min="-2" pref="75" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jScrollPane7" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -745,32 +735,28 @@
                                   <Component id="lb_data_distribuir" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="txt_data_distribuir" linkSize="6" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
                                   <Component id="lb_tipo_distribuir" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                  <Component id="cb_tipo_distribuir" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="cb_tipo_distribuir" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lb_obs_distribuir" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane7" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnNovoDist" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="btnCancelarDistribuir" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                                   <Component id="btnSalvarDistribuir" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                                   <Component id="btnAlterarDist" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="bt_excluir_distribuir" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="bt_excluir_distribuir" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="bt_fechar_distribuir" min="-2" pref="33" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Component id="jScrollPane6" min="-2" pref="170" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -817,6 +803,7 @@
                         <StringItem index="1" value="Finalizado"/>
                       </StringArray>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Se desejar finalizar o andamento, selecione finalizar!"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lb_obs_distribuir">
@@ -875,14 +862,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_excluir_distribuirActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="bt_fechar_distribuir">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Fechar"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_fechar_distribuirActionPerformed"/>
-                  </Events>
-                </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane6">
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -895,16 +874,26 @@
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
                             <Column editable="false" title="N&#xba;" type="java.lang.String"/>
-                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Data" type="java.lang.String"/>
-                            <Column editable="false" title="Tipo" type="java.lang.String"/>
+                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Observa&#xe7;&#xe3;o" type="java.lang.String"/>
+                            <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
                             <Column editable="false" title="Usuario" type="java.lang.String"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="30" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="70" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="90" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -914,22 +903,12 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="150" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>

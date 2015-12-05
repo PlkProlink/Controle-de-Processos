@@ -16,10 +16,13 @@ import java.util.*;
 import javax.swing.JOptionPane;
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class Ativador extends javax.swing.JFrame {
-    
+
+    public void setId(String id){
+        Ativador.id = id;
+    }
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
     
     Conexao con_cliente, con_organizar;
@@ -425,35 +428,39 @@ public class Ativador extends javax.swing.JFrame {
     }
     public void envia_para_menu(){
         try{
-            String datafim="", datainicio="";
+            String datafim, datainicio;
             
             TelaPrincipal.txt_codigo.setText(processo);
             TelaPrincipal.txt_id.setText(id);
             TelaPrincipal.txt_nome.setText(nome);
             TelaPrincipal.txt_classificacao.setText(classificacao);
-            
-            /*if(!dataativacao.equals(datainicio) ){
+                        
+            if(dataativacao.trim().length()==10 && !"0000-00-00".equals(dataativacao)
+                    && !"1111-11-11".equals(dataativacao)){
                 String ano = dataativacao.substring(0, 4);
                 String mes = dataativacao.substring(5, 7);
                 String dia = dataativacao.substring(8);
                 datainicio = dia+"/"+mes+"/"+ano;
-                
+                dataativacao = datainicio;
+                TelaPrincipal.txt_ativada.setText(dataativacao);
             }
-            if(datafinalizacao.length()>9 && datafinalizacao.length()<11){
+            if(datafinalizacao.trim().length()==10 && !"0000-00-00".equals(datafinalizacao)
+                    && !"1111-11-11".equals(dataativacao)){
                 String ano = datafinalizacao.substring(0, 4);
                 String mes = datafinalizacao.substring(5, 7);
                 String dia = datafinalizacao.substring(8);
-                
                 datafim = dia+"/"+mes+"/"+ano;
-            }*/
+                datafinalizacao = datafim;
+                TelaPrincipal.txt_finalizada.setText(datafinalizacao);
+            }
             
-            TelaPrincipal.txt_ativada.setText(dataativacao);
-            TelaPrincipal.txt_finalizada.setText(datafinalizacao);
+            
+            
             
             
             
         }catch(Exception erro){
-            JOptionPane.showMessageDialog(null, "Erro ao ativar a empresa!\n"+erro);
+            
         }
     }
 }

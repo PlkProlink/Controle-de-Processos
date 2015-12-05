@@ -15,11 +15,11 @@ import javax.swing.text.MaskFormatter;
 
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class EnviadosIntFgts extends javax.swing.JInternalFrame {
     
-    Conexao con_cofins;
+    Conexao con_fgts;
     
     MaskFormatter formatoData1, formatoData2, formatoData3;
     
@@ -38,15 +38,17 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
     public EnviadosIntFgts() {
         initComponents();
         
-        con_cofins = new Conexao();
-        con_cofins.conecta();
+        con_fgts = new Conexao();
+        con_fgts.conecta();
         
         tabela.setAutoCreateRowSorter(true);
         
         txtCodigo.setEditable(false);
         
-        bloquear_campos();
+        //bloquear_campos();
         
+		btnAlterar.setEnabled(false);
+		
         preencher_tabela();
         
         pegar_ultimo_registro();
@@ -56,7 +58,7 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
         logb.setCliente(Ativador.nome);
         logb.setApelido(Ativador.id);
         logb.setProcesso(Ativador.processo);
-        logb.setTela("Envio de Pis/Cofins");
+        logb.setTela("Envio de Fgts");
         
     }
 
@@ -103,7 +105,7 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         setClosable(true);
-        setTitle("PIS/COFINS");
+        setTitle("FGTS");
         try {
             setSelected(true);
         } catch (java.beans.PropertyVetoException e1) {
@@ -390,7 +392,7 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                         converter_data2();
                         converter_data3();
                         
-                        String gry = "insert into pisacompanhamento "
+                        String gry = "insert into fgtsacompanhamento "
                                 + "(DataAndamento, NumeroProcesso, Usuario, "
                                 + "Observacao, Data1Envio, Data2Envio, "
                                 + "Data3Envio, Andamento) values ('"
@@ -403,7 +405,7 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                                 + new java.sql.Date(novadata3.getTime())+"','"
                                 + "Finalizado')";
                                 
-                        con_cofins.exeQuery(gry);
+                        con_fgts.exeQuery(gry);
                         //
                         String mensagem = "Inserido com sucesso!";
                         
@@ -414,11 +416,11 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                         enviar_label3();
                         
                         acao = "Inclusão";
-                        descricao = "1º, 2º e 3º envio de COFINS informado";
+                        descricao = "1º, 2º e 3º envio de FGTS informado";
                         
                         gravar_log();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                         
@@ -434,7 +436,7 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                         converter_data1();
                         converter_data2();
                         
-                        String gry = "insert into pisacompanhamento "
+                        String gry = "insert into fgtsacompanhamento "
                                 + "(DataAndamento, NumeroProcesso, Usuario, "
                                 + "Observacao, Data1Envio, Data2Envio, "
                                 + "Andamento) values ('"
@@ -446,20 +448,20 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                                 + new java.sql.Date(novadata2.getTime())+"','"
                                 + "1º e 2º envio realizado')";
                                 
-                        con_cofins.exeQuery(gry);
+                        con_fgts.exeQuery(gry);
                         
                         String mensagem = "Inserido com sucesso!";
                         lbMensagem.setText(mensagem);
                         
                         acao = "Inclusão";
-                        descricao = "1º e 2º envio de COFINS informado";
+                        descricao = "1º e 2º envio de FGTS informado";
                         
                         gravar_log();
                         
                         enviar_label1();
                         enviar_label2();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                         
@@ -473,7 +475,7 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                     try{
                         converter_data1();
                         
-                        String gry = "insert into pisacompanhamento "
+                        String gry = "insert into fgtsacompanhamento "
                                 + "(DataAndamento, NumeroProcesso, Usuario, "
                                 + "Observacao, Data1Envio, "
                                 + "Andamento) values ('"
@@ -484,19 +486,19 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                                 + new java.sql.Date(novadata1.getTime())+"','"
                                 + "1º envio realizado')";
                                 
-                        con_cofins.exeQuery(gry);
+                        con_fgts.exeQuery(gry);
                         
                         String mensagem = "Inserido com sucesso!";
                         lbMensagem.setText(mensagem);
                         
                         acao = "Inclusão";
-                        descricao = "1º envio de COFINS informado";
+                        descricao = "1º envio de FGTS informado";
                         
                         gravar_log();
                         
                         enviar_label1();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                     }catch(Exception erro){
@@ -513,7 +515,7 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                         converter_data2();
                         converter_data3();
                         
-                        String sql = "update pisacompanhamento set "
+                        String sql = "update fgtsacompanhamento set "
                                 +"DataAndamento='" +datahoje+"',"
                                 +"Usuario='" +usuario+"',"
                                 +"Observacao='" +txtObservacao.getText()+"',"
@@ -521,13 +523,13 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                                 +"Data2Envio='" +new java.sql.Date(novadata2.getTime())+"',"
                                 +"Data3Envio='" +new java.sql.Date(novadata3.getTime())+"',"
                                 +"Andamento='Finalizado' where Cod="+txtCodigo.getText();
-                        con_cofins.statement.executeUpdate(sql);
+                        con_fgts.statement.executeUpdate(sql);
                         
                         String mensagem = "Atualizado com sucesso!";
                         lbMensagem.setText(mensagem);
                         
                         acao = "Atualização";
-                        descricao = "1º, 2º e 3º envio de COFINS informado";
+                        descricao = "1º, 2º e 3º envio de FGTS informado";
                         
                         gravar_log();
                         
@@ -535,7 +537,7 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                         enviar_label2();
                         enviar_label3();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                         
@@ -550,27 +552,27 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                         converter_data1();
                         converter_data2();
                         
-                        String sql = "update pisacompanhamento set "
+                        String sql = "update fgtsacompanhamento set "
                                 +"DataAndamento='" +datahoje+"',"
                                 +"Usuario='" +usuario+"',"
                                 +"Observacao='" +txtObservacao.getText()+"',"
                                 +"Data1Envio='" +new java.sql.Date(novadata1.getTime())+"',"
                                 +"Data2Envio='" +new java.sql.Date(novadata2.getTime())+"',"
                                 +"Andamento='1º e 2º envio realizado' where Cod="+txtCodigo.getText();
-                        con_cofins.statement.executeUpdate(sql);
+                        con_fgts.statement.executeUpdate(sql);
                         
                         String mensagem = "Atualizado com sucesso!";
                         lbMensagem.setText(mensagem);
                         
                         acao = "Atualização";
-                        descricao = "1º, 2º e 3º envio de COFINS informado";
+                        descricao = "1º, 2º e 3º envio de FGTS informado";
                         
                         gravar_log();
                         
                         enviar_label1();
                         enviar_label2();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                         
@@ -584,25 +586,25 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                     try{
                         converter_data1();
                         
-                        String sql = "update pisacompanhamento set "
+                        String sql = "update fgtsacompanhamento set "
                                 +"DataAndamento='" +datahoje+"',"
                                 +"Usuario='" +usuario+"',"
                                 +"Observacao='" +txtObservacao.getText()+"',"
                                 +"Data1Envio='" +new java.sql.Date(novadata1.getTime())+"',"
                                 +"Andamento='1º envio realizado' where Cod="+txtCodigo.getText();
-                        con_cofins.statement.executeUpdate(sql);
+                        con_fgts.statement.executeUpdate(sql);
                         
                         String mensagem = "Atualizado com sucesso!";
                         lbMensagem.setText(mensagem);
                         
                         acao = "Atualização";
-                        descricao = "1º envio de COFINS informado";
+                        descricao = "1º envio de FGTS informado";
                         
                         gravar_log();
                         
                         enviar_label1();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                         
@@ -615,7 +617,7 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         restaurar_backup();
-        bloquear_campos();
+        //bloquear_campos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -627,7 +629,7 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
             int escolha = JOptionPane.showConfirmDialog(null, cliente, "Exclusão", JOptionPane.YES_NO_OPTION);
             if(escolha==JOptionPane.YES_OPTION){
                 try{
-                    int excluiu = con_cofins.statement.executeUpdate("delete from pisacompanhamento where Cod="+txtCodigo.getText());
+                    int excluiu = con_fgts.statement.executeUpdate("delete from fgtsacompanhamento where Cod="+txtCodigo.getText());
                     if(excluiu == 1){
                         String mensagem = "Atualizado com sucesso!";
                         lbMensagem.setText(mensagem);
@@ -637,9 +639,9 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
                         
                         gravar_log();
                         
-                        doc.cofins();
+                        doc.fgts();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                         
@@ -763,21 +765,21 @@ public class EnviadosIntFgts extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 public void pegar_ultimo_registro(){
         
-        con_cofins.executeSQL("select * from pisacompanhamento where NumeroProcesso='"+processo+"'");
+        con_fgts.executeSQL("select * from fgtsacompanhamento where NumeroProcesso='"+processo+"'");
         try {
-            if(con_cofins.resultset.last()){
+            if(con_fgts.resultset.last()){
                 String novocodigo , ndata1, ndata2, ndata3;
                 
-                novocodigo = con_cofins.resultset.getString("Cod");
+                novocodigo = con_fgts.resultset.getString("Cod");
                 
-                data1 = con_cofins.resultset.getString("Data1Envio");
-                data2 = con_cofins.resultset.getString("Data2Envio");
-                data3 = con_cofins.resultset.getString("Data3Envio");
+                data1 = con_fgts.resultset.getString("Data1Envio");
+                data2 = con_fgts.resultset.getString("Data2Envio");
+                data3 = con_fgts.resultset.getString("Data3Envio");
                 
                 if(!"".equals(novocodigo) || novocodigo != null){
                     
                     txtCodigo.setText(novocodigo);
-                    txtObservacao.setText(con_cofins.resultset.getString("Observacao"));
+                    txtObservacao.setText(con_fgts.resultset.getString("Observacao"));
                     
                     if(data1.trim().length()==10 && !data1.equals("1111-11-11") ){
                         
@@ -816,21 +818,21 @@ public void preencher_tabela(){
     tabela.getColumnModel().getColumn(5);
     tabela.getColumnModel().getColumn(6);
     
-    con_cofins.executeSQL("select * from pisacompanhamento where NumeroProcesso='"+processo+"'");
+    con_fgts.executeSQL("select * from fgtsacompanhamento where NumeroProcesso='"+processo+"'");
     
     DefaultTableModel modelo =(DefaultTableModel)tabela.getModel();
     
     try{
-        while(con_cofins.resultset.next())
+        while(con_fgts.resultset.next())
             modelo.addRow(new Object []{
-                con_cofins.resultset.getString("Cod"),
-                con_cofins.resultset.getString("DataAndamento"),
-                con_cofins.resultset.getString("Data1Envio"),
-                con_cofins.resultset.getString("Data2Envio"),
-                con_cofins.resultset.getString("Data3Envio"),
-                con_cofins.resultset.getString("Observacao"),
-                con_cofins.resultset.getString("Usuario")});
-                con_cofins.resultset.first();
+                con_fgts.resultset.getString("Cod"),
+                con_fgts.resultset.getString("DataAndamento"),
+                con_fgts.resultset.getString("Data1Envio"),
+                con_fgts.resultset.getString("Data2Envio"),
+                con_fgts.resultset.getString("Data3Envio"),
+                con_fgts.resultset.getString("Observacao"),
+                con_fgts.resultset.getString("Usuario")});
+                con_fgts.resultset.first();
     }catch(Exception erro){
         JOptionPane.showMessageDialog(null, "Erro ao preencher tabela! \n"+erro);
     }
@@ -925,13 +927,13 @@ public void converter_data3(){
             */
 }
 public void enviar_label1(){
-    DocumentosEnviados.lbCofins1.setText(data1);
+    DocumentosEnviados.lbFgts1.setText(data1);
 }
 public void enviar_label2(){
-    DocumentosEnviados.lbCofins2.setText(data2);
+    DocumentosEnviados.lbFgts2.setText(data2);
 }
 public void enviar_label3(){
-    DocumentosEnviados.lbCofins3.setText(data3);
+    DocumentosEnviados.lbFgts3.setText(data3);
 }
 public void gravar_log(){
     logb.setAcao(acao);

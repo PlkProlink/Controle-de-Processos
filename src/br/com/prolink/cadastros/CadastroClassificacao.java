@@ -14,7 +14,7 @@ import br.com.prolink.inicio.Conexao;
 import br.com.prolink.controle.*;
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class CadastroClassificacao extends javax.swing.JFrame {
     

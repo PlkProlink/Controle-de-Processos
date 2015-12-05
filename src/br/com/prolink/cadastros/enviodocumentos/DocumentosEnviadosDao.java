@@ -8,7 +8,7 @@ package br.com.prolink.cadastros.enviodocumentos;
 import br.com.prolink.inicio.*;
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class DocumentosEnviadosDao {
     
@@ -66,8 +66,7 @@ public void boleto(){
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbBol2.setText(ndata2);
             }
-            else
-            
+         
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
                 String ano = data1.substring(0, 4);
                 String mes = data1.substring(5, 7);

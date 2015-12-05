@@ -12,7 +12,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/**
+ *
+ * @author Tiago Dias
+ */
 public class Login extends javax.swing.JFrame {
     int conta=0;
     Conexao con_login;

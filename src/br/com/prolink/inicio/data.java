@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class data{
 

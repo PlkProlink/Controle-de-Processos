@@ -7,7 +7,7 @@ package br.com.prolink.inicio;
 
 /**
  *
- * @author tiago
+ * @author Tiago Dias
  */
 public class TeladeLog extends javax.swing.JFrame {
 

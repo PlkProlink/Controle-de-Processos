@@ -15,7 +15,7 @@ import br.com.prolink.inicio.*;
 
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class Contabil extends javax.swing.JFrame {
     //conexão com as tabelas necessarias
@@ -105,7 +105,6 @@ public class Contabil extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        btnFechar = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         tb_todos = new javax.swing.JTable();
         btnAlterar = new javax.swing.JButton();
@@ -223,6 +222,7 @@ public class Contabil extends javax.swing.JFrame {
         lb_tipo_todos.setText("Tipo:");
 
         cb_tipo_todos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Novo Andamento", "Finalizado" }));
+        cb_tipo_todos.setToolTipText("Se desejar finalizar o andamento, selecione finalizado");
 
         txt_obs_todos.setColumns(20);
         txt_obs_todos.setLineWrap(true);
@@ -257,19 +257,12 @@ public class Contabil extends javax.swing.JFrame {
             }
         });
 
-        btnFechar.setText("Fechar");
-        btnFechar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharActionPerformed(evt);
-            }
-        });
-
         tb_todos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nº", "Processo", "Data", "Tipo", "Observação", "Usuario"
+                "Nº", "Data", "Processo", "Observação", "Situação", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
@@ -293,6 +286,13 @@ public class Contabil extends javax.swing.JFrame {
             }
         });
         jScrollPane8.setViewportView(tb_todos);
+        if (tb_todos.getColumnModel().getColumnCount() > 0) {
+            tb_todos.getColumnModel().getColumn(0).setMaxWidth(30);
+            tb_todos.getColumnModel().getColumn(1).setMaxWidth(70);
+            tb_todos.getColumnModel().getColumn(2).setMaxWidth(90);
+            tb_todos.getColumnModel().getColumn(4).setMaxWidth(150);
+            tb_todos.getColumnModel().getColumn(5).setMaxWidth(100);
+        }
 
         btnAlterar.setText("Alterar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -305,39 +305,37 @@ public class Contabil extends javax.swing.JFrame {
         jpPerfil.setLayout(jpPerfilLayout);
         jpPerfilLayout.setHorizontalGroup(
             jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPerfilLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbcod_todos)
-                .addGap(115, 115, 115)
-                .addComponent(txt_codigo_todos, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpPerfilLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_andamento_todos)
-                .addGap(111, 111, 111)
-                .addComponent(txt_data_todos, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lb_tipo_todos)
-                .addGap(18, 18, 18)
-                .addComponent(cb_tipo_todos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpPerfilLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_obs_todos)
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpPerfilLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(btNovos, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jpPerfilLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPerfilLayout.createSequentialGroup()
+                        .addComponent(lbcod_todos)
+                        .addGap(115, 115, 115)
+                        .addComponent(txt_codigo_todos, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpPerfilLayout.createSequentialGroup()
+                        .addComponent(lb_andamento_todos)
+                        .addGap(111, 111, 111)
+                        .addComponent(txt_data_todos, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lb_tipo_todos)
+                        .addGap(18, 18, 18)
+                        .addComponent(cb_tipo_todos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpPerfilLayout.createSequentialGroup()
+                        .addComponent(lb_obs_todos)
+                        .addGap(73, 73, 73)
+                        .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpPerfilLayout.createSequentialGroup()
+                                .addComponent(btNovos, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane9)))))
         );
         jpPerfilLayout.setVerticalGroup(
             jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,25 +353,23 @@ public class Contabil extends javax.swing.JFrame {
                         .addComponent(lb_andamento_todos))
                     .addComponent(txt_data_todos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpPerfilLayout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(lb_tipo_todos))
-                    .addGroup(jpPerfilLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(cb_tipo_todos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(2, 2, 2)
+                        .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lb_tipo_todos)
+                            .addComponent(cb_tipo_todos, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(16, 16, 16)
                 .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_obs_todos)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(8, 8, 8)
                 .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btNovos, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -446,9 +442,9 @@ public class Contabil extends javax.swing.JFrame {
     private void tb_todosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_todosMouseClicked
         Integer linha = tb_todos.getSelectedRow();
         String codigo = (String)tb_todos.getValueAt(linha, 0);
-        String data = (String)tb_todos.getValueAt(linha, 2);
-        String tipo = (String)tb_todos.getValueAt(linha, 3);
-        String observacao = (String)tb_todos.getValueAt(linha, 4);
+        String data = (String)tb_todos.getValueAt(linha, 1);
+        String observacao = (String)tb_todos.getValueAt(linha, 3);
+        String andamento = (String)tb_todos.getValueAt(linha, 4);
 
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -458,14 +454,16 @@ public class Contabil extends javax.swing.JFrame {
         txt_data_todos.setText(recebedataTabela);
 
         txt_codigo_todos.setText(codigo);
-        cb_tipo_todos.setSelectedItem(tipo);
+        
+        if(andamento.equalsIgnoreCase("Finalizado")){
+            cb_tipo_todos.setSelectedItem("Finalizado");
+        }
+        else
+            cb_tipo_todos.setSelectedItem("Novo Andamento");
+        
         txt_obs_todos.setText(observacao);
 
     }//GEN-LAST:event_tb_todosMouseClicked
-
-    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         //se não selecionado nenhum cadastro, exclusão não será permitida
@@ -480,25 +478,26 @@ public class Contabil extends javax.swing.JFrame {
                 con_todos.resultset.first();
                 String cliente = "Tem certeza que deseja excluir um cadastro da tabela principal com cliente : " +con_todos.resultset.getString("Cliente")+"?";
                 //pegando o processo sendo excluido
-                String operacao = con_todos.resultset.getString("Tipo");
+                String operacao = con_todos.resultset.getString("AndamentoGerarPlanoDeContas");
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
                     sql = "DELETE FROM gerarplanodecontas Where CodGerarPlanoDeContas = "+txt_codigo_todos.getText();
                     int conseguiu_excluir = con_todos.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
+                        
+                        limpar_tela_todos();
+                        limpar_tabela_todos();
+                        preencher_tabela_todos();
                         //se excluir um cadastro finalizado ele vai atualizar o status e reabrir
                         if("Finalizado".equals(operacao)){
                             try{
                             con_todos.executeSQL("select * from gerarplanodecontas where NumeroProcesso='"+processo+"' and AndamentoGerarPlanoDeContas='Finalizado'");
                             //se não existir mais um em situação finalizada ele ira atualizar o status
-                            if(!con_todos.resultset.last()){
+                            if(!con_todos.resultset.first()){
                                 try{
                                 con_contabil.statement.executeUpdate("UPDATE contabil set AndamentoGerarPlanoDeContas ='Em Aberto' where Numerodoprocesso='" +processo+"'");
                                 
-                                limpar_tela_todos();
-                                limpar_tabela_todos();
-                                preencher_tabela_todos();
                                 preencher_status();
                                 atualiza_cadastrocliente();
                                 
@@ -506,6 +505,7 @@ public class Contabil extends javax.swing.JFrame {
                                     JOptionPane.showMessageDialog(null, " Falha ao atualizar a tabela Plano de Contas:\n" +erro);
                                 }
                             }
+                            
                             }catch(SQLException erro){
                                 JOptionPane.showMessageDialog(null, "Falha ao abrir o status!\n"+erro);
                             }
@@ -528,11 +528,9 @@ public class Contabil extends javax.swing.JFrame {
         //nao permitir que a primeira data fique vazia
         if(txt_data_todos.getText().equals("  /  /    ") || txt_data_todos.getText().trim().length()<10){
             JOptionPane.showMessageDialog(null, "Digite uma data valida no campo novo andamento!");
-            txt_data_todos.requestFocus(true);
         }
         else if(cb_tipo_todos.getSelectedItem().equals("")){
             JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
-            cb_tipo_todos.requestFocus();
         }
         else if(!txt_codigo_todos.getText().equals("")){
             try{
@@ -552,9 +550,8 @@ public class Contabil extends javax.swing.JFrame {
                 String sql = "UPDATE gerarplanodecontas set DatadeCadastroAndamento='"+
                 new java.sql.Date(datatermo.getTime())+"',"+
                 "Obsevacao='"+txt_obs_todos.getText()+"',"+
-                "Usuario = '"+txt_usuario.getText()+"',"+
+                "Usuario = '"+usuario+"',"+
                 "AndamentoGerarPlanoDeContas='"+andamentotermo+"',"+
-                "Tipo='"+cb_tipo_todos.getSelectedItem()+"' "+
                 "where CodGerarPlanoDeContas = "+txt_codigo_todos.getText();
 
                 con_todos.statement.executeUpdate(sql);
@@ -588,14 +585,11 @@ public class Contabil extends javax.swing.JFrame {
 
                 String gry = "insert into gerarplanodecontas ("+
                 "NumeroProcesso, DatadeCadastroAndamento, Obsevacao,"+
-                "Cliente, Usuario, AndamentoGerarPlanodeContas, Tipo) values ('"+processo+"','"+
+                "Usuario, AndamentoGerarPlanodeContas) values ('"+processo+"','"+
                 new java.sql.Date(datatermo.getTime())+"','"+
                 txt_obs_todos.getText()+"','"+
-                txt_nome.getText()+"','"+
-                txt_usuario.getText()+"','"+
-                andamentotermo+"','"+
-                cb_tipo_todos.getSelectedItem()+"')";
-
+                usuario+"','"+
+                andamentotermo+"',)";
                 con_todos.exeQuery(gry);
 
                 JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
@@ -640,7 +634,6 @@ public class Contabil extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
-    private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox cb_tipo_todos;
     private javax.swing.JScrollPane jScrollPane8;
@@ -680,7 +673,7 @@ public class Contabil extends javax.swing.JFrame {
         tb_todos.getColumnModel().getColumn(3);
         tb_todos.getColumnModel().getColumn(4);
         tb_todos.getColumnModel().getColumn(5);
-        con_todos.executeSQL("select * from gerarplanodecontas where NumeroProcesso='"+processo+"' order by CodGerarPlanoDeContas");
+        con_todos.executeSQL("select * from gerarplanodecontas where NumeroProcesso='"+processo+"'");
 
         DefaultTableModel modelo = (DefaultTableModel)tb_todos.getModel();
         //modelo.setNumRows(0);
@@ -691,14 +684,14 @@ public class Contabil extends javax.swing.JFrame {
             while (con_todos.resultset.next())
                 modelo.addRow(new Object [] {
                     con_todos.resultset.getString("CodGerarPlanoDeContas"),
-                    con_todos.resultset.getString("NumeroProcesso"),
                     sdf.format(con_todos.resultset.getTime("DatadeCadastroAndamento")),
-                    con_todos.resultset.getString("Tipo"),                    
+                    con_todos.resultset.getString("NumeroProcesso"),
                     con_todos.resultset.getString("Obsevacao"),
+                    con_todos.resultset.getString("AndamentoGerarPlanoDeContas"),                    
                     con_todos.resultset.getString("Usuario")});
             con_todos.resultset.first();
         }   catch (SQLException erro){
-                JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Perfil "+erro);
+                JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Plano de Contas\n"+erro);
         }
 }
 
@@ -792,7 +785,7 @@ public class Contabil extends javax.swing.JFrame {
         txt_codigo_todos.setText("");
         txt_obs_todos.setText("");
         txt_codigo_todos.setEditable(false);
-        cb_tipo_todos.setSelectedItem("Novo Andamento");
+        cb_tipo_todos.setSelectedItem("");
         Date data = new Date();
         String datahoje = sdf.format(data);
         txt_data_todos.setText(datahoje);

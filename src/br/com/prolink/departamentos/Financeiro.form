@@ -444,43 +444,44 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbcod_planilha" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
-                          <Component id="txt_cod_planilha" min="-2" pref="70" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lb_andamento_planilha" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
-                          <Component id="txt_data_planilha" min="-2" pref="70" max="-2" attributes="0"/>
-                          <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                          <Component id="lb_tipo_planilha" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="cb_tipo_planilha" min="-2" pref="130" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lb_obs_planilha" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
-                          <Component id="jScrollPane9" min="-2" pref="490" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
-                          <Component id="btnNovoPlanilha" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnAlterarPlanilha" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnSalvarPlanilha" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnCancelarPlanilha" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnExcluirPlanilha" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnFecharPlanilha" min="-2" pref="75" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="jScrollPane8" min="-2" pref="646" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="lbcod_planilha" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
+                                  <Component id="txt_cod_planilha" min="-2" pref="70" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="lb_andamento_planilha" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
+                                  <Component id="txt_data_planilha" min="-2" pref="70" max="-2" attributes="0"/>
+                                  <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                                  <Component id="lb_tipo_planilha" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="cb_tipo_planilha" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lb_obs_planilha" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="btnNovoPlanilha" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnAlterarPlanilha" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnSalvarPlanilha" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnCancelarPlanilha" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnExcluirPlanilha" min="-2" pref="75" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jScrollPane9" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -501,33 +502,33 @@
                                   <Component id="lb_andamento_planilha" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="txt_data_planilha" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
                                   <Component id="lb_tipo_planilha" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                  <Component id="cb_tipo_planilha" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="cb_tipo_planilha" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lb_obs_planilha" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane9" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btnSalvarPlanilha" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <Component id="btnNovoPlanilha" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <Component id="btnAlterarPlanilha" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="btnNovoPlanilha" min="-2" pref="33" max="-2" attributes="0"/>
+                                      <Component id="btnSalvarPlanilha" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="btnCancelarPlanilha" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                          <Component id="btnExcluirPlanilha" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane8" min="-2" pref="170" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btnCancelarPlanilha" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnExcluirPlanilha" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnFecharPlanilha" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="btnAlterarPlanilha" min="-2" pref="33" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                          <Component id="jScrollPane8" min="-2" pref="170" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -581,6 +582,7 @@
                         <StringItem index="1" value="Finalizado"/>
                       </StringArray>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Se desejar finalizar o andamento, selecione finalizar!"/>
                   </Properties>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane9">
@@ -610,6 +612,9 @@
                 <Component class="javax.swing.JButton" name="btnSalvarPlanilha">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Salvar"/>
+                    <Property name="focusable" type="boolean" value="false"/>
+                    <Property name="horizontalTextPosition" type="int" value="0"/>
+                    <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarPlanilhaActionPerformed"/>
@@ -631,14 +636,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirPlanilhaActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnFecharPlanilha">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Fechar"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFecharPlanilhaActionPerformed"/>
-                  </Events>
-                </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane8">
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -651,16 +648,26 @@
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
                             <Column editable="false" title="N&#xba;" type="java.lang.String"/>
-                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Data" type="java.lang.String"/>
-                            <Column editable="false" title="Tipo" type="java.lang.String"/>
+                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Observa&#xe7;&#xe3;o" type="java.lang.String"/>
+                            <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
                             <Column editable="false" title="Usuario" type="java.lang.String"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="30" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="70" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="90" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -670,22 +677,12 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="150" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -729,43 +726,44 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbcod_boleto" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
-                          <Component id="txt_cod_boleto" min="-2" pref="70" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lb_data_boleto" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
-                          <Component id="txt_data_boleto" min="-2" pref="70" max="-2" attributes="0"/>
-                          <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                          <Component id="lb_tipo_boleto" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="cb_tipo_boleto" min="-2" pref="130" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lb_obs_boleto" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
-                          <Component id="jScrollPane7" min="-2" pref="490" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
-                          <Component id="btnNovoBoleto" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnAlterarBoleto" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnSalvarBoleto" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnCancelarBoleto" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnExcluirBoleto" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnFecharBoleto" min="-2" pref="75" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="jScrollPane6" min="-2" pref="646" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="lbcod_boleto" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
+                                  <Component id="txt_cod_boleto" min="-2" pref="70" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="lb_data_boleto" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
+                                  <Component id="txt_data_boleto" min="-2" pref="70" max="-2" attributes="0"/>
+                                  <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                                  <Component id="lb_tipo_boleto" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="cb_tipo_boleto" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lb_obs_boleto" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="btnNovoBoleto" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnAlterarBoleto" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnSalvarBoleto" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnCancelarBoleto" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnExcluirBoleto" min="-2" pref="75" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jScrollPane7" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -786,33 +784,33 @@
                                   <Component id="lb_data_boleto" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="txt_data_boleto" linkSize="6" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
                                   <Component id="lb_tipo_boleto" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                  <Component id="cb_tipo_boleto" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="cb_tipo_boleto" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lb_obs_boleto" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane7" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btnSalvarBoleto" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <Component id="btnAlterarBoleto" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <Component id="btnNovoBoleto" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="btnNovoBoleto" min="-2" pref="33" max="-2" attributes="0"/>
+                                      <Component id="btnSalvarBoleto" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="btnCancelarBoleto" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                          <Component id="btnExcluirBoleto" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane6" min="-2" pref="170" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btnCancelarBoleto" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnExcluirBoleto" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnFecharBoleto" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="btnAlterarBoleto" min="-2" pref="33" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
-                          <Component id="jScrollPane6" min="-2" pref="170" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -858,6 +856,7 @@
                         <StringItem index="1" value="Finalizado"/>
                       </StringArray>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Se desejar finalizar o andamento, selecione finalizar!"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lb_obs_boleto">
@@ -916,14 +915,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirBoletoActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnFecharBoleto">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Fechar"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFecharBoletoActionPerformed"/>
-                  </Events>
-                </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane6">
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -936,16 +927,26 @@
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
                             <Column editable="false" title="N&#xba;" type="java.lang.String"/>
-                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Data" type="java.lang.String"/>
-                            <Column editable="false" title="Tipo" type="java.lang.String"/>
+                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Observa&#xe7;&#xe3;o" type="java.lang.String"/>
+                            <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
                             <Column editable="false" title="Usuario" type="java.lang.String"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="30" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="70" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="90" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -955,22 +956,12 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="150" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -1014,43 +1005,44 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbcod_controle" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
-                          <Component id="txt_cod_controle" min="-2" pref="70" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lbdata_controle" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
-                          <Component id="txt_data_controle" min="-2" pref="70" max="-2" attributes="0"/>
-                          <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                          <Component id="lbtipo_controle" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                          <Component id="cb_tipo_controle" min="-2" pref="130" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="lb_obs_controle" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
-                          <Component id="jScrollPane10" min="-2" pref="490" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
-                          <Component id="btnNovoControle" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnAlterarControle" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnSalvarControle" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnCancelarControle" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnExcluirControle" min="-2" pref="75" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnFecharControle" min="-2" pref="75" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="jScrollPane11" alignment="0" min="-2" pref="646" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbcod_controle" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
+                                  <Component id="txt_cod_controle" min="-2" pref="70" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lbdata_controle" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="111" pref="111" max="-2" attributes="0"/>
+                                  <Component id="txt_data_controle" min="-2" pref="70" max="-2" attributes="0"/>
+                                  <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                                  <Component id="lbtipo_controle" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="cb_tipo_controle" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="lb_obs_controle" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="73" pref="73" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="btnNovoControle" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnAlterarControle" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnSalvarControle" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnCancelarControle" min="-2" pref="75" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnExcluirControle" min="-2" pref="75" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jScrollPane10" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -1075,29 +1067,29 @@
                                   <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
                                   <Component id="lbtipo_controle" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                  <Component id="cb_tipo_controle" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="cb_tipo_controle" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lb_obs_controle" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jScrollPane10" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="btnSalvarControle" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <Component id="btnNovoControle" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <Component id="btnAlterarControle" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="btnNovoControle" min="-2" pref="33" max="-2" attributes="0"/>
+                                      <Component id="btnSalvarControle" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="btnCancelarControle" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                          <Component id="btnExcluirControle" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane11" min="-2" pref="170" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btnCancelarControle" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnExcluirControle" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnFecharControle" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="btnAlterarControle" min="-2" pref="33" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
-                          <Component id="jScrollPane11" min="-2" pref="170" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1143,6 +1135,7 @@
                         <StringItem index="1" value="Finalizado"/>
                       </StringArray>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Se desejar finalizar o andamento, selecione finalizar!"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lb_obs_controle">
@@ -1201,14 +1194,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirControleActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnFecharControle">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Fechar"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFecharControleActionPerformed"/>
-                  </Events>
-                </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane11">
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -1221,16 +1206,26 @@
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
                             <Column editable="false" title="N&#xba;" type="java.lang.String"/>
-                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Data" type="java.lang.String"/>
-                            <Column editable="false" title="Tipo" type="java.lang.String"/>
+                            <Column editable="false" title="Processo" type="java.lang.String"/>
                             <Column editable="false" title="Observa&#xe7;&#xe3;o" type="java.lang.String"/>
+                            <Column editable="false" title="Situa&#xe7;&#xe3;o" type="java.lang.String"/>
                             <Column editable="false" title="Usuario" type="java.lang.String"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="30" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="70" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="90" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -1240,22 +1235,12 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="150" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                              <Title/>
-                              <Editor/>
-                              <Renderer/>
-                            </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="100" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>

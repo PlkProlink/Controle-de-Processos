@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author tiago
+ * @author Tiago Dias
  */
 public class RecuperarAcesso extends javax.swing.JFrame {
     

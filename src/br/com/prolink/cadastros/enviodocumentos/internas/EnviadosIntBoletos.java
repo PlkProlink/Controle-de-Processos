@@ -1,6 +1,5 @@
 package br.com.prolink.cadastros.enviodocumentos.internas;
 
-
 import br.com.prolink.cadastros.enviodocumentos.*;
 import br.com.prolink.controle.*;
 import br.com.prolink.inicio.*;
@@ -15,11 +14,11 @@ import javax.swing.text.MaskFormatter;
 
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
     
-    Conexao con_boletos;
+    Conexao conexao;
     
     MaskFormatter formatoData1, formatoData2, formatoData3;
     
@@ -38,15 +37,17 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
     public EnviadosIntBoletos() {
         initComponents();
         
-        con_boletos = new Conexao();
-        con_boletos.conecta();
+        conexao = new Conexao();
+        conexao.conecta();
         
         tabela.setAutoCreateRowSorter(true);
         
         txtCodigo.setEditable(false);
         
-        bloquear_campos();
+        //bloquear_campos();
         
+		btnAlterar.setEnabled(false);
+		
         preencher_tabela();
         
         pegar_ultimo_registro();
@@ -403,7 +404,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                                 + new java.sql.Date(novadata3.getTime())+"','"
                                 + "Finalizado')";
                                 
-                        con_boletos.exeQuery(gry);
+                        conexao.exeQuery(gry);
                         //
                         String mensagem = "Inserido com sucesso!";
                         
@@ -413,12 +414,14 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                         enviar_label2();
                         enviar_label3();
                         
+                        atualizar_acompanhamento3();
+                        
                         acao = "Inclusão";
                         descricao = "1º, 2º e 3º envio de BOLETO informado";
                         
                         gravar_log();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                         
@@ -446,11 +449,11 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                                 + new java.sql.Date(novadata2.getTime())+"','"
                                 + "1º e 2º envio realizado')";
                                 
-                        con_boletos.exeQuery(gry);
+                        conexao.exeQuery(gry);
                         
                         String mensagem = "Inserido com sucesso!";
                         lbMensagem.setText(mensagem);
-                        
+                        atualizar_acompanhamento2();
                         acao = "Inclusão";
                         descricao = "1º e 2º envio de BOLETO informado";
                         
@@ -459,7 +462,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                         enviar_label1();
                         enviar_label2();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                         
@@ -484,10 +487,12 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                                 + new java.sql.Date(novadata1.getTime())+"','"
                                 + "1º envio realizado')";
                                 
-                        con_boletos.exeQuery(gry);
+                        conexao.exeQuery(gry);
                         
                         String mensagem = "Inserido com sucesso!";
                         lbMensagem.setText(mensagem);
+                        
+                        atualizar_acompanhamento1();
                         
                         acao = "Inclusão";
                         descricao = "1º envio de BOLETO informado";
@@ -496,7 +501,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                         
                         enviar_label1();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                     }catch(Exception erro){
@@ -521,10 +526,12 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                                 +"Data2Envio='" +new java.sql.Date(novadata2.getTime())+"',"
                                 +"Data3Envio='" +new java.sql.Date(novadata3.getTime())+"',"
                                 +"Andamento='Finalizado' where Cod="+txtCodigo.getText();
-                        con_boletos.statement.executeUpdate(sql);
+                        conexao.statement.executeUpdate(sql);
                         
                         String mensagem = "Atualizado com sucesso!";
                         lbMensagem.setText(mensagem);
+                        
+                        atualizar_acompanhamento3();
                         
                         acao = "Atualização";
                         descricao = "1º, 2º e 3º envio de BOLETO informado";
@@ -535,7 +542,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                         enviar_label2();
                         enviar_label3();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                         
@@ -557,20 +564,22 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                                 +"Data1Envio='" +new java.sql.Date(novadata1.getTime())+"',"
                                 +"Data2Envio='" +new java.sql.Date(novadata2.getTime())+"',"
                                 +"Andamento='1º e 2º envio realizado' where Cod="+txtCodigo.getText();
-                        con_boletos.statement.executeUpdate(sql);
+                        conexao.statement.executeUpdate(sql);
                         
                         String mensagem = "Atualizado com sucesso!";
                         lbMensagem.setText(mensagem);
                         
+                        atualizar_acompanhamento2();
+                        
                         acao = "Atualização";
-                        descricao = "1º, 2º e 3º envio de BOLETO informado";
+                        descricao = "1º, 2º envio de BOLETO informado";
                         
                         gravar_log();
                         
                         enviar_label1();
                         enviar_label2();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                         
@@ -590,7 +599,9 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                                 +"Observacao='" +txtObservacao.getText()+"',"
                                 +"Data1Envio='" +new java.sql.Date(novadata1.getTime())+"',"
                                 +"Andamento='1º envio realizado' where Cod="+txtCodigo.getText();
-                        con_boletos.statement.executeUpdate(sql);
+                        conexao.statement.executeUpdate(sql);
+                        
+                        atualizar_acompanhamento1();
                         
                         String mensagem = "Atualizado com sucesso!";
                         lbMensagem.setText(mensagem);
@@ -602,7 +613,8 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                         
                         enviar_label1();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
+						
                         limpar_tabela();
                         preencher_tabela();
                         
@@ -615,7 +627,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         restaurar_backup();
-        bloquear_campos();
+        //bloquear_campos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -627,10 +639,12 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
             int escolha = JOptionPane.showConfirmDialog(null, cliente, "Exclusão", JOptionPane.YES_NO_OPTION);
             if(escolha==JOptionPane.YES_OPTION){
                 try{
-                    int excluiu = con_boletos.statement.executeUpdate("delete from boletoplkacompanhamento where Cod="+txtCodigo.getText());
+                    int excluiu = conexao.statement.executeUpdate("delete from boletoplkacompanhamento where Cod="+txtCodigo.getText());
                     if(excluiu == 1){
                         String mensagem = "Removido com sucesso!";
                         lbMensagem.setText(mensagem);
+                        
+                        atualizar_acompanhamento_exclusao();
                         
                         acao = "Exclusão";
                         descricao = "Registro removido";
@@ -639,7 +653,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                         
                         doc.boleto();
                         
-                        bloquear_campos();
+                        //bloquear_campos();
                         limpar_tabela();
                         preencher_tabela();
                         
@@ -707,12 +721,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
+    try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -727,10 +736,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
             java.util.logging.Logger.getLogger(DocumentosEnviados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DocumentosEnviados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
+        }    
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new EnviadosIntBoletos().setVisible(true);
@@ -763,21 +769,21 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 public void pegar_ultimo_registro(){
         
-        con_boletos.executeSQL("select * from boletoplkacompanhamento where NumeroProcesso='"+processo+"'");
+        conexao.executeSQL("select * from boletoplkacompanhamento where NumeroProcesso='"+processo+"'");
         try {
-            if(con_boletos.resultset.last()){
+            if(conexao.resultset.last()){
                 String novocodigo , ndata1, ndata2, ndata3;
                 
-                novocodigo = con_boletos.resultset.getString("Cod");
+                novocodigo = conexao.resultset.getString("Cod");
                 
-                data1 = con_boletos.resultset.getString("Data1Envio");
-                data2 = con_boletos.resultset.getString("Data2Envio");
-                data3 = con_boletos.resultset.getString("Data3Envio");
+                data1 = conexao.resultset.getString("Data1Envio");
+                data2 = conexao.resultset.getString("Data2Envio");
+                data3 = conexao.resultset.getString("Data3Envio");
                 
                 if(!"".equals(novocodigo) || novocodigo != null){
                     
                     txtCodigo.setText(novocodigo);
-                    txtObservacao.setText(con_boletos.resultset.getString("Observacao"));
+                    txtObservacao.setText(conexao.resultset.getString("Observacao"));
                     
                     if(data1.trim().length()==10 && !data1.equals("1111-11-11") ){
                         
@@ -816,21 +822,21 @@ public void preencher_tabela(){
     tabela.getColumnModel().getColumn(5);
     tabela.getColumnModel().getColumn(6);
     
-    con_boletos.executeSQL("select * from boletoplkacompanhamento where NumeroProcesso='"+processo+"'");
+    conexao.executeSQL("select * from boletoplkacompanhamento where NumeroProcesso='"+processo+"'");
     
     DefaultTableModel modelo =(DefaultTableModel)tabela.getModel();
     
     try{
-        while(con_boletos.resultset.next())
+        while(conexao.resultset.next())
             modelo.addRow(new Object []{
-                con_boletos.resultset.getString("Cod"),
-                con_boletos.resultset.getString("DataAndamento"),
-                con_boletos.resultset.getString("Data1Envio"),
-                con_boletos.resultset.getString("Data2Envio"),
-                con_boletos.resultset.getString("Data3Envio"),
-                con_boletos.resultset.getString("Observacao"),
-                con_boletos.resultset.getString("Usuario")});
-                con_boletos.resultset.first();
+                conexao.resultset.getString("Cod"),
+                conexao.resultset.getString("DataAndamento"),
+                conexao.resultset.getString("Data1Envio"),
+                conexao.resultset.getString("Data2Envio"),
+                conexao.resultset.getString("Data3Envio"),
+                conexao.resultset.getString("Observacao"),
+                conexao.resultset.getString("Usuario")});
+                conexao.resultset.first();
     }catch(Exception erro){
         JOptionPane.showMessageDialog(null, "Erro ao preencher tabela! \n"+erro);
     }
@@ -938,5 +944,46 @@ public void gravar_log(){
     logb.setDescricao(descricao);
     
     log.inserir(logb);
+}
+public void atualizar_acompanhamento1(){
+    try{
+    conexao.statement.executeUpdate("update acompanhamentodeenvios set "
+                                        + "BoletoPLKacompanhamento='1º Envio Realizado' where Numerodoprocesso='"+processo+"'");
+    }catch(SQLException erro){
+        JOptionPane.showMessageDialog(null, "Erro ao atualizar acompanhamento: tela>" +logb.getTela());
+    }
+}
+public void atualizar_acompanhamento2(){
+    try{
+    conexao.statement.executeUpdate("update acompanhamentodeenvios set "
+                                        + "BoletoPLKacompanhamento='2º Envio Realizado' where Numerodoprocesso='"+processo+"'");
+    }catch(SQLException erro){
+        JOptionPane.showMessageDialog(null, "Erro ao atualizar acompanhamento: tela>" +logb.getTela());
+    }
+}
+public void atualizar_acompanhamento3(){
+    try{
+    conexao.statement.executeUpdate("update acompanhamentodeenvios set "
+                                        + "BoletoPLKacompanhamento='Finalizado' where Numerodoprocesso='"+processo+"'");
+    }catch(SQLException erro){
+        JOptionPane.showMessageDialog(null, "Erro ao atualizar acompanhamento: tela>" +logb.getTela());
+    }
+}
+public void atualizar_acompanhamento_exclusao(){
+    if(txtData1.getText().trim().length()==10 &&
+            txtData2.getText().trim().length()==10 &&
+            txtData3.getText().trim().length()==10){
+        atualizar_acompanhamento3();
+    }
+    else if(txtData1.getText().trim().length()==10 &&
+            txtData2.getText().trim().length()==10 &&
+            txtData3.getText().trim().length()<10){
+        atualizar_acompanhamento2();
+    }
+    else if(txtData1.getText().trim().length()==10 &&
+            txtData2.getText().trim().length()<10 &&
+            txtData3.getText().trim().length()<10){
+        atualizar_acompanhamento1();
+    }
 }
 }

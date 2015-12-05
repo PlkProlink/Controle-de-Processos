@@ -13,7 +13,10 @@ import javax.swing.text.MaskFormatter;
 
 import br.com.prolink.controle.*;
 import br.com.prolink.inicio.*;
-
+/**
+ *
+ * @author Tiago Dias
+ */
 
 public class DepPessoal extends javax.swing.JFrame {
     //conexão com as tabelas necessarias
@@ -69,12 +72,15 @@ public class DepPessoal extends javax.swing.JFrame {
         txtNome.setText(nome);
         txtId.setText(id);
         txtUsuario.setText(usuario);
+        
         if(!Login.nivel.equals("1") && !Login.departamento.equalsIgnoreCase("Pessoal")){
             
             btnExcluirSocio.setEnabled(false);
             btnSalvarSocio.setEnabled(false);
+            
             btnExcluirDependentes.setEnabled(false);
             btnSalvarDependentes.setEnabled(false);
+            
             btnExcluirFolha.setEnabled(false);
             btnSalvarFolha.setEnabled(false);
             
@@ -126,7 +132,6 @@ public class DepPessoal extends javax.swing.JFrame {
         btnSalvarSocio = new javax.swing.JButton();
         btnCancelarSocio = new javax.swing.JButton();
         btnExcluirSocio = new javax.swing.JButton();
-        btnFecharSocio = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         tbSocio = new javax.swing.JTable();
         jpDependentes = new javax.swing.JPanel();
@@ -149,7 +154,6 @@ public class DepPessoal extends javax.swing.JFrame {
         btnSalvarDependentes = new javax.swing.JButton();
         btnCancelarDependentes = new javax.swing.JButton();
         btnExcluirDependentes = new javax.swing.JButton();
-        btnFecharDependentes = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         tbDependentes = new javax.swing.JTable();
         jpFolha = new javax.swing.JPanel();
@@ -157,10 +161,10 @@ public class DepPessoal extends javax.swing.JFrame {
         txtCodFolha = new javax.swing.JTextField();
         lbDataFolha = new javax.swing.JLabel();
         try {
-            formatoFolha = new MaskFormatter("##/##/####");
-        }catch(Exception erro){
-            JOptionPane.showMessageDialog(null ,"Não foi possivel receber a data em Controle: " +erro);
-        }
+     formatoFolha = new MaskFormatter("##/##/####");
+ }catch(Exception erro){
+     JOptionPane.showMessageDialog(null ,"Não foi possivel receber a data: " +erro);
+ }
         txtDataFolha = new JFormattedTextField(formatoFolha);
         lbTipoFolha = new javax.swing.JLabel();
         cbTipoFolha = new javax.swing.JComboBox();
@@ -172,7 +176,6 @@ public class DepPessoal extends javax.swing.JFrame {
         btnSalvarFolha = new javax.swing.JButton();
         btnCancelarFolha = new javax.swing.JButton();
         btnExcluirFolha = new javax.swing.JButton();
-        btnFecharFolha = new javax.swing.JButton();
         jScrollPane11 = new javax.swing.JScrollPane();
         tbFolha = new javax.swing.JTable();
 
@@ -182,7 +185,7 @@ public class DepPessoal extends javax.swing.JFrame {
 
         lb_titulo.setFont(new java.awt.Font("Verdana", 1, 22)); // NOI18N
         lb_titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_titulo.setText("Controle Dep. Pessoal");
+        lb_titulo.setText("Controle Folha");
         lb_titulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lb_cod.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -206,6 +209,7 @@ public class DepPessoal extends javax.swing.JFrame {
         txtId.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtId.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jtbGuiaDP.setToolTipText("");
         jtbGuiaDP.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jpSitDP.setBackground(new java.awt.Color(245, 245, 245));
@@ -327,6 +331,7 @@ public class DepPessoal extends javax.swing.JFrame {
         lbTipoSocio.setText("Tipo:");
 
         cbTipoSocio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Novo Andamento", "Finalizado" }));
+        cbTipoSocio.setToolTipText("Se desejar finalizar o andamento, selecione finalizado");
 
         txtObsSocio.setColumns(20);
         txtObsSocio.setLineWrap(true);
@@ -368,19 +373,12 @@ public class DepPessoal extends javax.swing.JFrame {
             }
         });
 
-        btnFecharSocio.setText("Fechar");
-        btnFecharSocio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharSocioActionPerformed(evt);
-            }
-        });
-
         tbSocio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nº", "Processo", "Data", "Tipo", "Observação", "Usuario"
+                "Nº", "Data", "Processo", "Observação", "Situação", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
@@ -404,44 +402,49 @@ public class DepPessoal extends javax.swing.JFrame {
             }
         });
         jScrollPane8.setViewportView(tbSocio);
+        if (tbSocio.getColumnModel().getColumnCount() > 0) {
+            tbSocio.getColumnModel().getColumn(0).setMaxWidth(30);
+            tbSocio.getColumnModel().getColumn(1).setMaxWidth(70);
+            tbSocio.getColumnModel().getColumn(2).setMaxWidth(90);
+            tbSocio.getColumnModel().getColumn(4).setMaxWidth(150);
+            tbSocio.getColumnModel().getColumn(5).setMaxWidth(100);
+        }
 
         javax.swing.GroupLayout jpCadSocioLayout = new javax.swing.GroupLayout(jpCadSocio);
         jpCadSocio.setLayout(jpCadSocioLayout);
         jpCadSocioLayout.setHorizontalGroup(
             jpCadSocioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpCadSocioLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbCodSocio)
-                .addGap(115, 115, 115)
-                .addComponent(txtCodSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpCadSocioLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbDataSocio)
-                .addGap(111, 111, 111)
-                .addComponent(txtDataSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lbTipoSocio)
-                .addGap(18, 18, 18)
-                .addComponent(cbTipoSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpCadSocioLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbObsSocio)
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpCadSocioLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(btnNovoSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterarSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalvarSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelarSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcluirSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFecharSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jpCadSocioLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jpCadSocioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpCadSocioLayout.createSequentialGroup()
+                        .addComponent(lbCodSocio)
+                        .addGap(115, 115, 115)
+                        .addComponent(txtCodSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpCadSocioLayout.createSequentialGroup()
+                        .addComponent(lbDataSocio)
+                        .addGap(111, 111, 111)
+                        .addComponent(txtDataSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lbTipoSocio)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbTipoSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpCadSocioLayout.createSequentialGroup()
+                        .addComponent(lbObsSocio)
+                        .addGap(73, 73, 73)
+                        .addGroup(jpCadSocioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpCadSocioLayout.createSequentialGroup()
+                                .addComponent(btnNovoSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterarSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvarSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelarSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluirSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane9)))))
         );
         jpCadSocioLayout.setVerticalGroup(
             jpCadSocioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -461,23 +464,21 @@ public class DepPessoal extends javax.swing.JFrame {
                     .addGroup(jpCadSocioLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(lbTipoSocio))
-                    .addGroup(jpCadSocioLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(cbTipoSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cbTipoSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(jpCadSocioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbObsSocio)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpCadSocioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpCadSocioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnSalvarSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnNovoSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnAlterarSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCancelarSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluirSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFecharSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                    .addGroup(jpCadSocioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCancelarSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcluirSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -495,6 +496,7 @@ public class DepPessoal extends javax.swing.JFrame {
         lbTipoDependentes.setText("Tipo:");
 
         cbTipoDependentes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Novo Andamento", "Finalizado" }));
+        cbTipoDependentes.setToolTipText("Se desejar finalizar o andamento, selecione finalizado");
 
         lbObsDependentes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbObsDependentes.setText("Observação:");
@@ -539,19 +541,12 @@ public class DepPessoal extends javax.swing.JFrame {
             }
         });
 
-        btnFecharDependentes.setText("Fechar");
-        btnFecharDependentes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharDependentesActionPerformed(evt);
-            }
-        });
-
         tbDependentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nº", "Processo", "Data", "Tipo", "Observação", "Usuario"
+                "Nº", "Data", "Processo", "Observação", "Situação", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
@@ -575,44 +570,49 @@ public class DepPessoal extends javax.swing.JFrame {
             }
         });
         jScrollPane6.setViewportView(tbDependentes);
+        if (tbDependentes.getColumnModel().getColumnCount() > 0) {
+            tbDependentes.getColumnModel().getColumn(0).setMaxWidth(30);
+            tbDependentes.getColumnModel().getColumn(1).setMaxWidth(70);
+            tbDependentes.getColumnModel().getColumn(2).setMaxWidth(90);
+            tbDependentes.getColumnModel().getColumn(4).setMaxWidth(150);
+            tbDependentes.getColumnModel().getColumn(5).setMaxWidth(100);
+        }
 
         javax.swing.GroupLayout jpDependentesLayout = new javax.swing.GroupLayout(jpDependentes);
         jpDependentes.setLayout(jpDependentesLayout);
         jpDependentesLayout.setHorizontalGroup(
             jpDependentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpDependentesLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbCodDependentes)
-                .addGap(115, 115, 115)
-                .addComponent(txtCodDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpDependentesLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbDataDependetes)
-                .addGap(111, 111, 111)
-                .addComponent(txtDataDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lbTipoDependentes)
-                .addGap(18, 18, 18)
-                .addComponent(cbTipoDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpDependentesLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbObsDependentes)
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpDependentesLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(btnNovoDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterarDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalvarDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelarDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcluirDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFecharDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jpDependentesLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jpDependentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpDependentesLayout.createSequentialGroup()
+                        .addComponent(lbCodDependentes)
+                        .addGap(115, 115, 115)
+                        .addComponent(txtCodDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpDependentesLayout.createSequentialGroup()
+                        .addComponent(lbDataDependetes)
+                        .addGap(111, 111, 111)
+                        .addComponent(txtDataDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lbTipoDependentes)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbTipoDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpDependentesLayout.createSequentialGroup()
+                        .addComponent(lbObsDependentes)
+                        .addGap(73, 73, 73)
+                        .addGroup(jpDependentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpDependentesLayout.createSequentialGroup()
+                                .addComponent(btnNovoDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterarDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvarDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelarDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluirDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane7)))))
         );
         jpDependentesLayout.setVerticalGroup(
             jpDependentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -632,23 +632,21 @@ public class DepPessoal extends javax.swing.JFrame {
                     .addGroup(jpDependentesLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(lbTipoDependentes))
-                    .addGroup(jpDependentesLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(cbTipoDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cbTipoDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(jpDependentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbObsDependentes)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpDependentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpDependentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnSalvarDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnAlterarDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnNovoDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCancelarDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluirDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFecharDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                    .addGroup(jpDependentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCancelarDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcluirDependentes, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -664,10 +662,13 @@ public class DepPessoal extends javax.swing.JFrame {
         lbDataFolha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbDataFolha.setText("Data:");
 
+        txtDataFolha.setToolTipText("");
+
         lbTipoFolha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbTipoFolha.setText("Tipo:");
 
         cbTipoFolha.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Novo Andamento", "Finalizado" }));
+        cbTipoFolha.setToolTipText("Se desejar finalizar o andamento, selecione finalizado");
 
         lbObsFolha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbObsFolha.setText("Observação:");
@@ -712,19 +713,12 @@ public class DepPessoal extends javax.swing.JFrame {
             }
         });
 
-        btnFecharFolha.setText("Fechar");
-        btnFecharFolha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharFolhaActionPerformed(evt);
-            }
-        });
-
         tbFolha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nº", "Processo", "Data", "Tipo", "Observação", "Usuario"
+                "Nº", "Data", "Processo", "Observação", "Situação", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
@@ -748,44 +742,49 @@ public class DepPessoal extends javax.swing.JFrame {
             }
         });
         jScrollPane11.setViewportView(tbFolha);
+        if (tbFolha.getColumnModel().getColumnCount() > 0) {
+            tbFolha.getColumnModel().getColumn(0).setMaxWidth(30);
+            tbFolha.getColumnModel().getColumn(1).setMaxWidth(70);
+            tbFolha.getColumnModel().getColumn(2).setMaxWidth(90);
+            tbFolha.getColumnModel().getColumn(4).setMaxWidth(150);
+            tbFolha.getColumnModel().getColumn(5).setMaxWidth(100);
+        }
 
         javax.swing.GroupLayout jpFolhaLayout = new javax.swing.GroupLayout(jpFolha);
         jpFolha.setLayout(jpFolhaLayout);
         jpFolhaLayout.setHorizontalGroup(
             jpFolhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpFolhaLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbCodFolha)
-                .addGap(115, 115, 115)
-                .addComponent(txtCodFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpFolhaLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbDataFolha)
-                .addGap(111, 111, 111)
-                .addComponent(txtDataFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lbTipoFolha)
-                .addGap(18, 18, 18)
-                .addComponent(cbTipoFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpFolhaLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbObsFolha)
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpFolhaLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(btnNovoFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterarFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalvarFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelarFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcluirFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFecharFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jpFolhaLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jpFolhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpFolhaLayout.createSequentialGroup()
+                        .addComponent(lbCodFolha)
+                        .addGap(115, 115, 115)
+                        .addComponent(txtCodFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpFolhaLayout.createSequentialGroup()
+                        .addComponent(lbDataFolha)
+                        .addGap(111, 111, 111)
+                        .addComponent(txtDataFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lbTipoFolha)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbTipoFolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpFolhaLayout.createSequentialGroup()
+                        .addComponent(lbObsFolha)
+                        .addGap(73, 73, 73)
+                        .addGroup(jpFolhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpFolhaLayout.createSequentialGroup()
+                                .addComponent(btnNovoFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterarFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvarFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelarFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluirFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane10)))))
         );
         jpFolhaLayout.setVerticalGroup(
             jpFolhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -805,23 +804,20 @@ public class DepPessoal extends javax.swing.JFrame {
                     .addGroup(jpFolhaLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(lbTipoFolha))
-                    .addGroup(jpFolhaLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(cbTipoFolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cbTipoFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(jpFolhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbObsFolha)
                     .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpFolhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnNovoFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalvarFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpFolhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSalvarFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnNovoFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAlterarFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCancelarFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluirFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFecharFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                        .addComponent(btnCancelarFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcluirFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAlterarFolha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
                 .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -902,23 +898,25 @@ public class DepPessoal extends javax.swing.JFrame {
                 String sql = "select * from cadastrodosdependentesdosociaadm where CodCadastroDependentesSocioADM= "+txtCodDependentes.getText();
                 con_dependentes.executeSQL(sql);
                 if(con_dependentes.resultset.first()){
-                    String cliente = "Tem certeza que deseja excluir um cadastro da tabela Boleto com cliente : " +con_dependentes.resultset.getString("Cliente")+"?";
-                    String operacao = con_dependentes.resultset.getString("Tipo");
+                    String cliente = "Tem certeza que deseja excluir um registro do cliente : "+nome+"?";
+                    String operacao = con_dependentes.resultset.getString("AndamentoCadastroDependentesSocioADM");
                     int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                     if(opcao_escolhida == JOptionPane.YES_OPTION){
                         sql = "DELETE FROM cadastrodosdependentesdosociaadm Where CodCadastroDependentesSocioADM="+txtCodDependentes.getText();
                         int conseguiu_excluir = con_dependentes.statement.executeUpdate(sql);
                         if (conseguiu_excluir == 1){
                             JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
+                            
+                            limpar_tabela_dependentes();
+                            preencher_tabela_dependentes();
+                            limpar_tela_dependentes();
+                            
                             if("Finalizado".equals(operacao)){
                                con_dependentes.executeSQL("select * from cadastrodosdependentesdosociaadm where NumerodoProcesso='"+processo+ "and AndamentoCadastroDependentesSocioADM='Finalizado'");
                                if(!con_dependentes.resultset.first()){
                                     try{
                                         con_dp.statement.executeUpdate("update dp AndamentoCadastroDependentesdoSocioADM='Em Aberto' where Numerodoprocesso='"+processo);
                                     
-                                        limpar_tabela_dependentes();
-                                        preencher_tabela_dependentes();
-                                        limpar_tela_dependentes();
                                         preencher_status();
                                         atualizar_cadastro_cliente();
 
@@ -947,9 +945,7 @@ public class DepPessoal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Digite uma data valida no campo novo andamento!");
         }
         else if(cbTipoDependentes.getSelectedItem().equals("")){
-            JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
-            cbTipoDependentes.requestFocus();
-        }
+            JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");        }
         //evitando erros com cadastro ja salvo antes
         else if(txtCodDependentes.getText().equals("")){
             try{
@@ -965,13 +961,11 @@ public class DepPessoal extends javax.swing.JFrame {
                     }
                 String gry = "insert into cadastrodosdependentesdosociaadm ("+
                 "NumeroProcesso, DatadeCadastroAndamento, Obsevacao, "+
-                "Cliente, Usuario, AndamentoCadastroDependentesSocioADM, Tipo) values ('" +processo+"','"+
+                "Usuario, AndamentoCadastroDependentesSocioADM) values ('" +processo+"','"+
                 new java.sql.Date(data.getTime())+"','"+
                 txtObsDependentes.getText()+"','"+
-                nome+"','"+
                 usuario+"','"+
-                andamentoboleto+"','"+
-                cbTipoDependentes.getSelectedItem()+"')";
+                andamentoboleto+"')";
 
                 con_dependentes.exeQuery(gry);
                 JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
@@ -984,7 +978,7 @@ public class DepPessoal extends javax.swing.JFrame {
                 preencher_tabela_dependentes();
                 
             }catch(ParseException | HeadlessException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Boleto: "+erro);
+                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Dependentes: "+erro);
             }
         }
         else if(!txtCodDependentes.getText().equals("")){
@@ -1003,8 +997,7 @@ public class DepPessoal extends javax.swing.JFrame {
                 new java.sql.Date(data.getTime())+"',"+
                 "Obsevacao='"+txtObsDependentes.getText()+"',"+
                 "Usuario= '"+usuario+"',"+
-                "AndamentoCadastroDependentesSocioADM='"+andamento+"',"+
-                "Tipo='"+cbTipoDependentes.getSelectedItem()+"' "+
+                "AndamentoCadastroDependentesSocioADM='"+andamento+"' "+
                 "where CodCadastroDependentesSocioADM = "+txtCodDependentes.getText();
 
                 con_dependentes.statement.executeUpdate(sql);
@@ -1017,17 +1010,13 @@ public class DepPessoal extends javax.swing.JFrame {
                 atualizar_cadastro_cliente();
                 
             }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao atualizar os dados da tabela Boleto: \n " +erro);
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar os dados da tabela Dependentes: \n " +erro);
             } catch (ParseException ex) {
                 JOptionPane.showMessageDialog(null, "Você digitou uma data não valida!\n"+ex);
             }
         
         }
     }//GEN-LAST:event_btnSalvarDependentesActionPerformed
-
-    private void btnFecharDependentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharDependentesActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnFecharDependentesActionPerformed
 
     private void btnAlterarDependentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarDependentesActionPerformed
         desbloquear_tela_dependentes();
@@ -1044,14 +1033,18 @@ public class DepPessoal extends javax.swing.JFrame {
                         + "where CodCadastroSocioADMControl="+txtCodSocio.getText();
                 con_socio.executeSQL(sql);
                 con_socio.resultset.first();
-                String cliente = "Tem certeza que deseja excluir um cadastro da tabela Planilha de Cobrança do cliente : " +con_socio.resultset.getString("Cliente")+"?";
-                String operacao = con_socio.resultset.getString("Tipo");
+                String cliente = "Tem certeza que deseja excluir um registro do cliente : "+nome+"?";
+                String operacao = con_socio.resultset.getString("AndamentoCadastroSocioADMControl");
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
                     sql = "DELETE FROM cadastrosocioadmcontrol Where CodCadastroSocioADMControl = "+txtCodSocio.getText();
                     int conseguiu_excluir = con_socio.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
+                        
+                        limpar_tela_socio();
+                        limpar_tabela_socio();
+                        preencher_tabela_socio();
                         //verificar se não existe outro registro com o status finalizado nesse cliente
                         if("Finalizado".equals(operacao)){
                             con_socio.executeSQL("select * from cadastrosocioadmcontrol where NumeroProcesso="+processo+" and AndamentoCadastroSocioADMControl='Finalizado'");
@@ -1059,10 +1052,7 @@ public class DepPessoal extends javax.swing.JFrame {
                                 try{
                                     con_dp.statement.executeUpdate("update dp set AndamentoCadastroDoSocioNoControl='Em Aberto'"
                                     +"Numerodoprocesso="+processo);
-                                    
-                                    limpar_tela_socio();
-                                    limpar_tabela_socio();
-                                    preencher_tabela_socio();
+                                   
                                     preencher_status();
                                     atualizar_cadastro_cliente();
                                     
@@ -1110,14 +1100,12 @@ public class DepPessoal extends javax.swing.JFrame {
 
                     String gry = "insert into cadastrosocioadmcontrol("
                     +"NumeroProcesso, DatadeCadastroAndamento, Obsevacao,"
-                    +"Cliente, Usuario, AndamentoCadastroSocioADMControl, Tipo) "
+                    +"Usuario, AndamentoCadastroSocioADMControl) "
                     +"values ('"+processo+"','"
                     +new java.sql.Date(data.getTime())+"','"
                     +txtObsSocio.getText()+"','"
-                    +nome+"','"
                     +usuario+"','"
-                    +andamento+"','"
-                    +cbTipoSocio.getSelectedItem()+"')";
+                    +andamento+"')";
 
                     con_socio.exeQuery(gry);
                     
@@ -1152,8 +1140,7 @@ public class DepPessoal extends javax.swing.JFrame {
                 new java.sql.Date(datatermo.getTime())+"',"+
                 "Obsevacao='"+txtObsSocio.getText()+"',"+
                 "Usuario = '"+usuario+"',"+
-                "AndamentoCadastroSocioADMControl='"+andamento+"',"+
-                "Tipo='"+cbTipoSocio.getSelectedItem()+"' "+
+                "AndamentoCadastroSocioADMControl='"+andamento+"' "+
                 "where CodCadastroSocioADMControl = "+txtCodSocio.getText();
 
                 con_socio.statement.executeUpdate(sql);
@@ -1174,10 +1161,6 @@ public class DepPessoal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalvarSocioActionPerformed
 
-    private void btnFecharSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharSocioActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnFecharSocioActionPerformed
-
     private void btnNovoSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoSocioActionPerformed
         criar_backup_socio();
         limpar_tela_socio();
@@ -1186,9 +1169,9 @@ public class DepPessoal extends javax.swing.JFrame {
     private void tbSocioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSocioMouseClicked
         Integer linha = tbSocio.getSelectedRow();
         String codigo = (String)tbSocio.getValueAt(linha, 0);
-        String data = (String)tbSocio.getValueAt(linha, 2);
-        String tipo = (String)tbSocio.getValueAt(linha, 3);
-        String observacao = (String)tbSocio.getValueAt(linha, 4);
+        String data = (String)tbSocio.getValueAt(linha, 1);
+        String observacao = (String)tbSocio.getValueAt(linha, 3);
+        String tipo = (String)tbSocio.getValueAt(linha, 4);
         
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -1198,19 +1181,22 @@ public class DepPessoal extends javax.swing.JFrame {
         txtDataSocio.setText(recebedataTabela);
         
         txtCodSocio.setText(codigo);
-        cbTipoSocio.setSelectedItem(tipo);
         txtObsSocio.setText(observacao);
         
-        
+        if(tipo.equalsIgnoreCase("Finalizado")){
+            cbTipoSocio.setSelectedItem("Finalizado");
+        }
+        else
+            cbTipoSocio.setSelectedItem("Novo Andamento");
         
     }//GEN-LAST:event_tbSocioMouseClicked
 
     private void tbDependentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDependentesMouseClicked
         Integer linha = tbDependentes.getSelectedRow();
         String codigo = (String)tbDependentes.getValueAt(linha, 0);
-        String data = (String)tbDependentes.getValueAt(linha, 2);
-        String tipo = (String)tbDependentes.getValueAt(linha, 3);
-        String observacao = (String)tbDependentes.getValueAt(linha, 4);
+        String data = (String)tbDependentes.getValueAt(linha, 1);
+        String observacao = (String)tbDependentes.getValueAt(linha, 3);
+        String tipo = (String)tbDependentes.getValueAt(linha, 4);
         
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -1220,8 +1206,13 @@ public class DepPessoal extends javax.swing.JFrame {
         txtDataDependentes.setText(recebedataTabela);
         
         txtCodDependentes.setText(codigo);
-        cbTipoDependentes.setSelectedItem(tipo);
         txtObsDependentes.setText(observacao);
+        
+        if(tipo.equalsIgnoreCase("Finalizado")){
+            cbTipoDependentes.setSelectedItem("Finalizado");
+        }
+        else
+            cbTipoDependentes.setSelectedItem("Novo Andamento");
     }//GEN-LAST:event_tbDependentesMouseClicked
 
     private void btnNovoFolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoFolhaActionPerformed
@@ -1233,7 +1224,6 @@ public class DepPessoal extends javax.swing.JFrame {
     private void btnSalvarFolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarFolhaActionPerformed
         if(txtDataFolha.getText().equals("  /  /    ") || txtDataFolha.getText().trim().length()<10){
             JOptionPane.showMessageDialog(null, "Data informada é invalida!");
-            txtDataFolha.requestFocus(true);
         }
         else if(txtCodFolha.getText().equals("")){
             try{
@@ -1250,14 +1240,12 @@ public class DepPessoal extends javax.swing.JFrame {
                 }
                 
                 String gry = "insert into implantardadosfolhapg (DatadeCadastroAndamento, NumeroProcesso,"
-                        +"Cliente, Usuario, Observacao, AndamentoImplantarDadosFolhaPG, Tipo)"
-                        +"values ('"+new java.util.Date(data.getTime())+"','"
+                        +"Usuario, Observacao, AndamentoImplantarDadosFolhaPG)"
+                        +"values ('"+new java.sql.Date(data.getTime())+"','"
                         +processo+"','"
-                        +nome+"','"
                         +usuario+"','"
                         +txtObsFolha.getText()+"','"
-                        +andamento+"','"
-                        +cbTipoFolha.getSelectedItem()+"')";
+                        +andamento+"')";
                 con_folha.exeQuery(gry);
                 
                 JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
@@ -1287,11 +1275,10 @@ public class DepPessoal extends javax.swing.JFrame {
                 }
                 
                 String sql = "update implantardadosfolhapg set "
-                        +"DatadeCadastroAndamento='"+new java.util.Date(data.getTime())+"','"
+                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
                         +"Usuario='"+usuario+"','"
                         +"Observacao='"+txtObsFolha.getText()+"','"
-                        +"AndamentoImplantarDadosFolhaPG='"+andamento+"','"
-                        +"Tipo='"+cbTipoFolha.getSelectedItem()+"'"
+                        +"AndamentoImplantarDadosFolhaPG='"+andamento+"' "
                         +" where CodImplantarDadosFolhaPG="+txtCodFolha.getText();
                 
                 con_folha.statement.executeUpdate(sql);
@@ -1327,8 +1314,8 @@ public class DepPessoal extends javax.swing.JFrame {
             try{
                 con_folha.executeSQL(("select * from implantardadosfolhapg where CodImplantarDadosFolhaPG="+txtCodFolha.getText()));
                 if(con_folha.resultset.first()){
-                    String cliente = "Tem certeza que deseja excluir o registro do cliente " +con_folha.resultset.getString("Cliente")+"?";
-                    String andamento = con_folha.resultset.getString("Tipo");
+                    String cliente = "Tem certeza que deseja excluir o registro do cliente " +nome+"?";
+                    String andamento = con_folha.resultset.getString("AndamentoImplantarDadosFolhaPG");
                     
                     int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão",JOptionPane.YES_NO_OPTION);
                     if(opcao_escolhida == JOptionPane.YES_OPTION){
@@ -1336,6 +1323,9 @@ public class DepPessoal extends javax.swing.JFrame {
                         int conseguiu_excluir = con_folha.statement.executeUpdate(sql);
                         if(conseguiu_excluir==1){
                             JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+                            preencher_status();
+                            atualizar_cadastro_cliente();
+                            limpar_tabela_folha();
                             
                             if("Finalizado".equals(andamento)){
                                 con_folha.executeSQL("select * from implantardadosfolhapg where NumeroProcesso="+processo+" and AndamentoImplantarDadosFolhaPG='Finalizado'");
@@ -1344,9 +1334,6 @@ public class DepPessoal extends javax.swing.JFrame {
                                     try{
                                         con_dp.statement.executeUpdate("update dp set AndamentoIplantacaodadosFolhaPg='Em Aberto'");
 
-                                        preencher_status();
-                                        atualizar_cadastro_cliente();
-                                        limpar_tabela_folha();
                                         preencher_tabela_folha();
                                         limpar_tela_folha();
                                     }catch(SQLException erro){
@@ -1365,16 +1352,12 @@ public class DepPessoal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExcluirFolhaActionPerformed
 
-    private void btnFecharFolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharFolhaActionPerformed
-    dispose();
-    }//GEN-LAST:event_btnFecharFolhaActionPerformed
-
     private void tbFolhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbFolhaMouseClicked
         Integer linha = tbFolha.getSelectedRow();
         String codigo = (String)tbFolha.getValueAt(linha, 0);
-        String data = (String)tbFolha.getValueAt(linha, 2);
-        String tipo = (String)tbFolha.getValueAt(linha, 3);
-        String observacao = (String)tbFolha.getValueAt(linha, 4);
+        String data = (String)tbFolha.getValueAt(linha, 1);
+        String observacao = (String)tbFolha.getValueAt(linha, 3);
+        String tipo = (String)tbFolha.getValueAt(linha, 4);
         
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -1384,8 +1367,13 @@ public class DepPessoal extends javax.swing.JFrame {
         txtDataFolha.setText(recebedataTabela);
         
         txtCodFolha.setText(codigo);
-        cbTipoFolha.setSelectedItem(tipo);
-        txtObsFolha.setText(observacao);     
+        txtObsFolha.setText(observacao);
+        
+        if(tipo.equalsIgnoreCase("Finalizado")){
+            cbTipoFolha.setSelectedItem("Finalizado");
+        }
+        else
+            cbTipoFolha.setSelectedItem("Novo Andamento");
     }//GEN-LAST:event_tbFolhaMouseClicked
 
     private void btnAlterarSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarSocioActionPerformed
@@ -1400,8 +1388,8 @@ public class DepPessoal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoDependentesActionPerformed
 
     private void btnAlterarFolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarFolhaActionPerformed
-        criar_backup_dependentes();
-        desbloquear_tela_dependentes();
+        criar_backup_folha();
+        desbloquear_tela_folha();
     }//GEN-LAST:event_btnAlterarFolhaActionPerformed
     public static void main(String args[]){
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1421,9 +1409,6 @@ public class DepPessoal extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluirDependentes;
     private javax.swing.JButton btnExcluirFolha;
     private javax.swing.JButton btnExcluirSocio;
-    private javax.swing.JButton btnFecharDependentes;
-    private javax.swing.JButton btnFecharFolha;
-    private javax.swing.JButton btnFecharSocio;
     private javax.swing.JButton btnNovoDependentes;
     private javax.swing.JButton btnNovoFolha;
     private javax.swing.JButton btnNovoSocio;
@@ -1506,10 +1491,10 @@ public class DepPessoal extends javax.swing.JFrame {
             while (con_socio.resultset.next())
                 modelo.addRow(new Object [] {
                     con_socio.resultset.getString("CodCadastroSocioADMControl"),
-                    con_socio.resultset.getString("NumeroProcesso"),
                     sdf.format(con_socio.resultset.getTime("DatadeCadastroAndamento")),
-                    con_socio.resultset.getString("Tipo"),                    
+                    con_socio.resultset.getString("NumeroProcesso"),
                     con_socio.resultset.getString("Obsevacao"),
+                    con_socio.resultset.getString("AndamentoCadastroSocioADMControl"),
                     con_socio.resultset.getString("Usuario")});
             con_socio.resultset.first();
         }   catch (SQLException erro){
@@ -1532,10 +1517,10 @@ public class DepPessoal extends javax.swing.JFrame {
             while (con_dependentes.resultset.next())
                 modelo.addRow(new Object [] {
                     con_dependentes.resultset.getString("CodCadastroDependentesSocioADM"),
-                    con_dependentes.resultset.getString("NumeroProcesso"),
                     sdf.format(con_dependentes.resultset.getTime("DatadeCadastroAndamento")),
-                    con_dependentes.resultset.getString("Tipo"),
+                    con_dependentes.resultset.getString("NumeroProcesso"),
                     con_dependentes.resultset.getString("Obsevacao"),
+                    con_dependentes.resultset.getString("AndamentoCadastroDependentesSocioADM"),
                     con_dependentes.resultset.getString("Usuario")});
             con_dependentes.resultset.first();
         }catch(SQLException erro){
@@ -1557,10 +1542,10 @@ public class DepPessoal extends javax.swing.JFrame {
             while(con_folha.resultset.next())
                 modelo.addRow(new Object [] {
                     con_folha.resultset.getString("CodImplantarDadosFolhaPG"),
-                    con_folha.resultset.getString("NumeroProcesso"),
                     sdf.format(con_folha.resultset.getString("DatadeCadastroAndamento")),
-                    con_folha.resultset.getString("Tipo"),
+                    con_folha.resultset.getString("NumeroProcesso"),
                     con_folha.resultset.getString("Obsevacao"),
+                    con_folha.resultset.getString("AndamentoImplantarDadosFolhaPG"),
                     con_folha.resultset.getString("Usuario")});
             con_folha.resultset.first();
         }catch(SQLException erro){
@@ -1681,7 +1666,7 @@ public class DepPessoal extends javax.swing.JFrame {
         txtCodSocio.setText("");
         txtObsSocio.setText("");
         txtCodSocio.setEditable(false);
-        cbTipoSocio.setSelectedItem("Novo Andamento");
+        cbTipoSocio.setSelectedItem("");
         Date data = new Date();
         String datahoje = sdf.format(data);
         txtDataSocio.setText(datahoje);
@@ -1690,7 +1675,7 @@ public class DepPessoal extends javax.swing.JFrame {
     public void limpar_tela_dependentes(){
         txtCodDependentes.setEditable(false);
         txtCodDependentes.setText("");
-        cbTipoDependentes.setSelectedItem("Novo Andamento");
+        cbTipoDependentes.setSelectedItem("");
         txtObsDependentes.setText("");
         Date data = new Date();
         String datahoje = sdf.format(data);
@@ -1699,7 +1684,7 @@ public class DepPessoal extends javax.swing.JFrame {
     public void limpar_tela_folha(){
         txtCodFolha.setEditable(false);
         txtCodFolha.setText("");
-        cbTipoFolha.setSelectedItem("Novo Andamento");
+        cbTipoFolha.setSelectedItem("");
         txtObsFolha.setText("");
         Date data = new Date();
         String datahoje = sdf.format(data);
@@ -1849,7 +1834,6 @@ public class DepPessoal extends javax.swing.JFrame {
     }
 
     public void desbloquear_tela_dependentes(){
-        txtCodDependentes.setEditable(false);
         txtDataDependentes.setEditable(true);
         cbTipoDependentes.setEditable(true);
         txtObsDependentes.setEditable(true);
@@ -1862,7 +1846,6 @@ public class DepPessoal extends javax.swing.JFrame {
     }
 
     public void desbloquear_tela_socio(){
-        txtCodSocio.setEditable(false);
         txtDataSocio.setEditable(true);
         cbTipoSocio.setEditable(true);
         txtObsSocio.setEditable(true);
@@ -1875,7 +1858,6 @@ public class DepPessoal extends javax.swing.JFrame {
     }
 
     public void desbloquear_tela_folha(){
-        txtCodFolha.setEditable(false);
         txtDataFolha.setEditable(true);
         cbTipoFolha.setEditable(true);
         txtObsFolha.setEditable(true);

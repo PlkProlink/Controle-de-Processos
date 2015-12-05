@@ -5,7 +5,7 @@ import javax.swing.*;
 
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class Conexao
 {

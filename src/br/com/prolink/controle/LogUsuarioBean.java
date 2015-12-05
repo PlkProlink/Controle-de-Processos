@@ -7,7 +7,7 @@ package br.com.prolink.controle;
 
 /**
  *
- * @author tiago
+ * @author Tiago Dias
  */
 
 public class LogUsuarioBean {

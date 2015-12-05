@@ -13,7 +13,10 @@ import javax.swing.text.MaskFormatter;
 
 import br.com.prolink.controle.*;
 import br.com.prolink.inicio.*;
-
+/**
+ *
+ * @author Tiago Dias
+ */
 
 public class Financeiro extends javax.swing.JFrame {
     //conexão com as tabelas necessarias
@@ -69,12 +72,15 @@ public class Financeiro extends javax.swing.JFrame {
         txt_nome.setText(nome);
         txt_id.setText(id);
         txt_usuario.setText(usuario);
+        
         if(!Login.nivel.equals("1") && !Login.departamento.equalsIgnoreCase("Financeiro")){
             
             btnExcluirPlanilha.setEnabled(false);
             btnSalvarPlanilha.setEnabled(false);
+            
             btnExcluirBoleto.setEnabled(false);
             btnSalvarBoleto.setEnabled(false);
+            
             btnExcluirControle.setEnabled(false);
             btnSalvarControle.setEnabled(false);
             
@@ -125,7 +131,6 @@ public class Financeiro extends javax.swing.JFrame {
         btnSalvarPlanilha = new javax.swing.JButton();
         btnCancelarPlanilha = new javax.swing.JButton();
         btnExcluirPlanilha = new javax.swing.JButton();
-        btnFecharPlanilha = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         tb_planilha = new javax.swing.JTable();
         btnAlterarPlanilha = new javax.swing.JButton();
@@ -148,7 +153,6 @@ public class Financeiro extends javax.swing.JFrame {
         btnSalvarBoleto = new javax.swing.JButton();
         btnCancelarBoleto = new javax.swing.JButton();
         btnExcluirBoleto = new javax.swing.JButton();
-        btnFecharBoleto = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         tb_boleto = new javax.swing.JTable();
         btnNovoBoleto = new javax.swing.JButton();
@@ -171,7 +175,6 @@ public class Financeiro extends javax.swing.JFrame {
         btnSalvarControle = new javax.swing.JButton();
         btnCancelarControle = new javax.swing.JButton();
         btnExcluirControle = new javax.swing.JButton();
-        btnFecharControle = new javax.swing.JButton();
         jScrollPane11 = new javax.swing.JScrollPane();
         tb_controle = new javax.swing.JTable();
         btnAlterarControle = new javax.swing.JButton();
@@ -328,6 +331,7 @@ public class Financeiro extends javax.swing.JFrame {
         lb_tipo_planilha.setText("Tipo:");
 
         cb_tipo_planilha.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Novo Andamento", "Finalizado" }));
+        cb_tipo_planilha.setToolTipText("Se desejar finalizar o andamento, selecione finalizar!");
 
         txt_obs_planilha.setColumns(20);
         txt_obs_planilha.setLineWrap(true);
@@ -342,6 +346,9 @@ public class Financeiro extends javax.swing.JFrame {
         });
 
         btnSalvarPlanilha.setText("Salvar");
+        btnSalvarPlanilha.setFocusable(false);
+        btnSalvarPlanilha.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSalvarPlanilha.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnSalvarPlanilha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarPlanilhaActionPerformed(evt);
@@ -362,19 +369,12 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
-        btnFecharPlanilha.setText("Fechar");
-        btnFecharPlanilha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharPlanilhaActionPerformed(evt);
-            }
-        });
-
         tb_planilha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nº", "Processo", "Data", "Tipo", "Observação", "Usuario"
+                "Nº", "Data", "Processo", "Observação", "Situação", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
@@ -398,6 +398,13 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
         jScrollPane8.setViewportView(tb_planilha);
+        if (tb_planilha.getColumnModel().getColumnCount() > 0) {
+            tb_planilha.getColumnModel().getColumn(0).setMaxWidth(30);
+            tb_planilha.getColumnModel().getColumn(1).setMaxWidth(70);
+            tb_planilha.getColumnModel().getColumn(2).setMaxWidth(90);
+            tb_planilha.getColumnModel().getColumn(4).setMaxWidth(150);
+            tb_planilha.getColumnModel().getColumn(5).setMaxWidth(100);
+        }
 
         btnAlterarPlanilha.setText("Alterar");
         btnAlterarPlanilha.addActionListener(new java.awt.event.ActionListener() {
@@ -410,39 +417,37 @@ public class Financeiro extends javax.swing.JFrame {
         jpPlanilha.setLayout(jpPlanilhaLayout);
         jpPlanilhaLayout.setHorizontalGroup(
             jpPlanilhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPlanilhaLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbcod_planilha)
-                .addGap(115, 115, 115)
-                .addComponent(txt_cod_planilha, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpPlanilhaLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_andamento_planilha)
-                .addGap(111, 111, 111)
-                .addComponent(txt_data_planilha, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lb_tipo_planilha)
-                .addGap(18, 18, 18)
-                .addComponent(cb_tipo_planilha, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpPlanilhaLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_obs_planilha)
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpPlanilhaLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(btnNovoPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterarPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalvarPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelarPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcluirPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFecharPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jpPlanilhaLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jpPlanilhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPlanilhaLayout.createSequentialGroup()
+                        .addComponent(lbcod_planilha)
+                        .addGap(115, 115, 115)
+                        .addComponent(txt_cod_planilha, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpPlanilhaLayout.createSequentialGroup()
+                        .addComponent(lb_andamento_planilha)
+                        .addGap(111, 111, 111)
+                        .addComponent(txt_data_planilha, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lb_tipo_planilha)
+                        .addGap(18, 18, 18)
+                        .addComponent(cb_tipo_planilha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpPlanilhaLayout.createSequentialGroup()
+                        .addComponent(lb_obs_planilha)
+                        .addGap(73, 73, 73)
+                        .addGroup(jpPlanilhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpPlanilhaLayout.createSequentialGroup()
+                                .addComponent(btnNovoPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterarPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvarPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelarPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluirPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane9)))))
         );
         jpPlanilhaLayout.setVerticalGroup(
             jpPlanilhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -462,24 +467,23 @@ public class Financeiro extends javax.swing.JFrame {
                     .addGroup(jpPlanilhaLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(lb_tipo_planilha))
-                    .addGroup(jpPlanilhaLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(cb_tipo_planilha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cb_tipo_planilha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(jpPlanilhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_obs_planilha)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(8, 8, 8)
                 .addGroup(jpPlanilhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpPlanilhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSalvarPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnNovoPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAlterarPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCancelarPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluirPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFecharPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpPlanilhaLayout.createSequentialGroup()
+                        .addGroup(jpPlanilhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNovoPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSalvarPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jpPlanilhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnCancelarPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnExcluirPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAlterarPlanilha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jtbGuiaFiscal.addTab("Planilha de Cobrança", jpPlanilha);
@@ -496,6 +500,7 @@ public class Financeiro extends javax.swing.JFrame {
         lb_tipo_boleto.setText("Tipo:");
 
         cb_tipo_boleto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Novo Andamento", "Finalizado" }));
+        cb_tipo_boleto.setToolTipText("Se desejar finalizar o andamento, selecione finalizar!");
 
         lb_obs_boleto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lb_obs_boleto.setText("Observação:");
@@ -533,19 +538,12 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
-        btnFecharBoleto.setText("Fechar");
-        btnFecharBoleto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharBoletoActionPerformed(evt);
-            }
-        });
-
         tb_boleto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nº", "Processo", "Data", "Tipo", "Observação", "Usuario"
+                "Nº", "Data", "Processo", "Observação", "Situação", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
@@ -569,6 +567,13 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
         jScrollPane6.setViewportView(tb_boleto);
+        if (tb_boleto.getColumnModel().getColumnCount() > 0) {
+            tb_boleto.getColumnModel().getColumn(0).setMaxWidth(30);
+            tb_boleto.getColumnModel().getColumn(1).setMaxWidth(70);
+            tb_boleto.getColumnModel().getColumn(2).setMaxWidth(90);
+            tb_boleto.getColumnModel().getColumn(4).setMaxWidth(150);
+            tb_boleto.getColumnModel().getColumn(5).setMaxWidth(100);
+        }
 
         btnNovoBoleto.setText("Novo");
         btnNovoBoleto.addActionListener(new java.awt.event.ActionListener() {
@@ -581,39 +586,37 @@ public class Financeiro extends javax.swing.JFrame {
         jpBoleto.setLayout(jpBoletoLayout);
         jpBoletoLayout.setHorizontalGroup(
             jpBoletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpBoletoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbcod_boleto)
-                .addGap(115, 115, 115)
-                .addComponent(txt_cod_boleto, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpBoletoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_data_boleto)
-                .addGap(111, 111, 111)
-                .addComponent(txt_data_boleto, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lb_tipo_boleto)
-                .addGap(18, 18, 18)
-                .addComponent(cb_tipo_boleto, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpBoletoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_obs_boleto)
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpBoletoLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(btnNovoBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalvarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcluirBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFecharBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jpBoletoLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jpBoletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpBoletoLayout.createSequentialGroup()
+                        .addComponent(lbcod_boleto)
+                        .addGap(115, 115, 115)
+                        .addComponent(txt_cod_boleto, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpBoletoLayout.createSequentialGroup()
+                        .addComponent(lb_data_boleto)
+                        .addGap(111, 111, 111)
+                        .addComponent(txt_data_boleto, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lb_tipo_boleto)
+                        .addGap(18, 18, 18)
+                        .addComponent(cb_tipo_boleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpBoletoLayout.createSequentialGroup()
+                        .addComponent(lb_obs_boleto)
+                        .addGap(73, 73, 73)
+                        .addGroup(jpBoletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpBoletoLayout.createSequentialGroup()
+                                .addComponent(btnNovoBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluirBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane7)))))
         );
         jpBoletoLayout.setVerticalGroup(
             jpBoletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -633,24 +636,23 @@ public class Financeiro extends javax.swing.JFrame {
                     .addGroup(jpBoletoLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(lb_tipo_boleto))
-                    .addGroup(jpBoletoLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(cb_tipo_boleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cb_tipo_boleto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(jpBoletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_obs_boleto)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(8, 8, 8)
                 .addGroup(jpBoletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpBoletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSalvarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAlterarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnNovoBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCancelarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluirBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFecharBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpBoletoLayout.createSequentialGroup()
+                        .addGroup(jpBoletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNovoBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSalvarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jpBoletoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnCancelarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnExcluirBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAlterarBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jpBoletoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txt_cod_boleto, txt_data_boleto});
@@ -669,6 +671,7 @@ public class Financeiro extends javax.swing.JFrame {
         lbtipo_controle.setText("Tipo:");
 
         cb_tipo_controle.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Novo Andamento", "Finalizado" }));
+        cb_tipo_controle.setToolTipText("Se desejar finalizar o andamento, selecione finalizar!");
 
         lb_obs_controle.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lb_obs_controle.setText("Observação:");
@@ -706,19 +709,12 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
-        btnFecharControle.setText("Fechar");
-        btnFecharControle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFecharControleActionPerformed(evt);
-            }
-        });
-
         tb_controle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nº", "Processo", "Data", "Tipo", "Observação", "Usuario"
+                "Nº", "Data", "Processo", "Observação", "Situação", "Usuario"
             }
         ) {
             Class[] types = new Class [] {
@@ -742,6 +738,13 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
         jScrollPane11.setViewportView(tb_controle);
+        if (tb_controle.getColumnModel().getColumnCount() > 0) {
+            tb_controle.getColumnModel().getColumn(0).setMaxWidth(30);
+            tb_controle.getColumnModel().getColumn(1).setMaxWidth(70);
+            tb_controle.getColumnModel().getColumn(2).setMaxWidth(90);
+            tb_controle.getColumnModel().getColumn(4).setMaxWidth(150);
+            tb_controle.getColumnModel().getColumn(5).setMaxWidth(100);
+        }
 
         btnAlterarControle.setText("Alterar");
         btnAlterarControle.addActionListener(new java.awt.event.ActionListener() {
@@ -754,39 +757,37 @@ public class Financeiro extends javax.swing.JFrame {
         jpControle.setLayout(jpControleLayout);
         jpControleLayout.setHorizontalGroup(
             jpControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpControleLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbcod_controle)
-                .addGap(115, 115, 115)
-                .addComponent(txt_cod_controle, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpControleLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lbdata_controle)
-                .addGap(111, 111, 111)
-                .addComponent(txt_data_controle, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(lbtipo_controle)
-                .addGap(18, 18, 18)
-                .addComponent(cb_tipo_controle, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpControleLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(lb_obs_controle)
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jpControleLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
-                .addComponent(btnNovoControle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAlterarControle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSalvarControle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCancelarControle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnExcluirControle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFecharControle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jpControleLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jpControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpControleLayout.createSequentialGroup()
+                        .addComponent(lbcod_controle)
+                        .addGap(115, 115, 115)
+                        .addComponent(txt_cod_controle, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpControleLayout.createSequentialGroup()
+                        .addComponent(lbdata_controle)
+                        .addGap(111, 111, 111)
+                        .addComponent(txt_data_controle, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lbtipo_controle)
+                        .addGap(18, 18, 18)
+                        .addComponent(cb_tipo_controle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpControleLayout.createSequentialGroup()
+                        .addComponent(lb_obs_controle)
+                        .addGap(73, 73, 73)
+                        .addGroup(jpControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpControleLayout.createSequentialGroup()
+                                .addComponent(btnNovoControle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterarControle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSalvarControle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelarControle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluirControle, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane10)))))
         );
         jpControleLayout.setVerticalGroup(
             jpControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -806,24 +807,23 @@ public class Financeiro extends javax.swing.JFrame {
                     .addGroup(jpControleLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(lbtipo_controle))
-                    .addGroup(jpControleLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(cb_tipo_controle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cb_tipo_controle, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(jpControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lb_obs_controle)
                     .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(8, 8, 8)
                 .addGroup(jpControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSalvarControle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnNovoControle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAlterarControle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCancelarControle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluirControle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFecharControle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpControleLayout.createSequentialGroup()
+                        .addGroup(jpControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNovoControle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSalvarControle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jpControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnCancelarControle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnExcluirControle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAlterarControle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jtbGuiaFiscal.addTab("Controle de O.S - Control", jpControle);
@@ -903,26 +903,27 @@ public class Financeiro extends javax.swing.JFrame {
                 String sql = "select * from emissaoboleto where CodEmissaoBoleto= "+txt_cod_boleto.getText();
                 con_boleto.executeSQL(sql);
                 if(con_boleto.resultset.first()){
-                    String cliente = "Tem certeza que deseja excluir um cadastro do cliente : " +con_boleto.resultset.getString("Cliente")+"?";
-                    String operacao = con_boleto.resultset.getString("Tipo");
+                    String cliente = "Tem certeza que deseja excluir um registro do cliente : " +nome+"?";
+                    String operacao = con_boleto.resultset.getString("AndamentoEmissaoBoleto");
                     int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                     if(opcao_escolhida == JOptionPane.YES_OPTION){
                         sql = "DELETE FROM emissaoboleto Where CodEmissaoBoleto="+txt_cod_boleto.getText();
                         int conseguiu_excluir = con_boleto.statement.executeUpdate(sql);
                         if (conseguiu_excluir == 1){
                             JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
+                            limpar_tabela_boleto();
+                            preencher_tabela_boleto();
+                            limpar_tela_boleto();
+                            
                             if("Finalizado".equals(operacao)){
                                 try{
                                     con_boleto.executeSQL("select * from emissaoboleto where NumeroProcesso='"+processo+"' and AndamentoEmissaoBoleto='Finalizado'");
                                     //se não existir mais um em situação finalizada ele ira atualizar o status
 
-                                    if(!con_boleto.resultset.last()){
+                                    if(!con_boleto.resultset.first()){
                                         try{
                                         con_financeiro.statement.executeUpdate("UPDATE financeiro set AndamentoEmissaoBoleto ='Em Aberto' where Numerodoprocesso='" +processo+"'");
 
-                                        limpar_tabela_boleto();
-                                        preencher_tabela_boleto();
-                                        limpar_tela_boleto();
                                         preencher_status();
                                         atualizar_cadastro_cliente();
 
@@ -955,7 +956,6 @@ public class Financeiro extends javax.swing.JFrame {
         }
         else if(cb_tipo_boleto.getSelectedItem().equals("")){
             JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
-            cb_tipo_boleto.requestFocus();
         }
         //evitando erros com cadastro ja salvo antes
         else if(txt_cod_boleto.getText().equals("")){
@@ -972,13 +972,11 @@ public class Financeiro extends javax.swing.JFrame {
                     }
                 String gry = "insert into emissaoboleto ("+
                 "NumeroProcesso, DatadeCadastroAndamento, Obsevacao, "+
-                "Cliente, Usuario, AndamentoEmissaoBoleto, Tipo) values ('" +processo+"','"+
+                "Usuario, AndamentoEmissaoBoleto) values ('" +processo+"','"+
                 new java.sql.Date(data.getTime())+"','"+
                 txt_obs_boleto.getText()+"','"+
-                nome+"','"+
                 usuario+"','"+
-                andamentoboleto+"','"+
-                cb_tipo_boleto.getSelectedItem()+"')";
+                andamentoboleto+"')";
 
                 con_boleto.exeQuery(gry);
                 JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
@@ -1010,8 +1008,7 @@ public class Financeiro extends javax.swing.JFrame {
                 new java.sql.Date(data.getTime())+"',"+
                 "Obsevacao='"+txt_obs_boleto.getText()+"',"+
                 "Usuario= '"+usuario+"',"+
-                "AndamentoEmissaoBoleto='"+andamento+"',"+
-                "Tipo='"+cb_tipo_boleto.getSelectedItem()+"' "+
+                "AndamentoEmissaoBoleto='"+andamento+"' "+
                 "where CodDistribuirFuncionarioInterno = "+txt_cod_boleto.getText();
 
                 con_boleto.statement.executeUpdate(sql);
@@ -1032,10 +1029,6 @@ public class Financeiro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalvarBoletoActionPerformed
 
-    private void btnFecharBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharBoletoActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnFecharBoletoActionPerformed
-
     private void btnAlterarBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarBoletoActionPerformed
         desbloquear_tela_boleto();
     }//GEN-LAST:event_btnAlterarBoletoActionPerformed
@@ -1051,25 +1044,26 @@ public class Financeiro extends javax.swing.JFrame {
                         + "where CodLancamentoDeDadosNaPlanConbranca= "+txt_cod_planilha.getText();
                 con_planilha.executeSQL(sql);
                 con_planilha.resultset.first();
-                String cliente = "Tem certeza que deseja excluir um cadastro da tabela Planilha de Cobrança do cliente : " +con_planilha.resultset.getString("Cliente")+"?";
-                String operacao = con_planilha.resultset.getString("Tipo");
+                String cliente = "Tem certeza que deseja excluir um registro do cliente : " +nome+"?";
+                String operacao = con_planilha.resultset.getString("AndamentoLancamentoDeDadosPlanCobranca");
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
                     sql = "DELETE FROM lancamentodedadosnaplancobranca Where CodLancamentoDeDadosNaPlanConbranca="+txt_cod_planilha.getText();
                     int conseguiu_excluir = con_planilha.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
+                        
+                        limpar_tela_planilha();
+                        limpar_tabela_planilha();
+                        preencher_tabela_planilha();
                         //verificar se não existe outro registro com o status finalizado nesse cliente
                         if("Finalizado".equals(operacao)){
-                            con_planilha.executeSQL("select * from lancamentodedadosnaplancobranca where NumeroProcesso="+processo+" and AndamentoLancamentoDeDadosPlanCobranca='Finalizado'");
+                            con_planilha.executeSQL("select * from lancamentodedadosnaplancobranca where NumeroProcesso='"+processo+"' and AndamentoLancamentoDeDadosPlanCobranca='Finalizado'");
                             if(!con_planilha.resultset.first()){
                                 try{
                                     con_financeiro.statement.executeUpdate("update financeiro set AndamentoLancamentodeDadosPlanCobranca='Em Aberto'"
                                     +"Numerodoprocesso="+processo);
-                                    
-                                    limpar_tela_planilha();
-                                    limpar_tabela_planilha();
-                                    preencher_tabela_planilha();
+                                                                        
                                     preencher_status();
                                     atualizar_cadastro_cliente();
                                     
@@ -1117,14 +1111,12 @@ public class Financeiro extends javax.swing.JFrame {
 
                     String gry = "insert into lancamentodedadosnaplancobranca  ("
                     +"NumeroProcesso, DatadeCadastroAndamento, Obsevacao,"
-                    +"Cliente, Usuario, AndamentoValidarPerfilFiscal, Tipo) "
+                    +"Usuario, AndamentoValidarPerfilFiscal) "
                     +"values ('"+processo+"','"
                     +new java.sql.Date(dataplanilha.getTime())+"','"
                     +txt_obs_planilha.getText()+"','"
-                    +nome+"','"
                     +usuario+"','"
-                    +andamentoplanilha+"','"
-                    +cb_tipo_planilha.getSelectedItem()+"')";
+                    +andamentoplanilha+"')";
 
                     con_planilha.exeQuery(gry);
                     
@@ -1158,8 +1150,7 @@ public class Financeiro extends javax.swing.JFrame {
                 new java.sql.Date(datatermo.getTime())+"',"+
                 "Obsevacao='"+txt_obs_planilha.getText()+"',"+
                 "Usuario = '"+usuario+"',"+
-                "AndamentoLancamentoDeDadosPlanCobranca='"+andamentoplanilha+"',"+
-                "Tipo='"+cb_tipo_planilha.getSelectedItem()+"' "+
+                "AndamentoLancamentoDeDadosPlanCobranca='"+andamentoplanilha+"' "+
                 "where CodLancamentoDeDadosNaPlanConbranca = "+txt_cod_planilha.getText();
 
                 con_planilha.statement.executeUpdate(sql);
@@ -1180,10 +1171,6 @@ public class Financeiro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSalvarPlanilhaActionPerformed
 
-    private void btnFecharPlanilhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharPlanilhaActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnFecharPlanilhaActionPerformed
-
     private void btnNovoPlanilhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoPlanilhaActionPerformed
         criar_backup_planilha();
         limpar_tela_planilha();
@@ -1192,9 +1179,9 @@ public class Financeiro extends javax.swing.JFrame {
     private void tb_planilhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_planilhaMouseClicked
         Integer linha = tb_planilha.getSelectedRow();
         String codigo = (String)tb_planilha.getValueAt(linha, 0);
-        String data = (String)tb_planilha.getValueAt(linha, 2);
-        String tipo = (String)tb_planilha.getValueAt(linha, 3);
-        String observacao = (String)tb_planilha.getValueAt(linha, 4);
+        String data = (String)tb_planilha.getValueAt(linha, 1);
+        String observacao = (String)tb_planilha.getValueAt(linha, 3);
+        String tipo = (String)tb_planilha.getValueAt(linha, 4);
         
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -1204,19 +1191,22 @@ public class Financeiro extends javax.swing.JFrame {
         txt_data_planilha.setText(recebedataTabela);
         
         txt_cod_planilha.setText(codigo);
-        cb_tipo_planilha.setSelectedItem(tipo);
         txt_obs_planilha.setText(observacao);
         
-        
+        if(tipo.equalsIgnoreCase("Finalizado")){
+            cb_tipo_planilha.setSelectedItem("Finalizado");
+        }
+        else
+            cb_tipo_planilha.setSelectedItem("Novo Andamento");
         
     }//GEN-LAST:event_tb_planilhaMouseClicked
 
     private void tb_boletoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_boletoMouseClicked
         Integer linha = tb_boleto.getSelectedRow();
         String codigo = (String)tb_boleto.getValueAt(linha, 0);
-        String data = (String)tb_boleto.getValueAt(linha, 2);
-        String tipo = (String)tb_boleto.getValueAt(linha, 3);
-        String observacao = (String)tb_boleto.getValueAt(linha, 4);
+        String data = (String)tb_boleto.getValueAt(linha, 1);
+        String observacao = (String)tb_boleto.getValueAt(linha, 3);
+        String tipo = (String)tb_boleto.getValueAt(linha, 4);
         
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -1226,8 +1216,14 @@ public class Financeiro extends javax.swing.JFrame {
         txt_data_boleto.setText(recebedataTabela);
         
         txt_cod_boleto.setText(codigo);
-        cb_tipo_boleto.setSelectedItem(tipo);
         txt_obs_boleto.setText(observacao);
+        
+        if(tipo.equalsIgnoreCase("Finalizado")){
+            cb_tipo_boleto.setSelectedItem("Finalizado");
+        }
+        else
+            cb_tipo_boleto.setSelectedItem("Novo Andamento");
+        
     }//GEN-LAST:event_tb_boletoMouseClicked
 
     private void btnNovoControleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoControleActionPerformed
@@ -1239,7 +1235,6 @@ public class Financeiro extends javax.swing.JFrame {
     private void btnSalvarControleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarControleActionPerformed
         if(txt_data_controle.getText().equals("  /  /    ") || txt_data_controle.getText().trim().length()<10){
             JOptionPane.showMessageDialog(null, "Data informada é invalida!");
-            txt_data_controle.requestFocus(true);
         }
         else if(txt_cod_controle.getText().equals("")){
             try{
@@ -1256,14 +1251,12 @@ public class Financeiro extends javax.swing.JFrame {
                 }
                 
                 String gry = "insert into entrarnocontrolcontroleos (DatadeCadastroAndamento, NumeroProcesso,"
-                        +"Cliente, Usuario, Observacao, AndamentoEntrarNControlControleOS, Tipo)"
-                        +"values ('"+new java.util.Date(data.getTime())+"','"
+                        +"Usuario, Observacao, AndamentoEntrarNControlControleOS)"
+                        +"values ('"+new java.sql.Date(data.getTime())+"','"
                         +processo+"','"
-                        +nome+"','"
                         +usuario+"','"
                         +txt_obs_controle.getText()+"','"
-                        +andamento+"','"
-                        +cb_tipo_controle.getSelectedItem()+"')";
+                        +andamento+"')";
                 con_controle.exeQuery(gry);
                 
                 JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
@@ -1293,12 +1286,11 @@ public class Financeiro extends javax.swing.JFrame {
                 }
                 
                 String sql = "update entrarnocontrolcontroleos set "
-                        +"DatadeCadastroAndamento='"+new java.util.Date(data.getTime())+"','"
+                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
                         +"Usuario='"+usuario+"','"
                         +"Observacao='"+txt_obs_controle.getText()+"','"
-                        +"AndamentoEntrarNControlControleOS='"+andamento+"','"
-                        +"Tipo='"+cb_tipo_controle.getSelectedItem()+"'"
-                        +" where CodEntrarNoControlControleOS="+txt_cod_controle.getText();
+                        +"AndamentoEntrarNControlControleOS='"+andamento+"' "
+                        +"where CodEntrarNoControlControleOS="+txt_cod_controle.getText();
                 
                 con_controle.statement.executeUpdate(sql);
                 
@@ -1334,7 +1326,7 @@ public class Financeiro extends javax.swing.JFrame {
                 con_controle.executeSQL(("select * from entrarnocontrolcontroleos where CodEntrarNoControlControleOS="+txt_cod_controle.getText()));
                 if(con_controle.resultset.first()){
                     String cliente = "Tem certeza que deseja excluir o registro do cliente " +con_controle.resultset.getString("Cliente")+"?";
-                    String andamento = con_controle.resultset.getString("Tipo");
+                    String andamento = con_controle.resultset.getString("AndamentoEntrarNControlControleOS");
                     
                     int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão",JOptionPane.YES_NO_OPTION);
                     if(opcao_escolhida == JOptionPane.YES_OPTION){
@@ -1342,6 +1334,9 @@ public class Financeiro extends javax.swing.JFrame {
                         int conseguiu_excluir = con_controle.statement.executeUpdate(sql);
                         if(conseguiu_excluir==1){
                             JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+                            limpar_tabela_controle();
+                            preencher_tabela_controle();
+                            limpar_tela_controle();
                             
                             if("Finalizado".equals(andamento)){
                                 con_controle.executeSQL("select * from entrarnocontrolcontroleos where NumeroProcesso="+processo+" and AndamentoEntrarNControlControleOS='Finalizado'");
@@ -1352,9 +1347,7 @@ public class Financeiro extends javax.swing.JFrame {
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
-                                        limpar_tabela_controle();
-                                        preencher_tabela_controle();
-                                        limpar_tela_controle();
+                                        
                                     }catch(SQLException erro){
                                         JOptionPane.showMessageDialog(null, "Falha ao atualizar tabela Financeiro!\n"+erro);
                                     }
@@ -1372,16 +1365,12 @@ public class Financeiro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExcluirControleActionPerformed
 
-    private void btnFecharControleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharControleActionPerformed
-    dispose();
-    }//GEN-LAST:event_btnFecharControleActionPerformed
-
     private void tb_controleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_controleMouseClicked
         Integer linha = tb_controle.getSelectedRow();
         String codigo = (String)tb_controle.getValueAt(linha, 0);
-        String data = (String)tb_controle.getValueAt(linha, 2);
-        String tipo = (String)tb_controle.getValueAt(linha, 3);
-        String observacao = (String)tb_controle.getValueAt(linha, 4);
+        String data = (String)tb_controle.getValueAt(linha, 1);
+        String observacao = (String)tb_controle.getValueAt(linha, 3);
+        String tipo = (String)tb_controle.getValueAt(linha, 4);
         
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -1391,8 +1380,14 @@ public class Financeiro extends javax.swing.JFrame {
         txt_data_controle.setText(recebedataTabela);
         
         txt_cod_controle.setText(codigo);
-        cb_tipo_controle.setSelectedItem(tipo);
-        txt_obs_controle.setText(observacao);     
+        txt_obs_controle.setText(observacao);
+        
+        if(tipo.equalsIgnoreCase("Finalizado")){
+            cb_tipo_controle.setSelectedItem("Finalizado");
+        }
+        else
+            cb_tipo_controle.setSelectedItem("Novo Andamento");
+        
     }//GEN-LAST:event_tb_controleMouseClicked
 
     private void btnAlterarPlanilhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarPlanilhaActionPerformed
@@ -1407,8 +1402,8 @@ public class Financeiro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoBoletoActionPerformed
 
     private void btnAlterarControleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarControleActionPerformed
-        criar_backup_boleto();
-        desbloquear_tela_boleto();
+        criar_backup_controle();
+        desbloquear_tela_controle();
     }//GEN-LAST:event_btnAlterarControleActionPerformed
     public static void main(String args[]){
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1428,9 +1423,6 @@ public class Financeiro extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluirBoleto;
     private javax.swing.JButton btnExcluirControle;
     private javax.swing.JButton btnExcluirPlanilha;
-    private javax.swing.JButton btnFecharBoleto;
-    private javax.swing.JButton btnFecharControle;
-    private javax.swing.JButton btnFecharPlanilha;
     private javax.swing.JButton btnNovoBoleto;
     private javax.swing.JButton btnNovoControle;
     private javax.swing.JButton btnNovoPlanilha;
@@ -1501,7 +1493,7 @@ public class Financeiro extends javax.swing.JFrame {
         tb_planilha.getColumnModel().getColumn(3);
         tb_planilha.getColumnModel().getColumn(4);
         tb_planilha.getColumnModel().getColumn(5);
-        con_planilha.executeSQL("select * from lancamentodedadosnaplancobranca where NumeroProcesso='"+processo);
+        con_planilha.executeSQL("select * from lancamentodedadosnaplancobranca where NumeroProcesso='"+processo+"'");
         
         DefaultTableModel modelo = (DefaultTableModel)tb_planilha.getModel();
         //modelo.setNumRows(0);
@@ -1512,14 +1504,14 @@ public class Financeiro extends javax.swing.JFrame {
             while (con_planilha.resultset.next())
                 modelo.addRow(new Object [] {
                     con_planilha.resultset.getString("CodLancamentoDeDadosNaPlanConbranca"),
-                    con_planilha.resultset.getString("NumeroProcesso"),
                     sdf.format(con_planilha.resultset.getTime("DatadeCadastroAndamento")),
-                    con_planilha.resultset.getString("Tipo"),                    
+                    con_planilha.resultset.getString("NumeroProcesso"),
                     con_planilha.resultset.getString("Obsevacao"),
+                    con_planilha.resultset.getString("AndamentoLancamentoDeDadosPlanCobranca"),
                     con_planilha.resultset.getString("Usuario")});
             con_planilha.resultset.first();
         }   catch (SQLException erro){
-    JOptionPane.showMessageDialog(null,"Erro ao listar na Tabela Planilha " +erro);
+    JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Planilha " +erro);
     }
 }
     public void preencher_tabela_boleto(){
@@ -1529,7 +1521,7 @@ public class Financeiro extends javax.swing.JFrame {
         tb_boleto.getColumnModel().getColumn(3);
         tb_boleto.getColumnModel().getColumn(4);
         tb_boleto.getColumnModel().getColumn(5);
-        con_boleto.executeSQL("select * from emissaoboleto WHERE NumeroProcesso='"+processo+"' order by CodDistribuirFuncionarioInterno");
+        con_boleto.executeSQL("select * from emissaoboleto WHERE NumeroProcesso='"+processo+"'");
         //
         DefaultTableModel modelo = (DefaultTableModel)tb_boleto.getModel();
         //modelo.setNumRows(0);
@@ -1538,10 +1530,10 @@ public class Financeiro extends javax.swing.JFrame {
             while (con_boleto.resultset.next())
                 modelo.addRow(new Object [] {
                     con_boleto.resultset.getString("CodEmissaoBoleto"),
-                    con_boleto.resultset.getString("NumeroProcesso"),
                     sdf.format(con_boleto.resultset.getTime("DatadeCadastroAndamento")),
-                    con_boleto.resultset.getString("Tipo"),
+                    con_boleto.resultset.getString("NumeroProcesso"),
                     con_boleto.resultset.getString("Obsevacao"),
+                    con_boleto.resultset.getString("AndamentoEmissaoBoleto"),
                     con_boleto.resultset.getString("Usuario")});
             con_boleto.resultset.first();
         }catch(SQLException erro){
@@ -1563,14 +1555,14 @@ public class Financeiro extends javax.swing.JFrame {
             while(con_controle.resultset.next())
                 modelo.addRow(new Object [] {
                     con_controle.resultset.getString("CoEntrarNoControlControleOS"),
-                    con_controle.resultset.getString("NumeroProcesso"),
                     sdf.format(con_controle.resultset.getString("DatadeCadastroAndamento")),
-                    con_controle.resultset.getString("Tipo"),
+                    con_controle.resultset.getString("NumeroProcesso"),
                     con_controle.resultset.getString("Obsevacao"),
+                    con_controle.resultset.getString("AndamentoEntrarNControlControleOS"),
                     con_controle.resultset.getString("Usuario")});
             con_controle.resultset.first();
         }catch(SQLException erro){
-          JOptionPane.showMessageDialog(null,"Erro ao listar na Tabela Controle " +erro);
+          JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Controle " +erro);
         }
     }
     public void limpar_tabela_planilha(){
@@ -1616,7 +1608,7 @@ public class Financeiro extends javax.swing.JFrame {
                 txt_status_controle.getText().equalsIgnoreCase("Em Aberto")){
        
                 try{
-                    String sql = "UPDATE cadastrodeprocesso set AndamentoFinanceiro='' where codNumerodoprocesso=" +processo;
+                    String sql = "UPDATE cadastrodeprocesso set AndamentoFinanceiro='Em Aberto' where codNumerodoprocesso=" +processo;
                     con_financeiro.statement.executeUpdate(sql);
 
                     String andamento = "Não Iniciado";
@@ -1687,7 +1679,7 @@ public class Financeiro extends javax.swing.JFrame {
         txt_cod_planilha.setText("");
         txt_obs_planilha.setText("");
         txt_cod_planilha.setEditable(false);
-        cb_tipo_planilha.setSelectedItem("Novo Andamento");
+        cb_tipo_planilha.setSelectedItem("");
         Date data = new Date();
         String datahoje = sdf.format(data);
         txt_data_planilha.setText(datahoje);
@@ -1696,7 +1688,7 @@ public class Financeiro extends javax.swing.JFrame {
     public void limpar_tela_boleto(){
         txt_cod_boleto.setEditable(false);
         txt_cod_boleto.setText("");
-        cb_tipo_boleto.setSelectedItem("Novo Andamento");
+        cb_tipo_boleto.setSelectedItem("");
         txt_obs_boleto.setText("");
         Date data = new Date();
         String datahoje = sdf.format(data);
@@ -1705,7 +1697,7 @@ public class Financeiro extends javax.swing.JFrame {
     public void limpar_tela_controle(){
         txt_cod_controle.setEditable(false);
         txt_cod_controle.setText("");
-        cb_tipo_controle.setSelectedItem("Novo Andamento");
+        cb_tipo_controle.setSelectedItem("");
         txt_obs_controle.setText("");
         Date data = new Date();
         String datahoje = sdf.format(data);
@@ -1730,7 +1722,7 @@ public class Financeiro extends javax.swing.JFrame {
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
      
-                    con_financeiro.executeSQL("select * from lancamentodedadosnaplancobranca  where NumeroProcesso='"+processo+"'and AndamentoLancamentoDeDadosPlanCobranca='Finalizado'");
+                    con_financeiro.executeSQL("select * from lancamentodedadosnaplancobranca where NumeroProcesso='"+processo+"'and AndamentoLancamentoDeDadosPlanCobranca='Finalizado'");
                     
                     if(!con_financeiro.resultset.first()){
                         try{
@@ -1855,7 +1847,6 @@ public class Financeiro extends javax.swing.JFrame {
     }
 
     public void desbloquear_tela_boleto(){
-        txt_cod_boleto.setEditable(false);
         txt_data_boleto.setEditable(true);
         cb_tipo_boleto.setEditable(true);
         txt_obs_boleto.setEditable(true);
@@ -1868,7 +1859,6 @@ public class Financeiro extends javax.swing.JFrame {
     }
 
     public void desbloquear_tela_planilha(){
-        txt_cod_planilha.setEditable(false);
         txt_data_planilha.setEditable(true);
         cb_tipo_planilha.setEditable(true);
         txt_obs_planilha.setEditable(true);
@@ -1881,7 +1871,6 @@ public class Financeiro extends javax.swing.JFrame {
     }
 
     public void desbloquear_tela_controle(){
-        txt_cod_controle.setEditable(false);
         txt_data_controle.setEditable(true);
         cb_tipo_controle.setEditable(true);
         txt_obs_controle.setEditable(true);

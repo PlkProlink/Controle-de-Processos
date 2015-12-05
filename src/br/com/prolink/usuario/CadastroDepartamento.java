@@ -10,7 +10,7 @@ import java.util.*;
 import javax.swing.JOptionPane;
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class CadastroDepartamento extends javax.swing.JFrame {
    

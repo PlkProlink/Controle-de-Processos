@@ -7,7 +7,7 @@ package br.com.prolink.recepcao;
 
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class GeralDocumentos extends javax.swing.JFrame {
 

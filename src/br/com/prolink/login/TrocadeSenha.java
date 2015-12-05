@@ -4,7 +4,10 @@ import br.com.prolink.inicio.Conexao;
 import br.com.prolink.inicio.Login;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-
+/**
+ *
+ * @author Tiago Dias
+ */
 public class TrocadeSenha extends javax.swing.JFrame {
 
     Conexao con_senha;

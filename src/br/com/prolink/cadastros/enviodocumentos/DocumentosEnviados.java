@@ -1,9 +1,6 @@
 package br.com.prolink.cadastros.enviodocumentos;
 
-import br.com.prolink.cadastros.enviodocumentos.internas.EnviadosIntCofins;
-import br.com.prolink.cadastros.enviodocumentos.internas.EnviadosIntDas;
-import br.com.prolink.cadastros.enviodocumentos.internas.EnviadosIntBoletos;
-import br.com.prolink.cadastros.enviodocumentos.envios.*;
+import br.com.prolink.cadastros.enviodocumentos.internas.*;
 import br.com.prolink.inicio.*;
 import java.text.SimpleDateFormat;
 
@@ -31,7 +28,19 @@ public class DocumentosEnviados extends javax.swing.JFrame {
         txtUsuario.setText(usuario);
         txtID.setText(id);
         
-        tudo();
+        boleto();
+        cofins();
+        csll();
+        das();
+        fgts();
+        gps();
+        icms();
+        icms_servico();
+        ipi();
+        irpf_salario();
+        irpf_servico();
+        irpj();
+        iss();    
         
    }
     @SuppressWarnings("unchecked")
@@ -104,19 +113,19 @@ public class DocumentosEnviados extends javax.swing.JFrame {
         lbIcmsServ3 = new javax.swing.JLabel();
         lbIcmsServ2 = new javax.swing.JLabel();
         lbIcmsServ1 = new javax.swing.JLabel();
-        okIrrfServ = new javax.swing.JLabel();
-        okFgts = new javax.swing.JLabel();
-        okIcms = new javax.swing.JLabel();
-        okIpi = new javax.swing.JLabel();
-        okIcmsServ = new javax.swing.JLabel();
-        okBol = new javax.swing.JLabel();
-        okDas = new javax.swing.JLabel();
-        okCofins = new javax.swing.JLabel();
-        okIrpj = new javax.swing.JLabel();
-        okCsll = new javax.swing.JLabel();
-        okGps = new javax.swing.JLabel();
-        okIrrf = new javax.swing.JLabel();
-        okIss = new javax.swing.JLabel();
+        btnBol = new javax.swing.JButton();
+        btnDas = new javax.swing.JButton();
+        btnCofins = new javax.swing.JButton();
+        btnIrpj = new javax.swing.JButton();
+        btnCsll = new javax.swing.JButton();
+        btnIss = new javax.swing.JButton();
+        btnIrpfSal = new javax.swing.JButton();
+        btnGps = new javax.swing.JButton();
+        btnIrpfServ = new javax.swing.JButton();
+        btnFgts = new javax.swing.JButton();
+        btnIpi = new javax.swing.JButton();
+        btnIcms = new javax.swing.JButton();
+        btnIcmsServ = new javax.swing.JButton();
         jDesktopPane = new javax.swing.JDesktopPane();
         jPanel4 = new javax.swing.JPanel();
         btnPDF = new javax.swing.JButton();
@@ -140,16 +149,16 @@ public class DocumentosEnviados extends javax.swing.JFrame {
         lbNome.setText("Nome:");
 
         txtCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtCodigo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtCodigo.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         txtID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtID.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtID.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         txtNome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtNome.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtNome.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         txtUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtUsuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtUsuario.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -192,22 +201,22 @@ public class DocumentosEnviados extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(250, 250, 250));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("1º Envio");
         jLabel22.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("2º Envio");
         jLabel23.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setText("3º Envio");
         jLabel24.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("Acompanhamento de Envios");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -250,235 +259,277 @@ public class DocumentosEnviados extends javax.swing.JFrame {
         jLabel21.setText("ICMS SERVIÇO");
 
         lbBol1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBol1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbBol1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbBol1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbBol2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBol2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbBol2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbBol2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbBol3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbBol3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbBol3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbBol3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbDas1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbDas1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbDas1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbDas1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbDas2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbDas2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbDas2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbDas2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbDas3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbDas3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbDas3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbDas3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbCofins1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbCofins1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbCofins1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbCofins1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbCofins2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbCofins2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbCofins2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbCofins2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbCofins3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbCofins3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbCofins3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbCofins3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIrpj1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIrpj1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIrpj1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIrpj1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIrpj2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIrpj2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIrpj2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIrpj2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIrpj3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIrpj3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIrpj3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIrpj3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbCsll1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbCsll1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbCsll1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbCsll1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbCsll2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbCsll2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbCsll2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbCsll2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbCsll3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbCsll3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbCsll3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbCsll3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIss1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIss1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIss1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIss1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIss2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIss2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIss2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIss2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIss3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIss3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIss3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIss3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbGps1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbGps1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbGps1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbGps1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbGps2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbGps2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbGps2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbGps2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbGps3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbGps3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbGps3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbGps3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIrpfSal1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIrpfSal1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIrpfSal1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIrpfSal1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIrpfSal2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIrpfSal2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIrpfSal2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIrpfSal2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIrpfSal3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIrpfSal3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIrpfSal3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIrpfSal3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIrpfServ1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIrpfServ1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIrpfServ1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIrpfServ1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIrpfServ2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIrpfServ2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIrpfServ2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIrpfServ2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIrpfServ3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIrpfServ3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIrpfServ3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIrpfServ3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbFgts1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbFgts1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbFgts1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbFgts1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbFgts2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbFgts2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbFgts2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbFgts2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbFgts3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbFgts3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbFgts3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbFgts3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIcms3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIcms3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIcms3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIcms3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIcms2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIcms2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIcms2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIcms2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIcms1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIcms1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIcms1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIcms1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIpi3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIpi3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIpi3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIpi3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIpi2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIpi2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIpi2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIpi2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIpi1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIpi1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIpi1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIpi1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIcmsServ3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIcmsServ3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIcmsServ3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIcmsServ3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIcmsServ2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIcmsServ2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIcmsServ2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIcmsServ2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         lbIcmsServ1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbIcmsServ1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lbIcmsServ1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lbIcmsServ1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
-        okIrrfServ.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okIrrfServ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okIrrfServ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okIrrfServ.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-
-        okFgts.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okFgts.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okFgts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okFgts.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-
-        okIcms.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okIcms.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okIcms.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okIcms.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-
-        okIpi.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okIpi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okIpi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okIpi.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-
-        okIcmsServ.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okIcmsServ.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okIcmsServ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okIcmsServ.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-
-        okBol.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okBol.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okBol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okBol.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        okBol.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                okBolMouseClicked(evt);
+        btnBol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnBol.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnBol.setContentAreaFilled(false);
+        btnBol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBolActionPerformed(evt);
             }
         });
 
-        okDas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okDas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okDas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okDas.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        okDas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                okDasMouseClicked(evt);
+        btnDas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnDas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnDas.setContentAreaFilled(false);
+        btnDas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDasActionPerformed(evt);
             }
         });
 
-        okCofins.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okCofins.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okCofins.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okCofins.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btnCofins.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnCofins.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCofins.setContentAreaFilled(false);
+        btnCofins.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCofinsActionPerformed(evt);
+            }
+        });
 
-        okIrpj.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okIrpj.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okIrpj.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okIrpj.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btnIrpj.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnIrpj.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnIrpj.setContentAreaFilled(false);
+        btnIrpj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIrpjActionPerformed(evt);
+            }
+        });
 
-        okCsll.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okCsll.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okCsll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okCsll.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btnCsll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnCsll.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCsll.setContentAreaFilled(false);
+        btnCsll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCsllActionPerformed(evt);
+            }
+        });
 
-        okGps.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okGps.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okGps.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okGps.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btnIss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnIss.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnIss.setContentAreaFilled(false);
+        btnIss.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIssActionPerformed(evt);
+            }
+        });
 
-        okIrrf.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okIrrf.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okIrrf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okIrrf.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btnIrpfSal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnIrpfSal.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnIrpfSal.setContentAreaFilled(false);
+        btnIrpfSal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIrpfSalActionPerformed(evt);
+            }
+        });
 
-        okIss.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        okIss.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        okIss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/green_seta.png"))); // NOI18N
-        okIss.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        btnGps.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnGps.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnGps.setContentAreaFilled(false);
+        btnGps.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGpsActionPerformed(evt);
+            }
+        });
+
+        btnIrpfServ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnIrpfServ.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnIrpfServ.setContentAreaFilled(false);
+        btnIrpfServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIrpfServActionPerformed(evt);
+            }
+        });
+
+        btnFgts.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnFgts.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnFgts.setContentAreaFilled(false);
+        btnFgts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFgtsActionPerformed(evt);
+            }
+        });
+
+        btnIpi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnIpi.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnIpi.setContentAreaFilled(false);
+        btnIpi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIpiActionPerformed(evt);
+            }
+        });
+
+        btnIcms.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnIcms.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnIcms.setContentAreaFilled(false);
+        btnIcms.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIcmsActionPerformed(evt);
+            }
+        });
+
+        btnIcmsServ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta.png"))); // NOI18N
+        btnIcmsServ.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnIcmsServ.setContentAreaFilled(false);
+        btnIcmsServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIcmsServActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -506,175 +557,169 @@ public class DocumentosEnviados extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbIcmsServ1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIcmsServ2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIcmsServ3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbIpi1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIpi2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIpi3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbIcms1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIcms2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIcms3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbFgts1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbFgts2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbFgts3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbIrpfServ1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIrpfServ2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIrpfServ3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbIrpfSal1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIrpfSal2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIrpfSal3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbGps1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbGps2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbGps3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbIss1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIss2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIss3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbCsll1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbCsll2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbCsll3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbIrpj1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIrpj2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbIrpj3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbCofins1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbCofins2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbCofins3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(lbDas1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(lbDas2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lbDas3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addComponent(lbBol1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(lbBol2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(lbBol3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(okIcmsServ, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okIpi, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okIcms, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okFgts, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okIrrfServ, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okIrrf, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okGps, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okIss, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okCsll, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okIrpj, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okCofins, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okDas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okBol, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(lbDas3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(btnDas, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lbBol1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbBol2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbBol3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnBol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lbIrpj1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIrpj2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIrpj3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lbCofins1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbCofins2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbCofins3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnIrpj, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                                    .addComponent(btnCofins, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lbIrpfSal1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIrpfSal2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIrpfSal3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lbGps1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbGps2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbGps3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lbIss1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIss2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIss3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lbCsll1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbCsll2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbCsll3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnIss, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                                    .addComponent(btnCsll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnIrpfSal, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                                    .addComponent(btnGps, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lbIcmsServ1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIcmsServ2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIcmsServ3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lbIpi1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIpi2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIpi3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lbIcms1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIcms2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIcms3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lbFgts1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbFgts2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbFgts3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(lbIrpfServ1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIrpfServ2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbIrpfServ3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnFgts, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                                    .addComponent(btnIrpfServ, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnIpi, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                                    .addComponent(btnIcms, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnIcmsServ, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(okBol, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(okDas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(okCofins, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(okIrpj, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(okCsll, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(okIss, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(okGps, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(okIrrf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(okIrrfServ, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(okFgts, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(okIcms, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(okIpi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(okIcmsServ, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel22)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel24))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel22)
-                            .addComponent(jLabel23)
-                            .addComponent(jLabel24))
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lbBol1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbBol2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbBol3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lbDas1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbDas2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbDas3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lbCofins1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbCofins2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbCofins3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lbIrpj1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbIrpj2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbIrpj3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(11, 11, 11)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lbBol1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbBol2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbBol3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBol, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbDas1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbDas2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbDas3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnDas, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnCofins, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbCofins1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbCofins2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbCofins3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbIrpj1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbIrpj2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbIrpj3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnIrpj, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lbCsll1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -687,7 +732,13 @@ public class DocumentosEnviados extends javax.swing.JFrame {
                                 .addComponent(lbIss1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lbIss2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lbIss3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnCsll, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)
+                        .addComponent(btnIss, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -701,44 +752,62 @@ public class DocumentosEnviados extends javax.swing.JFrame {
                                 .addComponent(lbIrpfSal1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lbIrpfSal2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lbIrpfSal3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGps, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnIrpfSal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnIrpfServ, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbIrpfServ1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbIrpfServ2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbIrpfServ3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lbIrpfServ1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbIrpfServ2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbIrpfServ3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lbFgts1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lbFgts2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbFgts3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lbIcms1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbIcms2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbIcms3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lbIpi1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbIpi2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbIpi3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lbIcmsServ1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbIcmsServ2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbIcmsServ3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(16, 16, 16)
-                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(lbFgts3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(btnFgts, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnIcms, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbIcms1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbIcms2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbIcms3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbIpi1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbIpi2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbIpi3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnIpi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbIcmsServ1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbIcmsServ2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbIcmsServ3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnIcmsServ, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(55, 55, 55))
         );
 
@@ -762,17 +831,17 @@ public class DocumentosEnviados extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gerar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
         btnPDF.setFont(new java.awt.Font("Georgia", 1, 12)); // NOI18N
-        btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/pdf_icon.png"))); // NOI18N
+        btnPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/pdf_icon.png"))); // NOI18N
         btnPDF.setText("PDF");
         btnPDF.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnRelatorio.setFont(new java.awt.Font("Georgia", 1, 12)); // NOI18N
-        btnRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/relatorio_icon.png"))); // NOI18N
+        btnRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/relatorio_icon.png"))); // NOI18N
         btnRelatorio.setText("Relatório");
         btnRelatorio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnExcel.setFont(new java.awt.Font("Georgia", 1, 12)); // NOI18N
-        btnExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/cadastros/enviodocumentos/excel_icon.png"))); // NOI18N
+        btnExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/excel_icon.png"))); // NOI18N
         btnExcel.setText("EXCEL");
         btnExcel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -848,24 +917,125 @@ public class DocumentosEnviados extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void okBolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_okBolMouseClicked
+    private void btnBolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBolActionPerformed
         jDesktopPane.removeAll();
-        if(envbol == null){
-            envbol = new EnviadosIntBoletos();
+        if(bol == null){
+            bol = new EnviadosIntBoletos();
         }
-        jDesktopPane.add(envbol);
-        envbol.setVisible(true);
-      
-    }//GEN-LAST:event_okBolMouseClicked
+        jDesktopPane.add(bol);
+        bol.setVisible(true);
+ 
+    }//GEN-LAST:event_btnBolActionPerformed
 
-    private void okDasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_okDasMouseClicked
+    private void btnDasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDasActionPerformed
         jDesktopPane.removeAll();
-        if(envdas == null){
-            envdas = new EnviadosIntCsll();
+        if(das == null){
+            das = new EnviadosIntDas();
         }
-        jDesktopPane.add(envdas);
-        envdas.setVisible(true);
-    }//GEN-LAST:event_okDasMouseClicked
+        jDesktopPane.add(das);
+        das.setVisible(true);
+ 
+    }//GEN-LAST:event_btnDasActionPerformed
+
+    private void btnCofinsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCofinsActionPerformed
+        jDesktopPane.removeAll();
+        if(cofins == null){
+            cofins = new EnviadosIntCofins();
+        }
+        jDesktopPane.add(cofins);
+        cofins.setVisible(true);
+ 
+    }//GEN-LAST:event_btnCofinsActionPerformed
+
+    private void btnIrpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrpjActionPerformed
+        jDesktopPane.removeAll();
+        if(irpj == null){
+            irpj = new EnviadosIntIrpj();
+        }
+        jDesktopPane.add(irpj);
+        irpj.setVisible(true);
+    }//GEN-LAST:event_btnIrpjActionPerformed
+
+    private void btnCsllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCsllActionPerformed
+        jDesktopPane.removeAll();
+        if(csll == null){
+            csll = new EnviadosIntCsll();
+        }
+        jDesktopPane.add(csll);
+        csll.setVisible(true);
+    }//GEN-LAST:event_btnCsllActionPerformed
+
+    private void btnIssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIssActionPerformed
+        jDesktopPane.removeAll();
+        if(iss == null){
+            iss = new EnviadosIntIss();
+        }
+        jDesktopPane.add(iss);
+        iss.setVisible(true);
+    }//GEN-LAST:event_btnIssActionPerformed
+
+    private void btnGpsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGpsActionPerformed
+        jDesktopPane.removeAll();
+        if(gps == null){
+            gps = new EnviadosIntGps();
+        }
+        jDesktopPane.add(gps);
+        gps.setVisible(true);
+    }//GEN-LAST:event_btnGpsActionPerformed
+
+    private void btnIrpfSalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrpfSalActionPerformed
+        jDesktopPane.removeAll();
+        if(irpfSal == null){
+            irpfSal = new EnviadosIntIrpfSalario();
+        }
+        jDesktopPane.add(irpfSal);
+        irpfSal.setVisible(true);
+    }//GEN-LAST:event_btnIrpfSalActionPerformed
+
+    private void btnIrpfServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrpfServActionPerformed
+        jDesktopPane.removeAll();
+        if(irpfServ == null){
+            irpfServ = new EnviadosIntIrpfServicos();
+        }
+        jDesktopPane.add(irpfServ);
+        irpfServ.setVisible(true);
+    }//GEN-LAST:event_btnIrpfServActionPerformed
+
+    private void btnFgtsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFgtsActionPerformed
+        jDesktopPane.removeAll();
+        if(fgts == null){
+            fgts = new EnviadosIntFgts();
+        }
+        jDesktopPane.add(fgts);
+        fgts.setVisible(true);
+    }//GEN-LAST:event_btnFgtsActionPerformed
+
+    private void btnIcmsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIcmsActionPerformed
+        jDesktopPane.removeAll();
+        if(icms == null){
+            icms = new EnviadosIntIcms();
+        }
+        jDesktopPane.add(icms);
+        icms.setVisible(true);
+    }//GEN-LAST:event_btnIcmsActionPerformed
+
+    private void btnIpiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIpiActionPerformed
+        jDesktopPane.removeAll();
+        if(ipi == null){
+            ipi = new EnviadosIntIpi();
+        }
+        jDesktopPane.add(ipi);
+        ipi.setVisible(true);
+    }//GEN-LAST:event_btnIpiActionPerformed
+
+    private void btnIcmsServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIcmsServActionPerformed
+        jDesktopPane.removeAll();
+        if(icmsServ == null){
+            icmsServ = new EnviadosIntIcmsServicos();
+        }
+        jDesktopPane.add(icmsServ);
+        icmsServ.setVisible(true);
+    }//GEN-LAST:event_btnIcmsServActionPerformed
 
 
     public static void main(String args[]) {
@@ -900,7 +1070,20 @@ public class DocumentosEnviados extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBol;
+    private javax.swing.JButton btnCofins;
+    private javax.swing.JButton btnCsll;
+    private javax.swing.JButton btnDas;
     private javax.swing.JButton btnExcel;
+    private javax.swing.JButton btnFgts;
+    private javax.swing.JButton btnGps;
+    private javax.swing.JButton btnIcms;
+    private javax.swing.JButton btnIcmsServ;
+    private javax.swing.JButton btnIpi;
+    private javax.swing.JButton btnIrpfSal;
+    private javax.swing.JButton btnIrpfServ;
+    private javax.swing.JButton btnIrpj;
+    private javax.swing.JButton btnIss;
     private javax.swing.JButton btnPDF;
     private javax.swing.JButton btnRelatorio;
     private javax.swing.JDesktopPane jDesktopPane;
@@ -967,44 +1150,25 @@ public class DocumentosEnviados extends javax.swing.JFrame {
     public static javax.swing.JLabel lbIss3;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbProcesso;
-    private javax.swing.JLabel okBol;
-    private javax.swing.JLabel okCofins;
-    private javax.swing.JLabel okCsll;
-    private javax.swing.JLabel okDas;
-    private javax.swing.JLabel okFgts;
-    private javax.swing.JLabel okGps;
-    private javax.swing.JLabel okIcms;
-    private javax.swing.JLabel okIcmsServ;
-    private javax.swing.JLabel okIpi;
-    private javax.swing.JLabel okIrpj;
-    private javax.swing.JLabel okIrrf;
-    private javax.swing.JLabel okIrrfServ;
-    private javax.swing.JLabel okIss;
     public static javax.swing.JLabel txtCodigo;
     public static javax.swing.JLabel txtID;
     public static javax.swing.JLabel txtNome;
     public static javax.swing.JLabel txtUsuario;
     // End of variables declaration//GEN-END:variables
-    EnviadosIntBoletos envbol;
-    EnviadosIntDas envdas;
-    EnviadosIntCofins encofins;
-    
-    public void tudo(){
-        boleto();
-        cofins();
-        csll();
-        das();
-        fgts();
-        gps();
-        icms();
-        icms_servico();
-        ipi();
-        irpf_salario();
-        irpf_servico();
-        irpj();
-        iss();    
+    EnviadosIntBoletos bol;
+    EnviadosIntCofins cofins;
+    EnviadosIntCsll csll;
+    EnviadosIntDas das;
+    EnviadosIntFgts fgts;
+    EnviadosIntGps gps;
+    EnviadosIntIcms icms;
+    EnviadosIntIcmsServicos icmsServ;
+    EnviadosIntIpi ipi;
+    EnviadosIntIrpfSalario irpfSal;
+    EnviadosIntIrpfServicos irpfServ;
+    EnviadosIntIrpj irpj;
+    EnviadosIntIss iss;
 
-}
 public void boleto(){
     
     try{

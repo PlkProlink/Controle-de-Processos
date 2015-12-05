@@ -9,10 +9,9 @@ import javax.swing.table.*;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import br.com.prolink.inicio.*;
-
 /**
  *
- * @author User
+ * @author Tiago Dias
  */
 public class GrupodeAcesso extends javax.swing.JFrame {
     Conexao con_grupo;
