@@ -20,8 +20,10 @@ import br.com.prolink.inicio.*;
 
 public class Financeiro extends javax.swing.JFrame {
     //conexão com as tabelas necessarias
-    Conexao con_financeiro, con_controle, con_planilha, con_boleto;
-    //maskara para o JFormattedTextField
+    Conexao con = new Conexao();
+    Conexao con_geral = new Conexao();
+    
+//maskara para o JFormattedTextField
     MaskFormatter formatoPlanilha, formatoControle, formatoBoleto;
     //Formatador para data
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -34,18 +36,9 @@ public class Financeiro extends javax.swing.JFrame {
     
     public Financeiro() {
         initComponents();
-        //instanciando as conexoes e executando o metodo conecta
-        con_financeiro = new Conexao();
-        con_financeiro.conecta();
         
-        con_controle = new Conexao();
-        con_controle.conecta();
-        
-        con_planilha = new Conexao();
-        con_planilha.conecta();
-        
-        con_boleto = new Conexao();
-        con_boleto.conecta();
+        con.conecta();
+        con_geral.conecta();
         
         //chamando metodo que preencha as tabelas
         preencher_tabela_planilha();
@@ -53,7 +46,6 @@ public class Financeiro extends javax.swing.JFrame {
         preencher_tabela_controle();
         //chamando metodo que preencha tela de status
         preencher_status();
-        
         atualizar_cadastro_cliente();
         
         bloquear_tela_planilha();
@@ -181,6 +173,11 @@ public class Financeiro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Financeiro");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jpFiscal.setBackground(new java.awt.Color(245, 245, 245));
 
@@ -338,6 +335,7 @@ public class Financeiro extends javax.swing.JFrame {
         txt_obs_planilha.setRows(5);
         jScrollPane9.setViewportView(txt_obs_planilha);
 
+        btnNovoPlanilha.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoPlanilha.setText("Novo");
         btnNovoPlanilha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -345,6 +343,7 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarPlanilha.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarPlanilha.setText("Salvar");
         btnSalvarPlanilha.setFocusable(false);
         btnSalvarPlanilha.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -355,6 +354,7 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarPlanilha.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarPlanilha.setText("Cancelar");
         btnCancelarPlanilha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -362,6 +362,7 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirPlanilha.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirPlanilha.setText("Excluir");
         btnExcluirPlanilha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -406,6 +407,7 @@ public class Financeiro extends javax.swing.JFrame {
             tb_planilha.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
+        btnAlterarPlanilha.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarPlanilha.setText("Alterar");
         btnAlterarPlanilha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -510,6 +512,7 @@ public class Financeiro extends javax.swing.JFrame {
         txt_obs_boleto.setRows(5);
         jScrollPane7.setViewportView(txt_obs_boleto);
 
+        btnAlterarBoleto.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarBoleto.setText("Alterar");
         btnAlterarBoleto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -517,6 +520,7 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarBoleto.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarBoleto.setText("Salvar");
         btnSalvarBoleto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -524,6 +528,7 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarBoleto.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarBoleto.setText("Cancelar");
         btnCancelarBoleto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -531,6 +536,7 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirBoleto.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirBoleto.setText("Excluir");
         btnExcluirBoleto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -575,6 +581,7 @@ public class Financeiro extends javax.swing.JFrame {
             tb_boleto.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
+        btnNovoBoleto.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoBoleto.setText("Novo");
         btnNovoBoleto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -681,6 +688,7 @@ public class Financeiro extends javax.swing.JFrame {
         txt_obs_controle.setRows(5);
         jScrollPane10.setViewportView(txt_obs_controle);
 
+        btnNovoControle.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoControle.setText("Novo");
         btnNovoControle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -688,6 +696,7 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarControle.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarControle.setText("Salvar");
         btnSalvarControle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -695,6 +704,7 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarControle.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarControle.setText("Cancelar");
         btnCancelarControle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -702,6 +712,7 @@ public class Financeiro extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirControle.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirControle.setText("Excluir");
         btnExcluirControle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -746,6 +757,7 @@ public class Financeiro extends javax.swing.JFrame {
             tb_controle.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
+        btnAlterarControle.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarControle.setText("Alterar");
         btnAlterarControle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -898,17 +910,18 @@ public class Financeiro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Primeiro selecione um registro para exclusão!");
         }
         else{
+            
             try{
                 //busca cadastro de acordo com o codigo
                 String sql = "select * from emissaoboleto where CodEmissaoBoleto= "+txt_cod_boleto.getText();
-                con_boleto.executeSQL(sql);
-                if(con_boleto.resultset.first()){
+                con.executeSQL(sql);
+                if(con.resultset.first()){
                     String cliente = "Tem certeza que deseja excluir um registro do cliente : " +nome+"?";
-                    String operacao = con_boleto.resultset.getString("AndamentoEmissaoBoleto");
+                    String operacao = con.resultset.getString("AndamentoEmissaoBoleto");
                     int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                     if(opcao_escolhida == JOptionPane.YES_OPTION){
                         sql = "DELETE FROM emissaoboleto Where CodEmissaoBoleto="+txt_cod_boleto.getText();
-                        int conseguiu_excluir = con_boleto.statement.executeUpdate(sql);
+                        int conseguiu_excluir = con.statement.executeUpdate(sql);
                         if (conseguiu_excluir == 1){
                             JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
                             limpar_tabela_boleto();
@@ -917,12 +930,12 @@ public class Financeiro extends javax.swing.JFrame {
                             
                             if("Finalizado".equals(operacao)){
                                 try{
-                                    con_boleto.executeSQL("select * from emissaoboleto where NumeroProcesso='"+processo+"' and AndamentoEmissaoBoleto='Finalizado'");
+                                    con.executeSQL("select * from emissaoboleto where NumeroProcesso='"+processo+"' and AndamentoEmissaoBoleto='Finalizado'");
                                     //se não existir mais um em situação finalizada ele ira atualizar o status
 
-                                    if(!con_boleto.resultset.first()){
+                                    if(!con.resultset.first()){
                                         try{
-                                        con_financeiro.statement.executeUpdate("UPDATE financeiro set AndamentoEmissaoBoleto ='Em Aberto' where Numerodoprocesso='" +processo+"'");
+                                        con.statement.executeUpdate("UPDATE financeiro set AndamentoEmissaoBoleto ='Em Aberto' where Numerodoprocesso='" +processo+"'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
@@ -941,6 +954,7 @@ public class Financeiro extends javax.swing.JFrame {
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null, "Falha ao excluir o registro\n"+erro);
             }
+            
         }
     }//GEN-LAST:event_btnExcluirBoletoActionPerformed
 
@@ -959,6 +973,7 @@ public class Financeiro extends javax.swing.JFrame {
         }
         //evitando erros com cadastro ja salvo antes
         else if(txt_cod_boleto.getText().equals("")){
+            
             try{
                 String dataandamento = txt_data_boleto.getText();
                 Date data = sdf.parse(dataandamento);
@@ -978,7 +993,7 @@ public class Financeiro extends javax.swing.JFrame {
                 usuario+"','"+
                 andamentoboleto+"')";
 
-                con_boleto.exeQuery(gry);
+                con.exeQuery(gry);
                 JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
                 
                 
@@ -991,8 +1006,10 @@ public class Financeiro extends javax.swing.JFrame {
             }catch(ParseException | HeadlessException erro){
                 JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Boleto: "+erro);
             }
+            
         }
         else if(!txt_cod_boleto.getText().equals("")){
+            
             try{
                
                 String dataandamento = txt_data_boleto.getText();
@@ -1009,9 +1026,9 @@ public class Financeiro extends javax.swing.JFrame {
                 "Obsevacao='"+txt_obs_boleto.getText()+"',"+
                 "Usuario= '"+usuario+"',"+
                 "AndamentoEmissaoBoleto='"+andamento+"' "+
-                "where CodDistribuirFuncionarioInterno = "+txt_cod_boleto.getText();
+                "where CodEmissaoBoleto= "+txt_cod_boleto.getText();
 
-                con_boleto.statement.executeUpdate(sql);
+                con.statement.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
                 
                 atualizar_financeiro_boleto();
@@ -1025,7 +1042,7 @@ public class Financeiro extends javax.swing.JFrame {
             } catch (ParseException ex) {
                 JOptionPane.showMessageDialog(null, "Você digitou uma data não valida!\n"+ex);
             }
-        
+            
         }
     }//GEN-LAST:event_btnSalvarBoletoActionPerformed
 
@@ -1039,17 +1056,18 @@ public class Financeiro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Primeiro selecione um registro para exclusão!");
         }
         else{
+            
             try{
                 String sql = "select * from lancamentodedadosnaplancobranca  "
                         + "where CodLancamentoDeDadosNaPlanConbranca= "+txt_cod_planilha.getText();
-                con_planilha.executeSQL(sql);
-                con_planilha.resultset.first();
+                con.executeSQL(sql);
+                con.resultset.first();
                 String cliente = "Tem certeza que deseja excluir um registro do cliente : " +nome+"?";
-                String operacao = con_planilha.resultset.getString("AndamentoLancamentoDeDadosPlanCobranca");
+                String operacao = con.resultset.getString("AndamentoLancamentoDeDadosPlanCobranca");
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
                     sql = "DELETE FROM lancamentodedadosnaplancobranca Where CodLancamentoDeDadosNaPlanConbranca="+txt_cod_planilha.getText();
-                    int conseguiu_excluir = con_planilha.statement.executeUpdate(sql);
+                    int conseguiu_excluir = con.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
                         
@@ -1058,11 +1076,11 @@ public class Financeiro extends javax.swing.JFrame {
                         preencher_tabela_planilha();
                         //verificar se não existe outro registro com o status finalizado nesse cliente
                         if("Finalizado".equals(operacao)){
-                            con_planilha.executeSQL("select * from lancamentodedadosnaplancobranca where NumeroProcesso='"+processo+"' and AndamentoLancamentoDeDadosPlanCobranca='Finalizado'");
-                            if(!con_planilha.resultset.first()){
+                            con.executeSQL("select * from lancamentodedadosnaplancobranca where NumeroProcesso='"+processo+"' and AndamentoLancamentoDeDadosPlanCobranca='Finalizado'");
+                            if(!con.resultset.first()){
                                 try{
-                                    con_financeiro.statement.executeUpdate("update financeiro set AndamentoLancamentodeDadosPlanCobranca='Em Aberto'"
-                                    +"Numerodoprocesso="+processo);
+                                    con.statement.executeUpdate("update financeiro set AndamentoLancamentodeDadosPlanCobranca='Em Aberto' where"
+                                    +"Numerodoprocesso='"+processo+"'");
                                                                         
                                     preencher_status();
                                     atualizar_cadastro_cliente();
@@ -1077,6 +1095,7 @@ public class Financeiro extends javax.swing.JFrame {
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null, "Falha ao excluir o registro\n"+erro);
             }
+            
         }
     }//GEN-LAST:event_btnExcluirPlanilhaActionPerformed
 
@@ -1095,6 +1114,7 @@ public class Financeiro extends javax.swing.JFrame {
         }
         //evitando erros com cadastro ja salvo antes
         else if(txt_cod_planilha.getText().equals("")){
+            
             try{
                 //convertendo a primeira data
                 String dataandamento = txt_data_planilha.getText();
@@ -1111,14 +1131,14 @@ public class Financeiro extends javax.swing.JFrame {
 
                     String gry = "insert into lancamentodedadosnaplancobranca  ("
                     +"NumeroProcesso, DatadeCadastroAndamento, Obsevacao,"
-                    +"Usuario, AndamentoValidarPerfilFiscal) "
+                    +"Usuario, AndamentoLancamentoDeDadosPlanCobranca) "
                     +"values ('"+processo+"','"
                     +new java.sql.Date(dataplanilha.getTime())+"','"
                     +txt_obs_planilha.getText()+"','"
                     +usuario+"','"
                     +andamentoplanilha+"')";
 
-                    con_planilha.exeQuery(gry);
+                    con.exeQuery(gry);
                     
                     JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
                     
@@ -1131,8 +1151,10 @@ public class Financeiro extends javax.swing.JFrame {
             }catch(ParseException | HeadlessException add){
                 JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Planilha de Cobrança: "+add);
             }
+            
         }
         else if(!txt_cod_planilha.getText().equals("")){
+            
             try{
                
                 String dataandamento = txt_data_planilha.getText();
@@ -1153,7 +1175,7 @@ public class Financeiro extends javax.swing.JFrame {
                 "AndamentoLancamentoDeDadosPlanCobranca='"+andamentoplanilha+"' "+
                 "where CodLancamentoDeDadosNaPlanConbranca = "+txt_cod_planilha.getText();
 
-                con_planilha.statement.executeUpdate(sql);
+                con.statement.executeUpdate(sql);
                 
                 JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
                 
@@ -1168,12 +1190,14 @@ public class Financeiro extends javax.swing.JFrame {
             }catch (ParseException ex) {
                 JOptionPane.showMessageDialog(null, "Você digitou uma data não valida!\n"+ex);
             }
+            
         }
     }//GEN-LAST:event_btnSalvarPlanilhaActionPerformed
 
     private void btnNovoPlanilhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoPlanilhaActionPerformed
         criar_backup_planilha();
         limpar_tela_planilha();
+        desbloquear_tela_planilha();
     }//GEN-LAST:event_btnNovoPlanilhaActionPerformed
 
     private void tb_planilhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_planilhaMouseClicked
@@ -1237,6 +1261,7 @@ public class Financeiro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Data informada é invalida!");
         }
         else if(txt_cod_controle.getText().equals("")){
+            
             try{
                 String novadata = txt_data_controle.getText();
                 Date data = sdf.parse(novadata);
@@ -1251,13 +1276,13 @@ public class Financeiro extends javax.swing.JFrame {
                 }
                 
                 String gry = "insert into entrarnocontrolcontroleos (DatadeCadastroAndamento, NumeroProcesso,"
-                        +"Usuario, Observacao, AndamentoEntrarNControlControleOS)"
+                        +"Usuario, Obsevacao, AndamentoEntrarNControlControleOS)"
                         +"values ('"+new java.sql.Date(data.getTime())+"','"
                         +processo+"','"
                         +usuario+"','"
                         +txt_obs_controle.getText()+"','"
                         +andamento+"')";
-                con_controle.exeQuery(gry);
+                con.exeQuery(gry);
                 
                 JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
                 
@@ -1270,8 +1295,10 @@ public class Financeiro extends javax.swing.JFrame {
             }catch(ParseException | HeadlessException add){
                 JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro!\n" +add);
             }
+            
         }
         else if(!txt_cod_controle.getText().equals("")){
+            
             try{
                 String novadata = txt_data_controle.getText();
                 Date data = sdf.parse(novadata);
@@ -1286,15 +1313,15 @@ public class Financeiro extends javax.swing.JFrame {
                 }
                 
                 String sql = "update entrarnocontrolcontroleos set "
-                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
-                        +"Usuario='"+usuario+"','"
-                        +"Observacao='"+txt_obs_controle.getText()+"','"
+                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"', "
+                        +"Usuario='"+usuario+"',"
+                        +"Obsevacao='"+txt_obs_controle.getText()+"', "
                         +"AndamentoEntrarNControlControleOS='"+andamento+"' "
                         +"where CodEntrarNoControlControleOS="+txt_cod_controle.getText();
                 
-                con_controle.statement.executeUpdate(sql);
+                con.statement.executeUpdate(sql);
                 
-                JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
+                JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
                 
                 atualizar_financeiro_controle();
                 preencher_status();
@@ -1307,6 +1334,7 @@ public class Financeiro extends javax.swing.JFrame {
             }catch(ParseException ex){
                 JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro!\n" +ex);
             }
+            
         }
         
         
@@ -1322,16 +1350,17 @@ public class Financeiro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione um cliente para exclusão!");
         }
         else{
+            
             try{
-                con_controle.executeSQL(("select * from entrarnocontrolcontroleos where CodEntrarNoControlControleOS="+txt_cod_controle.getText()));
-                if(con_controle.resultset.first()){
-                    String cliente = "Tem certeza que deseja excluir o registro do cliente " +con_controle.resultset.getString("Cliente")+"?";
-                    String andamento = con_controle.resultset.getString("AndamentoEntrarNControlControleOS");
+                con.executeSQL(("select * from entrarnocontrolcontroleos where CodEntrarNoControlControleOS="+txt_cod_controle.getText()));
+                if(con.resultset.first()){
+                    String cliente = "Tem certeza que deseja excluir o registro do cliente " +con.resultset.getString("Cliente")+"?";
+                    String andamento = con.resultset.getString("AndamentoEntrarNControlControleOS");
                     
                     int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão",JOptionPane.YES_NO_OPTION);
                     if(opcao_escolhida == JOptionPane.YES_OPTION){
                         String sql = "delete from entrarnocontrolcontroleos where CodEntrarNoControlControleOS="+txt_cod_controle.getText();
-                        int conseguiu_excluir = con_controle.statement.executeUpdate(sql);
+                        int conseguiu_excluir = con.statement.executeUpdate(sql);
                         if(conseguiu_excluir==1){
                             JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
                             limpar_tabela_controle();
@@ -1339,11 +1368,12 @@ public class Financeiro extends javax.swing.JFrame {
                             limpar_tela_controle();
                             
                             if("Finalizado".equals(andamento)){
-                                con_controle.executeSQL("select * from entrarnocontrolcontroleos where NumeroProcesso="+processo+" and AndamentoEntrarNControlControleOS='Finalizado'");
+                                con.executeSQL("select * from entrarnocontrolcontroleos where NumeroProcesso="+processo+" and AndamentoEntrarNControlControleOS='Finalizado'");
                                 
-                                if(!con_controle.resultset.first()){
+                                if(!con.resultset.first()){
                                     try{
-                                        con_financeiro.statement.executeUpdate("update financeiro set AndamentoEntrarNoControlControleDoOs='Em Aberto'");
+                                        con.statement.executeUpdate("update financeiro set AndamentoEntrarNoControlControleDoOs='Em Aberto'"
+                                                + "where Numerodoprocesso='"+processo+"'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
@@ -1361,7 +1391,7 @@ public class Financeiro extends javax.swing.JFrame {
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null, "Falha ao excluir o registro da tabela Controle!\n"+erro);
             }
-            
+        
         }
     }//GEN-LAST:event_btnExcluirControleActionPerformed
 
@@ -1405,6 +1435,11 @@ public class Financeiro extends javax.swing.JFrame {
         criar_backup_controle();
         desbloquear_tela_controle();
     }//GEN-LAST:event_btnAlterarControleActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        con.desconecta();
+        con_geral.desconecta();
+    }//GEN-LAST:event_formWindowClosing
     public static void main(String args[]){
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run(){
@@ -1493,7 +1528,7 @@ public class Financeiro extends javax.swing.JFrame {
         tb_planilha.getColumnModel().getColumn(3);
         tb_planilha.getColumnModel().getColumn(4);
         tb_planilha.getColumnModel().getColumn(5);
-        con_planilha.executeSQL("select * from lancamentodedadosnaplancobranca where NumeroProcesso='"+processo+"'");
+        con.executeSQL("select * from lancamentodedadosnaplancobranca where NumeroProcesso='"+processo+"'");
         
         DefaultTableModel modelo = (DefaultTableModel)tb_planilha.getModel();
         //modelo.setNumRows(0);
@@ -1501,15 +1536,15 @@ public class Financeiro extends javax.swing.JFrame {
         try
         {
             
-            while (con_planilha.resultset.next())
+            while (con.resultset.next())
                 modelo.addRow(new Object [] {
-                    con_planilha.resultset.getString("CodLancamentoDeDadosNaPlanConbranca"),
-                    sdf.format(con_planilha.resultset.getTime("DatadeCadastroAndamento")),
-                    con_planilha.resultset.getString("NumeroProcesso"),
-                    con_planilha.resultset.getString("Obsevacao"),
-                    con_planilha.resultset.getString("AndamentoLancamentoDeDadosPlanCobranca"),
-                    con_planilha.resultset.getString("Usuario")});
-            con_planilha.resultset.first();
+                    con.resultset.getString("CodLancamentoDeDadosNaPlanConbranca"),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
+                    con.resultset.getString("NumeroProcesso"),
+                    con.resultset.getString("Obsevacao"),
+                    con.resultset.getString("AndamentoLancamentoDeDadosPlanCobranca"),
+                    con.resultset.getString("Usuario")});
+            con.resultset.first();
         }   catch (SQLException erro){
     JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Planilha " +erro);
     }
@@ -1521,21 +1556,21 @@ public class Financeiro extends javax.swing.JFrame {
         tb_boleto.getColumnModel().getColumn(3);
         tb_boleto.getColumnModel().getColumn(4);
         tb_boleto.getColumnModel().getColumn(5);
-        con_boleto.executeSQL("select * from emissaoboleto WHERE NumeroProcesso='"+processo+"'");
+        con.executeSQL("select * from emissaoboleto WHERE NumeroProcesso='"+processo+"'");
         //
         DefaultTableModel modelo = (DefaultTableModel)tb_boleto.getModel();
         //modelo.setNumRows(0);
         try
         {
-            while (con_boleto.resultset.next())
+            while (con.resultset.next())
                 modelo.addRow(new Object [] {
-                    con_boleto.resultset.getString("CodEmissaoBoleto"),
-                    sdf.format(con_boleto.resultset.getTime("DatadeCadastroAndamento")),
-                    con_boleto.resultset.getString("NumeroProcesso"),
-                    con_boleto.resultset.getString("Obsevacao"),
-                    con_boleto.resultset.getString("AndamentoEmissaoBoleto"),
-                    con_boleto.resultset.getString("Usuario")});
-            con_boleto.resultset.first();
+                    con.resultset.getString("CodEmissaoBoleto"),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
+                    con.resultset.getString("NumeroProcesso"),
+                    con.resultset.getString("Obsevacao"),
+                    con.resultset.getString("AndamentoEmissaoBoleto"),
+                    con.resultset.getString("Usuario")});
+            con.resultset.first();
         }catch(SQLException erro){
           JOptionPane.showMessageDialog(null,"Erro ao listar na Tabela Boleto "+erro);
         }
@@ -1547,20 +1582,20 @@ public class Financeiro extends javax.swing.JFrame {
         tb_controle.getColumnModel().getColumn(3);
         tb_controle.getColumnModel().getColumn(4);
         tb_controle.getColumnModel().getColumn(5);
-        con_controle.executeSQL("select * from entrarnocontrolcontroleos where NumeroProcesso='"+processo+"'");
+        con.executeSQL("select * from entrarnocontrolcontroleos where NumeroProcesso='"+processo+"'");
         
         DefaultTableModel modelo = (DefaultTableModel)tb_controle.getModel();
         
         try{
-            while(con_controle.resultset.next())
+            while(con.resultset.next())
                 modelo.addRow(new Object [] {
-                    con_controle.resultset.getString("CoEntrarNoControlControleOS"),
-                    sdf.format(con_controle.resultset.getString("DatadeCadastroAndamento")),
-                    con_controle.resultset.getString("NumeroProcesso"),
-                    con_controle.resultset.getString("Obsevacao"),
-                    con_controle.resultset.getString("AndamentoEntrarNControlControleOS"),
-                    con_controle.resultset.getString("Usuario")});
-            con_controle.resultset.first();
+                    con.resultset.getString("CodEntrarNoControlControleOS"),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
+                    con.resultset.getString("NumeroProcesso"),
+                    con.resultset.getString("Obsevacao"),
+                    con.resultset.getString("AndamentoEntrarNControlControleOS"),
+                    con.resultset.getString("Usuario")});
+            con.resultset.first();
         }catch(SQLException erro){
           JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Controle " +erro);
         }
@@ -1586,12 +1621,12 @@ public class Financeiro extends javax.swing.JFrame {
     public void preencher_status(){
         try{
             String sql = "select * from financeiro WHERE Numerodoprocesso='"+processo+"'";
-            con_financeiro.executeSQL(sql);
-            con_financeiro.resultset.first();
+            con_geral.executeSQL(sql);
+            con_geral.resultset.first();
             
-            planilha = con_financeiro.resultset.getString("AndamentoLancamentodeDadosPlanCobranca");
-            boleto = con_financeiro.resultset.getString("AndamentoEmissaoBoleto");
-            controle = con_financeiro.resultset.getString("AndamentoEntrarNoControlControleDoOs");
+            planilha = con_geral.resultset.getString("AndamentoLancamentodeDadosPlanCobranca");
+            boleto = con_geral.resultset.getString("AndamentoEmissaoBoleto");
+            controle = con_geral.resultset.getString("AndamentoEntrarNoControlControleDoOs");
             
             txt_status_planilha.setText(planilha);
             txt_status_boleto.setText(boleto);
@@ -1603,43 +1638,43 @@ public class Financeiro extends javax.swing.JFrame {
     }
     public void atualizar_cadastro_cliente(){
         
-        if(txt_status_planilha.getText().equalsIgnoreCase("Em Aberto") &&
-                txt_status_boleto.getText().equalsIgnoreCase("Em Aberto") &&
-                txt_status_controle.getText().equalsIgnoreCase("Em Aberto")){
+        if(planilha.equalsIgnoreCase("Em Aberto") &&
+                boleto.equalsIgnoreCase("Em Aberto") &&
+                controle.equalsIgnoreCase("Em Aberto")){
        
                 try{
                     String sql = "UPDATE cadastrodeprocesso set AndamentoFinanceiro='Em Aberto' where codNumerodoprocesso=" +processo;
-                    con_financeiro.statement.executeUpdate(sql);
+                    con_geral.statement.executeUpdate(sql);
 
-                    String andamento = "Não Iniciado";
+                    String andamento = "Em Aberto";
                     txt_andamento_financeiro.setText(andamento);
                 }catch(SQLException erro){
                     JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!" +erro);
                 }
         }
-        else if(txt_status_planilha.getText().equalsIgnoreCase("Em Aberto") ||
-                txt_status_boleto.getText().equalsIgnoreCase("Em Aberto") ||
-                txt_status_controle.getText().equalsIgnoreCase("Em Aberto")){
-                try{
-                    String sql = "UPDATE cadastrodeprocesso set AndamentoFiscal='Em Aberto' where codNumerodoprocesso=" +processo;
-                    con_financeiro.statement.executeUpdate(sql);
-
-                    String andamento = "Em Andamento";
-                    txt_andamento_financeiro.setText(andamento);
-                }catch(SQLException erro){
-                    JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!" +erro);
-                }
-        }
-        else if(txt_status_planilha.getText().equalsIgnoreCase("Finalizado") &&
-                txt_status_boleto.getText().equalsIgnoreCase("Finalizado") &&
-                txt_status_controle.getText().equalsIgnoreCase("Finalizado")){
+        else if(planilha.equalsIgnoreCase("Finalizado") &&
+                boleto.equalsIgnoreCase("Finalizado") &&
+                controle.equalsIgnoreCase("Finalizado")){
        
                 try{
-                    String sql = "UPDATE cadastrodeprocesso set AndamentoFinanceiro='Finalizado' where codNumerodoprocesso="+processo;
-                    con_financeiro.statement.executeUpdate(sql);
+                    String sql = "UPDATE cadastrodeprocesso set AndamentoFinanceiro='Concluido' where codNumerodoprocesso="+processo;
+                    con_geral.statement.executeUpdate(sql);
+
+                    String andamento = "Concluido";
+                    txt_andamento_financeiro.setText(andamento);
+                    
+                }catch(SQLException erro){
+                    JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!" +erro);
+                }
+        }
+        else{
+            try{
+                    String sql = "UPDATE cadastrodeprocesso set AndamentoFinanceiro='Em Aberto' where codNumerodoprocesso="+processo;
+                    con_geral.statement.executeUpdate(sql);
 
                     String andamento = "Em Andamento";
                     txt_andamento_financeiro.setText(andamento);
+                    
                 }catch(SQLException erro){
                     JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!" +erro);
                 }
@@ -1708,27 +1743,27 @@ public class Financeiro extends javax.swing.JFrame {
         if(cb_tipo_planilha.getSelectedItem().equals("Finalizado")){
                     try{
                         String sql = "UPDATE financeiro set AndamentoLancamentodeDadosPlanCobranca='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_financeiro.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Planilha\n" +erro);
                     }
         }
         else{
             try{
-                con_financeiro.executeSQL("select * from financeiro where Numerodoprocesso='" +processo+"' and AndamentoLancamentodeDadosPlanCobranca ='Finalizado'");
-                if(con_financeiro.resultset.next()){
+                con_geral.executeSQL("select * from financeiro where Numerodoprocesso='" +processo+"' and AndamentoLancamentodeDadosPlanCobranca ='Finalizado'");
+                if(con_geral.resultset.next()){
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua ou altere todos os registros finalizados nesse painel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
-                    //consulta se existe algum registro finalizado
+                    //con_geralsulta se existe algum registro finalizado
      
-                    con_financeiro.executeSQL("select * from lancamentodedadosnaplancobranca where NumeroProcesso='"+processo+"'and AndamentoLancamentoDeDadosPlanCobranca='Finalizado'");
+                    con_geral.executeSQL("select * from lancamentodedadosnaplancobranca where NumeroProcesso='"+processo+"'and AndamentoLancamentoDeDadosPlanCobranca='Finalizado'");
                     
-                    if(!con_financeiro.resultset.first()){
+                    if(!con_geral.resultset.first()){
                         try{
                 
                         String sql = "UPDATE financeiro set AndamentoLancamentodeDadosPlanCobranca ='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_financeiro.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                         }catch(SQLException erro){
                             JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Planilha\n" +erro);
                         }
@@ -1738,7 +1773,7 @@ public class Financeiro extends javax.swing.JFrame {
                 else{
                     try{
                         String sql = "UPDATE financeiro set AndamentoLancamentodeDadosPlanCobranca ='Em Aberto' where Numerodoprocesso='" +txt_codigo.getText()+"'";
-                        con_financeiro.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Planilha:\n" +erro);
                     }
@@ -1753,27 +1788,27 @@ public class Financeiro extends javax.swing.JFrame {
         if(cb_tipo_boleto.getSelectedItem().equals("Finalizado")){
                     try{
                         String sql = "UPDATE financeiro set AndamentoEmissaoBoleto='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_financeiro.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Boleto\n" +erro);
                     }
         }
         else{
             try{
-                con_financeiro.executeSQL("select * from financeiro where Numerodoprocesso='" +processo+"' and AndamentoEmissaoBoleto ='Finalizado'");
-                if(con_financeiro.resultset.next()){
+                con_geral.executeSQL("select * from financeiro where Numerodoprocesso='" +processo+"' and AndamentoEmissaoBoleto ='Finalizado'");
+                if(con_geral.resultset.next()){
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua ou altere todos os registros finalizados nesse painel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
      
-                    con_financeiro.executeSQL("select * from emissaoboleto where NumeroProcesso='"+processo+"'and AndamentoEmissaoBoleto='Finalizado'");
+                    con_geral.executeSQL("select * from emissaoboleto where NumeroProcesso='"+processo+"'and AndamentoEmissaoBoleto='Finalizado'");
                     
-                    if(!con_financeiro.resultset.first()){
+                    if(!con_geral.resultset.first()){
                         try{
                 
                         String sql = "UPDATE financeiro set AndamentoEmissaoBoleto='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_financeiro.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                         }catch(SQLException erro){
                             JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Boleto\n" +erro);
                         }
@@ -1783,7 +1818,7 @@ public class Financeiro extends javax.swing.JFrame {
                 else{
                     try{
                         String sql = "UPDATE financeiro set AndamentoEmissaoBoleto ='Em Aberto' where Numerodoprocesso='" +txt_codigo.getText()+"'";
-                        con_financeiro.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Boleto:\n" +erro);
                     }
@@ -1798,27 +1833,27 @@ public class Financeiro extends javax.swing.JFrame {
         if(cb_tipo_controle.getSelectedItem().equals("Finalizado")){
                     try{
                         String sql = "UPDATE financeiro set AndamentoEntrarNoControlControleDoOs='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_financeiro.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Controle\n" +erro);
                     }
         }
         else{
             try{
-                con_financeiro.executeSQL("select * from financeiro where Numerodoprocesso='" +processo+"' and AndamentoEntrarNoControlControleDoOs ='Finalizado'");
-                if(con_financeiro.resultset.next()){
+                con_geral.executeSQL("select * from financeiro where Numerodoprocesso='" +processo+"' and AndamentoEntrarNoControlControleDoOs ='Finalizado'");
+                if(con_geral.resultset.next()){
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua ou altere todos os registros finalizados nesse painel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
      
-                    con_financeiro.executeSQL("select * from entrarnocontrolcontroleos where NumeroProcesso='"+processo+"'and AndamentoEntrarNControlControleOS='Finalizado'");
+                    con_geral.executeSQL("select * from entrarnocontrolcontroleos where NumeroProcesso='"+processo+"'and AndamentoEntrarNControlControleOS='Finalizado'");
                     
-                    if(!con_financeiro.resultset.first()){
+                    if(!con_geral.resultset.first()){
                         try{
                 
                         String sql = "UPDATE financeiro set AndamentoEntrarNoControlControleDoOs='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_financeiro.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                         }catch(SQLException erro){
                             JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Controle\n" +erro);
                         }
@@ -1828,7 +1863,7 @@ public class Financeiro extends javax.swing.JFrame {
                 else{
                     try{
                         String sql = "UPDATE financeiro set AndamentoEntrarNoControlControleDoOs ='Em Aberto' where Numerodoprocesso='" +txt_codigo.getText()+"'";
-                        con_financeiro.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Controle:\n" +erro);
                     }

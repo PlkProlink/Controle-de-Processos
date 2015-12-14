@@ -3,9 +3,9 @@ será um gestor de ações, fara a chamada para as novas classes
 
 Tiago Dias de Souza tiagoice@hotmail.com
 
-1-etapa = telas
-2-etapa = codigo + conexao
-3-envio e recebebimento entre  telas
+1-etapa = telas /
+2-etapa = codigo + conexao /
+3-envio e recebebimento entre  telas /
 4-etapa = relatorios
 5-etapa = graficos
 6-javahelp
@@ -29,7 +29,7 @@ import javax.swing.JOptionPane;
 
 public class TelaPrincipal extends javax.swing.JFrame {
     
-    data mostrar_data = new data();
+    data mostrar_data;
    
     public TelaPrincipal() {
         initComponents();
@@ -73,6 +73,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpRececepcao = new javax.swing.JPanel();
         btnConfirmarDocumento = new javax.swing.JButton();
         btnNovoDocumentoRec = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jpBarraInfo = new javax.swing.JPanel();
         txt_finalizada = new javax.swing.JLabel();
         lbFinalizada = new javax.swing.JLabel();
@@ -110,8 +111,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem8 = new javax.swing.JMenuItem();
         jmControle = new javax.swing.JMenu();
-        menu_arquivos = new javax.swing.JMenuItem();
-        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         menu_comercial = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         menu_contabil = new javax.swing.JMenuItem();
@@ -120,6 +119,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         menu_deppessoal = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
+        menu_enviados = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         menu_documentos = new javax.swing.JMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         menu_financeiro = new javax.swing.JMenuItem();
@@ -127,12 +128,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menu_fiscal = new javax.swing.JMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         menu_regulazicacao = new javax.swing.JMenuItem();
-        jmRelatorios = new javax.swing.JMenu();
-        jMenu8 = new javax.swing.JMenu();
-        jMenuItem18 = new javax.swing.JMenuItem();
-        jSeparator12 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem19 = new javax.swing.JMenuItem();
-        jMenuItem21 = new javax.swing.JMenuItem();
         jmAtivar = new javax.swing.JMenu();
         jmSobre = new javax.swing.JMenu();
         jmSair = new javax.swing.JMenu();
@@ -149,6 +144,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setFocusCycleRoot(false);
         setForeground(new java.awt.Color(255, 255, 255));
         setName("Menu Principal"); // NOI18N
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jpPrincipal.setBackground(new java.awt.Color(245, 245, 245));
         jpPrincipal.setToolTipText("");
@@ -447,6 +447,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jpRececepcaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnConfirmarDocumento, btnNovoDocumentoRec});
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/logo_grande.jpg"))); // NOI18N
+
         javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
         jpPrincipal.setLayout(jpPrincipalLayout);
         jpPrincipalLayout.setHorizontalGroup(
@@ -460,7 +462,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jpDepartamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpOutros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpPrincipalLayout.setVerticalGroup(
             jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -474,7 +480,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jpDepartamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpOutros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
         );
 
         jpBarraInfo.setBackground(new java.awt.Color(245, 245, 245));
@@ -648,6 +656,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jmPerfil.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jmPerfil.setText("Perfis");
+        jmPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmPerfilActionPerformed(evt);
+            }
+        });
         jMenu5.add(jmPerfil);
 
         jmCadastro.add(jMenu5);
@@ -658,10 +671,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jmUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jmUsuario.setText("Gerenciar");
+        jmUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmUsuarioActionPerformed(evt);
+            }
+        });
         jMenu6.add(jmUsuario);
 
         jmDepartamento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jmDepartamento.setText("Departamento");
+        jmDepartamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmDepartamentoActionPerformed(evt);
+            }
+        });
         jMenu6.add(jmDepartamento);
 
         jmControledeAcesso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -695,16 +718,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuItem6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem6.setText("Cadastrar Entrada");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jmRecepcao.add(jMenuItem6);
         jmRecepcao.add(jSeparator2);
 
         jMenuItem7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem7.setText("Confirmar Recebimento");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jmRecepcao.add(jMenuItem7);
         jmRecepcao.add(jSeparator3);
 
         jMenuItem8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem8.setText("Relação de Recebimentos");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jmRecepcao.add(jMenuItem8);
 
         barraGuias.add(jmRecepcao);
@@ -712,83 +750,96 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jmControle.setText("Controle");
         jmControle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        menu_arquivos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        menu_arquivos.setText("Arquivos");
-        jmControle.add(menu_arquivos);
-        jmControle.add(jSeparator4);
-
         menu_comercial.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_comercial.setText("Comercial");
+        menu_comercial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_comercialActionPerformed(evt);
+            }
+        });
         jmControle.add(menu_comercial);
         jmControle.add(jSeparator5);
 
         menu_contabil.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_contabil.setText("Contabil");
+        menu_contabil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_contabilActionPerformed(evt);
+            }
+        });
         jmControle.add(menu_contabil);
         jmControle.add(jSeparator6);
 
         menu_contratos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_contratos.setText("Contratos");
+        menu_contratos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_contratosActionPerformed(evt);
+            }
+        });
         jmControle.add(menu_contratos);
         jmControle.add(jSeparator7);
 
         menu_deppessoal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_deppessoal.setText("Dep.Pessoal");
+        menu_deppessoal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_deppessoalActionPerformed(evt);
+            }
+        });
         jmControle.add(menu_deppessoal);
         jmControle.add(jSeparator8);
 
+        menu_enviados.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        menu_enviados.setText("Documentos Enviados");
+        menu_enviados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_enviadosActionPerformed(evt);
+            }
+        });
+        jmControle.add(menu_enviados);
+        jmControle.add(jSeparator4);
+
         menu_documentos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        menu_documentos.setText("Documentos");
+        menu_documentos.setText("Documentos Recebidos");
+        menu_documentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_documentosActionPerformed(evt);
+            }
+        });
         jmControle.add(menu_documentos);
         jmControle.add(jSeparator9);
 
         menu_financeiro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_financeiro.setText("Financeiro");
+        menu_financeiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_financeiroActionPerformed(evt);
+            }
+        });
         jmControle.add(menu_financeiro);
         jmControle.add(jSeparator10);
 
         menu_fiscal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_fiscal.setText("Fiscal");
+        menu_fiscal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_fiscalActionPerformed(evt);
+            }
+        });
         jmControle.add(menu_fiscal);
         jmControle.add(jSeparator11);
 
         menu_regulazicacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         menu_regulazicacao.setText("Regularização");
+        menu_regulazicacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_regulazicacaoActionPerformed(evt);
+            }
+        });
         jmControle.add(menu_regulazicacao);
 
         barraGuias.add(jmControle);
-
-        jmRelatorios.setText("Relatórios");
-        jmRelatorios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jmRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jmRelatoriosMouseClicked(evt);
-            }
-        });
-
-        jMenu8.setText("Processos");
-
-        jMenuItem18.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem18.setText("Individual");
-        jMenu8.add(jMenuItem18);
-        jMenu8.add(jSeparator12);
-
-        jMenuItem19.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem19.setText("Geral");
-        jMenu8.add(jMenuItem19);
-
-        jmRelatorios.add(jMenu8);
-
-        jMenuItem21.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem21.setText("Gráficos");
-        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem21ActionPerformed(evt);
-            }
-        });
-        jmRelatorios.add(jMenuItem21);
-
-        barraGuias.add(jmRelatorios);
 
         jmAtivar.setText("Ativar Empresa");
         jmAtivar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -811,6 +862,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jmSair.setText("Sair");
         jmSair.setFocusable(false);
         jmSair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jmSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmSairMouseClicked(evt);
+            }
+        });
         barraGuias.add(jmSair);
 
         setJMenuBar(barraGuias);
@@ -840,14 +896,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jmSobreMouseClicked
 
-    private void jmRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmRelatoriosMouseClicked
-        JOptionPane.showMessageDialog(null, "Modulo em desenvolvimento");
-    }//GEN-LAST:event_jmRelatoriosMouseClicked
-
-    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
-        JOptionPane.showMessageDialog(null, "Modulo em Desenvolvimento!");
-    }//GEN-LAST:event_jMenuItem21ActionPerformed
-
     private void jmTrocadeUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmTrocadeUsuarioActionPerformed
         trocarAcesso = new LoginTrocadeAcesso();
         trocarAcesso.setVisible(true);
@@ -865,7 +913,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_timer1OnTime
 
     private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        JOptionPane.showMessageDialog(null, "Modulo em desenvolvimento");
+        JOptionPane.showMessageDialog(null, "Disponível na proxima atualização");
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void btnNovoProcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoProcessoActionPerformed
@@ -873,12 +921,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoProcessoActionPerformed
 
     private void btnClassificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClassificacaoActionPerformed
-        perfil();
+        classificacao();
     }//GEN-LAST:event_btnClassificacaoActionPerformed
 
     private void btnFiscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiscalActionPerformed
-        fiscal();
-        
+        fiscal();    
     }//GEN-LAST:event_btnFiscalActionPerformed
 
     private void btnNovoDocumentoRecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoDocumentoRecActionPerformed
@@ -942,6 +989,81 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnModificarDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarDataActionPerformed
         clientes();
     }//GEN-LAST:event_btnModificarDataActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+//        int escolha = JOptionPane.showConfirmDialog(null,"Deseja finalizar a aplicação?","Saindo!", JOptionPane.YES_NO_OPTION);  
+//        if(escolha == JOptionPane.YES_OPTION){
+////            Conexao con = new Conexao();
+////            con.conecta();
+////            con.desconecta();
+//            System.exit(0);
+//        }
+//        
+    }//GEN-LAST:event_formWindowClosing
+
+    private void jmUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmUsuarioActionPerformed
+        usuarios();
+    }//GEN-LAST:event_jmUsuarioActionPerformed
+
+    private void jmDepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDepartamentoActionPerformed
+        //departamentos();
+    }//GEN-LAST:event_jmDepartamentoActionPerformed
+
+    private void jmPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmPerfilActionPerformed
+        classificacao();
+    }//GEN-LAST:event_jmPerfilActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        recepcao_documentos();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        recepcao_confirmar();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        JOptionPane.showMessageDialog(null, "Modulo em desenvolvimento");
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void menu_enviadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_enviadosActionPerformed
+        enviar_documentos();
+    }//GEN-LAST:event_menu_enviadosActionPerformed
+
+    private void menu_comercialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_comercialActionPerformed
+        comercial();
+    }//GEN-LAST:event_menu_comercialActionPerformed
+
+    private void menu_contabilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_contabilActionPerformed
+        contabil();
+    }//GEN-LAST:event_menu_contabilActionPerformed
+
+    private void menu_contratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_contratosActionPerformed
+        contratos();
+    }//GEN-LAST:event_menu_contratosActionPerformed
+
+    private void menu_deppessoalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_deppessoalActionPerformed
+        dp();
+    }//GEN-LAST:event_menu_deppessoalActionPerformed
+
+    private void menu_documentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_documentosActionPerformed
+        documentos();
+    }//GEN-LAST:event_menu_documentosActionPerformed
+
+    private void menu_financeiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_financeiroActionPerformed
+        financeiro();
+    }//GEN-LAST:event_menu_financeiroActionPerformed
+
+    private void menu_fiscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_fiscalActionPerformed
+        fiscal();
+    }//GEN-LAST:event_menu_fiscalActionPerformed
+
+    private void menu_regulazicacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_regulazicacaoActionPerformed
+        regularizacao();
+    }//GEN-LAST:event_menu_regulazicacaoActionPerformed
+
+    private void jmSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmSairMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jmSairMouseClicked
     
     /**
      *
@@ -976,19 +1098,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnPessoal;
     private javax.swing.JButton btnRegularizacao;
     private javax.swing.JButton btnRelatorios;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu8;
-    private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
-    private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -1006,7 +1124,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmDepartamento;
     private javax.swing.JMenuItem jmPerfil;
     private javax.swing.JMenu jmRecepcao;
-    private javax.swing.JMenu jmRelatorios;
     private javax.swing.JMenu jmSair;
     private javax.swing.JMenu jmSobre;
     private javax.swing.JMenuItem jmTrocadeUsuario;
@@ -1023,12 +1140,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lbFinalizada;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lb_apelido;
-    private javax.swing.JMenuItem menu_arquivos;
     private javax.swing.JMenuItem menu_comercial;
     private javax.swing.JMenuItem menu_contabil;
     private javax.swing.JMenuItem menu_contratos;
     private javax.swing.JMenuItem menu_deppessoal;
     private javax.swing.JMenuItem menu_documentos;
+    private javax.swing.JMenuItem menu_enviados;
     private javax.swing.JMenuItem menu_financeiro;
     private javax.swing.JMenuItem menu_fiscal;
     private javax.swing.JMenuItem menu_regulazicacao;
@@ -1066,7 +1183,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public void contabil(){
         //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
         if(txt_codigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ma = new Ativador();
             ma.setVisible(true);
         }
@@ -1084,17 +1201,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public void regularizacao(){
         //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
         if(txt_codigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ativador = new Ativador();
             ativador.setVisible(true);
         }
         else{
             regularizacao = new Regularizacao();
             //Chamando a tela, enviando os dados do cliente para a tela solicitada
-            regularizacao.txt_codigo.setText(Ativador.processo);
-            regularizacao.txt_nome.setText(Ativador.nome);
-            regularizacao.txt_id.setText(Ativador.id);
-            regularizacao.txt_usuario.setText(Login.usuario);
+//            regularizacao.txt_codigo.setText(Ativador.processo);
+//            regularizacao.txt_nome.setText(Ativador.nome);
+//            regularizacao.txt_id.setText(Ativador.id);
+//            regularizacao.txt_usuario.setText(Login.usuario);
             
             regularizacao.setVisible(true);
             //JOptionPane.showMessageDialog(null, "A tela solicitada já se encontra aberta!");
@@ -1103,7 +1220,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     public void financeiro(){
         if(txt_codigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ma = new Ativador();
             ma.setVisible(true);
         }
@@ -1120,7 +1237,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public void comercial(){
         //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
         if(txt_codigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ma = new Ativador();
             ma.setVisible(true);
         }
@@ -1138,7 +1255,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public void fiscal(){
         //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
         if(txt_codigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ma = new Ativador();
             ma.setVisible(true);
         }
@@ -1154,7 +1271,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public void contratos(){
         //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
         if(txt_codigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ma = new Ativador();
             ma.setVisible(true);
         }
@@ -1172,7 +1289,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public void dp(){
         //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
         if(txt_codigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Primeiro ative uma empresa!");
+            JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ma = new Ativador();
             ma.setVisible(true);
         }
@@ -1192,14 +1309,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         cadClientes.setVisible(true);
 
     }
-    public void perfil(){
+    public void classificacao(){
         classificacao = new CadastroClassificacao();
         classificacao.setVisible(true);
         
     }
     public void documentos(){
        if(txt_codigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Ative uma empresa!");
+            JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ativador = new Ativador();
             ativador.setVisible(true);
         }
@@ -1217,7 +1334,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     public void enviar_documentos(){
         if(txt_codigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Ative uma empresa!");
+            JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ativador = new Ativador();
             ativador.setVisible(true);
         }
@@ -1244,6 +1361,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public void usuarios(){
         cadUsuario = new CadastroUsuarios();
         cadUsuario.setVisible(true);
+    }
+    public void departamentos(){
+        cd = new CadastroDepartamento();
+        cd.setVisible(true);
     }
 
 }

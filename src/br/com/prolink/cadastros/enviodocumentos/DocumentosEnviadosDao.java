@@ -79,6 +79,7 @@ public void boleto(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 public void das(){
     
@@ -125,6 +126,7 @@ public void das(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 public void cofins(){
     
@@ -170,6 +172,7 @@ public void cofins(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 public void irpj(){
 
@@ -215,6 +218,7 @@ public void irpj(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 public void csll(){
     
@@ -260,6 +264,7 @@ public void csll(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 public void iss(){
     
@@ -306,6 +311,7 @@ public void iss(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 public void gps(){
     
@@ -352,6 +358,7 @@ public void gps(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 public void irpf_salario(){
     
@@ -398,6 +405,7 @@ public void irpf_salario(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 public void irpf_servico(){
     
@@ -444,6 +452,7 @@ public void irpf_servico(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 public void fgts(){
     
@@ -488,6 +497,7 @@ public void fgts(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 public void icms(){
     
@@ -532,6 +542,7 @@ public void icms(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 public void ipi(){
     
@@ -576,6 +587,7 @@ public void ipi(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 public void icms_servico(){
     
@@ -622,6 +634,7 @@ public void icms_servico(){
     }catch(Exception erro){
         
     }
+    con.desconecta();
 }
 
 }

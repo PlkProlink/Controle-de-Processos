@@ -48,6 +48,7 @@ public class TrocadeSenha extends javax.swing.JFrame {
 
         lbSenhaConfirma.setText("Confirme:");
 
+        lbTitulo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lbTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbTitulo.setText("Alterar Senha");
 
@@ -128,20 +129,15 @@ public class TrocadeSenha extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         if(txtSenha.getText().trim().equals("")){
             JOptionPane.showMessageDialog(null,"Senha informada invalida");
-            txtSenha.requestFocusInWindow();
         }
         else if(txtSenhaNova.getText().trim().equals("")){
             JOptionPane.showMessageDialog(null,"Senha informada invalida");
-            txtSenhaNova.requestFocusInWindow();
         }
         else if(txtSenhaConfirma.getText().trim().equals("")){
             JOptionPane.showMessageDialog(null,"Senha informada invalida");
-            txtSenhaConfirma.requestFocusInWindow();
         }
         else if(!txtSenhaNova.getText().trim().equals(txtSenhaConfirma.getText().trim())){
             JOptionPane.showMessageDialog(null, "Senhas não são iguais");
-            txtSenhaConfirma.requestFocusInWindow();
-            txtSenhaNova.requestFocusInWindow();
         }
         else{
             if(txtSenha.getText().trim().equals(Login.senha)){
@@ -154,7 +150,7 @@ public class TrocadeSenha extends javax.swing.JFrame {
                 }
             }
             else{
-                    JOptionPane.showMessageDialog(null, "Senha informada não confere com o cadastro!");   
+                    JOptionPane.showMessageDialog(null, "Senha atual informada esta incorreta!");   
             }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed

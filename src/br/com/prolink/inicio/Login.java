@@ -4,6 +4,9 @@ package br.com.prolink.inicio;
 import br.com.prolink.controle.*;
 import br.com.prolink.login.*;
 import br.com.prolink.inicio.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -12,6 +15,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Timer;
 /**
  *
  * @author Tiago Dias
@@ -27,10 +31,13 @@ public class Login extends javax.swing.JFrame {
     public static String departamento;
     public static String nivel;
     
+    private Timer tempo;
+    int cont;
+    public final static int TREE_SECOND=5;
      public Login() {
         initComponents();
-        con_login = new Conexao();
-        con_login.conecta();
+        
+        barra.setVisible(false);
         
         lbVersao.setText(versaosistema);
         
@@ -53,6 +60,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtRecuperarAcesso = new javax.swing.JLabel();
         lbVersao = new javax.swing.JLabel();
+        barra = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -97,6 +105,11 @@ public class Login extends javax.swing.JFrame {
 
         txtSenha.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtSenha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -140,7 +153,7 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                    .addComponent(btnEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10))
         );
 
@@ -150,7 +163,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setText("Versão Beta:");
         jLabel3.setToolTipText("");
 
-        txtRecuperarAcesso.setFont(new java.awt.Font("Georgia", 1, 14)); // NOI18N
+        txtRecuperarAcesso.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtRecuperarAcesso.setForeground(new java.awt.Color(13, 53, 203));
         txtRecuperarAcesso.setText("Problema com o acesso?");
         txtRecuperarAcesso.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -167,7 +180,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(91, 91, 91)
                         .addComponent(jLabel1))
@@ -184,8 +197,11 @@ public class Login extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtRecuperarAcesso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                                    .addComponent(txtRecuperarAcesso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(barra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,8 +214,10 @@ public class Login extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(barra, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtRecuperarAcesso)
                 .addContainerGap())
         );
@@ -215,7 +233,7 @@ public class Login extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(478, 383));
+        setSize(new java.awt.Dimension(478, 405));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -232,6 +250,14 @@ public class Login extends javax.swing.JFrame {
         ra.setVisible(true);
     }//GEN-LAST:event_txtRecuperarAcessoMouseClicked
 
+    private void txtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            logar();
+        }
+    }//GEN-LAST:event_txtSenhaKeyPressed
+public void InicioSessao(){
+    
+}
     /**
      *
      * @param args
@@ -244,6 +270,7 @@ public class Login extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar barra;
     private javax.swing.JButton btnEntrar;
     private javax.swing.JButton btnSair;
     private javax.swing.JLabel jLabel1;
@@ -258,11 +285,29 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel txtRecuperarAcesso;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
-
+    class TimerListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+        cont++;
+        barra.setValue(cont);
+        if(cont==100){
+            tempo.stop();
+            esconder();
+            TelaPrincipal tela = new TelaPrincipal();
+            tela.setVisible(true);
+            TelaPrincipal.txt_usuario.setText(usuario);
+            TelaPrincipal.txt_departamento.setText(departamento);
+        
+        }
+        }
+    }
+    public void esconder(){this.setVisible(false);}
+    public void mostrar(){tempo.start();}
     /**
      *
      */
     public void logar(){
+        con_login = new Conexao();
+        con_login.conecta();
     //validação simples para não permitir campos vazios
         if(txtNome.getText().equals("") || txtSenha.getText().equals(""))
         JOptionPane.showMessageDialog(null,"Os campos não podem ser vazios!\n Tente Novamente!");
@@ -279,24 +324,29 @@ public class Login extends javax.swing.JFrame {
                     con_login.executeSQL(sql);
                      //se  encontrado o primeiro resultado, e se encontrar...   
                 if (con_login.resultset.first())
-                {
+                {   
+                    barra.setVisible(true);
+                    cont=-1;
+                    barra.setValue(0);
+                    barra.setStringPainted(true);
+                    tempo = new Timer(TREE_SECOND,new TimerListener());
+                    mostrar();
                     //JOptionPane.showMessageDialog(null,"Bem vindo ao Novo Controle de Processos!");
                      //será enviado para a tela principal o usuario logado e seu departamento
-                    new TelaPrincipal().show();
                      
                     usuario = con_login.resultset.getString("Usuario");
                     departamento = con_login.resultset.getString("Departamento");
                     senha = con_login.resultset.getString("Senha");
                     nivel = con_login.resultset.getString("Nivel");
                     
-                    TelaPrincipal.txt_usuario.setText(usuario);
-                    TelaPrincipal.txt_departamento.setText(departamento);
                     
-                    dispose();
+                    //dispose();
                 }
                 else{
-                     JOptionPane.showMessageDialog(null, "Senha Incorreta!");
+                     JOptionPane.showMessageDialog(null, "Senha ou Usuario incorreto(s)!");
+                     
                 }
+                
              }
              catch(SQLException erro)
              {
@@ -304,5 +354,7 @@ public class Login extends javax.swing.JFrame {
            // }
         }  
       }
+      con_login.desconecta();
     }
+    
 }

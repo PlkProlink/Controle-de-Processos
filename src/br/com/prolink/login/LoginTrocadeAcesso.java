@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import br.com.prolink.inicio.Conexao;
 import br.com.prolink.inicio.Login;
 import br.com.prolink.inicio.TelaPrincipal;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -14,7 +15,7 @@ import br.com.prolink.inicio.TelaPrincipal;
  */
 public class LoginTrocadeAcesso extends javax.swing.JFrame {
     int conta=0;
-    Conexao con_usuario;
+    Conexao con_usuario = new Conexao();;
 //inicializando um metodo da classe conexao para validação no banco de dados   
 
     /**
@@ -22,8 +23,8 @@ public class LoginTrocadeAcesso extends javax.swing.JFrame {
      */
         public LoginTrocadeAcesso() {
         initComponents();
-        con_usuario = new Conexao();
-        con_usuario.conecta();
+        
+        
         
     }
 
@@ -68,6 +69,11 @@ public class LoginTrocadeAcesso extends javax.swing.JFrame {
 
         txt_senha.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txt_senha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_senha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_senhaKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -130,35 +136,14 @@ public class LoginTrocadeAcesso extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        //validação simples para não permitir campos vazios
-        if(txt_nome.getText().equals("") || txt_senha.getText().equals(""))
-        JOptionPane.showMessageDialog(null,"Os campos não podem ser vazios!\n Tente Novamente!");
-        else{
-            try{      
-                //string sql para buscar no banco a informação necessaria
-                String sql = "select * from login Where Usuario like '"+
-                txt_nome.getText()+"' and Senha like '"+
-                txt_senha.getText()+"'";
-                con_usuario.executeSQL(sql);
-                //se  encontrado o primeiro resultado, e se encontrar...   
-                if (con_usuario.resultset.first()){
-                    //agora a parte legal, será enviado para a tela principal o usuario logado e seu departamento
-                    new TelaPrincipal().show();
-
-                    Login.usuario = con_usuario.resultset.getString("Nome");
-                    Login.departamento = con_usuario.resultset.getString("Departamento");
-                    Login.nivel = con_usuario.resultset.getString("Nivel");
-                    Login.senha = con_usuario.resultset.getString("Senha");
-                    dispose();
-                    }
-                else{
-                    JOptionPane.showMessageDialog(null, "Usuario ou Senha incorreto!\n");
-                }
-            }catch(SQLException erro){
-                    JOptionPane.showMessageDialog(null, "Erro na busca do cadastro do usuario!\n" +erro);
-            }
-        }       
+        logar();       
     }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void txt_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_senhaKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+                logar();
+        }
+    }//GEN-LAST:event_txt_senhaKeyPressed
 
     /**
      *
@@ -180,4 +165,43 @@ public class LoginTrocadeAcesso extends javax.swing.JFrame {
     private javax.swing.JTextField txt_nome;
     private javax.swing.JPasswordField txt_senha;
     // End of variables declaration//GEN-END:variables
+
+    public void logar(){
+        //validação simples para não permitir campos vazios
+        if(txt_nome.getText().equals("") || txt_senha.getText().equals(""))
+        JOptionPane.showMessageDialog(null,"Os campos não podem ser vazios!\n Tente Novamente!");
+        else{
+            con_usuario.conecta();
+            try{      
+                //string sql para buscar no banco a informação necessaria
+                String sql = "select * from login Where Usuario like '"+
+                txt_nome.getText()+"' and Senha like '"+
+                txt_senha.getText()+"'";
+                con_usuario.executeSQL(sql);
+                //se  encontrado o primeiro resultado, e se encontrar...   
+                if (con_usuario.resultset.first()){
+                    //agora a parte legal, será enviado para a tela principal o usuario logado e seu departamento
+                    TelaPrincipal inicio = new TelaPrincipal();
+                    inicio.setVisible(true);
+
+                    Login.usuario = con_usuario.resultset.getString("Usuario");
+                    Login.departamento = con_usuario.resultset.getString("Departamento");
+                    Login.nivel = con_usuario.resultset.getString("Nivel");
+                    Login.senha = con_usuario.resultset.getString("Senha");
+                    
+                    TelaPrincipal.txt_usuario.setText(Login.usuario);
+                    TelaPrincipal.txt_departamento.setText(Login.departamento);
+                    
+                    dispose();
+                    }
+                else{
+                    JOptionPane.showMessageDialog(null, "Usuario ou Senha incorreto!\n");
+                }
+            }catch(SQLException erro){
+                    JOptionPane.showMessageDialog(null, "Erro na busca do cadastro do usuario!\n" +erro);
+            }
+            con_usuario.desconecta();
+        }
+    }
+
 }

@@ -111,6 +111,23 @@ public class EnviadosIntGps extends javax.swing.JInternalFrame {
         } catch (java.beans.PropertyVetoException e1) {
             e1.printStackTrace();
         }
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentMoved(java.awt.event.ComponentEvent evt) {
                 formComponentMoved(evt);
@@ -121,27 +138,27 @@ public class EnviadosIntGps extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(250, 250, 250));
 
-        lbCodigo.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbCodigo.setText("Codigo:");
 
-        txtCodigo.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txtCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        lbEnvio1.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbEnvio1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbEnvio1.setText("1º Envio:");
 
-        txtData1.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txtData1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        lbEnvio2.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbEnvio2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbEnvio2.setText("2º Envio:");
 
-        txtData2.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txtData2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        lbEnvio3.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbEnvio3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbEnvio3.setText("3º Envio:");
 
-        txtData3.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txtData3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        btnNovo.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnNovo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnNovo.setText("Novo");
         btnNovo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -150,7 +167,7 @@ public class EnviadosIntGps extends javax.swing.JInternalFrame {
             }
         });
 
-        btnAlterar.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnAlterar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -159,7 +176,7 @@ public class EnviadosIntGps extends javax.swing.JInternalFrame {
             }
         });
 
-        btnGravar.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnGravar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnGravar.setText("Gravar");
         btnGravar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +185,7 @@ public class EnviadosIntGps extends javax.swing.JInternalFrame {
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -177,16 +194,16 @@ public class EnviadosIntGps extends javax.swing.JInternalFrame {
             }
         });
 
-        lbObservacao.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbObservacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbObservacao.setText("Observação:");
 
         txtObservacao.setColumns(20);
-        txtObservacao.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txtObservacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtObservacao.setLineWrap(true);
         txtObservacao.setRows(5);
         jScrollPane2.setViewportView(txtObservacao);
 
-        btnExcluir.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -234,7 +251,7 @@ public class EnviadosIntGps extends javax.swing.JInternalFrame {
                                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAlterar, btnCancelar, btnGravar, btnNovo});
@@ -704,6 +721,10 @@ public class EnviadosIntGps extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_tabelaMouseClicked
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        con_gps.desconecta();
+    }//GEN-LAST:event_formInternalFrameClosing
 
     /**
      * @param args the command line arguments

@@ -10,11 +10,10 @@ import javax.swing.*;
 public class Conexao
 {
     final private String driver = "com.mysql.jdbc.Driver";
-    // base de dados no amazon rds.
-    //final private String url = "jdbc:mysql://implantacao.csghj3rzcv99.us-east-1.rds.amazonaws.com/clientev2";
-    final private String url = "jdbc:mysql://localhost/clientev2";
+    final private String url = "jdbc:mysql://192.168.0.202/clientev1";
+//    final private String url = "jdbc:mysql://localhost/clientev1";
     final private String usuario = "root";
-    final private String senha = "";
+    final private String senha = "123456";
     private Connection Conexao;  //vai chamar a conexao
 
     /**
@@ -48,7 +47,7 @@ public class Conexao
             catch(SQLException Fonte) 
             {
                 JOptionPane.showMessageDialog(null,"Deu erro na conexão, falha de comunicação "+
-                        "com a fonte de dados. \nVerifique sua conexão com a internet, mais detalhes do erro: \n" +Fonte);
+                        "com a fonte de dados. \nVerifique sua conexão com a internet, mais detalhes do erro: \n\n\n" +Fonte);
                 result = false;
             }
             return result; 
@@ -63,7 +62,7 @@ public class Conexao
             try 
             {
                 Conexao.close();
-                JOptionPane.showMessageDialog(null,"Banco fechado");
+                //JOptionPane.showMessageDialog(null,"Banco fechado");
             }
             catch(SQLException fecha) 
             {

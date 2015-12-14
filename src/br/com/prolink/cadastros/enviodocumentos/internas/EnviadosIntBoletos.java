@@ -18,7 +18,7 @@ import javax.swing.text.MaskFormatter;
  */
 public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
     
-    Conexao conexao;
+    Conexao conexao = new Conexao();
     
     MaskFormatter formatoData1, formatoData2, formatoData3;
     
@@ -37,20 +37,19 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
     public EnviadosIntBoletos() {
         initComponents();
         
-        conexao = new Conexao();
-        conexao.conecta();
-        
         tabela.setAutoCreateRowSorter(true);
         
         txtCodigo.setEditable(false);
         
         //bloquear_campos();
         
-		btnAlterar.setEnabled(false);
-		
+	btnAlterar.setEnabled(false);
+	
+        conexao.conecta();
         preencher_tabela();
         
         pegar_ultimo_registro();
+        
         
         converter_data_atual();
         
@@ -110,6 +109,23 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
         } catch (java.beans.PropertyVetoException e1) {
             e1.printStackTrace();
         }
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentMoved(java.awt.event.ComponentEvent evt) {
                 formComponentMoved(evt);
@@ -120,27 +136,27 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(250, 250, 250));
 
-        lbCodigo.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbCodigo.setText("Codigo:");
 
-        txtCodigo.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txtCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        lbEnvio1.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbEnvio1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbEnvio1.setText("1º Envio:");
 
-        txtData1.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txtData1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        lbEnvio2.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbEnvio2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbEnvio2.setText("2º Envio:");
 
-        txtData2.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txtData2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        lbEnvio3.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        lbEnvio3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbEnvio3.setText("3º Envio:");
 
-        txtData3.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txtData3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        btnNovo.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnNovo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnNovo.setText("Novo");
         btnNovo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -149,7 +165,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
             }
         });
 
-        btnAlterar.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnAlterar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -158,7 +174,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
             }
         });
 
-        btnGravar.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnGravar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnGravar.setText("Gravar");
         btnGravar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
@@ -167,7 +183,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -180,12 +196,12 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
         lbObservacao.setText("Observação:");
 
         txtObservacao.setColumns(20);
-        txtObservacao.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        txtObservacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtObservacao.setLineWrap(true);
         txtObservacao.setRows(5);
         jScrollPane2.setViewportView(txtObservacao);
 
-        btnExcluir.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -233,7 +249,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAlterar, btnCancelar, btnGravar, btnNovo});
@@ -277,7 +293,6 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAlterar, btnCancelar, btnGravar, btnNovo});
 
-        tabela.setFont(new java.awt.Font("Georgia", 0, 11)); // NOI18N
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -362,6 +377,8 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
+        
+        
         data1 = txtData1.getText();
         data2 = txtData2.getText();
         data3 = txtData3.getText();
@@ -623,6 +640,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
                     }
                 }
         }
+        
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -635,6 +653,8 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Selecione um registro para exclusão");
         }
         else{
+            
+            
             String cliente = "Deseja excluir o registro do cliente "+Ativador.nome+"?";
             int escolha = JOptionPane.showConfirmDialog(null, cliente, "Exclusão", JOptionPane.YES_NO_OPTION);
             if(escolha==JOptionPane.YES_OPTION){
@@ -664,6 +684,7 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
             }
             
         }
+        
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
@@ -716,6 +737,10 @@ public class EnviadosIntBoletos extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_tabelaMouseClicked
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        conexao.desconecta();
+    }//GEN-LAST:event_formInternalFrameClosing
 
     /**
      * @param args the command line arguments

@@ -110,6 +110,23 @@ public class DocumentosIntPerfil extends javax.swing.JInternalFrame {
         } catch (java.beans.PropertyVetoException e1) {
             e1.printStackTrace();
         }
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentMoved(java.awt.event.ComponentEvent evt) {
                 formComponentMoved(evt);
@@ -393,7 +410,7 @@ public class DocumentosIntPerfil extends javax.swing.JInternalFrame {
                         
                         String gry = "insert into configurarperfilfiscalnositeprefeituradocumento "
                                 + "(NumeroProcesso, Usuario, "
-                                + "Observacao, DatadeCadastroAndamento, DataDevulucaoCliente, "
+                                + "Obsevacao, DatadeCadastroAndamento, DataDevulucaoCliente, "
                                 + "DataFinalAndamento, Andamento) values ('"
                                 + processo+"','"
                                 + usuario+"','"
@@ -437,7 +454,7 @@ public class DocumentosIntPerfil extends javax.swing.JInternalFrame {
                         
                         String gry = "insert into configurarperfilfiscalnositeprefeituradocumento "
                                 + "(NumeroProcesso, Usuario, "
-                                + "Observacao, DatadeCadastroAndamento, "
+                                + "Obsevacao, DatadeCadastroAndamento, "
                                 + "DataFinalAndamento, Andamento) values ('"
                                 + processo+"','"
                                 + usuario+"','"
@@ -477,7 +494,7 @@ public class DocumentosIntPerfil extends javax.swing.JInternalFrame {
                         
                         String gry = "insert into configurarperfilfiscalnositeprefeituradocumento "
                                 + "(NumeroProcesso, Usuario, "
-                                + "Observacao, DatadeCadastroAndamento, "
+                                + "Obsevacao, DatadeCadastroAndamento, "
                                 + "Andamento) values ('"
                                 + processo+"','"
                                 + usuario+"','"
@@ -518,7 +535,7 @@ public class DocumentosIntPerfil extends javax.swing.JInternalFrame {
                         
                         String sql = "update configurarperfilfiscalnositeprefeituradocumento set "
                                 +"Usuario='" +usuario+"',"
-                                +"Observacao='" +txtObservacao.getText()+"',"
+                                +"Obsevacao='" +txtObservacao.getText()+"',"
                                 +"DatadeCadastroAndamento='" +new java.sql.Date(novadata1.getTime())+"',"
                                 +"DataDevulucaoCliente='" +new java.sql.Date(novadata2.getTime())+"',"
                                 +"DataFinalAndamento='" +new java.sql.Date(novadata3.getTime())+"',"
@@ -556,7 +573,7 @@ public class DocumentosIntPerfil extends javax.swing.JInternalFrame {
                         
                         String sql = "update configurarperfilfiscalnositeprefeituradocumento set "
                                 +"Usuario='" +usuario+"',"
-                                +"Observacao='" +txtObservacao.getText()+"',"
+                                +"Obsevacao='" +txtObservacao.getText()+"',"
                                 +"DatadeCadastroAndamento='" +new java.sql.Date(novadata1.getTime())+"',"
                                 +"DataDevulucaoCliente='" +new java.sql.Date(novadata2.getTime())+"',"
                                 +"Andamento='Aguardando Validação' where Cod="+txtCodigo.getText();
@@ -591,7 +608,7 @@ public class DocumentosIntPerfil extends javax.swing.JInternalFrame {
                         
                         String sql = "update configurarperfilfiscalnositeprefeituradocumento set "
                                 +"Usuario='" +usuario+"',"
-                                +"Observacao='" +txtObservacao.getText()+"',"
+                                +"Obsevacao='" +txtObservacao.getText()+"',"
                                 +"DatadeCadastroAndamento='" +new java.sql.Date(novadata1.getTime())+"',"
                                 +"DataDevulucaoCliente='" +new java.sql.Date(novadata2.getTime())+"',"
                                 +"Andamento='Enviado para o Cliente' where Cod="+txtCodigo.getText();
@@ -711,6 +728,10 @@ public class DocumentosIntPerfil extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_tabelaMouseClicked
 
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        conexao.desconecta();
+    }//GEN-LAST:event_formInternalFrameClosing
+
     /**
      * @param args the command line arguments
      */
@@ -826,7 +847,7 @@ public void preencher_tabela(){
                 conexao.resultset.getString("DatadeCadastroAndamento"),
                 conexao.resultset.getString("DataDevulucaoCliente"),
                 conexao.resultset.getString("DataFinalAndamento"),
-                conexao.resultset.getString("Observacao"),
+                conexao.resultset.getString("Obsevacao"),
                 conexao.resultset.getString("Usuario")});
                 conexao.resultset.first();
     }catch(Exception erro){

@@ -22,18 +22,9 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
     
     String dataRec_backup, recPor_backup, obs_backup;
     
-    Date date = new Date();
-    String datatela = sdf.format(date);
-    
-    String  data = ListagemDocumentos.data,hora = ListagemDocumentos.hora, 
-            codigo = ListagemDocumentos.codigo, id= ListagemDocumentos.id,
-            nome=ListagemDocumentos.nome, entreguepor=ListagemDocumentos.entreguepor,
-            historico=ListagemDocumentos.historico, para=ListagemDocumentos.para,
-            departamento=ListagemDocumentos.departamento,
-            recebidopor=ListagemDocumentos.recebidopor,
-            observacao=ListagemDocumentos.observacao,
-            dataconfirmada=ListagemDocumentos.dataconfirmada,
-            usuario = Login.usuario;
+    public static String codigo;
+    String  hora,recebidopor,observacao,id, nome, remetente, historico, para,
+            dataconfirmada, usuario = Login.usuario;
     
     public ConfirmarDocumento() {
         initComponents();
@@ -41,20 +32,33 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
         con_recebidos = new Conexao();
         con_recebidos.conecta();
         
-        receber_listagem();
         
-        if(recebidopor.trim().equals("")){
-            txt_recebidopor.setText(Login.usuario);
-            btnAlterar.setEnabled(false);
+//        receber_listagem();
+//        
+        if(!txt_recebidopor.getText().trim().equals("")){
+            try{
+                con_recebidos.executeSQL("select * from documentos_recebidos where cod="+txtCodigo.getText());
+                if(con_recebidos.resultset.first()){
+                    txt_recebidopor.setText(con_recebidos.resultset.getString("Quem_recebeu"));
+                    txt_observacao.setText(con_recebidos.resultset.getString("Observacao"));
+                    String novadata  = con_recebidos.resultset.getString("Data_Funcionario_Recebeu");
+                    if(novadata.trim().length()==10){
+                        String ano = novadata.substring(0, 4);
+                        String mes = novadata.substring(5, 7);
+                        String dia = novadata.substring(8);
+                        
+                        txt_recebidoem.setText(dia+"/"+mes+"/"+ano);
+                    }
+                    
+                }
+            }catch(Exception erro){
+                JOptionPane.showMessageDialog(null, "opa");
+            }
         }
         else{
-            txt_recebidoem.setText(dataRec_backup);
-            txt_recebidopor.setText(recPor_backup);
-            txt_observacao.setText(obs_backup);
+            txt_recebidopor.setText(usuario);
             pegar_datarecebida();
-            pegar_observacao();
-            pegar_usuario();
-            
+            btnAlterar.setEnabled(false);
         }
         
         bloquear_tela();
@@ -77,11 +81,9 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
         lb_recebidopor = new javax.swing.JLabel();
         lb_recebidoem = new javax.swing.JLabel();
         lb_resumo = new javax.swing.JLabel();
-        txt_codigo = new javax.swing.JTextField();
         txt_remetente = new javax.swing.JTextField();
         txt_idempresa = new javax.swing.JTextField();
         txt_nome = new javax.swing.JTextField();
-        cb_departamento = new javax.swing.JComboBox();
         txt_recebidopor = new javax.swing.JTextField();
         try {
       formatoData2 = new MaskFormatter("##/##/####");
@@ -106,9 +108,11 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null ,"Não foi possivel receber a data" +erro);
         }
         txt_data = new JFormattedTextField(formatoData1);
-        txtHora = new javax.swing.JTextField();
+        txt_hora = new javax.swing.JTextField();
         lbHora = new javax.swing.JLabel();
         btnAlterar = new javax.swing.JButton();
+        txtCodigo = new javax.swing.JLabel();
+        txt_departamento = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Confirmação de Recebimento");
@@ -171,9 +175,6 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
         lb_resumo.setText("Historico");
         lb_resumo.setAlignmentY(0.8F);
 
-        txt_codigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txt_codigo.setAlignmentY(0.8F);
-
         txt_remetente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_remetente.setAlignmentY(0.8F);
 
@@ -182,9 +183,6 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
 
         txt_nome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_nome.setAlignmentY(0.8F);
-
-        cb_departamento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cb_departamento.setAlignmentY(0.8F);
 
         txt_recebidopor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_recebidopor.setAlignmentY(0.8F);
@@ -253,6 +251,8 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
             }
         });
 
+        txtCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout jp_GeralLayout = new javax.swing.GroupLayout(jp_Geral);
         jp_Geral.setLayout(jp_GeralLayout);
         jp_GeralLayout.setHorizontalGroup(
@@ -270,47 +270,42 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
                         .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jp_GeralLayout.createSequentialGroup()
                         .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_GeralLayout.createSequentialGroup()
-                                .addContainerGap()
+                            .addGroup(jp_GeralLayout.createSequentialGroup()
+                                .addGap(7, 7, 7)
                                 .addComponent(lb_remetente))
                             .addGroup(jp_GeralLayout.createSequentialGroup()
+                                .addContainerGap()
                                 .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jp_GeralLayout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lb_destino)
-                                            .addComponent(lb_codigo)
-                                            .addGroup(jp_GeralLayout.createSequentialGroup()
-                                                .addGap(1, 1, 1)
-                                                .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(lb_idempresa)
-                                                    .addComponent(lb_nome)))))
-                                    .addGroup(jp_GeralLayout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(lb_resumo)))
-                                .addGap(9, 9, 9)))
+                                    .addComponent(lb_resumo)
+                                    .addComponent(lb_destino)
+                                    .addComponent(lb_nome)
+                                    .addComponent(lb_idempresa)))
+                            .addGroup(jp_GeralLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lb_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(7, 7, 7)
                         .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jp_GeralLayout.createSequentialGroup()
-                                .addComponent(cb_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53)
+                                .addComponent(txt_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61)
                                 .addComponent(jLabel2)
                                 .addGap(10, 10, 10)
                                 .addComponent(txt_para, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jp_GeralLayout.createSequentialGroup()
-                                .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txt_idempresa, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_remetente))
+                                .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txt_idempresa, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                                        .addComponent(txt_remetente))
+                                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(lb_data)
                                     .addComponent(lbHora, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtHora, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                    .addComponent(txt_hora, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                                     .addComponent(txt_data)))))
                     .addGroup(jp_GeralLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -332,46 +327,50 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
         jp_GeralLayout.setVerticalGroup(
             jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jp_GeralLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
                 .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jp_GeralLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
                         .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jp_GeralLayout.createSequentialGroup()
                                 .addGap(4, 4, 4)
                                 .addComponent(lb_data))
                             .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jp_GeralLayout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(9, 9, 9)
-                        .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbHora)
-                            .addComponent(txt_remetente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lb_remetente))
-                        .addGap(15, 15, 15)
-                        .addComponent(txt_idempresa, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cb_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jp_GeralLayout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(jLabel2))
-                            .addComponent(txt_para, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(6, 6, 6)
+                                .addComponent(lb_codigo)))
+                        .addGap(10, 10, 10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_GeralLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbHora)
+                    .addComponent(txt_remetente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_remetente))
+                .addGap(15, 15, 15)
+                .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_idempresa, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_idempresa))
+                .addGap(11, 11, 11)
+                .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_nome))
+                .addGap(10, 10, 10)
+                .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lb_destino)
+                        .addComponent(txt_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jp_GeralLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel2))
+                    .addComponent(txt_para, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jp_GeralLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jp_GeralLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(lb_codigo)
-                        .addGap(55, 55, 55)
-                        .addComponent(lb_idempresa)
-                        .addGap(17, 17, 17)
-                        .addComponent(lb_nome)
-                        .addGap(18, 18, 18)
-                        .addComponent(lb_destino)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lb_resumo)))
                 .addGap(19, 19, 19)
                 .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,7 +393,7 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
                         .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -402,7 +401,7 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jp_Geral, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jp_Geral, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,23 +427,30 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
         if(txt_recebidoem.getText().trim().length()<10 || txt_recebidoem.getText().equals("  /  /    ")){
             JOptionPane.showMessageDialog(null, "A data informada esta incorreto valor incorreto!");
         }
-        try{
-            String data2 = txt_recebidoem.getText();
-            Date datarec = sdf.parse(data2);
-                        
-            String sql =  "UPDATE documentos_recebidos set Quem_recebeu='"+txt_recebidopor.getText()+"',"+
-                    "Data_Funcionario_Recebeu='"+new java.sql.Date(datarec.getTime())+"',"+
-                    "Observacao='"+txt_observacao.getText()+"'"+
-                    "where cod="+txt_codigo.getText();
-            con_recebidos.statement.executeUpdate(sql);
-                    
-            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
-        }catch(SQLException erro){
-            JOptionPane.showMessageDialog(null,"Erro ao atualizar a tabela de documentos :\n" +erro);
-        }catch(ParseException ex){
-            JOptionPane.showMessageDialog(null,"Falha na conversão da data :\n" +ex);
+        if(txt_observacao.getText().trim().length()<1)
+        {
+            observacao="";
         }
-        btnAlterar.setEnabled(true);
+        else{
+            
+            try{
+                String data2 = txt_recebidoem.getText();
+                Date datarec = sdf.parse(data2);
+
+                String sql =  "UPDATE documentos_recebidos set Quem_recebeu='"+txt_recebidopor.getText()+"',"+
+                        "Data_Funcionario_Recebeu='"+new java.sql.Date(datarec.getTime())+"',"+
+                        "Observacao='"+observacao+"'"+
+                        "where cod="+codigo;
+                con_recebidos.statement.executeUpdate(sql);
+
+                JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+            }catch(SQLException erro){
+                JOptionPane.showMessageDialog(null,"Erro ao atualizar a tabela de documentos :\n" +erro);
+            }catch(ParseException ex){
+                JOptionPane.showMessageDialog(null,"Falha na conversão da data :\n" +ex);
+            }
+        }
+        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
@@ -453,12 +459,7 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
                 "Deseja alterar o atual registro?";
         int continuar = JOptionPane.showConfirmDialog(null, duvida, "Informação!", JOptionPane.YES_NO_OPTION);
         if(continuar == JOptionPane.YES_OPTION){
-            String ano = data.substring(0, 4);
-            String mes = data.substring(5, 7);
-            String dia = data.substring(8);
-            String fim = dia+"/"+mes+"/"+ano;
-            txt_recebidoem.setText(fim);
-            
+            pegar_datarecebida();
             txt_recebidopor.setText(usuario);
             txt_observacao.setText("");
         }
@@ -478,7 +479,6 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSalvar;
-    public static javax.swing.JComboBox cb_departamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -496,30 +496,32 @@ public class ConfirmarDocumento extends javax.swing.JFrame {
     private javax.swing.JLabel lb_recebidopor;
     private javax.swing.JLabel lb_remetente;
     private javax.swing.JLabel lb_resumo;
-    private javax.swing.JTextField txtHora;
-    public static javax.swing.JTextField txt_codigo;
+    public static javax.swing.JLabel txtCodigo;
     public static javax.swing.JFormattedTextField txt_data;
+    public static javax.swing.JTextField txt_departamento;
     public static javax.swing.JTextArea txt_historico;
+    public static javax.swing.JTextField txt_hora;
     public static javax.swing.JTextField txt_idempresa;
     public static javax.swing.JTextField txt_nome;
     public static javax.swing.JTextArea txt_observacao;
     public static javax.swing.JTextField txt_para;
-    private javax.swing.JFormattedTextField txt_recebidoem;
+    public static javax.swing.JFormattedTextField txt_recebidoem;
     public static javax.swing.JTextField txt_recebidopor;
     public static javax.swing.JTextField txt_remetente;
     // End of variables declaration//GEN-END:variables
 
 public void bloquear_tela(){
-    txt_codigo.setEditable(false);
     txt_data.setEditable(false);
-    txtHora.setEditable(false);
+    txt_hora.setEditable(false);
     txt_idempresa.setEditable(false);
-    cb_departamento.setEditable(false);
+    txt_departamento.setEditable(false);
     txt_nome.setEditable(false);
     txt_para.setEditable(false);
     txt_remetente.setEditable(false);
     txt_historico.setEditable(false);
-    txt_recebidopor.setEditable(false);
+//    txt_remetente.setEditable(false);
+//    txt_historico.setEditable(false);
+//    txt_recebidopor.setEditable(false);
 }
 public void criar_backup(){
 
@@ -535,41 +537,35 @@ public void restaurar_backup(){
     txt_observacao.setText(obs_backup);
     
 }
-public void receber_listagem(){
-            //txt_data.setText(data);
-            acertar_data();
-            
-            txtHora.setText(hora);
-            
-            txt_codigo.setText(codigo);
-            txt_idempresa.setText(id);
-            txt_nome.setText(nome); 
-            txt_remetente.setText(entreguepor);
-            txt_historico.setText(historico);
-            txt_para.setText(para);
-            cb_departamento.setSelectedItem(departamento);
-            
-            dataconfirmada=ListagemDocumentos.dataconfirmada;
-}
-public void acertar_data(){
-    String ano = data.substring(0, 4);
-    String mes = data.substring(5, 7);
-    String dia = data.substring(8);
-    String fim = dia+"/"+mes+"/"+ano;
-    txt_data.setText(fim);
-}
+//public void receber_listagem(){
+//            acertar_data();
+//            
+//            try{
+//                con_recebidos.executeSQL("select * from documentos_recebidos where cod="+codigo);
+//                if(con_recebidos.resultset.first()){
+//                
+//                    data = sdf.format(con_recebidos.resultset.getDate("Data_Recebimento"));
+//                    hora = (con_recebidos.resultset.getString("Hora"));
+//                    id = (con_recebidos.resultset.getString("ID"));
+//                    nome=(con_recebidos.resultset.getString("Empresa"));
+//                    remetente=(con_recebidos.resultset.getString("Quem_Entregou"));
+//                    historico=(con_recebidos.resultset.getString("Historico"));
+//                    para=(con_recebidos.resultset.getString("Para_Quem"));
+//                    cb_departamento.setSelectedItem(con_recebidos.resultset.getString("Departamento"));
+//                    
+//                    recebidopor = con_recebidos.resultset.getString("Quem_recebeu");
+//                    observacao = con_recebidos.resultset.getString("Observacao");
+//                    dataconfirmada = con_recebidos.resultset.getString("Data_Funcionario_Recebeu");
+//                }
+//            }catch(Exception erro){
+//                JOptionPane.showMessageDialog(null, "Falha ao recuperar registro! \n"+erro+ "\n");
+//            }
+//            
+//}
 public void pegar_datarecebida(){
-    String ano = dataconfirmada.substring(0, 4);
-    String mes = dataconfirmada.substring(5, 7);
-    String dia = dataconfirmada.substring(8);
-    String fim = dia+"/"+mes+"/"+ano;
+    Date data = new Date();
+    String ndata = sdf.format(data);
     
-    txt_recebidoem.setText(fim);
-}
-public void pegar_observacao(){
-    txt_observacao.setText(observacao);
-}
-public void pegar_usuario(){
-    txt_recebidopor.setText(recebidopor);
+    txt_recebidoem.setText(ndata);
 }
 }

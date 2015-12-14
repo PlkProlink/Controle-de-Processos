@@ -9,6 +9,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -823,6 +826,9 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btnNovoDiagnose">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Novo"/>
                   </Properties>
                   <Events>
@@ -831,6 +837,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlterarDiagnose">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Alterar"/>
                   </Properties>
                   <Events>
@@ -839,6 +848,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSalvarDiagnose">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Salvar"/>
                   </Properties>
                   <Events>
@@ -847,6 +859,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCancelarDiagnose">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Cancelar"/>
                   </Properties>
                   <Events>
@@ -855,6 +870,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnExcluirDiagnose">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Excluir"/>
                   </Properties>
                   <Events>
@@ -1105,6 +1123,9 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btnNovoProposta">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Novo"/>
                   </Properties>
                   <Events>
@@ -1113,6 +1134,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlterarProposta">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Alterar"/>
                   </Properties>
                   <Events>
@@ -1121,6 +1145,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSalvarProposta">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Salvar"/>
                   </Properties>
                   <Events>
@@ -1129,6 +1156,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCancelarProposta">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Cancelar"/>
                   </Properties>
                   <Events>
@@ -1137,6 +1167,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnExcluirProposta">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Excluir"/>
                   </Properties>
                   <Events>
@@ -1382,6 +1415,9 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btnNovoOS">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Novo"/>
                   </Properties>
                   <Events>
@@ -1390,6 +1426,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlterarOS">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Alterar"/>
                   </Properties>
                   <Events>
@@ -1398,6 +1437,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSalvarOS">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Salvar"/>
                   </Properties>
                   <Events>
@@ -1406,6 +1448,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCancelarOS">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Cancelar"/>
                   </Properties>
                   <Events>
@@ -1414,6 +1459,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnExcluirOS">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Excluir"/>
                   </Properties>
                   <Events>
@@ -1659,6 +1707,9 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btnNovoDocumentos">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Novo"/>
                   </Properties>
                   <Events>
@@ -1667,6 +1718,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlterarDocumentos">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Alterar"/>
                   </Properties>
                   <Events>
@@ -1675,6 +1729,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSalvarDocumentos">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Salvar"/>
                   </Properties>
                   <Events>
@@ -1683,6 +1740,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCancelarDocumentos">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Cancelar"/>
                   </Properties>
                   <Events>
@@ -1691,6 +1751,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnExcluirDocumentos">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Excluir"/>
                   </Properties>
                   <Events>
@@ -1936,6 +1999,9 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btnNovoTaxa">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Novo"/>
                   </Properties>
                   <Events>
@@ -1944,6 +2010,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlterarTaxa">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Alterar"/>
                   </Properties>
                   <Events>
@@ -1952,6 +2021,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSalvarTaxa">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Salvar"/>
                   </Properties>
                   <Events>
@@ -1960,6 +2032,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCancelarTaxa">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Cancelar"/>
                   </Properties>
                   <Events>
@@ -1968,6 +2043,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnExcluirTaxa">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Excluir"/>
                   </Properties>
                   <Events>
@@ -2213,6 +2291,9 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btnNovoRecebimento">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Novo"/>
                   </Properties>
                   <Events>
@@ -2221,6 +2302,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlterarRecebimento">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Alterar"/>
                   </Properties>
                   <Events>
@@ -2229,6 +2313,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSalvarRecebimento">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Salvar"/>
                   </Properties>
                   <Events>
@@ -2237,6 +2324,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCancelarRecebimento">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Cancelar"/>
                   </Properties>
                   <Events>
@@ -2245,6 +2335,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnExcluirRecebimento">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Excluir"/>
                   </Properties>
                   <Events>
@@ -2490,6 +2583,9 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btnNovoCertidoes">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Novo"/>
                   </Properties>
                   <Events>
@@ -2498,6 +2594,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlterarCertidoes">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Alterar"/>
                   </Properties>
                   <Events>
@@ -2506,6 +2605,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSalvarCertidoes">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Salvar"/>
                   </Properties>
                   <Events>
@@ -2514,6 +2616,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCancelarCertidoes">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Cancelar"/>
                   </Properties>
                   <Events>
@@ -2522,6 +2627,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnExcluirCertidoes">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Excluir"/>
                   </Properties>
                   <Events>
@@ -2767,6 +2875,9 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btnNovoTermo">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Novo"/>
                   </Properties>
                   <Events>
@@ -2775,6 +2886,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlterarTermo">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Alterar"/>
                   </Properties>
                   <Events>
@@ -2783,6 +2897,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSalvarTermo">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Salvar"/>
                   </Properties>
                   <Events>
@@ -2791,6 +2908,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCancelarTermo">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Cancelar"/>
                   </Properties>
                   <Events>
@@ -2799,6 +2919,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnExcluirTermo">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Excluir"/>
                   </Properties>
                   <Events>
@@ -3044,6 +3167,9 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btnNovoSenhas">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Novo"/>
                   </Properties>
                   <Events>
@@ -3052,6 +3178,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAlterarSenhas">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Alterar"/>
                   </Properties>
                   <Events>
@@ -3060,6 +3189,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSalvarSenhas">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Salvar"/>
                   </Properties>
                   <Events>
@@ -3068,6 +3200,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCancelarSenhas">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Cancelar"/>
                   </Properties>
                   <Events>
@@ -3076,6 +3211,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnExcluirSenhas">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Excluir"/>
                   </Properties>
                   <Events>

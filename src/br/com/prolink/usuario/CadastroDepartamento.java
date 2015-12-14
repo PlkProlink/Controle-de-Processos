@@ -3,6 +3,7 @@ package br.com.prolink.usuario;
 
 
 import br.com.prolink.inicio.Conexao;
+import br.com.prolink.inicio.Login;
 import java.awt.Component;
 import javax.swing.table.*;
 import java.sql.*;
@@ -14,23 +15,28 @@ import javax.swing.JOptionPane;
  */
 public class CadastroDepartamento extends javax.swing.JFrame {
    
-    Conexao con_departamento;
+    Conexao con = new Conexao();
     
     String codigo_backup, nome_backup;
-    
+    String nivel=Login.nivel, departamento=Login.departamento;
     /**
      *
      */
     public CadastroDepartamento() {
         initComponents();
         
-        con_departamento = new Conexao();
-        con_departamento.conecta();
+        con.conecta();
     
         limpar_tela();
         preencher_tabela();
         
+        
         tb_departamento.setAutoCreateRowSorter(true);
+        
+        if(!departamento.equals("Tecnologia")){
+                    btnAlterar.setEnabled(false);
+                    btnExcluir.setEnabled(false);
+        }
 }
 
     @SuppressWarnings("unchecked")
@@ -57,6 +63,11 @@ public class CadastroDepartamento extends javax.swing.JFrame {
         setTitle("Departamento");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(245, 245, 245));
 
@@ -91,6 +102,7 @@ public class CadastroDepartamento extends javax.swing.JFrame {
         lblDescricao1.setText("Nome");
 
         btnNovo.setText("Novo");
+        btnNovo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoActionPerformed(evt);
@@ -98,6 +110,7 @@ public class CadastroDepartamento extends javax.swing.JFrame {
         });
 
         btnAlterar.setText("Alterar");
+        btnAlterar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
@@ -105,6 +118,7 @@ public class CadastroDepartamento extends javax.swing.JFrame {
         });
 
         btnGravar.setText("Gravar");
+        btnGravar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGravarActionPerformed(evt);
@@ -112,6 +126,7 @@ public class CadastroDepartamento extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -119,6 +134,7 @@ public class CadastroDepartamento extends javax.swing.JFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -126,6 +142,7 @@ public class CadastroDepartamento extends javax.swing.JFrame {
         });
 
         btnFechar.setText("Fechar");
+        btnFechar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFecharActionPerformed(evt);
@@ -136,32 +153,33 @@ public class CadastroDepartamento extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPlaca)
-                    .addComponent(lblDescricao1))
-                .addGap(47, 47, 47)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFechar))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAlterar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGravar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPlaca)
+                            .addComponent(lblDescricao1))
+                        .addGap(47, 47, 47)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnExcluir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnFechar))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAlterar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnGravar)))
+                        .addGap(43, 43, 43))))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAlterar, btnCancelar, btnExcluir, btnFechar, btnGravar, btnNovo});
@@ -261,7 +279,7 @@ public class CadastroDepartamento extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        if(txt_codigo.getText().isEmpty()){
+        if(txt_codigo.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Nenhum registro foi selecionado!");
         }
         else{
@@ -275,28 +293,36 @@ public class CadastroDepartamento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Campo nome não pode ficar em branco");
             txt_nome.requestFocus();
         }
-        else if(txt_codigo.getText().trim().isEmpty()){
+        else if(txt_codigo.getText().equals("")){
+            
             try{
                 String gry = "insert into departamento (nome) values ('"+txt_nome.getText()+"')";
-                con_departamento.exeQuery(gry);
+                con.exeQuery(gry);
+                limpar_tela();
+                limpar_tabela();
+                preencher_tabela();
             }catch(Exception add){
                 JOptionPane.showMessageDialog(null, "Não foi possivel gravar o novo registro\n" +add);
             
             }
+            
         }
         else if(!txt_codigo.getText().trim().equals("")){
+            
             try{
                 String sql = "update departamento set nome='"+txt_nome.getText()+"' where cod="+txt_codigo.getText();
-                con_departamento.statement.executeUpdate(sql);
+                con.statement.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
+
+                limpar_tela();
+                limpar_tabela();
+                preencher_tabela();
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null, "Não foi possivel alterar o novo registro\n" +erro);
             
             }
+            
         }
-        limpar_tela();
-        limpar_tabela();
-        preencher_tabela();
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -309,16 +335,17 @@ public class CadastroDepartamento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Você selecione um registro para exclusão!");
         }
         else{
+            
             try{
-                con_departamento.executeSQL("select * from departamento where cod="+txt_codigo.getText());
-                con_departamento.resultset.first();
+                con.executeSQL("select * from departamento where cod="+txt_codigo.getText());
+                con.resultset.first();
                 
-                String nome = "Tem certeza que deseja excluir o registro "+con_departamento.resultset.getString("nome");
+                String nome = "Tem certeza que deseja excluir o registro "+con.resultset.getString("nome");
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null, nome, "Exclusão", JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
                     try{
                     String sql = "delete from departamento where cod="+txt_codigo.getText();
-                    int excluir = con_departamento.statement.executeUpdate(sql);
+                    int excluir = con.statement.executeUpdate(sql);
                     if(excluir == 1){
                         JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
                         limpar_tela();
@@ -332,12 +359,17 @@ public class CadastroDepartamento extends javax.swing.JFrame {
             }catch(Exception erro){
                 JOptionPane.showMessageDialog(null, "Erro ao buscar o registro");
             }
+            
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        con.desconecta();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      *
@@ -405,15 +437,15 @@ public class CadastroDepartamento extends javax.swing.JFrame {
     tb_departamento.getColumnModel().getColumn(0);
     tb_departamento.getColumnModel().getColumn(1);
     try{
-    con_departamento.executeSQL("select * from departamento order by nome");
+    con.executeSQL("select * from departamento order by nome");
     
     DefaultTableModel modelo = (DefaultTableModel)tb_departamento.getModel();
     
-    while(con_departamento.resultset.next())
+    while(con.resultset.next())
         modelo.addRow(new Object[]{
-            con_departamento.resultset.getString("cod"),
-            con_departamento.resultset.getString("nome")});
-            con_departamento.resultset.first();
+            con.resultset.getString("cod"),
+            con.resultset.getString("nome")});
+            con.resultset.first();
     }catch(SQLException erro){
         JOptionPane.showMessageDialog(null,"Listagem com erro na tabela\n" +erro);
     }

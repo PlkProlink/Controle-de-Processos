@@ -17,7 +17,8 @@ import br.com.prolink.inicio.*;
 
 public class Comercial extends javax.swing.JFrame {
     //conexão com as tabelas necessarias
-    Conexao con_geral, con;
+    Conexao con_geral = new Conexao();
+    Conexao con = new Conexao();
     //maskara para o JFormattedTextField
     MaskFormatter formatoDiagnose, formatoProposta, formatoOS, formatoDocumentos,
             formatoTaxa, formatoRecebimento,
@@ -38,14 +39,12 @@ public class Comercial extends javax.swing.JFrame {
             codSenhas_backup, dataSenhas_backup, obsSenhas_backup, tipoSenhas_backup;
     
     String processo=Ativador.processo, nome=Ativador.nome, id=Ativador.id, usuario=Login.usuario;
-    
+
     public Comercial() {
         initComponents();
         //instanciando as conexoes e executando o metodo conecta
-        con_geral = new Conexao();
-        con_geral.conecta();
         
-        con = new Conexao();
+        con_geral.conecta();
         con.conecta();
         
         //chamando metodo que preencha as tabelas
@@ -66,6 +65,13 @@ public class Comercial extends javax.swing.JFrame {
         bloquear_tela_diagnose();
         bloquear_tela_proposta();
         bloquear_tela_os();
+        bloquear_tela_certidoes();
+        bloquear_tela_documentos();
+        bloquear_tela_recebimento();
+        bloquear_tela_senhas();
+        bloquear_tela_taxa();
+        bloquear_tela_termo();
+        
         
         limpar_tela_diagnose();
         limpar_tela_proposta();
@@ -362,6 +368,11 @@ public class Comercial extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Comercial");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jpComercial.setBackground(new java.awt.Color(245, 245, 245));
 
@@ -622,6 +633,7 @@ public class Comercial extends javax.swing.JFrame {
         txtObsDiagnose.setRows(5);
         jScrollPane9.setViewportView(txtObsDiagnose);
 
+        btnNovoDiagnose.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoDiagnose.setText("Novo");
         btnNovoDiagnose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -629,6 +641,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarDiagnose.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarDiagnose.setText("Alterar");
         btnAlterarDiagnose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -636,6 +649,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarDiagnose.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarDiagnose.setText("Salvar");
         btnSalvarDiagnose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -643,6 +657,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarDiagnose.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarDiagnose.setText("Cancelar");
         btnCancelarDiagnose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -650,6 +665,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirDiagnose.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirDiagnose.setText("Excluir");
         btnExcluirDiagnose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -789,6 +805,7 @@ public class Comercial extends javax.swing.JFrame {
         txtObsProposta.setRows(5);
         jScrollPane7.setViewportView(txtObsProposta);
 
+        btnNovoProposta.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoProposta.setText("Novo");
         btnNovoProposta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -796,6 +813,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarProposta.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarProposta.setText("Alterar");
         btnAlterarProposta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -803,6 +821,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarProposta.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarProposta.setText("Salvar");
         btnSalvarProposta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -810,6 +829,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarProposta.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarProposta.setText("Cancelar");
         btnCancelarProposta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -817,6 +837,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirProposta.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirProposta.setText("Excluir");
         btnExcluirProposta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -962,6 +983,7 @@ public class Comercial extends javax.swing.JFrame {
         txtObsOS.setRows(5);
         jScrollPane10.setViewportView(txtObsOS);
 
+        btnNovoOS.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoOS.setText("Novo");
         btnNovoOS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -969,6 +991,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarOS.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarOS.setText("Alterar");
         btnAlterarOS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -976,6 +999,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarOS.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarOS.setText("Salvar");
         btnSalvarOS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -983,6 +1007,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarOS.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarOS.setText("Cancelar");
         btnCancelarOS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -990,6 +1015,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirOS.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirOS.setText("Excluir");
         btnExcluirOS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1130,6 +1156,7 @@ public class Comercial extends javax.swing.JFrame {
         txtObsDocumentos.setRows(5);
         jScrollPane12.setViewportView(txtObsDocumentos);
 
+        btnNovoDocumentos.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoDocumentos.setText("Novo");
         btnNovoDocumentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1137,6 +1164,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarDocumentos.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarDocumentos.setText("Alterar");
         btnAlterarDocumentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1144,6 +1172,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarDocumentos.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarDocumentos.setText("Salvar");
         btnSalvarDocumentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1151,6 +1180,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarDocumentos.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarDocumentos.setText("Cancelar");
         btnCancelarDocumentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1158,6 +1188,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirDocumentos.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirDocumentos.setText("Excluir");
         btnExcluirDocumentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1298,6 +1329,7 @@ public class Comercial extends javax.swing.JFrame {
         txtObsTaxa.setRows(5);
         jScrollPane14.setViewportView(txtObsTaxa);
 
+        btnNovoTaxa.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoTaxa.setText("Novo");
         btnNovoTaxa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1305,6 +1337,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarTaxa.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarTaxa.setText("Alterar");
         btnAlterarTaxa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1312,6 +1345,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarTaxa.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarTaxa.setText("Salvar");
         btnSalvarTaxa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1319,6 +1353,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarTaxa.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarTaxa.setText("Cancelar");
         btnCancelarTaxa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1326,6 +1361,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirTaxa.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirTaxa.setText("Excluir");
         btnExcluirTaxa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1466,6 +1502,7 @@ public class Comercial extends javax.swing.JFrame {
         txtObsRecebimento.setRows(5);
         jScrollPane16.setViewportView(txtObsRecebimento);
 
+        btnNovoRecebimento.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoRecebimento.setText("Novo");
         btnNovoRecebimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1473,6 +1510,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarRecebimento.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarRecebimento.setText("Alterar");
         btnAlterarRecebimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1480,6 +1518,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarRecebimento.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarRecebimento.setText("Salvar");
         btnSalvarRecebimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1487,6 +1526,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarRecebimento.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarRecebimento.setText("Cancelar");
         btnCancelarRecebimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1494,6 +1534,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirRecebimento.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirRecebimento.setText("Excluir");
         btnExcluirRecebimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1634,6 +1675,7 @@ public class Comercial extends javax.swing.JFrame {
         txtObsCertidoes.setRows(5);
         jScrollPane18.setViewportView(txtObsCertidoes);
 
+        btnNovoCertidoes.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoCertidoes.setText("Novo");
         btnNovoCertidoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1641,6 +1683,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarCertidoes.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarCertidoes.setText("Alterar");
         btnAlterarCertidoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1648,6 +1691,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarCertidoes.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarCertidoes.setText("Salvar");
         btnSalvarCertidoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1655,6 +1699,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarCertidoes.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarCertidoes.setText("Cancelar");
         btnCancelarCertidoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1662,6 +1707,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirCertidoes.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirCertidoes.setText("Excluir");
         btnExcluirCertidoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1802,6 +1848,7 @@ public class Comercial extends javax.swing.JFrame {
         txtObsTermo.setRows(5);
         jScrollPane20.setViewportView(txtObsTermo);
 
+        btnNovoTermo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoTermo.setText("Novo");
         btnNovoTermo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1809,6 +1856,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarTermo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarTermo.setText("Alterar");
         btnAlterarTermo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1816,6 +1864,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarTermo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarTermo.setText("Salvar");
         btnSalvarTermo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1823,6 +1872,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarTermo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarTermo.setText("Cancelar");
         btnCancelarTermo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1830,6 +1880,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirTermo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirTermo.setText("Excluir");
         btnExcluirTermo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1970,6 +2021,7 @@ public class Comercial extends javax.swing.JFrame {
         txtObsSenhas.setRows(5);
         jScrollPane22.setViewportView(txtObsSenhas);
 
+        btnNovoSenhas.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoSenhas.setText("Novo");
         btnNovoSenhas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1977,6 +2029,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarSenhas.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarSenhas.setText("Alterar");
         btnAlterarSenhas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1984,6 +2037,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarSenhas.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarSenhas.setText("Salvar");
         btnSalvarSenhas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1991,6 +2045,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarSenhas.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarSenhas.setText("Cancelar");
         btnCancelarSenhas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1998,6 +2053,7 @@ public class Comercial extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirSenhas.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirSenhas.setText("Excluir");
         btnExcluirSenhas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2205,10 +2261,10 @@ public class Comercial extends javax.swing.JFrame {
                             limpar_tela_proposta();
                             
                             if("Finalizado".equals(operacao)){
-                               con.executeSQL("select * from propostacomercial where NumerodoProcesso='"+processo+ "and AndamentoCadastroDependentesSocioADM='Finalizado'");
+                               con.executeSQL("select * from propostacomercial where NumeroProcesso='"+processo+ "' and AndamentoPropostaComercial='Finalizado'");
                                if(!con.resultset.first()){
                                     try{
-                                        con_geral.statement.executeUpdate("update comercial set AndamentoPropastaComercial='Em Aberto' where NumeroProcesso='"+processo+"'");
+                                        con_geral.statement.executeUpdate("update comercial set AndamentoPropastaComercial='Em Aberto' where Numerodoprocesso='"+processo+"'");
                                     
                                         preencher_status();
                                         atualizar_cadastro_cliente();
@@ -2346,7 +2402,7 @@ public class Comercial extends javax.swing.JFrame {
                             if(!con.resultset.first()){
                                 try{
                                     con_geral.statement.executeUpdate("update comercial set AndamentoEnvioDiagnose='Em Aberto'"
-                                    +"Numerodoprocesso="+processo);
+                                    +"Numerodoprocesso='"+processo);
                                     
                                     preencher_status();
                                     atualizar_cadastro_cliente();
@@ -2431,12 +2487,12 @@ public class Comercial extends javax.swing.JFrame {
                     andamento = "Em Aberto";
                 }
                 
-                String sql = "UPDATE enviodiaginose set DatadeCadastroAndamento='"+
+                    String sql = "UPDATE enviodiaginose set DatadeCadastroAndamento='"+
                 new java.sql.Date(datatermo.getTime())+"',"+
                 "Obsevacao='"+txtObsDiagnose.getText()+"',"+
                 "Usuario = '"+usuario+"',"+
                 "AndamentoEnioDiagnose='"+andamento+"' "+
-                "where CodCadastroSocioADMControl = "+txtCodDiagnose.getText();
+                "where CodEnvioDgnose = "+txtCodDiagnose.getText();
 
                 con.statement.executeUpdate(sql);
                 
@@ -2459,6 +2515,7 @@ public class Comercial extends javax.swing.JFrame {
     private void btnNovoDiagnoseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoDiagnoseActionPerformed
         criar_backup_diagnose();
         limpar_tela_diagnose();
+        desbloquear_tela_diagnose();
     }//GEN-LAST:event_btnNovoDiagnoseActionPerformed
 
     private void tbDiagnoseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDiagnoseMouseClicked
@@ -2539,7 +2596,7 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String gry = "insert into geraros (DatadeCadastroAndamento, NumeroProcesso,"
-                        +"Usuario, Observacao, AndamentoGerarOS)"
+                        +"Usuario, Obsevacao, AndamentoGerarOS)"
                         +"values ('"+new java.sql.Date(data.getTime())+"','"
                         +processo+"','"
                         +usuario+"','"
@@ -2574,9 +2631,9 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String sql = "update geraros set "
-                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
-                        +"Usuario='"+usuario+"','"
-                        +"Observacao='"+txtObsOS.getText()+"','"
+                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"',"
+                        +"Usuario='"+usuario+"',"
+                        +"Obsevacao='"+txtObsOS.getText()+"',"
                         +"AndamentoGerarOS='"+andamento+"'"
                         +" where CodGerarOS="+txtCodOS.getText();
                 
@@ -2726,7 +2783,7 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String gry = "insert into requisicaodocumentos (DatadeCadastroAndamento, NumeroProcesso,"
-                        +"Usuario, Observacao, AndamentoRequisicaoDocumentos)"
+                        +"Usuario, Obsevacao, AndamentoRequisicaoDocumentos)"
                         +"values ('"+new java.sql.Date(data.getTime())+"','"
                         +processo+"','"
                         +usuario+"','"
@@ -2761,11 +2818,11 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String sql = "update requisicaodocumentos set "
-                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
-                        +"Usuario='"+usuario+"','"
-                        +"Observacao='"+txtObsOS.getText()+"','"
+                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"',"
+                        +"Usuario='"+usuario+"',"
+                        +"Obsevacao='"+txtObsDocumentos.getText()+"',"
                         +"AndamentoRequisicaoDocumentos='"+andamento+"'"
-                        +" where CodRequisicaoDocumentos="+txtCodOS.getText();
+                        +" where CodRequisicaoDocumentos="+txtCodDocumentos.getText();
                 
                 con.statement.executeUpdate(sql);
                 
@@ -2799,7 +2856,7 @@ public class Comercial extends javax.swing.JFrame {
                 con.executeSQL(("select * from requisicaodocumentos where CodRequisicaoDocumentos="+txtCodDocumentos.getText()));
                 if(con.resultset.first()){
                     String cliente = "Tem certeza que deseja excluir o registro do cliente " +nome+"?";
-                    String andamento = con.resultset.getString("AndamentoPropostaComercial");
+                    String andamento = con.resultset.getString("AndamentoRequisicaoDocumentos");
                     
                     int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão",JOptionPane.YES_NO_OPTION);
                     if(opcao_escolhida == JOptionPane.YES_OPTION){
@@ -2815,7 +2872,8 @@ public class Comercial extends javax.swing.JFrame {
                                 
                                 if(!con.resultset.first()){
                                     try{
-                                        con_geral.statement.executeUpdate("update comercial set AndamentoRequisicaoDocumentos='Em Aberto'");
+                                        con_geral.statement.executeUpdate("update comercial set "
+                                                + "AndamentoRequisicaoDocumentos='Em Aberto' where Numerodoprocesso='"+processo+"'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
@@ -2893,7 +2951,7 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String gry = "insert into taxadeimplantacaoetaxapg (DatadeCadastroAndamento, NumeroProcesso,"
-                        +"Usuario, Observacao, AndamentoTaxaDeImplantacaoEformaPG)"
+                        +"Usuario, Obsevacao, AndamentoTaxaDeImplantacaoEformaPG)"
                         +"values ('"+new java.sql.Date(data.getTime())+"','"
                         +processo+"','"
                         +usuario+"','"
@@ -2928,9 +2986,9 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String sql = "update taxadeimplantacaoetaxapg set "
-                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
-                        +"Usuario='"+usuario+"','"
-                        +"Observacao='"+txtObsTaxa.getText()+"','"
+                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"',"
+                        +"Usuario='"+usuario+"',"
+                        +"Obsevacao='"+txtObsTaxa.getText()+"',"
                         +"AndamentoTaxaDeImplantacaoEformaPG='"+andamento+"'"
                         +" where CodTaxaDeImplantacaoEFormaDePG="+txtCodTaxa.getText();
                 
@@ -2984,7 +3042,8 @@ public class Comercial extends javax.swing.JFrame {
                                 
                                 if(!con.resultset.first()){
                                     try{
-                                        con_geral.statement.executeUpdate("update comercial set AndamentoTaxaDeImplantacaoEFormaDePagamento='Em Aberto'");
+                                        con_geral.statement.executeUpdate("update comercial set "
+                                                + "AndamentoTaxaDeImplantacaoEFormaDePagamento='Em Aberto' where Numerodoprocesso='"+processo+"'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
@@ -3063,7 +3122,7 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String gry = "insert into confirmarrecebimentodeposito (DatadeCadastroAndamento, NumeroProcesso,"
-                        +"Usuario, Observacao, AndamentoTaxaDeImplantacaoEformaPG)"
+                        +"Usuario, Obsevacao, AndamentoConfirmarrecebimentodeposito)"
                         +"values ('"+new java.sql.Date(data.getTime())+"','"
                         +processo+"','"
                         +usuario+"','"
@@ -3098,11 +3157,11 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String sql = "update confirmarrecebimentodeposito set "
-                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
-                        +"Usuario='"+usuario+"','"
-                        +"Observacao='"+txtObsRecebimento.getText()+"','"
-                        +"AndamentoTaxaDeImplantacaoEformaPG='"+andamento+"'"
-                        +" where CodTaxaDeImplantacaoEFormaDePG="+txtCodRecebimento.getText();
+                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"',"
+                        +"Usuario='"+usuario+"',"
+                        +"Obsevacao='"+txtObsRecebimento.getText()+"',"
+                        +"AndamentoConfirmarrecebimentodeposito='"+andamento+"'"
+                        +" where CodConfirmarrecebimentodeposito="+txtCodRecebimento.getText();
                 
                 con.statement.executeUpdate(sql);
                 
@@ -3144,15 +3203,16 @@ public class Comercial extends javax.swing.JFrame {
                         int conseguiu_excluir = con.statement.executeUpdate(sql);
                         if(conseguiu_excluir==1){
                             JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
-                            limpar_tabela_os();
-                            preencher_tabela_os();
-                            limpar_tela_os();
+                            limpar_tabela_recebimento();
+                            preencher_tabela_recebimento();
+                            limpar_tela_recebimento();
                             if("Finalizado".equals(andamento)){
                                 con.executeSQL("select * from confirmarrecebimentodeposito where NumeroProcesso="+processo+" and AndamentoConfirmarrecebimentodeposito='Finalizado'");
                                 
                                 if(!con.resultset.first()){
                                     try{
-                                        con_geral.statement.executeUpdate("update comercial set AndamentoConfirmarRecebimentoDeposito='Em Aberto'");
+                                        con_geral.statement.executeUpdate("update comercial set "
+                                                + "AndamentoConfirmarRecebimentoDeposito='Em Aberto' where Numerodoprocesso='"+processo+"'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
@@ -3231,7 +3291,7 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String gry = "insert into pesquisafiscal (DatadeCadastroAndamento, NumeroProcesso,"
-                        +"Usuario, Observacao, AndamentoPesquisaFiscal)"
+                        +"Usuario, Obsevacao, AndamentoPesquisaFiscal)"
                         +"values ('"+new java.sql.Date(data.getTime())+"','"
                         +processo+"','"
                         +usuario+"','"
@@ -3266,9 +3326,9 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String sql = "update pesquisafiscal set "
-                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
-                        +"Usuario='"+usuario+"','"
-                        +"Observacao='"+txtObsCertidoes.getText()+"','"
+                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"',"
+                        +"Usuario='"+usuario+"',"
+                        +"Obsevacao='"+txtObsCertidoes.getText()+"',"
                         +"AndamentoPesquisaFiscal='"+andamento+"'"
                         +" where CodPesquisaFiscal="+txtCodCertidoes.getText();
                 
@@ -3321,7 +3381,7 @@ public class Comercial extends javax.swing.JFrame {
                                 
                                 if(!con.resultset.first()){
                                     try{
-                                        con_geral.statement.executeUpdate("update comercial set AndamentoPesquisaFiscal='Em Aberto'");
+                                        con_geral.statement.executeUpdate("update comercial set AndamentoPesquisaFiscal='Em Aberto' where Numerodoprocesso='"+processo+"'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
@@ -3400,7 +3460,7 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String gry = "insert into enviartermoresponsaparacliente (DatadeCadastroAndamento, NumeroProcesso,"
-                        +"Usuario, Observacao, AndamentoEnviarTermoResponsaParaCliente)"
+                        +"Usuario, Obsevacao, AndamentoEnviarTermoResponsaParaCliente)"
                         +"values ('"+new java.sql.Date(data.getTime())+"','"
                         +processo+"','"
                         +usuario+"','"
@@ -3435,9 +3495,9 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String sql = "update enviartermoresponsaparacliente set "
-                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
-                        +"Usuario='"+usuario+"','"
-                        +"Observacao='"+txtObsTermo.getText()+"','"
+                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"',"
+                        +"Usuario='"+usuario+"',"
+                        +"Obsevacao='"+txtObsTermo.getText()+"',"
                         +"AndamentoEnviarTermoResponsaParaCliente='"+andamento+"'"
                         +" where CodEnviarTermoResponsaParaCliente="+txtCodTermo.getText();
                 
@@ -3490,7 +3550,8 @@ public class Comercial extends javax.swing.JFrame {
                                 
                                 if(!con.resultset.first()){
                                     try{
-                                        con_geral.statement.executeUpdate("update comercial set AndamentoEnviarTermoResponsaparacliente='Em Aberto'");
+                                        con_geral.statement.executeUpdate("update comercial set "
+                                                + "AndamentoEnviarTermoResponsaparacliente='Em Aberto' where Numerodoprocesso='"+processo+"'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
@@ -3568,7 +3629,7 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String gry = "insert into gravarsenhasfiscais (DatadeCadastroAndamento, NumeroProcesso,"
-                        +"Usuario, Observacao, AndamentoGravarSenhasFiscais)"
+                        +"Usuario, Obsevacao, AndamentoGravarSenhasFiscais)"
                         +"values ('"+new java.sql.Date(data.getTime())+"','"
                         +processo+"','"
                         +usuario+"','"
@@ -3603,11 +3664,11 @@ public class Comercial extends javax.swing.JFrame {
                 }
                 
                 String sql = "update gravarsenhasfiscais set "
-                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
-                        +"Usuario='"+usuario+"','"
-                        +"Observacao='"+txtObsSenhas.getText()+"','"
+                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"',"
+                        +"Usuario='"+usuario+"',"
+                        +"Obsevacao='"+txtObsSenhas.getText()+"',"
                         +"AndamentoGravarSenhasFiscais='"+andamento+"'"
-                        +" where AndamentoGravarSenhasFiscais="+txtCodSenhas.getText();
+                        +" where CodGravarSenhasFiscais="+txtCodSenhas.getText();
                 
                 con.statement.executeUpdate(sql);
                 
@@ -3658,7 +3719,7 @@ public class Comercial extends javax.swing.JFrame {
                                 
                                 if(!con.resultset.first()){
                                     try{
-                                        con_geral.statement.executeUpdate("update comercial set AndamentoGravarSenhasFiscais='Em Aberto'");
+                                        con_geral.statement.executeUpdate("update comercial set AndamentoGravarSenhasFiscais='Em Aberto' where Numerodoprocesso='"+processo+"'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
@@ -3703,6 +3764,11 @@ public class Comercial extends javax.swing.JFrame {
             cbTipoSenhas.setSelectedItem("Em Aberto");
         
     }//GEN-LAST:event_tbSenhasMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        con_geral.desconecta();
+        con.desconecta();
+    }//GEN-LAST:event_formWindowClosing
     public static void main(String args[]){
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run(){
@@ -3917,7 +3983,7 @@ public class Comercial extends javax.swing.JFrame {
             while (con.resultset.next())
                 modelo.addRow(new Object [] {
                     con.resultset.getString("CodEnvioDgnose"),
-                    sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                     con.resultset.getString("NumeroProcesso"),
                     con.resultset.getString("Obsevacao"),
                     con.resultset.getString("AndamentoEnioDiagnose"),                    
@@ -3943,7 +4009,7 @@ public class Comercial extends javax.swing.JFrame {
             while (con.resultset.next())
                 modelo.addRow(new Object [] {
                     con.resultset.getString("CodPropostaComercial"),
-                    sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                     con.resultset.getString("NumeroProcesso"),
                     con.resultset.getString("Obsevacao"),
                     con.resultset.getString("AndamentoPropostaComercial"),
@@ -3968,7 +4034,7 @@ public class Comercial extends javax.swing.JFrame {
             while(con.resultset.next())
                 modelo.addRow(new Object [] {
                     con.resultset.getString("CodGerarOS"),
-                    sdf.format(con.resultset.getString("DatadeCadastroAndamento")),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                     con.resultset.getString("NumeroProcesso"),
                     con.resultset.getString("Obsevacao"),
                     con.resultset.getString("AndamentoGerarOS"),
@@ -4010,7 +4076,8 @@ public class Comercial extends javax.swing.JFrame {
             recebimento = con_geral.resultset.getString("AndamentoConfirmarRecebimentoDeposito");
             certidoes = con_geral.resultset.getString("AndamentoPesquisaFiscal");
             termo = con_geral.resultset.getString("AndamentoEnviarTermoResponsaparacliente");
-            
+            senhas = con_geral.resultset.getString("AndamentoGravarSenhasFiscais");
+                    
             txtStatusDiagnose.setText(diagnose);
             txtStatusProposta.setText(proposta);
             txtStatusOS.setText(os);
@@ -4038,10 +4105,10 @@ public class Comercial extends javax.swing.JFrame {
                 txtStatusSenhas.getText().equalsIgnoreCase("Aberto")){
        
                 try{
-                    String sql = "UPDATE cadastrodeprocesso set AndamentoComercial='' where codNumerodoprocesso=" +processo;
+                    String sql = "UPDATE cadastrodeprocesso set AndamentoComercial='Em Aberto' where codNumerodoprocesso=" +processo;
                     con_geral.statement.executeUpdate(sql);
 
-                    String andamento = "Não Iniciado";
+                    String andamento = "Em Aberto";
                     txtAndamento.setText(andamento);
                 }catch(SQLException erro){
                     JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" +erro);
@@ -4059,10 +4126,10 @@ public class Comercial extends javax.swing.JFrame {
                 {
        
                 try{
-                    String sql = "UPDATE cadastrodeprocesso set AndamentoComercial='Finalizado' where codNumerodoprocesso="+processo;
+                    String sql = "UPDATE cadastrodeprocesso set AndamentoComercial='Concluido' where codNumerodoprocesso="+processo;
                     con_geral.statement.executeUpdate(sql);
 
-                    String andamento = "Em Andamento";
+                    String andamento = "Concluido";
                     txtAndamento.setText(andamento);
                 }catch(SQLException erro){
                     JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" +erro);
@@ -4107,6 +4174,12 @@ public class Comercial extends javax.swing.JFrame {
         else{
             txtStatusTaxa.setBackground(Color.green);
         }
+        if(txtStatusDocumentos.getText().equalsIgnoreCase("Em Aberto")){
+            txtStatusDocumentos.setBackground(Color.red);
+        }
+        else{
+            txtStatusDocumentos.setBackground(Color.green);        
+        }   
         if(txtStatusRecebimento.getText().equalsIgnoreCase("Em Aberto")){
             txtStatusRecebimento.setBackground(Color.red);
         }
@@ -4427,7 +4500,7 @@ public class Comercial extends javax.swing.JFrame {
             while(con.resultset.next())modelo.addRow(new Object []
             {
                 con.resultset.getString("CodRequisicaoDocumentos"),
-                sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                 con.resultset.getString("NumeroProcesso"),
                 con.resultset.getString("Obsevacao"),
                 con.resultset.getString("AndamentoRequisicaoDocumentos"),
@@ -4456,7 +4529,7 @@ public class Comercial extends javax.swing.JFrame {
             while(con.resultset.next())modelo.addRow(new Object[] 
             {
                 con.resultset.getString("CodTaxaDeImplantacaoEFormaDePG"),
-                sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                 con.resultset.getString("NumeroProcesso"),
                 con.resultset.getString("Obsevacao"),
                 con.resultset.getString("AndamentoTaxaDeImplantacaoEformaPG"),
@@ -4484,7 +4557,7 @@ public class Comercial extends javax.swing.JFrame {
             while(con.resultset.next())modelo.addRow(new Object[] 
             {
                 con.resultset.getString("CodConfirmarrecebimentodeposito"),
-                sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                 con.resultset.getString("NumeroProcesso"),
                 con.resultset.getString("Obsevacao"),
                 con.resultset.getString("AndamentoConfirmarrecebimentodeposito"),
@@ -4513,7 +4586,7 @@ public class Comercial extends javax.swing.JFrame {
             while(con.resultset.next())modelo.addRow(new Object[] 
             {
                 con.resultset.getString("CodPesquisaFiscal"),
-                sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                 con.resultset.getString("NumeroProcesso"),
                 con.resultset.getString("Obsevacao"),
                 con.resultset.getString("AndamentoPesquisaFiscal"),
@@ -4541,7 +4614,7 @@ public class Comercial extends javax.swing.JFrame {
             while(con.resultset.next())modelo.addRow(new Object[] 
             {
                 con.resultset.getString("CodEnviartermoResponsaParaCliente"),
-                sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                 con.resultset.getString("NumeroProcesso"),
                 con.resultset.getString("Obsevacao"),
                 con.resultset.getString("AndamentoEnviarTermoResponsaParaCliente"),
@@ -4553,23 +4626,23 @@ public class Comercial extends javax.swing.JFrame {
         }
     }
     private void preencher_tabela_senhas() {
-        tbTermo.getColumnModel().getColumn(0);
-        tbTermo.getColumnModel().getColumn(1);
-        tbTermo.getColumnModel().getColumn(2);
-        tbTermo.getColumnModel().getColumn(3);
-        tbTermo.getColumnModel().getColumn(4);
-        tbTermo.getColumnModel().getColumn(5);
+        tbSenhas.getColumnModel().getColumn(0);
+        tbSenhas.getColumnModel().getColumn(1);
+        tbSenhas.getColumnModel().getColumn(2);
+        tbSenhas.getColumnModel().getColumn(3);
+        tbSenhas.getColumnModel().getColumn(4);
+        tbSenhas.getColumnModel().getColumn(5);
         
         con.executeSQL("select * from gravarsenhasfiscais where NumeroProcesso='"+processo+"'");
         
-        DefaultTableModel modelo = (DefaultTableModel)tbTermo.getModel();
+        DefaultTableModel modelo = (DefaultTableModel)tbSenhas.getModel();
         
         try
         {
             while(con.resultset.next())modelo.addRow(new Object[] 
             {
                 con.resultset.getString("CodGravarSenhasFiscais"),
-                sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                 con.resultset.getString("NumeroProcesso"),
                 con.resultset.getString("Obsevacao"),
                 con.resultset.getString("AndamentoGravarSenhasFiscais"),

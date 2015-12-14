@@ -19,8 +19,9 @@ import br.com.prolink.inicio.*;
  */
 public class Contabil extends javax.swing.JFrame {
     //conexão com as tabelas necessarias
-    Conexao con_contabil, con_todos;
-    //maskara para o JFormattedTextField
+    Conexao con = new Conexao();
+    Conexao con_geral = new Conexao();
+//maskara para o JFormattedTextField
     MaskFormatter formatoTodos;
     //Formatador para data
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -33,18 +34,16 @@ public class Contabil extends javax.swing.JFrame {
     public Contabil() {
         initComponents();
         //instanciando as conexoes e executando o metodo conecta
-        con_todos = new Conexao();
-        con_todos.conecta();
-        
-        con_contabil = new Conexao();
-        con_contabil.conecta();
         
         
+        con.conecta();
+        con_geral.conecta();
         //chamando metodo que preencha as tabelas
         preencher_tabela_todos();
         //chamando metodo que preencha tela de status
         preencher_status();
         atualiza_cadastrocliente();
+        
         limpar_tela_todos();
         bloqueia_tela();
         //chamando metodo que busca a data atual e envia para os campos de datas
@@ -111,6 +110,11 @@ public class Contabil extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Controle Contabil");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jpContabil.setBackground(new java.awt.Color(245, 245, 245));
 
@@ -229,6 +233,7 @@ public class Contabil extends javax.swing.JFrame {
         txt_obs_todos.setRows(5);
         jScrollPane9.setViewportView(txt_obs_todos);
 
+        btNovos.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btNovos.setText("Novo");
         btNovos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,6 +241,7 @@ public class Contabil extends javax.swing.JFrame {
             }
         });
 
+        btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,6 +249,7 @@ public class Contabil extends javax.swing.JFrame {
             }
         });
 
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,6 +257,7 @@ public class Contabil extends javax.swing.JFrame {
             }
         });
 
+        btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -294,6 +302,7 @@ public class Contabil extends javax.swing.JFrame {
             tb_todos.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
+        btnAlterar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -473,16 +482,13 @@ public class Contabil extends javax.swing.JFrame {
         else{
             try{
                 //busca cadastro de acordo com o codigo
-                String sql = "select * from gerarplanodecontas where CodGerarPlanoDeContas= "+txt_codigo_todos.getText();
-                con_todos.executeSQL(sql);
-                con_todos.resultset.first();
-                String cliente = "Tem certeza que deseja excluir um cadastro da tabela principal com cliente : " +con_todos.resultset.getString("Cliente")+"?";
+               String cliente = "Tem certeza que deseja excluir um registro do cliente "+nome+" ?";
                 //pegando o processo sendo excluido
-                String operacao = con_todos.resultset.getString("AndamentoGerarPlanoDeContas");
+                String operacao = con.resultset.getString("AndamentoGerarPlanoDeContas");
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
-                    sql = "DELETE FROM gerarplanodecontas Where CodGerarPlanoDeContas = "+txt_codigo_todos.getText();
-                    int conseguiu_excluir = con_todos.statement.executeUpdate(sql);
+                    String sql = "DELETE FROM gerarplanodecontas Where CodGerarPlanoDeContas = "+txt_codigo_todos.getText();
+                    int conseguiu_excluir = con.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
                         
@@ -492,11 +498,11 @@ public class Contabil extends javax.swing.JFrame {
                         //se excluir um cadastro finalizado ele vai atualizar o status e reabrir
                         if("Finalizado".equals(operacao)){
                             try{
-                            con_todos.executeSQL("select * from gerarplanodecontas where NumeroProcesso='"+processo+"' and AndamentoGerarPlanoDeContas='Finalizado'");
+                            con.executeSQL("select * from gerarplanodecontas where NumeroProcesso='"+processo+"' and AndamentoGerarPlanoDeContas='Finalizado'");
                             //se não existir mais um em situação finalizada ele ira atualizar o status
-                            if(!con_todos.resultset.first()){
+                            if(!con.resultset.first()){
                                 try{
-                                con_contabil.statement.executeUpdate("UPDATE contabil set AndamentoGerarPlanoDeContas ='Em Aberto' where Numerodoprocesso='" +processo+"'");
+                                con.statement.executeUpdate("UPDATE contabil set AndamentoGerarPlanoDeContas ='Em Aberto' where Numerodoprocesso='" +processo+"'");
                                 
                                 preencher_status();
                                 atualiza_cadastrocliente();
@@ -533,6 +539,7 @@ public class Contabil extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
         }
         else if(!txt_codigo_todos.getText().equals("")){
+            ;
             try{
 
                 String dataandamento = txt_data_todos.getText();
@@ -551,10 +558,10 @@ public class Contabil extends javax.swing.JFrame {
                 new java.sql.Date(datatermo.getTime())+"',"+
                 "Obsevacao='"+txt_obs_todos.getText()+"',"+
                 "Usuario = '"+usuario+"',"+
-                "AndamentoGerarPlanoDeContas='"+andamentotermo+"',"+
+                "AndamentoGerarPlanoDeContas='"+andamentotermo+"' "+
                 "where CodGerarPlanoDeContas = "+txt_codigo_todos.getText();
 
-                con_todos.statement.executeUpdate(sql);
+                con.statement.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
 
                 atualiza_contabil_todos();
@@ -568,8 +575,10 @@ public class Contabil extends javax.swing.JFrame {
             }catch (ParseException ex) {
                 JOptionPane.showMessageDialog(null, "Erro na conversao da data ou data invalida!\n"+ex);
             }
+            
         }
         else if(txt_codigo_todos.getText().equals("")){
+            
             try{
                 //convertendo a primeira data
                 String dataandamento = txt_data_todos.getText();
@@ -589,16 +598,18 @@ public class Contabil extends javax.swing.JFrame {
                 new java.sql.Date(datatermo.getTime())+"','"+
                 txt_obs_todos.getText()+"','"+
                 usuario+"','"+
-                andamentotermo+"',)";
-                con_todos.exeQuery(gry);
+                andamentotermo+"')";
+                con.exeQuery(gry);
 
                 JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
-
+                
+                limpar_tabela_todos();
+                preencher_tabela_todos();
+                
                 atualiza_contabil_todos();
                 preencher_status();
                 atualiza_cadastrocliente();
-                limpar_tabela_todos();
-                preencher_tabela_todos();
+                
                 
             }catch(ParseException | HeadlessException add){
                 JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Plano de Contas: "+add);
@@ -616,6 +627,11 @@ public class Contabil extends javax.swing.JFrame {
         cria_backup();
         desbloqueia_tela();
     }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        con.desconecta();
+        con_geral.desconecta();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      *
@@ -673,7 +689,7 @@ public class Contabil extends javax.swing.JFrame {
         tb_todos.getColumnModel().getColumn(3);
         tb_todos.getColumnModel().getColumn(4);
         tb_todos.getColumnModel().getColumn(5);
-        con_todos.executeSQL("select * from gerarplanodecontas where NumeroProcesso='"+processo+"'");
+        con.executeSQL("select * from gerarplanodecontas where NumeroProcesso='"+processo+"'");
 
         DefaultTableModel modelo = (DefaultTableModel)tb_todos.getModel();
         //modelo.setNumRows(0);
@@ -681,15 +697,15 @@ public class Contabil extends javax.swing.JFrame {
         try
         {
             
-            while (con_todos.resultset.next())
+            while (con.resultset.next())
                 modelo.addRow(new Object [] {
-                    con_todos.resultset.getString("CodGerarPlanoDeContas"),
-                    sdf.format(con_todos.resultset.getTime("DatadeCadastroAndamento")),
-                    con_todos.resultset.getString("NumeroProcesso"),
-                    con_todos.resultset.getString("Obsevacao"),
-                    con_todos.resultset.getString("AndamentoGerarPlanoDeContas"),                    
-                    con_todos.resultset.getString("Usuario")});
-            con_todos.resultset.first();
+                    con.resultset.getString("CodGerarPlanoDeContas"),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
+                    con.resultset.getString("NumeroProcesso"),
+                    con.resultset.getString("Obsevacao"),
+                    con.resultset.getString("AndamentoGerarPlanoDeContas"),                    
+                    con.resultset.getString("Usuario")});
+            con.resultset.first();
         }   catch (SQLException erro){
                 JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Plano de Contas\n"+erro);
         }
@@ -704,17 +720,16 @@ public class Contabil extends javax.swing.JFrame {
                 tbm.removeRow(i);
             }
     }
-
     /**
      *
      */
     public void preencher_status(){
         try{
             String sql = "select * from contabil WHERE Numerodoprocesso='"+processo+"'";
-            con_contabil.executeSQL(sql);
-            con_contabil.resultset.first();
+            con_geral.executeSQL(sql);
+            con_geral.resultset.first();
             
-            todos = con_contabil.resultset.getString("AndamentoGerarPlanoDeContas");
+            todos = con_geral.resultset.getString("AndamentoGerarPlanoDeContas");
             
             txt_status_todos.setText(todos);
             
@@ -727,37 +742,39 @@ public class Contabil extends javax.swing.JFrame {
      *
      */
     public void atualiza_cadastrocliente(){
-        if(txt_status_todos.getText().equalsIgnoreCase("Finalizado")){
-       
+        if(todos.equalsIgnoreCase("Finalizado")) {
                 try{
                     String sql = "UPDATE cadastrodeprocesso set AndamentoContabil='Concluido' where codNumerodoprocesso="+processo;
-                    con_contabil.statement.executeUpdate(sql);
+                    con_geral.statement.executeUpdate(sql);
 
                     String andamento = "Concluido";
+                    
                     txt_andamento_contabil.setText(andamento);
+                    
                 }catch(SQLException erro){
                     JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!" +erro);
                 }
         }
-        else if(txt_status_todos.getText().equalsIgnoreCase("Em Aberto")){
-       
+        else if(todos.equalsIgnoreCase("Em Aberto")) {
                 try{
                     String sql = "UPDATE cadastrodeprocesso set AndamentoContabil='Em Aberto' where codNumerodoprocesso=" +processo;
-                    con_contabil.statement.executeUpdate(sql);
+                    con_geral.statement.executeUpdate(sql);
 
-                    String andamento = "Em Andamento";
+                    String andamento = "Em Aberto";
                     txt_andamento_contabil.setText(andamento);
+                    
                 }catch(SQLException erro){
                     JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!" +erro);
                 }
         }
         else{
-                    String andamento = "Em Aberto";
-                    txt_andamento_contabil.setText(andamento);
+                txt_andamento_contabil.setText("Em Aberto");
         }
-                
         distribuir_cores();
     }
+                
+        
+    
 
 
     public void distribuir_cores(){
@@ -798,27 +815,27 @@ public class Contabil extends javax.swing.JFrame {
     public void atualiza_contabil_todos(){
         if(cb_tipo_todos.getSelectedItem().equals("Finalizado")){
                     try{
-                        String sql = "UPDATE contabil set AndamentoGerarPlanoDeContas ='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_contabil.statement.executeUpdate(sql);
+                        String sql = "UPDATE contabil set AndamentoGerarPlanoDeContas ='Finalizado' where Numerodoprocesso='"+processo+"'";
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contabil>Plano de Contas\n" +erro);
                     }
                 }
         else{
             try{    
-                    con_contabil.executeSQL("select * from contabil where Numerodoprocesso='" +processo+"' and AndamentoGerarPlanoDeContas ='Finalizado'");
-                if(con_contabil.resultset.next()){
+                    con_geral.executeSQL("select * from contabil where Numerodoprocesso='" +processo+"' and AndamentoGerarPlanoDeContas ='Finalizado'");
+                if(con_geral.resultset.next()){
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua todos os registros finalizados no painel Todos Documentos\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-                    con_todos.executeSQL("select * from gerarplanodecontas where NumeroProcesso='"+processo+"'and AndamentoGerarPlanoDeContas='Finalizado'");
+                    con_geral.executeSQL("select * from gerarplanodecontas where NumeroProcesso='"+processo+"'and AndamentoGerarPlanoDeContas='Finalizado'");
                     
-                    if(!con_todos.resultset.last()){
+                    if(!con_geral.resultset.last()){
                         try{
                 
                         String sql = "UPDATE contabil set AndamentoGerarPlanoDeContas ='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_contabil.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                         }catch(SQLException erro){
                             JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contabil>Plano de Contas\n" +erro);
                         }
@@ -829,7 +846,7 @@ public class Contabil extends javax.swing.JFrame {
                     try{
                 
                         String sql = "UPDATE contabil set AndamentoGerarPlanoDeContas ='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_contabil.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contabil>Plano de Contas\n" +erro);
                     }

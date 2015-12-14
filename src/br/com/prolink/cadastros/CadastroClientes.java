@@ -16,8 +16,6 @@ import javax.swing.text.MaskFormatter;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import br.com.prolink.inicio.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,7 +23,9 @@ import java.util.logging.Logger;
  */
 public class CadastroClientes extends javax.swing.JFrame {
     MaskFormatter formatoData, formatoAtivada, formatoFim;
-    Conexao con_cliente, con_classificacao;
+ 
+    Conexao con_cliente = new Conexao();
+    Conexao con_classificacao= new Conexao();
     
     String codigo_backup, apelido_backup, nome_backup, classificacao_backup, data_backup, datainicio_backup, datafim_backup;  
     
@@ -35,19 +35,20 @@ public class CadastroClientes extends javax.swing.JFrame {
     
     public CadastroClientes() {
         initComponents();
-        con_cliente = new Conexao();
-        con_cliente.conecta();
         
-        con_classificacao = new Conexao();
-        con_classificacao.conecta();
+        con_cliente.conecta();
         
         atualiza_combo_box_classificacao();
         
         txt_codigo.setEditable(false);
         txt_data.setEditable(false);
         
-        //verificar_acesso();
+        txt_pesquisa.setVisible(false);
+        
+        verificar_acesso();
+        
         preencher_jtable();
+        
         data_agora();
         tb_clientes.setAutoCreateRowSorter(true);
         trava_campos();
@@ -435,8 +436,7 @@ public class CadastroClientes extends javax.swing.JFrame {
         String nome = (String)tb_clientes.getValueAt(linha, 2);
         String data = (String)tb_clientes.getValueAt(linha, 3);
         String classificacao = (String)tb_clientes.getValueAt(linha, 4);
-        String usuario = (String)tb_clientes.getValueAt(linha, 5);
-       
+        
         //2012-00-09
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -450,34 +450,39 @@ public class CadastroClientes extends javax.swing.JFrame {
         txt_nome.setText(nome);
         txt_apelido.setText(apelido);
         cb_classificacao.setSelectedItem(classificacao);
+        
         if(!txt_codigo.getText().equals("")){
-            try{
-            con_cliente.executeSQL("select * from cadastrodeprocesso where codNumerodoprocesso="+txt_codigo.getText());   
-            datainicio_backup = con_cliente.resultset.getString("DatadeAtivacao");
-            datafim_backup = con_cliente.resultset.getString("DataDeArquivamentodoProcesso");
             
-            if(datainicio_backup.length()==10 && !"1111-11-11".equals(datainicio_backup)){
-                String diai = datainicio_backup.substring(0, 2);
-                String mesi = datainicio_backup.substring(3, 5);
-                String anoi = datainicio_backup.substring(6);
-                String recebeinicio = dia+mes+ano;
-                
-                txt_datainicio.setText(recebeinicio);
-                
-            }
-            if(datafim_backup.length()==10 && !"1111-11-11".equals(datafim_backup)){
-                String diaf = datafim_backup.substring(0, 2);
-                String mesf = datafim_backup.substring(3, 5);
-                String anof = datafim_backup.substring(6);
-                String recebef = dia+mes+ano;
-                
-                txt_datafim.setText(recebef);
-                
-            }
+            try{
+                con_cliente.executeSQL("select * from cadastrodeprocesso where codNumerodoprocesso="+txt_codigo.getText());   
+                if(con_cliente.resultset.first()){
+
+                    datainicio_backup = con_cliente.resultset.getString("DatadeAtivacao");
+                    datafim_backup = con_cliente.resultset.getString("DataDeArquivamentodoProcesso");
+
+                    if(datainicio_backup.length()==10 && !"1111-11-11".equals(datainicio_backup)){
+                        String anoi = datainicio_backup.substring(0, 4);
+                        String mesi = datainicio_backup.substring(5, 7);
+                        String diai = datainicio_backup.substring(8);
+                        String recebeinicio = diai+"/"+mesi+"/"+anoi;
+
+                        txt_datainicio.setText(recebeinicio);
+
+                    }
+                    if(datafim_backup.length()==10 && !"1111-11-11".equals(datafim_backup)){
+                        String anof = datafim_backup.substring(0, 4);
+                        String mesf = datafim_backup.substring(5, 7);
+                        String diaf = datafim_backup.substring(8);
+                        String recebef = diaf+"/"+mesf+"/"+anof;
+
+                        txt_datafim.setText(recebef);
+
+                    }
+                }
             }catch(Exception erro){
             }
-        }
         
+    }
         
     }//GEN-LAST:event_tb_clientesMouseClicked
 
@@ -495,6 +500,7 @@ public class CadastroClientes extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Campo classificação não pode ficar em branco!");
     }
     else if(!txt_codigo.getText().equals("")){
+        
         try{
             String str = txt_data.getText();  
             Date data = sdf.parse(str);
@@ -508,6 +514,9 @@ public class CadastroClientes extends javax.swing.JFrame {
             con_cliente.statement.executeUpdate(sql);
             JOptionPane.showMessageDialog(null,"Alteração realizado com sucesso!");
             
+            enviar_data1();
+            enviar_data2();
+            
             limpar_tabela();
             preencher_jtable();
             
@@ -516,31 +525,40 @@ public class CadastroClientes extends javax.swing.JFrame {
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(null, "Problema na tentativa de conversão de data, contate o suporte!" +ex);
         }
+        
     }
-    else if (txt_codigo.getText().equals("")){  
+    else if (txt_codigo.getText().equals("")){ 
+        
         try{
             String str = txt_data.getText();  
             Date data = sdf.parse(str);
-            String gry = "insert into cadastrodeprocesso (Apelido, Datadecadastro, Cliente, Classificacao, Usuario) values ('"+
+            String gry = "insert into cadastrodeprocesso (Apelido, Datadecadastro,"
+                    + " Cliente, Classificacao, Usuario, "
+                    + "AndamentoComercial, AndamentoFinanceiro, AndamentoContratos,"
+                    + "AndamentoDP,AndamentoContabil, AndamentoFiscal, AndamentoRegularizacao) values ('"+
                             txt_apelido.getText()+"','"+
                             new java.sql.Date(data.getTime())+"','"+
                             txt_nome.getText()+"','"+
                             cb_classificacao.getSelectedItem()+"','"+
-                            Login.usuario+"')";
+                            Login.usuario+"','"
+                    + "Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto')";
                                 
                 con_cliente.exeQuery(gry);
-                               
+                expandir_cadastro();
+                enviar_data1();
+                enviar_data2();
+                
+                limpar_tabela();
+                //atualizando tabela
+                preencher_jtable();
+            
                 JOptionPane.showMessageDialog(null,"Gravado com sucesso!");
                 }catch(ParseException | HeadlessException add){
                          JOptionPane.showMessageDialog(null,"Falha ao gravar o registro: " +add);
-                }    
+                }
+        
     }
-        expandir_cadastro();
-        //limpando tabela para depois atualizar
-        limpar_tabela();
-        //atualizando tabela
-        preencher_jtable();
-        trava_campos();
+    trava_campos();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void bt_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_fecharActionPerformed
@@ -563,6 +581,7 @@ public class CadastroClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Para realizar a exclusão, por favor selecione um registro!");
         }
         else{
+            
             try{
                 String sql = "select * from cadastrodeprocesso where codNumerodoprocesso=" +txt_codigo.getText();
                 con_cliente.executeSQL(sql);
@@ -602,23 +621,30 @@ public class CadastroClientes extends javax.swing.JFrame {
             {
                     JOptionPane.showMessageDialog(null,"Erro a tentar excluir o registro..."+erro);
             }
+            
         }
     }//GEN-LAST:event_bt_excluirActionPerformed
 
     private void txt_pesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_pesquisaActionPerformed
         limpar_tabela();
         try{
-            String pesquisa = "select * from cadastrodeprocesso where Cliente like '"+txt_pesquisa.getText()+"%'";
+            
+            String pesquisa = "select * from cadastrodeprocesso where Cliente like '"+txt_pesquisa.getText()+"%' order by Cliente";
             con_cliente.executeSQL(pesquisa);
             if(con_cliente.resultset.first())
             {
+                
                 preencher_jtable_nome();
+               
             }
-            else
+            else{
                 JOptionPane.showMessageDialog(null, "Não existe registro com as letras "+txt_pesquisa.getText().toUpperCase());
+                
+            }
         }catch(SQLException | HeadlessException erro){
             JOptionPane.showMessageDialog(null,"Não foi possivel localizar os dados via digitação..."+erro);
         }
+         
     }//GEN-LAST:event_txt_pesquisaActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
@@ -675,17 +701,19 @@ public class CadastroClientes extends javax.swing.JFrame {
      */
     public void atualiza_combo_box_classificacao()
     {
+        con_classificacao.conecta();
         try
         {
             cb_classificacao.removeAllItems();
-            con_cliente.executeSQL("select * from classificacao order by Status");
-            while(con_cliente.resultset.next())
-                cb_classificacao.addItem(con_cliente.resultset.getString("Status"));
+            con_classificacao.executeSQL("select * from classificacao order by Status");
+            while(con_classificacao.resultset.next())
+                cb_classificacao.addItem(con_classificacao.resultset.getString("Status"));
         }
         catch(SQLException erro)
         {
             JOptionPane.showMessageDialog(null,"Não localizou dados na tabela classificacao!"+erro);
         }
+        con_classificacao.desconecta();
         
     }
 
@@ -752,7 +780,7 @@ catch (SQLException erro){
             con_cliente.resultset.first();
         }
 catch (SQLException erro){
-    JOptionPane.showMessageDialog(null,"Erro ao listar no JTable "+erro);
+    JOptionPane.showMessageDialog(null,"Erro ao listar na tabela! "+erro);
 }
 }
 
@@ -916,5 +944,35 @@ catch (SQLException erro){
     }catch(ParseException | SQLException add){
     JOptionPane.showMessageDialog(null, "Erro ao distribuir cadastro, chame o suporte :\n");   
     }
+    }
+    public void enviar_data1(){
+        if(txt_datainicio.getText().trim().length()==10){
+            
+            
+            try{
+                String st = txt_datainicio.getText();
+                Date data1 = sdf.parse(st);
+                
+                con_cliente.statement.executeUpdate("update cadastrodeprocesso "
+                        + "set DatadeAtivacao='"+ new java.sql.Date(data1.getTime())+
+                        "' where codNumerodoprocesso="+txt_codigo.getText());
+            }catch(Exception erro){
+            }  
+        }
+    }
+    public void enviar_data2(){
+        if(txt_datafim.getText().trim().length()==10){
+            
+            
+            try{
+                String st = txt_datafim.getText();
+                Date data1 = sdf.parse(st);
+                
+                con_cliente.statement.executeUpdate("update cadastrodeprocesso "
+                        + "set DataDeArquivamentodoProcesso='"+ new java.sql.Date(data1.getTime())+
+                        "' where codNumerodoprocesso="+txt_codigo.getText());
+            }catch(Exception erro){
+            }  
+        }
     }
 }

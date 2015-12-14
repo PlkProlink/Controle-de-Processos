@@ -90,6 +90,7 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }
+    con.desconecta();
 }
 
     public void ato() {
@@ -138,6 +139,7 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }
+    con.desconecta();
     }
 
     public void balancete() {
@@ -185,7 +187,8 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
+    }
+    con.desconecta();
     }
 
     public void balanco() {
@@ -233,7 +236,8 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
+    }
+    con.desconecta();
     }
 
     public void caged() {
@@ -279,7 +283,8 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
+    } 
+    con.desconecta();
     }
 
     public void comSocios() {
@@ -327,7 +332,8 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
+    }
+    con.desconecta();
     }
 
     public void contas() {
@@ -375,7 +381,8 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
+    }
+    con.desconecta();
     }
 
     public void darf() {
@@ -422,7 +429,8 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
+    }
+    con.desconecta();
     }
 
     public void docSocios() {
@@ -470,6 +478,7 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }    
+    con.desconecta();
     }
 
     public void ferias() {
@@ -517,7 +526,8 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
+    }
+    con.desconecta();
     }
 
     public void funcionarios() {
@@ -562,7 +572,8 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
+    }
+    con.desconecta();
     }
 
     public void hab() {
@@ -607,7 +618,8 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
+    }
+    con.desconecta();
     }    
     
     public void inss() {
@@ -652,7 +664,8 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
+    }
+    con.desconecta();
     }
     
     public void pisSocio() {
@@ -696,7 +709,8 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
+    }  
+    con.desconecta();
     }
 
     public void plano() {
@@ -741,6 +755,7 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }    
+    con.desconecta();
     }
 
     public void posto() {
@@ -786,6 +801,7 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }    
+    con.desconecta();
     }
 
     public void prefeitura() {
@@ -830,6 +846,7 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }    
+    con.desconecta();
     }
 
     public void receita() {
@@ -875,6 +892,7 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }    
+    con.desconecta();
     }
 
     public void recisoes() {
@@ -919,6 +937,7 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }    
+    con.desconecta();
     }
 
     public void sefip() {
@@ -964,6 +983,7 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }    
+    con.desconecta();
     }
 
     public void simples() {
@@ -1008,6 +1028,7 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }    
+    con.desconecta();
     }
 
     public void sindical() {
@@ -1053,6 +1074,7 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }    
+    con.desconecta();
     }    
 
     public void termo() {
@@ -1098,6 +1120,7 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }    
+    con.desconecta();
     }
     
     public void folha(){
@@ -1145,5 +1168,6 @@ public class DocumentosDao {
         }
     }catch(Exception erro){
     }
+    con.desconecta();
     }    
 }

@@ -18,7 +18,8 @@ import br.com.prolink.inicio.*;
  */
 public class Fiscal extends javax.swing.JFrame {
     //conexão com as tabelas necessarias
-    Conexao con_fiscal, con_distribuir, con_perfil;
+    Conexao con = new Conexao();
+    Conexao con_geral = new Conexao();
     //maskara para o JFormattedTextField
     MaskFormatter formatoPerfil, formatoDistribuir;
     //Formatador para data
@@ -34,25 +35,19 @@ public class Fiscal extends javax.swing.JFrame {
      */
     public Fiscal() {
         initComponents();
-        //instanciando as conexoes e executando o metodo conecta
-        con_distribuir = new Conexao();
-        con_distribuir.conecta();
         
-        con_perfil = new Conexao();
-        con_perfil.conecta();
-        
-        con_fiscal = new Conexao();
-        con_fiscal.conecta();
-        
+        con.conecta();
+        con_geral.conecta();
         //chamando metodo que preencha as tabelas
         preencher_jtable_perfil();
         preencher_jtable_distribuir();
         
+        preencher_status();
+        atualiza_cadastrocliente();
+        
         bloquear_tela_perfil();
         bloquear_tela_distribuir();
         //chamando metodo que preencha tela de status
-        preencher_status();
-        atualiza_cadastrocliente();
         
         limpar_tela_distribuir();
         limpar_tela_perfil();
@@ -146,6 +141,11 @@ public class Fiscal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Controle Fiscal");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jpFiscal.setBackground(new java.awt.Color(245, 245, 245));
 
@@ -218,25 +218,22 @@ public class Fiscal extends javax.swing.JFrame {
             .addGroup(jpSitFiscLayout.createSequentialGroup()
                 .addGroup(jpSitFiscLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpSitFiscLayout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(lbTitFaseFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(130, 130, 130)
-                        .addComponent(lbTitStatusFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpSitFiscLayout.createSequentialGroup()
                         .addGap(251, 251, 251)
                         .addComponent(txt_andamento_fiscal, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpSitFiscLayout.createSequentialGroup()
                         .addGap(73, 73, 73)
                         .addGroup(jpSitFiscLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpSitFiscLayout.createSequentialGroup()
-                                .addComponent(lb_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(86, 86, 86))
                             .addGroup(jpSitFiscLayout.createSequentialGroup()
-                                .addComponent(lb_validar, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(121, 121, 121)))
-                        .addGroup(jpSitFiscLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txt_status_perfil, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                            .addComponent(txt_status_distribuir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(lb_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(86, 86, 86)
+                                .addGroup(jpSitFiscLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txt_status_perfil, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                                    .addComponent(txt_status_distribuir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lb_validar, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jpSitFiscLayout.createSequentialGroup()
+                                .addComponent(lbTitFaseFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(130, 130, 130)
+                                .addComponent(lbTitStatusFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(60, 60, 60))
         );
         jpSitFiscLayout.setVerticalGroup(
@@ -247,17 +244,16 @@ public class Fiscal extends javax.swing.JFrame {
                     .addComponent(lbTitFaseFiscal)
                     .addComponent(lbTitStatusFiscal))
                 .addGap(12, 12, 12)
-                .addGroup(jpSitFiscLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_status_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addGroup(jpSitFiscLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpSitFiscLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lb_validar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_status_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jpSitFiscLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpSitFiscLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(txt_status_perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(194, 194, 194)
-                .addComponent(txt_andamento_fiscal, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lb_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(190, 190, 190)
+                        .addComponent(txt_andamento_fiscal, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_status_distribuir, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jtbGuiaFiscal.addTab("Situação", jpSitFisc);
@@ -284,6 +280,7 @@ public class Fiscal extends javax.swing.JFrame {
         txt_obs_perfil.setRows(5);
         jScrollPane9.setViewportView(txt_obs_perfil);
 
+        btCancelarPerfil.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btCancelarPerfil.setText("Cancelar");
         btCancelarPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,6 +288,7 @@ public class Fiscal extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarPerfil.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarPerfil.setText("Salvar");
         btnSalvarPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -298,6 +296,7 @@ public class Fiscal extends javax.swing.JFrame {
             }
         });
 
+        bt_alterar_perfil.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         bt_alterar_perfil.setText("Alterar");
         bt_alterar_perfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,6 +304,7 @@ public class Fiscal extends javax.swing.JFrame {
             }
         });
 
+        btExcluirPerfil.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btExcluirPerfil.setText("Excluir");
         btExcluirPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -349,6 +349,7 @@ public class Fiscal extends javax.swing.JFrame {
             tb_perfil.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
+        btNovoPerfil.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btNovoPerfil.setText("Novo");
         btNovoPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -451,6 +452,7 @@ public class Fiscal extends javax.swing.JFrame {
         txt_obs_distribuir.setRows(5);
         jScrollPane7.setViewportView(txt_obs_distribuir);
 
+        btnSalvarDistribuir.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarDistribuir.setText("Salvar");
         btnSalvarDistribuir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -458,6 +460,7 @@ public class Fiscal extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarDist.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarDist.setText("Alterar");
         btnAlterarDist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -465,6 +468,7 @@ public class Fiscal extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarDistribuir.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarDistribuir.setText("Cancelar");
         btnCancelarDistribuir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -472,6 +476,7 @@ public class Fiscal extends javax.swing.JFrame {
             }
         });
 
+        bt_excluir_distribuir.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         bt_excluir_distribuir.setText("Excluir");
         bt_excluir_distribuir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -516,6 +521,7 @@ public class Fiscal extends javax.swing.JFrame {
             tb_distribuir.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
+        btnNovoDist.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoDist.setText("Novo");
         btnNovoDist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -664,22 +670,23 @@ public class Fiscal extends javax.swing.JFrame {
 
     private void bt_excluir_distribuirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_excluir_distribuirActionPerformed
         //se não selecionado nenhum cadastro, exclusão não será permitida
-        if(txt_cod_distribuir.getText().isEmpty()){
+        if(txt_cod_distribuir.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Primeiro selecione um registro para exclusão!");
-            return;
+            
         }
         else{
+            
             try{
                 //busca cadastro de acordo com o codigo
                 String sql = "select * from distribuirfuncionariointerno where CodDistribuirFuncionarioInterno= "+txt_cod_distribuir.getText();
-                con_distribuir.executeSQL(sql);
-                con_distribuir.resultset.first();
-                String operacao = con_distribuir.resultset.getString("AndamentoDistribuirFuncionarioInterno");
-                String cliente = "Tem certeza que deseja excluir um cadastro da tabela Distribuição com cliente : " +con_perfil.resultset.getString("Cliente")+"?";
+                con.executeSQL(sql);
+                con.resultset.first();
+                String operacao = con.resultset.getString("AndamentoDistribuirFuncionarioInterno");
+                String cliente = "Tem certeza que deseja excluir um cadastro da tabela Distribuição com cliente : " +nome+"?";
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
                     sql = "DELETE FROM distribuirfuncionariointerno Where CodDistribuirFuncionarioInterno="+txt_cod_distribuir.getText();
-                    int conseguiu_excluir = con_distribuir.statement.executeUpdate(sql);
+                    int conseguiu_excluir = con.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
                         limpar_tabela_distribuir();
@@ -688,10 +695,10 @@ public class Fiscal extends javax.swing.JFrame {
                         
                         if("Finalizado".equalsIgnoreCase(operacao)){
                             try{
-                                con_distribuir.executeSQL("select * from distribuirfuncionariointerno where Numerodoprocesso='"+processo+"' and Tipo='Finalizado'");
-                                if(!con_distribuir.resultset.first()){
+                                con.executeSQL("select * from distribuirfuncionariointerno where NumeroProcesso='"+processo+"' and AndamentoDistribuirFuncionarioInterno='Finalizado'");
+                                if(!con.resultset.first()){
                                     try{
-                                        con_fiscal.statement.executeUpdate("UPDATE fiscal set AndamenoDistribuirFuncionarioInterno='Em Aberto' where Numerodoprocesso='" +processo+"'");
+                                        con.statement.executeUpdate("UPDATE fiscal set AndamenoDistribuirFuncionarioInterno='Em Aberto' where Numerodoprocesso='" +processo+"'");
 
                                         preencher_status();
                                         atualiza_cadastrocliente();
@@ -709,6 +716,7 @@ public class Fiscal extends javax.swing.JFrame {
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null, "Falha ao excluir o registro: /n"+erro);
             }
+            
         }
     }//GEN-LAST:event_bt_excluir_distribuirActionPerformed
 
@@ -733,6 +741,7 @@ public class Fiscal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
         }
         else if(!txt_cod_distribuir.getText().isEmpty()){
+            
             try{
                
                 String dataandamento = txt_data_distribuir.getText();
@@ -751,7 +760,7 @@ public class Fiscal extends javax.swing.JFrame {
                 "AndamentoDistribuirFuncionarioInterno='"+andamento+"' "+
                 "where CodDistribuirFuncionarioInterno = "+txt_cod_distribuir.getText();
 
-                con_distribuir.statement.executeUpdate(sql);
+                con.statement.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
                 
 
@@ -765,9 +774,11 @@ public class Fiscal extends javax.swing.JFrame {
             } catch (ParseException ex) {
                 JOptionPane.showMessageDialog(null, "Você digitou uma data não valida!\n"+ex);
             }
+            
         }
         //evitando erros com cadastro ja salvo antes
         else if(txt_cod_distribuir.getText().equals("")){
+            
             try{
                 String dataandamento = txt_data_distribuir.getText();
                 Date data = sdf.parse(dataandamento);
@@ -787,7 +798,7 @@ public class Fiscal extends javax.swing.JFrame {
                 usuario+"','"+
                 andamentoarquivo+"')";
 
-                con_distribuir.exeQuery(gry);
+                con.exeQuery(gry);
                 JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
 
                 atualiza_fiscal_distribuir();
@@ -798,6 +809,7 @@ public class Fiscal extends javax.swing.JFrame {
             }catch(ParseException | HeadlessException erro){
                 JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Distribuição: "+erro);
             }
+            
         }
     }//GEN-LAST:event_btnSalvarDistribuirActionPerformed
 
@@ -807,17 +819,18 @@ public class Fiscal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Primeiro selecione um registro para exclusão!");
         }
         else{
+            
             try{
                 //busca cadastro de acordo com o codigo
                 String sql = "select * from validarprefilfiscal where CodValidarPerfilFiscal= "+txt_cod_perfil.getText();
-                con_perfil.executeSQL(sql);
-                con_perfil.resultset.first();
-                String operacao = con_perfil.resultset.getString("AndamentoValidarPerfilFiscal");
-                String cliente = "Tem certeza que deseja excluir um cadastro da tabela Perfil com cliente : " +con_perfil.resultset.getString("Cliente")+"?";
+                con.executeSQL(sql);
+                con.resultset.first();
+                String operacao = con.resultset.getString("AndamentoValidarPerfilFiscal");
+                String cliente = "Tem certeza que deseja excluir um cadastro da tabela Perfil com cliente : "+nome+"?";
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
                     sql = "DELETE FROM validarprefilfiscal Where CodValidarPerfilFiscal = "+txt_cod_perfil.getText();
-                    int conseguiu_excluir = con_perfil.statement.executeUpdate(sql);
+                    int conseguiu_excluir = con.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
                         
@@ -827,10 +840,10 @@ public class Fiscal extends javax.swing.JFrame {
                         
                         if("Finalizado".equalsIgnoreCase(operacao)){
                             try{
-                                con_perfil.executeSQL("select * validarprefilfiscal where NumeroProcesso='"+processo+"' and Tipo='Finalizado'");
-                                if(!con_perfil.resultset.first()){
+                                con.executeSQL("select * validarprefilfiscal where NumeroProcesso='"+processo+"' and AndamentoValidarPerfilFiscal='Finalizado'");
+                                if(!con.resultset.first()){
                                     try{
-                                    con_fiscal.statement.executeUpdate("UPDATE fiscal set AndamentoValidarPerfilFiscal='Em Aberto' where Numerodoprocesso='" +processo+"'");
+                                    con.statement.executeUpdate("UPDATE fiscal set AndamentoValidarPerfilFiscal='Em Aberto' where Numerodoprocesso='" +processo+"'");
 
                                     preencher_status();
                                     atualiza_cadastrocliente();
@@ -848,6 +861,7 @@ public class Fiscal extends javax.swing.JFrame {
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null, "Falha ao excluir o registro");
             }
+            
         }
 
     }//GEN-LAST:event_btExcluirPerfilActionPerformed
@@ -867,6 +881,7 @@ public class Fiscal extends javax.swing.JFrame {
         }
         //evitando erros com cadastro ja salvo antes
         else if(txt_cod_perfil.getText().equals("")){
+            
             try{
                 //convertendo a primeira data
                 String dataandamento = txt_data_perfil.getText();
@@ -888,7 +903,7 @@ public class Fiscal extends javax.swing.JFrame {
                     usuario+"','"+
                     andamentotermo+"')";
 
-                    con_perfil.exeQuery(gry);
+                    con.exeQuery(gry);
                     
                     JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
 
@@ -901,8 +916,10 @@ public class Fiscal extends javax.swing.JFrame {
             }catch(ParseException | HeadlessException add){
                 JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Perfil Fiscal: "+add);
             }
+            
         }
         else if(!txt_cod_perfil.getText().equals("")){
+            
             try{
                 //convertendo a primeira data
                 String dataandamento = txt_data_perfil.getText();
@@ -920,10 +937,10 @@ public class Fiscal extends javax.swing.JFrame {
                     "Obsevacao='"+txt_obs_perfil.getText()+"',"+
                     "Usuario='"+usuario+"',"+
                     "AndamentoValidarPerfilFiscal='"+andamentotermo+"' "+
-                    "where NumeroProcesso="+processo;
-                    con_perfil.statement.executeUpdate(sql);
+                    "where CodValidarPerfilFiscal="+txt_cod_perfil.getText();
+                    con.statement.executeUpdate(sql);
                     
-                    JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
+                    JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
 
                     atualiza_fiscal_perfil();
                     preencher_status();
@@ -936,6 +953,7 @@ public class Fiscal extends javax.swing.JFrame {
             }catch(ParseException erro){
                 JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Perfil Fiscal(Campo data) "+erro);
             }
+            
         }
     }//GEN-LAST:event_btnSalvarPerfilActionPerformed
     
@@ -1005,6 +1023,11 @@ public class Fiscal extends javax.swing.JFrame {
         limpar_tela_distribuir();
         desbloquear_tela_distribuir();
     }//GEN-LAST:event_btnNovoDistActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        con.desconecta();
+        con_geral.desconecta();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      *
@@ -1083,7 +1106,7 @@ public class Fiscal extends javax.swing.JFrame {
         tb_perfil.getColumnModel().getColumn(3);
         tb_perfil.getColumnModel().getColumn(4);
         tb_perfil.getColumnModel().getColumn(5);
-        con_perfil.executeSQL("select * from validarprefilfiscal where NumeroProcesso='"+processo+"' order by CodValidarPerfilFiscal");
+        con.executeSQL("select * from validarprefilfiscal where NumeroProcesso='"+processo+"' order by CodValidarPerfilFiscal");
 
         DefaultTableModel modelo = (DefaultTableModel)tb_perfil.getModel();
         //modelo.setNumRows(0);
@@ -1091,15 +1114,15 @@ public class Fiscal extends javax.swing.JFrame {
         try
         {
             
-            while (con_perfil.resultset.next())
+            while (con.resultset.next())
                 modelo.addRow(new Object [] {
-                    con_perfil.resultset.getString("CodValidarPerfilFiscal"),
-                    sdf.format(con_perfil.resultset.getTime("DatadeCadastroAndamento")),
-                    con_perfil.resultset.getString("NumeroProcesso"),
-                    con_perfil.resultset.getString("Obsevacao"),
-                    con_perfil.resultset.getString("AndamentoValidarPerfilFiscal"), 
-                    con_perfil.resultset.getString("Usuario")});
-            con_perfil.resultset.first();
+                    con.resultset.getString("CodValidarPerfilFiscal"),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
+                    con.resultset.getString("NumeroProcesso"),
+                    con.resultset.getString("Obsevacao"),
+                    con.resultset.getString("AndamentoValidarPerfilFiscal"), 
+                    con.resultset.getString("Usuario")});
+            con.resultset.first();
         }   catch (SQLException erro){
     JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Perfil "+erro);
     }
@@ -1115,21 +1138,21 @@ public class Fiscal extends javax.swing.JFrame {
         tb_distribuir.getColumnModel().getColumn(3);
         tb_distribuir.getColumnModel().getColumn(4);
         tb_distribuir.getColumnModel().getColumn(5);
-        con_distribuir.executeSQL("select * from distribuirfuncionariointerno WHERE NumeroProcesso='"+processo+"' order by CodDistribuirFuncionarioInterno");
+        con.executeSQL("select * from distribuirfuncionariointerno WHERE NumeroProcesso='"+processo+"' order by CodDistribuirFuncionarioInterno");
         //
         DefaultTableModel modelo = (DefaultTableModel)tb_distribuir.getModel();
         //modelo.setNumRows(0);
         try
         {
-            while (con_distribuir.resultset.next())
+            while (con.resultset.next())
                 modelo.addRow(new Object [] {
-                    con_distribuir.resultset.getString("CodDistribuirFuncionarioInterno"),
-                    sdf.format(con_distribuir.resultset.getTime("DatadeCadastroAndamento")),
-                    con_distribuir.resultset.getString("NumeroProcesso"),
-                    con_distribuir.resultset.getString("Obsevacao"),
-                    con_distribuir.resultset.getString("AndamentoDistribuirFuncionarioInterno"),
-                    con_distribuir.resultset.getString("Usuario")});
-            con_distribuir.resultset.first();
+                    con.resultset.getString("CodDistribuirFuncionarioInterno"),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
+                    con.resultset.getString("NumeroProcesso"),
+                    con.resultset.getString("Obsevacao"),
+                    con.resultset.getString("AndamentoDistribuirFuncionarioInterno"),
+                    con.resultset.getString("Usuario")});
+            con.resultset.first();
         }catch(SQLException erro){
           JOptionPane.showMessageDialog(null,"Erro ao listar na Tabela Distribuir "+erro);
         }
@@ -1161,11 +1184,11 @@ public class Fiscal extends javax.swing.JFrame {
     public void preencher_status(){
         try{
             String sql = "select * from fiscal WHERE Numerodoprocesso='"+processo+"'";
-            con_fiscal.executeSQL(sql);
-            con_fiscal.resultset.first();
+            con_geral.executeSQL(sql);
+            con_geral.resultset.first();
             
-            perfil = con_fiscal.resultset.getString("AndamentoValidarPerfilFiscal");
-            distribuir = con_fiscal.resultset.getString("AndamenoDistribuirFuncionarioInterno");
+            perfil = con_geral.resultset.getString("AndamentoValidarPerfilFiscal");
+            distribuir = con_geral.resultset.getString("AndamenoDistribuirFuncionarioInterno");
             
             txt_status_perfil.setText(perfil);
             txt_status_distribuir.setText(distribuir);
@@ -1179,11 +1202,12 @@ public class Fiscal extends javax.swing.JFrame {
      *
      */
     public void atualiza_cadastrocliente(){
-        if(txt_status_perfil.getText().equalsIgnoreCase("Finalizado") && txt_status_distribuir.getText().equalsIgnoreCase("Finalizado")){
+        if(perfil.equalsIgnoreCase("Finalizado") &&
+                distribuir.equalsIgnoreCase("Finalizado")){
        
                 try{
                     String sql = "UPDATE cadastrodeprocesso set AndamentoFiscal='Concluido' where codNumerodoprocesso="+processo;
-                    con_fiscal.statement.executeUpdate(sql);
+                    con_geral.statement.executeUpdate(sql);
 
                     String andamento = "Concluido";
                     txt_andamento_fiscal.setText(andamento);
@@ -1191,15 +1215,23 @@ public class Fiscal extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!" +erro);
                 }
         }                      
-        else if(txt_status_perfil.getText().equalsIgnoreCase("Em Aberto") && txt_status_distribuir.getText().equalsIgnoreCase("Em Aberto")){
+        else if(perfil.equalsIgnoreCase("Em Aberto") &&
+                distribuir.equalsIgnoreCase("Em Aberto")){
+                try{
+                    String sql = "UPDATE cadastrodeprocesso set AndamentoFiscal='Em Aberto' where codNumerodoprocesso=" +processo;
+                    con_geral.statement.executeUpdate(sql);
+
                     String andamento = "Em Aberto";
                     txt_andamento_fiscal.setText(andamento);
+                }catch(SQLException erro){
+                    JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!" +erro);
+                }
         }
         else{
        
                 try{
                     String sql = "UPDATE cadastrodeprocesso set AndamentoFiscal='Em Aberto' where codNumerodoprocesso=" +processo;
-                    con_fiscal.statement.executeUpdate(sql);
+                    con_geral.statement.executeUpdate(sql);
 
                     String andamento = "Em Andamento";
                     txt_andamento_fiscal.setText(andamento);
@@ -1207,7 +1239,6 @@ public class Fiscal extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!" +erro);
                 }
         }
-                
         distribuir_cores();
     }
 
@@ -1272,26 +1303,26 @@ public class Fiscal extends javax.swing.JFrame {
         if(cb_tipo_distribuir.getSelectedItem().equals("Finalizado")){
                     try{
                         String sql = "UPDATE fiscal set AndamenoDistribuirFuncionarioInterno ='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_fiscal.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Fiscal>Distribuir a responsavel\n" +erro);
                     }
         }
         else{
             try{
-                con_fiscal.executeSQL("select * from fiscal where Numerodoprocesso='" +processo+"' and AndamenoDistribuirFuncionarioInterno ='Finalizado'");
-                if(con_fiscal.resultset.next()){
+                con_geral.executeSQL("select * from fiscal where Numerodoprocesso='" +processo+"' and AndamenoDistribuirFuncionarioInterno ='Finalizado'");
+                if(con_geral.resultset.next()){
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua todos os registros finalizados no painel Distribuição a Responsavel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-                    con_perfil.executeSQL("select * from DistribuirFuncionarioInterno where NumeroProcesso='"+processo+"'and AndamentoDistribuirFuncionarioInterno='Finalizado'");
+                    con_geral.executeSQL("select * from distribuirfuncionariointerno where NumeroProcesso='"+processo+"'and AndamentoDistribuirFuncionarioInterno='Finalizado'");
                     
-                    if(!con_perfil.resultset.first()){
+                    if(!con_geral.resultset.first()){
                         try{
                 
                         String sql = "UPDATE fiscal set AndamenoDistribuirFuncionarioInterno ='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_fiscal.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                         }catch(SQLException erro){
                             JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Fiscal>Distribuição\n" +erro);
                         }
@@ -1301,7 +1332,7 @@ public class Fiscal extends javax.swing.JFrame {
                 else{
                     try{
                         String sql = "UPDATE fiscal set AndamenoDistribuirFuncionarioInterno ='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_fiscal.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Fiscal>Distribuir a responsavel\n" +erro);
                     }
@@ -1320,26 +1351,26 @@ public class Fiscal extends javax.swing.JFrame {
         if(cb_tipo_perfil.getSelectedItem().equals("Finalizado")){
                     try{
                         String sql = "UPDATE fiscal set AndamentoValidarPerfilFiscal ='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_fiscal.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Fiscal>Perfil Fiscal\n" +erro);
                     }
                 }
         else{
             try{    
-                    con_fiscal.executeSQL("select * from fiscal where Numerodoprocesso='" +processo+"' and AndamentoValidarPerfilFiscal ='Finalizado'");
-                if(con_fiscal.resultset.next()){
+                    con_geral.executeSQL("select * from fiscal where Numerodoprocesso='" +processo+"' and AndamentoValidarPerfilFiscal ='Finalizado'");
+                if(con_geral.resultset.next()){
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua todos os registros finalizados no painel Perfil Fiscal\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-                    con_perfil.executeSQL("select * from validarprefilfiscal where NumeroProcesso='"+processo+"'and AndamentoValidarPerfilFiscal='Finalizado'");
+                    con_geral.executeSQL("select * from validarprefilfiscal where NumeroProcesso='"+processo+"'and AndamentoValidarPerfilFiscal='Finalizado'");
                     
-                    if(!con_perfil.resultset.first()){
+                    if(!con_geral.resultset.first()){
                         try{
                 
                         String sql = "UPDATE fiscal set AndamentoValidarPerfilFiscal ='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_fiscal.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                         }catch(SQLException erro){
                             JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Fiscal>Perfil Fiscal\n" +erro);
                         }
@@ -1350,7 +1381,7 @@ public class Fiscal extends javax.swing.JFrame {
                     try{
                 
                         String sql = "UPDATE fiscal set AndamentoValidarPerfilFiscal ='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_fiscal.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Fiscal>Perfil Fiscal\n" +erro);
                     }

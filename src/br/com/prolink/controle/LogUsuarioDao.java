@@ -62,9 +62,12 @@ public class LogUsuarioDao {
                             log.getUsuario()+"','"+log.getTela()+"','"+log.getAcao()+"','"+log.getDescricao()+"','"
                             +log.getProcesso()+"','"+log.getApelido()+"','"+log.getCliente()+"','"
                            +log.getData()+"','"+log.getHora()+"','"+log.getEndereco()+"','"+log.getHostname()+"')");
+        
+        con_log.desconecta();
         }catch(Exception add){
             JOptionPane.showMessageDialog(null,"Erro log\n"+add);
         }
+        con_log.desconecta();
     }
     
 }

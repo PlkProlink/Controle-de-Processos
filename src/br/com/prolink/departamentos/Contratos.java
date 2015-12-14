@@ -1,7 +1,5 @@
 package br.com.prolink.departamentos;
 
-
-
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
@@ -16,38 +14,36 @@ import javax.swing.text.MaskFormatter;
 import br.com.prolink.controle.*;
 import br.com.prolink.inicio.*;
 
-
 public class Contratos extends javax.swing.JFrame {
+
     //conexão com as tabelas necessarias
-    Conexao con_geral, con;
-    //maskara para o JFormattedTextField
+    Conexao con_geral = new Conexao();
+    Conexao con = new Conexao();
+    
     MaskFormatter formatoId, formatoCadastro, formatoContrato, formatoRec, formatoAtivar, formatoPerfil;
     //Formatador para data
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    String  gerarid, cadastro, contratos, receber, ativar, perfil, 
+    String gerarid, cadastro, contratos, receber, ativar, perfil,
             apelido_backup, codgerar_backup, datagerar_backup, obsgerar_backup, tipogerar_backup,
             codCad_backup, dataCad_backup, obsCad_backup, tipoCad_backup,
             codCont_backup, dataCont_backup, obsCont_backup, tipoCont_backup,
             codRec_backup, dataRec_backup, obsRec_backup, tipoRec_backup,
             codAtivar_backup, dataAtivar_backup, obsAtivar_backup, tipoAtivar_backup,
             codPerfil_backup, dataPerfil_backup, obsPerfil_backup, tipoPerfil_backup;
-            
-    
-    String processo=Ativador.processo, nome=Ativador.nome, id=Ativador.id, usuario=Login.usuario;
-    
+
+    String processo = Ativador.processo, nome = Ativador.nome, id = Ativador.id, usuario = Login.usuario;
+
     public Contratos() {
         initComponents();
         //instanciando as conexoes e executando o metodo conecta
-        con_geral = new Conexao();
         con_geral.conecta();
-        
-        con = new Conexao();
         con.conecta();
         
         apelido_backup = id;
-        
+
         //chamando metodo que preencha as tabelas
+        
         preencher_tabela_id();
         preencher_tabela_cadastro();
         preencher_tabela_perfil();
@@ -56,62 +52,62 @@ public class Contratos extends javax.swing.JFrame {
         preencher_tabela_ativar();
         //chamando metodo que preencha tela de status
         preencher_status();
-        
         atualizar_cadastro_cliente();
-        
+
         bloquear_tela_id();
         bloquear_tela_cadastro();
         bloquear_tela_contrato();
         bloquear_tela_perfil();
         bloquear_tela_ativar();
         bloquear_tela_receber();
-        
+
         limpar_tela_id();
         limpar_tela_cadastro();
         limpar_tela_contrato();
         limpar_tela_receber();
         limpar_tela_perfil();
         limpar_tela_ativar();
-        
-        txtIdApelido.setVisible(false);
-        
+
+        txtIdApelido.setEditable(false);
+
         tbId.setAutoCreateRowSorter(true);
         tbCadastro.setAutoCreateRowSorter(true);
         tbContrato.setAutoCreateRowSorter(true);
         tbRec.setAutoCreateRowSorter(true);
         tbAtivar.setAutoCreateRowSorter(true);
         tbPerfil.setAutoCreateRowSorter(true);
-        
+
         txtCodigo.setText(processo);
         txtNome.setText(nome);
         txtId.setText(id);
         txtUsuario.setText(usuario);
-        
-        if(!Login.nivel.equals("1") && !Login.departamento.equalsIgnoreCase("Contratos")){
-            
+
+        if (!Login.nivel.equals("1") && !Login.departamento.equalsIgnoreCase("Contratos")) {
+
             btnExcluirId.setEnabled(false);
             btnSalvarId.setEnabled(false);
-            
+
             btnExcluirCadastro.setEnabled(false);
             btnSalvarCadastro.setEnabled(false);
-            
+
             btnExcluirContrato.setEnabled(false);
             btnSalvarContrato.setEnabled(false);
-            
+
             btnSalvarRec.setEnabled(false);
             btnExcluirRec.setEnabled(false);
-            
+
             btnSalvarAtivar.setEnabled(false);
             btnExcluirAtivar.setEnabled(false);
-            
+
             btnSalvarPerfil.setEnabled(false);
             btnExcluirPerfil.setEnabled(false);
-            
+
             JOptionPane.showMessageDialog(null, "Você não tem permissão para editar os registros dessa tela!");
         }
         //chamando metodo que busca a data atual e envia para os campos de datas
     }
-@SuppressWarnings("unchecked")
+
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -278,7 +274,12 @@ public class Contratos extends javax.swing.JFrame {
         tbPerfil = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Comercial");
+        setTitle("Contratos");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jpComercial.setBackground(new java.awt.Color(245, 245, 245));
 
@@ -484,6 +485,7 @@ public class Contratos extends javax.swing.JFrame {
         txtObsId.setRows(5);
         jScrollPane9.setViewportView(txtObsId);
 
+        btnNovoId.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoId.setText("Novo");
         btnNovoId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -491,6 +493,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarId.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarId.setText("Alterar");
         btnAlterarId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -498,6 +501,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarId.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarId.setText("Salvar");
         btnSalvarId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -505,6 +509,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarId.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarId.setText("Cancelar");
         btnCancelarId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -512,6 +517,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirId.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirId.setText("Excluir");
         btnExcluirId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -680,6 +686,7 @@ public class Contratos extends javax.swing.JFrame {
         txtObsCadastro.setRows(5);
         jScrollPane7.setViewportView(txtObsCadastro);
 
+        btnNovoCadastro.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoCadastro.setText("Novo");
         btnNovoCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -687,6 +694,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarCadastro.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarCadastro.setText("Alterar");
         btnAlterarCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -694,6 +702,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarCadastro.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarCadastro.setText("Salvar");
         btnSalvarCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -701,6 +710,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarCadastro.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarCadastro.setText("Cancelar");
         btnCancelarCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -708,6 +718,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirCadastro.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirCadastro.setText("Excluir");
         btnExcluirCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -853,6 +864,7 @@ public class Contratos extends javax.swing.JFrame {
         txtObsContrato.setRows(5);
         jScrollPane10.setViewportView(txtObsContrato);
 
+        btnNovoContrato.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoContrato.setText("Novo");
         btnNovoContrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -860,6 +872,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarContrato.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarContrato.setText("Alterar");
         btnAlterarContrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -867,6 +880,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarContrato.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarContrato.setText("Salvar");
         btnSalvarContrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -874,6 +888,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnContrato.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnContrato.setText("Cancelar");
         btnContrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -881,6 +896,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirContrato.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirContrato.setText("Excluir");
         btnExcluirContrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1024,6 +1040,7 @@ public class Contratos extends javax.swing.JFrame {
         txtObsRec.setRows(5);
         jScrollPane12.setViewportView(txtObsRec);
 
+        btnNovoRec.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoRec.setText("Novo");
         btnNovoRec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1031,6 +1048,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarRec.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarRec.setText("Alterar");
         btnAlterarRec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1038,6 +1056,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarRec.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarRec.setText("Salvar");
         btnSalvarRec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1045,6 +1064,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarRec.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarRec.setText("Cancelar");
         btnCancelarRec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1052,6 +1072,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirRec.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirRec.setText("Excluir");
         btnExcluirRec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1195,6 +1216,7 @@ public class Contratos extends javax.swing.JFrame {
         txtObsAtivar.setRows(5);
         jScrollPane14.setViewportView(txtObsAtivar);
 
+        btnNovoAtivar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoAtivar.setText("Novo");
         btnNovoAtivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1202,6 +1224,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarAtivar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarAtivar.setText("Alterar");
         btnAlterarAtivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1209,6 +1232,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarAtivar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarAtivar.setText("Salvar");
         btnSalvarAtivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1216,6 +1240,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnCancelaAtivar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelaAtivar.setText("Cancelar");
         btnCancelaAtivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1223,6 +1248,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirAtivar.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirAtivar.setText("Excluir");
         btnExcluirAtivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1366,6 +1392,7 @@ public class Contratos extends javax.swing.JFrame {
         txtObsPerfil.setRows(5);
         jScrollPane16.setViewportView(txtObsPerfil);
 
+        btnNovoPerfil.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoPerfil.setText("Novo");
         btnNovoPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1373,6 +1400,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnAlterarPerfil.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarPerfil.setText("Alterar");
         btnAlterarPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1380,6 +1408,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarPerfil.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarPerfil.setText("Salvar");
         btnSalvarPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1387,6 +1416,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarPerfil.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarPerfil.setText("Cancelar");
         btnCancelarPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1394,6 +1424,7 @@ public class Contratos extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirPerfil.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirPerfil.setText("Excluir");
         btnExcluirPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1581,62 +1612,61 @@ public class Contratos extends javax.swing.JFrame {
 
     private void tbPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPerfilMouseClicked
         Integer linha = tbPerfil.getSelectedRow();
-        String codigo = (String)tbPerfil.getValueAt(linha, 0);
-        String data = (String)tbPerfil.getValueAt(linha, 1);
-        String observacao = (String)tbPerfil.getValueAt(linha, 3);
-        String tipo = (String)tbPerfil.getValueAt(linha, 4);
+        String codigo = (String) tbPerfil.getValueAt(linha, 0);
+        String data = (String) tbPerfil.getValueAt(linha, 1);
+        String observacao = (String) tbPerfil.getValueAt(linha, 3);
+        String tipo = (String) tbPerfil.getValueAt(linha, 4);
 
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
         String ano = data.substring(6);
-        String recebedataTabela = dia+mes+ano;
+        String recebedataTabela = dia + mes + ano;
 
         txtDataPerfil.setText(recebedataTabela);
 
         txtCodPerfil.setText(codigo);
         txtObsPerfil.setText(observacao);
-        
-        if(tipo.equalsIgnoreCase("Finalizado")){
+
+        if (tipo.equalsIgnoreCase("Finalizado")) {
             cbTipoPerfil.setSelectedItem("Finalizado");
-        }
-        else
+        } else {
             cbTipoPerfil.setSelectedItem("Novo Andamento");
+        }
     }//GEN-LAST:event_tbPerfilMouseClicked
 
     private void btnExcluirPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirPerfilActionPerformed
-        if(txtCodPerfil.getText().equals("")){
+        if (txtCodPerfil.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Selecione um cliente para exclusão!");
-        }
-        else{
-            try{
-                con.executeSQL(("select * from elaborarperfilfiscal where CodElaborarPerfilFiscal="+txtCodPerfil.getText()));
-                if(con.resultset.first()){
-                    String cliente = "Tem certeza que deseja excluir o registro do cliente " +nome+"?";
+        } else {
+            try {
+                con.executeSQL(("select * from elaborarperfilfiscal where CodElaborarPerfilFiscal=" + txtCodPerfil.getText()));
+                if (con.resultset.first()) {
+                    String cliente = "Tem certeza que deseja excluir o registro do cliente " + nome + "?";
                     String andamento = con.resultset.getString("AndamentoElaborarPerfilFiscal");
 
-                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão",JOptionPane.YES_NO_OPTION);
-                    if(opcao_escolhida == JOptionPane.YES_OPTION){
-                        String sql = "delete from elaborarperfilfiscal where CodElaborarPerfilFiscal="+txtCodPerfil.getText();
+                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão", JOptionPane.YES_NO_OPTION);
+                    if (opcao_escolhida == JOptionPane.YES_OPTION) {
+                        String sql = "delete from elaborarperfilfiscal where CodElaborarPerfilFiscal=" + txtCodPerfil.getText();
                         int conseguiu_excluir = con.statement.executeUpdate(sql);
-                        if(conseguiu_excluir==1){
+                        if (conseguiu_excluir == 1) {
                             JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
-                            
-                            limpar_tabela_contrato();
-                            preencher_tabela_contrato();
+
+                            limpar_tabela_perfil();
+                            preencher_tabela_perfil();
                             limpar_tela_perfil();
 
-                            if("Finalizado".equals(andamento)){
-                                con.executeSQL("select * from elaborarperfilfiscal where NumeroProcesso="+processo+" and AndamentoElaborarPerfilFiscal='Finalizado'");
+                            if ("Finalizado".equals(andamento)) {
+                                con.executeSQL("select * from elaborarperfilfiscal where NumeroProcesso=" +processo+ " and AndamentoElaborarPerfilFiscal='Finalizado'");
 
-                                if(!con.resultset.first()){
-                                    try{
-                                        con_geral.statement.executeUpdate("update contratos set AndamentoElaborarPrefilFiscal='Em Aberto'");
+                                if (!con.resultset.first()) {
+                                    try {
+                                        con_geral.statement.executeUpdate("update contratos set AndamentoElaborarPrefilFiscal='Em Aberto' where Numerodoprocesso='"+processo+"'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
-                                        
-                                    }catch(SQLException erro){
-                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar tabela Contratos!\n"+erro);
+
+                                    } catch (SQLException erro) {
+                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar tabela Contratos!\n" + erro);
                                     }
                                 }
                             }
@@ -1644,8 +1674,8 @@ public class Contratos extends javax.swing.JFrame {
                     }
                 }
 
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro da tabela Recebimento!\n"+erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro da tabela Recebimento!\n" + erro);
             }
 
         }
@@ -1657,33 +1687,30 @@ public class Contratos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarPerfilActionPerformed
 
     private void btnSalvarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarPerfilActionPerformed
-        if(txtDataPerfil.getText().trim().length()<10 || txtDataPerfil.getText().equals("  /  /    ")){
+        if (txtDataPerfil.getText().trim().length() < 10 || txtDataPerfil.getText().equals("  /  /    ")) {
             JOptionPane.showMessageDialog(null, "Data informada esta incorreta");
-        }
-        else if(cbTipoPerfil.getSelectedItem().equals("")){
+        } else if (cbTipoPerfil.getSelectedItem().equals("")) {
             JOptionPane.showMessageDialog(null, "Selecione um tipo!");
-        }
-        else if(txtCodPerfil.getText().equals("")){
-            try{
+        } else if (txtCodPerfil.getText().equals("")) {
+            try {
                 String novadata = txtDataPerfil.getText();
                 Date data = sdf.parse(novadata);
 
                 String andamento;
 
-                if(cbTipoPerfil.getSelectedItem().equals("Finalizado")){
+                if (cbTipoPerfil.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
 
                 String gry = "insert into elaborarperfilfiscal (DatadeCadastroAndamento, NumeroProcesso,"
-                +"Usuario, Observacao, AndamentoElaborarPerfilFiscal)"
-                +"values ('"+new java.sql.Date(data.getTime())+"','"
-                +processo+"','"
-                +usuario+"','"
-                +txtObsPerfil.getText()+"','"
-                +andamento+"')";
+                        + "Usuario, Obsevacao, AndamentoElaborarPerfilFiscal)"
+                        + "values ('" + new java.sql.Date(data.getTime()) + "','"
+                        +processo+ "','"
+                        + usuario + "','"
+                        + txtObsPerfil.getText() + "','"
+                        + andamento + "')";
                 con.exeQuery(gry);
 
                 JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
@@ -1694,30 +1721,28 @@ public class Contratos extends javax.swing.JFrame {
                 limpar_tabela_perfil();
                 preencher_tabela_perfil();
 
-            }catch(ParseException | HeadlessException add){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro na tabela Perfil!\n" +add);
+            } catch (ParseException | HeadlessException add) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro na tabela Perfil!\n" + add);
             }
-        }
-        else if(!txtCodPerfil.getText().equals("")){
-            try{
+        } else if (!txtCodPerfil.getText().equals("")) {
+            try {
                 String novadata = txtDataPerfil.getText();
                 Date data = sdf.parse(novadata);
 
                 String andamento;
 
-                if(cbTipoPerfil.getSelectedItem().equals("Finalizado")){
+                if (cbTipoPerfil.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
 
                 String sql = "update elaborarperfilfiscal set "
-                +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
-                +"Usuario='"+usuario+"','"
-                +"Observacao='"+txtObsPerfil.getText()+"','"
-                +"AndamentoElaborarPerfilFiscal='"+andamento+"'"
-                +" where CodElaborarPerfilFiscal="+txtCodPerfil.getText();
+                        + "DatadeCadastroAndamento='" + new java.sql.Date(data.getTime()) + "',"
+                        + "Usuario='" + usuario + "',"
+                        + "Obsevacao='" + txtObsPerfil.getText() + "',"
+                        + "AndamentoElaborarPerfilFiscal='" + andamento + "'"
+                        + " where CodElaborarPerfilFiscal=" + txtCodPerfil.getText();
 
                 con.statement.executeUpdate(sql);
 
@@ -1729,10 +1754,10 @@ public class Contratos extends javax.swing.JFrame {
                 limpar_tabela_perfil();
                 preencher_tabela_perfil();
 
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao alterar o registro na tabela Perfil\n"+erro);
-            }catch(ParseException ex){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro\n Erro na conversão da data!\n" +ex);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao alterar o registro na tabela Perfil\n" + erro);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro\n Erro na conversão da data!\n" + ex);
             }
         }
     }//GEN-LAST:event_btnSalvarPerfilActionPerformed
@@ -1750,62 +1775,61 @@ public class Contratos extends javax.swing.JFrame {
 
     private void tbAtivarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAtivarMouseClicked
         Integer linha = tbAtivar.getSelectedRow();
-        String codigo = (String)tbAtivar.getValueAt(linha, 0);
-        String data = (String)tbAtivar.getValueAt(linha, 1);
-        String observacao = (String)tbAtivar.getValueAt(linha, 3);
-        String tipo = (String)tbAtivar.getValueAt(linha, 4);
+        String codigo = (String) tbAtivar.getValueAt(linha, 0);
+        String data = (String) tbAtivar.getValueAt(linha, 1);
+        String observacao = (String) tbAtivar.getValueAt(linha, 3);
+        String tipo = (String) tbAtivar.getValueAt(linha, 4);
 
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
         String ano = data.substring(6);
-        String recebedataTabela = dia+mes+ano;
+        String recebedataTabela = dia + mes + ano;
 
         txtDataAtivar.setText(recebedataTabela);
 
         txtCodAtivar.setText(codigo);
         txtObsAtivar.setText(observacao);
-        
-        if(tipo.equalsIgnoreCase("Finalizado")){
+
+        if (tipo.equalsIgnoreCase("Finalizado")) {
             cbTipoAtivar.setSelectedItem("Finalizado");
-        }
-        else
+        } else {
             cbTipoAtivar.setSelectedItem("Novo Andamento");
+        }
     }//GEN-LAST:event_tbAtivarMouseClicked
 
     private void btnExcluirAtivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirAtivarActionPerformed
-        if(txtCodAtivar.getText().equals("")){
+        if (txtCodAtivar.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Selecione um cliente para exclusão!");
-        }
-        else{
-            try{
-                con.executeSQL(("select * from ativarcliente where CodAtivarCliente="+txtCodAtivar.getText()));
-                if(con.resultset.first()){
-                    String cliente = "Tem certeza que deseja excluir o registro do cliente " +nome+"?";
+        } else {
+            try {
+                con.executeSQL(("select * from ativarcliente where CodAtivarCliente=" + txtCodAtivar.getText()));
+                if (con.resultset.first()) {
+                    String cliente = "Tem certeza que deseja excluir o registro do cliente " + nome + "?";
                     String andamento = con.resultset.getString("AndamentoAtivarCliente");
 
-                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão",JOptionPane.YES_NO_OPTION);
-                    if(opcao_escolhida == JOptionPane.YES_OPTION){
-                        String sql = "delete from ativarcliente where CodAtivarCliente="+txtCodAtivar.getText();
+                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão", JOptionPane.YES_NO_OPTION);
+                    if (opcao_escolhida == JOptionPane.YES_OPTION) {
+                        String sql = "delete from ativarcliente where CodAtivarCliente=" + txtCodAtivar.getText();
                         int conseguiu_excluir = con.statement.executeUpdate(sql);
-                        if(conseguiu_excluir==1){
+                        if (conseguiu_excluir == 1) {
                             JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
-                            
+
                             limpar_tabela_ativar();
                             preencher_tabela_ativar();
                             limpar_tela_ativar();
 
-                            if("Finalizado".equals(andamento)){
-                                con.executeSQL("select * from ativarcliente where NumeroProcesso="+processo+" and AndamentoAtivarCliente='Finalizado'");
+                            if ("Finalizado".equals(andamento)) {
+                                con.executeSQL("select * from ativarcliente where NumeroProcesso=" +processo+ " and AndamentoAtivarCliente='Finalizado'");
 
-                                if(!con.resultset.first()){
-                                    try{
-                                        con_geral.statement.executeUpdate("update comercial set AndamentoAtivarCliente='Em Aberto'");
+                                if (!con.resultset.first()) {
+                                    try {
+                                        con_geral.statement.executeUpdate("update comercial set AndamentoAtivarCliente='Em Aberto' where Numerodoprocesso='"+processo+"'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
-                                        
-                                    }catch(SQLException erro){
-                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar tabela Contratos!\n"+erro);
+
+                                    } catch (SQLException erro) {
+                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar tabela Contratos!\n" + erro);
                                     }
                                 }
                             }
@@ -1813,8 +1837,8 @@ public class Contratos extends javax.swing.JFrame {
                     }
                 }
 
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro da tabela Taxa de Implantação!\n"+erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro da tabela Ativar Cliente!\n" + erro);
             }
 
         }
@@ -1826,33 +1850,30 @@ public class Contratos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelaAtivarActionPerformed
 
     private void btnSalvarAtivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAtivarActionPerformed
-        if(txtDataAtivar.getText().trim().length()<10 || txtDataAtivar.getText().equals("  /  /    ")){
+        if (txtDataAtivar.getText().trim().length() < 10 || txtDataAtivar.getText().equals("  /  /    ")) {
             JOptionPane.showMessageDialog(null, "Data informada esta incorreta");
-        }
-        else if(cbTipoAtivar.getSelectedItem().equals("")){
+        } else if (cbTipoAtivar.getSelectedItem().equals("")) {
             JOptionPane.showMessageDialog(null, "Selecione um tipo!");
-        }
-        else if(txtCodAtivar.getText().equals("")){
-            try{
+        } else if (txtCodAtivar.getText().equals("")) {
+            try {
                 String novadata = txtDataAtivar.getText();
                 Date data = sdf.parse(novadata);
 
                 String andamento;
 
-                if(cbTipoAtivar.getSelectedItem().equals("Finalizado")){
+                if (cbTipoAtivar.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
 
-                String gry = "insert into taxadeimplantacaoetaxapg (DatadeCadastroAndamento, NumeroProcesso,"
-                +"Usuario, Observacao, AndamentoTaxaDeImplantacaoEformaPG)"
-                +"values ('"+new java.sql.Date(data.getTime())+"','"
-                +processo+"','"
-                +usuario+"','"
-                +txtObsAtivar.getText()+"','"
-                +andamento+"')";
+                String gry = "insert into ativarcliente (DatadeCadastroAndamento, NumeroProcesso,"
+                        + "Usuario, Obsevacao, AndamentoAtivarCliente)"
+                        + "values ('" + new java.sql.Date(data.getTime()) + "','"
+                        +processo+ "','"
+                        + usuario + "','"
+                        + txtObsAtivar.getText() + "','"
+                        + andamento + "')";
                 con.exeQuery(gry);
 
                 JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
@@ -1863,30 +1884,28 @@ public class Contratos extends javax.swing.JFrame {
                 limpar_tabela_ativar();
                 preencher_tabela_ativar();
 
-            }catch(ParseException | HeadlessException add){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro na tabela Ativar!\n" +add);
+            } catch (ParseException | HeadlessException add) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro na tabela Ativar!\n" + add);
             }
-        }
-        else if(!txtCodAtivar.getText().equals("")){
-            try{
+        } else if (!txtCodAtivar.getText().equals("")) {
+            try {
                 String novadata = txtDataAtivar.getText();
                 Date data = sdf.parse(novadata);
 
                 String andamento;
 
-                if(cbTipoAtivar.getSelectedItem().equals("Finalizado")){
+                if (cbTipoAtivar.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
 
-                String sql = "update taxadeimplantacaoetaxapg set "
-                +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
-                +"Usuario='"+usuario+"','"
-                +"Observacao='"+txtObsAtivar.getText()+"','"
-                +"AndamentoTaxaDeImplantacaoEformaPG='"+andamento+"'"
-                +" where CodTaxaDeImplantacaoEFormaDePG="+txtCodAtivar.getText();
+                String sql = "update ativarcliente set "
+                        + "DatadeCadastroAndamento='" + new java.sql.Date(data.getTime()) + "',"
+                        + "Usuario='" + usuario + "',"
+                        + "Obsevacao='" + txtObsAtivar.getText() + "',"
+                        + "AndamentoAtivarCliente='" + andamento + "'"
+                        + " where CodAtivarCliente=" + txtCodAtivar.getText();
 
                 con.statement.executeUpdate(sql);
 
@@ -1898,10 +1917,10 @@ public class Contratos extends javax.swing.JFrame {
                 limpar_tabela_ativar();
                 preencher_tabela_ativar();
 
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao alterar o registro na tabela Ativar\n"+erro);
-            }catch(ParseException ex){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro\n Falha na conversão de data!\n" +ex);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao alterar o registro na tabela Ativar\n" + erro);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro\n Falha na conversão de data!\n" + ex);
             }
         }
 
@@ -1920,62 +1939,61 @@ public class Contratos extends javax.swing.JFrame {
 
     private void tbRecMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRecMouseClicked
         Integer linha = tbRec.getSelectedRow();
-        String codigo = (String)tbRec.getValueAt(linha, 0);
-        String data = (String)tbRec.getValueAt(linha, 1);
-        String observacao = (String)tbRec.getValueAt(linha, 3);
-        String tipo = (String)tbRec.getValueAt(linha, 4);
+        String codigo = (String) tbRec.getValueAt(linha, 0);
+        String data = (String) tbRec.getValueAt(linha, 1);
+        String observacao = (String) tbRec.getValueAt(linha, 3);
+        String tipo = (String) tbRec.getValueAt(linha, 4);
 
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
         String ano = data.substring(6);
-        String recebedataTabela = dia+mes+ano;
+        String recebedataTabela = dia + mes + ano;
 
         txtDataRec.setText(recebedataTabela);
 
         txtCodRec.setText(codigo);
         txtObsRec.setText(observacao);
-        
-        if(tipo.equalsIgnoreCase("Finalizado")){
+
+        if (tipo.equalsIgnoreCase("Finalizado")) {
             cbTipoRec.setSelectedItem("Finalizado");
-        }
-        else
+        } else {
             cbTipoRec.setSelectedItem("Novo Andamento");
+        }
     }//GEN-LAST:event_tbRecMouseClicked
 
     private void btnExcluirRecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirRecActionPerformed
-        if(txtCodRec.getText().equals("")){
+        if (txtCodRec.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Selecione um registro para exclusão!");
-        }
-        else{
-            try{
-                con.executeSQL(("select * from recebercontratoasscliente where CodReceberContratoAssCliente="+txtCodRec.getText()));
-                if(con.resultset.first()){
-                    String cliente = "Tem certeza que deseja excluir o registro do cliente " +nome+"?";
+        } else {
+            try {
+                con.executeSQL(("select * from recebercontratoasscliente where CodReceberContratoAssCliente=" + txtCodRec.getText()));
+                if (con.resultset.first()) {
+                    String cliente = "Tem certeza que deseja excluir o registro do cliente " + nome + "?";
                     String andamento = con.resultset.getString("AndamentoReceberContratoAssCliente");
 
-                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão",JOptionPane.YES_NO_OPTION);
-                    if(opcao_escolhida == JOptionPane.YES_OPTION){
-                        String sql = "delete from recebercontratoasscliente where CodReceberContratoAssCliente="+txtCodRec.getText();
+                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão", JOptionPane.YES_NO_OPTION);
+                    if (opcao_escolhida == JOptionPane.YES_OPTION) {
+                        String sql = "delete from recebercontratoasscliente where CodReceberContratoAssCliente=" + txtCodRec.getText();
                         int conseguiu_excluir = con.statement.executeUpdate(sql);
-                        if(conseguiu_excluir==1){
+                        if (conseguiu_excluir == 1) {
                             JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
-                            
+
                             limpar_tabela_receber();
                             preencher_tabela_receber();
                             limpar_tela_receber();
-                            
-                            if("Finalizado".equals(andamento)){
-                                con.executeSQL("select * from recebercontratoasscliente where NumeroProcesso="+processo+" and AndamentoReceberContratoAssCliente='Finalizado'");
 
-                                if(!con.resultset.first()){
-                                    try{
-                                        con_geral.statement.executeUpdate("update contratos set AndamentoReceberContratoAssCliente='Em Aberto'");
+                            if ("Finalizado".equals(andamento)) {
+                                con.executeSQL("select * from recebercontratoasscliente where NumeroProcesso=" +processo+ " and AndamentoReceberContratoAssCliente='Finalizado'");
+
+                                if (!con.resultset.first()) {
+                                    try {
+                                        con_geral.statement.executeUpdate("update contratos set AndamentoReceberContratoAssCliente='Em Aberto' where Numerodoprocesso='"+processo+"'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
-                                        
-                                    }catch(SQLException erro){
-                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contrato!\n"+erro);
+
+                                    } catch (SQLException erro) {
+                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contrato!\n" + erro);
                                     }
                                 }
                             }
@@ -1983,8 +2001,8 @@ public class Contratos extends javax.swing.JFrame {
                     }
                 }
 
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro da tabela Recebimento de Contrato!\n"+erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro da tabela Recebimento de Contrato!\n" + erro);
             }
 
         }
@@ -1996,33 +2014,30 @@ public class Contratos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarRecActionPerformed
 
     private void btnSalvarRecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarRecActionPerformed
-        if(txtDataRec.getText().trim().length()<10 || txtDataRec.getText().equals("  /  /    ")){
+        if (txtDataRec.getText().trim().length() < 10 || txtDataRec.getText().equals("  /  /    ")) {
             JOptionPane.showMessageDialog(null, "Data informada esta incorreta");
-        }
-        else if(cbTipoRec.getSelectedItem().equals("")){
+        } else if (cbTipoRec.getSelectedItem().equals("")) {
             JOptionPane.showMessageDialog(null, "Selecione um tipo!");
-        }
-        else if(txtCodRec.getText().equals("")){
-            try{
+        } else if (txtCodRec.getText().equals("")) {
+            try {
                 String novadata = txtDataRec.getText();
                 Date data = sdf.parse(novadata);
 
                 String andamento;
 
-                if(cbTipoRec.getSelectedItem().equals("Finalizado")){
+                if (cbTipoRec.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
 
                 String gry = "insert into recebercontratoasscliente (DatadeCadastroAndamento, NumeroProcesso,"
-                +"Usuario, Observacao, AndamentoReceberContratoAssCliente)"
-                +"values ('"+new java.sql.Date(data.getTime())+"','"
-                +processo+"','"
-                +usuario+"','"
-                +txtObsRec.getText()+"','"
-                +andamento+"')";
+                        + "Usuario, Obsevacao, AndamentoReceberContratoAssCliente)"
+                        + "values ('" + new java.sql.Date(data.getTime()) + "','"
+                        + processo+ "','"
+                        + usuario + "','"
+                        + txtObsRec.getText() + "','"
+                        + andamento + "')";
                 con.exeQuery(gry);
 
                 JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
@@ -2033,30 +2048,28 @@ public class Contratos extends javax.swing.JFrame {
                 limpar_tabela_receber();
                 preencher_tabela_receber();
 
-            }catch(ParseException | HeadlessException add){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro Recebimento de Contrato!\n" +add);
+            } catch (ParseException | HeadlessException add) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro Recebimento de Contrato!\n" + add);
             }
-        }
-        else if(!txtCodRec.getText().equals("")){
-            try{
+        } else if (!txtCodRec.getText().equals("")) {
+            try {
                 String novadata = txtDataRec.getText();
                 Date data = sdf.parse(novadata);
 
                 String andamento;
 
-                if(cbTipoRec.getSelectedItem().equals("Finalizado")){
+                if (cbTipoRec.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
 
                 String sql = "update recebercontratoasscliente set "
-                +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
-                +"Usuario='"+usuario+"','"
-                +"Observacao='"+txtObsContrato.getText()+"','"
-                +"AndamentoReceberContratoAssCliente='"+andamento+"'"
-                +" where CodReceberContratoAssCliente="+txtCodContrato.getText();
+                        + "DatadeCadastroAndamento='" + new java.sql.Date(data.getTime()) + "',"
+                        + "Usuario='" + usuario + "',"
+                        + "Obsevacao='" + txtObsRec.getText() + "',"
+                        + "AndamentoReceberContratoAssCliente='" + andamento + "'"
+                        + " where CodReceberContratoAssCliente=" + txtCodRec.getText();
 
                 con.statement.executeUpdate(sql);
 
@@ -2068,10 +2081,10 @@ public class Contratos extends javax.swing.JFrame {
                 limpar_tabela_receber();
                 preencher_tabela_receber();
 
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao alterar o registro na tabela Recebimento de Contrato\n"+erro);
-            }catch(ParseException ex){
-                JOptionPane.showMessageDialog(null, "Falha ao converter data informada!\n" +ex);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao alterar o registro na tabela Recebimento de Contrato\n" + erro);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "Falha ao converter data informada!\n" + ex);
             }
         }
     }//GEN-LAST:event_btnSalvarRecActionPerformed
@@ -2089,62 +2102,61 @@ public class Contratos extends javax.swing.JFrame {
 
     private void tbContratoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbContratoMouseClicked
         Integer linha = tbContrato.getSelectedRow();
-        String codigo = (String)tbContrato.getValueAt(linha, 0);
-        String data = (String)tbContrato.getValueAt(linha, 1);
-        String observacao = (String)tbContrato.getValueAt(linha, 3);
-        String tipo = (String)tbContrato.getValueAt(linha, 4);
+        String codigo = (String) tbContrato.getValueAt(linha, 0);
+        String data = (String) tbContrato.getValueAt(linha, 1);
+        String observacao = (String) tbContrato.getValueAt(linha, 3);
+        String tipo = (String) tbContrato.getValueAt(linha, 4);
 
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
         String ano = data.substring(6);
-        String recebedataTabela = dia+mes+ano;
+        String recebedataTabela = dia + mes + ano;
 
         txtDataContrato.setText(recebedataTabela);
 
         txtCodContrato.setText(codigo);
         txtObsContrato.setText(observacao);
-        
-        if(tipo.equalsIgnoreCase("Finalizado")){
+
+        if (tipo.equalsIgnoreCase("Finalizado")) {
             cbTipoContrato.setSelectedItem("Finalizado");
-        }
-        else
+        } else {
             cbTipoContrato.setSelectedItem("Novo Andamento");
+        }
     }//GEN-LAST:event_tbContratoMouseClicked
 
     private void btnExcluirContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirContratoActionPerformed
-        if(txtCodContrato.getText().equals("")){
+        if (txtCodContrato.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Selecione um registro para exclusão!");
-        }
-        else{
-            try{
-                con.executeSQL(("select * from elaborarcontratodeprestacaodeservico where CodEleborarPropostaPrestacaoDeServico="+txtCodContrato.getText()));
-                if(con.resultset.first()){
-                    String cliente = "Tem certeza que deseja excluir o registro do cliente " +nome+"?";
+        } else {
+            try {
+                con.executeSQL(("select * from elaborarcontratodeprestacaodeservico where CodEleborarPropostaPrestacaoDeServico=" + txtCodContrato.getText()));
+                if (con.resultset.first()) {
+                    String cliente = "Tem certeza que deseja excluir o registro do cliente " + nome + "?";
                     String andamento = con.resultset.getString("AndamentoElaborarPropostaPrestacaoDeServico");
 
-                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão",JOptionPane.YES_NO_OPTION);
-                    if(opcao_escolhida == JOptionPane.YES_OPTION){
-                        String sql = "delete from elaborarcontratodeprestacaodeservico where CodEleborarPropostaPrestacaoDeServico="+txtCodContrato.getText();
+                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão", JOptionPane.YES_NO_OPTION);
+                    if (opcao_escolhida == JOptionPane.YES_OPTION) {
+                        String sql = "delete from elaborarcontratodeprestacaodeservico where CodEleborarPropostaPrestacaoDeServico=" + txtCodContrato.getText();
                         int conseguiu_excluir = con.statement.executeUpdate(sql);
-                        if(conseguiu_excluir==1){
+                        if (conseguiu_excluir == 1) {
                             JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
-                            
+
                             limpar_tabela_contrato();
                             preencher_tabela_contrato();
                             limpar_tela_contrato();
-                            
-                            if("Finalizado".equals(andamento)){
-                                con.executeSQL("select * from elaborarcontratodeprestacaodeservico where NumeroProcesso="+processo+" and AndamentoElaborarPropostaPrestacaoDeServico='Finalizado'");
 
-                                if(!con.resultset.first()){
-                                    try{
-                                        con_geral.statement.executeUpdate("update contratos set AndamentoElaborarContratoPrestacaoDeServico='Em Aberto'");
+                            if ("Finalizado".equals(andamento)) {
+                                con.executeSQL("select * from elaborarcontratodeprestacaodeservico where NumeroProcesso=" +processo+ " and AndamentoElaborarPropostaPrestacaoDeServico='Finalizado'");
+
+                                if (!con.resultset.first()) {
+                                    try {
+                                        con_geral.statement.executeUpdate("update contratos set AndamentoElaborarContratoPrestacaoDeServico='Em Aberto' where Numerodoprocesso='"+processo+"'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
-                                        
-                                    }catch(SQLException erro){
-                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar tabela Contrato!\n"+erro);
+
+                                    } catch (SQLException erro) {
+                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar tabela Contrato!\n" + erro);
                                     }
                                 }
                             }
@@ -2152,8 +2164,8 @@ public class Contratos extends javax.swing.JFrame {
                     }
                 }
 
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro da tabela Elaborar Contrato!\n"+erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro da tabela Elaborar Contrato!\n" + erro);
             }
 
         }
@@ -2165,33 +2177,30 @@ public class Contratos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnContratoActionPerformed
 
     private void btnSalvarContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarContratoActionPerformed
-        if(txtDataContrato.getText().equals("  /  /    ") || txtDataContrato.getText().trim().length()<10){
+        if (txtDataContrato.getText().equals("  /  /    ") || txtDataContrato.getText().trim().length() < 10) {
             JOptionPane.showMessageDialog(null, "Data informada é invalida!");
-        }
-        else if(cbTipoContrato.getSelectedItem().equals("")){
-            JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
-        }
-        else if(txtCodContrato.getText().equals("")){
-            try{
+        } else if (cbTipoContrato.getSelectedItem().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo Tipo não pode ficar em branco");
+        } else if (txtCodContrato.getText().equals("")) {
+            try {
                 String novadata = txtDataContrato.getText();
                 Date data = sdf.parse(novadata);
 
                 String andamento;
 
-                if(cbTipoContrato.getSelectedItem().equals("Finalizado")){
+                if (cbTipoContrato.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
 
                 String gry = "insert into elaborarcontratodeprestacaodeservico (DatadeCadastroAndamento, NumeroProcesso,"
-                +"Usuario, Observacao, AndamentoElaborarPropostaPrestacaoDeServico)"
-                +"values ('"+new java.sql.Date(data.getTime())+"','"
-                +processo+"','"
-                +usuario+"','"
-                +txtObsContrato.getText()+"','"
-                +andamento+"')";
+                        + "Usuario, Obsevacao, AndamentoElaborarPropostaPrestacaoDeServico)"
+                        + "values ('" + new java.sql.Date(data.getTime()) + "','"
+                        +processo+ "','"
+                        + usuario + "','"
+                        + txtObsContrato.getText() + "','"
+                        + andamento + "')";
                 con.exeQuery(gry);
 
                 JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
@@ -2202,30 +2211,28 @@ public class Contratos extends javax.swing.JFrame {
                 limpar_tabela_contrato();
                 preencher_tabela_contrato();
 
-            }catch(ParseException | HeadlessException add){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro na tabela Contrato!\n" +add);
+            } catch (ParseException | HeadlessException add) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro na tabela Contrato!\n" + add);
             }
-        }
-        else if(!txtCodContrato.getText().equals("")){
-            try{
+        } else if (!txtCodContrato.getText().equals("")) {
+            try {
                 String novadata = txtDataContrato.getText();
                 Date data = sdf.parse(novadata);
 
                 String andamento;
 
-                if(cbTipoContrato.getSelectedItem().equals("Finalizado")){
+                if (cbTipoContrato.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
 
                 String sql = "update elaborarcontratodeprestacaodeservico set "
-                +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"','"
-                +"Usuario='"+usuario+"','"
-                +"Observacao='"+txtObsContrato.getText()+"','"
-                +"AndamentoElaborarPropostaPrestacaoDeServico='"+andamento+"'"
-                +" where CodEleborarPropostaPrestacaoDeServico="+txtCodContrato.getText();
+                        + "DatadeCadastroAndamento='" + new java.sql.Date(data.getTime()) + "',"
+                        + "Usuario='" + usuario + "',"
+                        + "Obsevacao='" + txtObsContrato.getText() + "',"
+                        + "AndamentoElaborarPropostaPrestacaoDeServico='" + andamento + "'"
+                        + " where CodEleborarPropostaPrestacaoDeServico=" + txtCodContrato.getText();
 
                 con.statement.executeUpdate(sql);
 
@@ -2237,10 +2244,10 @@ public class Contratos extends javax.swing.JFrame {
                 limpar_tabela_contrato();
                 preencher_tabela_contrato();
 
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao alterar o registro\n"+erro);
-            }catch(ParseException ex){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro na tabela Contrato!\n" +ex);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao alterar o registro\n" + erro);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro na tabela Contrato!\n" + ex);
             }
         }
 
@@ -2259,70 +2266,69 @@ public class Contratos extends javax.swing.JFrame {
 
     private void tbCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCadastroMouseClicked
         Integer linha = tbCadastro.getSelectedRow();
-        String codigo = (String)tbCadastro.getValueAt(linha, 0);
-        String data = (String)tbCadastro.getValueAt(linha, 1);
-        String observacao = (String)tbCadastro.getValueAt(linha, 3);
-        String tipo = (String)tbCadastro.getValueAt(linha, 4);
+        String codigo = (String) tbCadastro.getValueAt(linha, 0);
+        String data = (String) tbCadastro.getValueAt(linha, 1);
+        String observacao = (String) tbCadastro.getValueAt(linha, 3);
+        String tipo = (String) tbCadastro.getValueAt(linha, 4);
 
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
         String ano = data.substring(6);
-        String recebedataTabela = dia+mes+ano;
+        String recebedataTabela = dia + mes + ano;
 
         txtDataCadastro.setText(recebedataTabela);
 
         txtCodCadastro.setText(codigo);
         txtObsCadastro.setText(observacao);
-        
-        if(tipo.equalsIgnoreCase("Finalizado")){
+
+        if (tipo.equalsIgnoreCase("Finalizado")) {
             cbTipoCadastro.setSelectedItem("Finalizado");
-        }
-        else
+        } else {
             cbTipoCadastro.setSelectedItem("Novo Andamento");
+        }
     }//GEN-LAST:event_tbCadastroMouseClicked
 
     private void btnExcluirCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirCadastroActionPerformed
         //se não selecionado nenhum cadastro, exclusão não será permitida
-        if(txtCodCadastro.getText().equals("")){
+        if (txtCodCadastro.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Primeiro selecione um registro para exclusão!");
-        }
-        else{
-            try{
+        } else {
+            try {
                 //busca cadastro de acordo com o codigo
-                String sql = "select * from cadastrocontrolecotimatic where CodCadastrarControlEContimatic= "+txtCodCadastro.getText();
-                con_geral.executeSQL(sql);
-                if(con.resultset.first()){
-                    String cliente = "Tem certeza que deseja excluir um registro do cliente : " +nome+"?";
-                    String operacao = con.resultset.getString("AndamentoCadatrarControlEContimatic");
-                    int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
-                    if(opcao_escolhida == JOptionPane.YES_OPTION){
-                        sql = "DELETE FROM cadastrocontrolecotimatic Where CodCadastrarControlEContimatic="+txtCodCadastro.getText();
+                String sql = "select * from cadastrarcontrolecontimatic where CodCadastrarControlEContimatic= " + txtCodCadastro.getText();
+                con.executeSQL(sql);
+                if (con.resultset.first()) {
+                    String cliente = "Tem certeza que deseja excluir um registro do cliente : " + nome + "?";
+                    String operacao = con.resultset.getString("AndamentoCadastrarControlEContimatic");
+                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão ", JOptionPane.YES_NO_OPTION);
+                    if (opcao_escolhida == JOptionPane.YES_OPTION) {
+                        sql = "DELETE FROM cadastrarcontrolecontimatic Where CodCadastrarControlEContimatic=" + txtCodCadastro.getText();
                         int conseguiu_excluir = con.statement.executeUpdate(sql);
-                        if (conseguiu_excluir == 1){
-                            JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
+                        if (conseguiu_excluir == 1) {
+                            JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso");
                             limpar_tabela_cadastro();
                             preencher_tabela_cadastro();
                             limpar_tela_cadastro();
-                            
-                            if("Finalizado".equals(operacao)){
-                                con.executeSQL("select * from cadastrocontrolecotimatic where NumerodoProcesso='"+processo+ "and AndamentoCadatrarControlEContimatic='Finalizado'");
-                                if(!con.resultset.first()){
-                                    try{
-                                        con_geral.statement.executeUpdate("update contratos set AndamentoCadastrarControlEContmatic='Em Aberto' where NumeroProcesso='"+processo+"'");
+
+                            if ("Finalizado".equals(operacao)) {
+                                con.executeSQL("select * from cadastrarcontrolecontimatic where NumerodoProcesso='" +processo+ "' and AndamentoCadatrarControlEContimatic='Finalizado'");
+                                if (!con.resultset.first()) {
+                                    try {
+                                        con_geral.statement.executeUpdate("update contratos set AndamentoCadastrarControlEContmatic='Em Aberto' where NumeroProcesso='" +processo+ "'");
 
                                         preencher_status();
                                         atualizar_cadastro_cliente();
 
-                                    }catch(SQLException erro){
-                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar\n"+erro);
+                                    } catch (SQLException erro) {
+                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar\n" + erro);
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro\n"+erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro\n" + erro);
             }
         }
     }//GEN-LAST:event_btnExcluirCadastroActionPerformed
@@ -2334,32 +2340,29 @@ public class Contratos extends javax.swing.JFrame {
 
     private void btnSalvarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarCadastroActionPerformed
         //nao permitir que a primeira data fique vazia
-        if(txtDataCadastro.getText().equals("  /  /    ") || txtDataCadastro.getText().trim().length()<10){
+        if (txtDataCadastro.getText().equals("  /  /    ") || txtDataCadastro.getText().trim().length() < 10) {
             JOptionPane.showMessageDialog(null, "Digite uma data valida no campo novo andamento!");
-        }
-        else if(cbTipoCadastro.getSelectedItem().equals("")){
-            JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
-        }
-        //evitando erros com cadastro ja salvo antes
-        else if(txtCodCadastro.getText().equals("")){
-            try{
+        } else if (cbTipoCadastro.getSelectedItem().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo Tipo não pode ficar em branco");
+        } //evitando erros com cadastro ja salvo antes
+        else if (txtCodCadastro.getText().equals("")) {
+            try {
                 String dataandamento = txtDataCadastro.getText();
                 Date data = sdf.parse(dataandamento);
 
                 String andamento;
-                if(cbTipoCadastro.getSelectedItem().equals("Finalizado")){
+                if (cbTipoCadastro.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
-                String gry = "insert into cadastrarcontrolecontimatic ("+
-                "NumeroProcesso, DatadeCadastroAndamento, Obsevacao, "+
-                "Usuario, AndamnetoCadastrarControlEContimatic) values ('" +processo+"','"+
-                new java.sql.Date(data.getTime())+"','"+
-                txtObsCadastro.getText()+"','"+
-                usuario+"','"+
-                andamento+"')";
+                String gry = "insert into cadastrarcontrolecontimatic ("
+                        + "NumeroProcesso, DatadeCadastroAndamento, Obsevacao, "
+                        + "Usuario, AndamentoCadastrarControlEContimatic) values ('" +processo+ "','"
+                        + new java.sql.Date(data.getTime()) + "','"
+                        + txtObsCadastro.getText() + "','"
+                        + usuario + "','"
+                        + andamento + "')";
                 con.exeQuery(gry);
                 JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
 
@@ -2369,28 +2372,27 @@ public class Contratos extends javax.swing.JFrame {
                 limpar_tabela_cadastro();
                 preencher_tabela_cadastro();
 
-            }catch(ParseException | HeadlessException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Cadastro Control e Contmatic: \n"+erro);
+            } catch (ParseException | HeadlessException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Cadastro Control e Contmatic: \n" + erro);
             }
-        }
-        else if(!txtCodCadastro.getText().equals("")){
-            try{
+        } else if (!txtCodCadastro.getText().equals("")) {
+            try {
 
                 String dataandamento = txtDataCadastro.getText();
                 Date data = sdf.parse(dataandamento);
 
                 String andamento;
-                if(cbTipoCadastro.getSelectedItem().equals("Finalizado")){
+                if (cbTipoCadastro.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }else{
+                } else {
                     andamento = "Em Aberto";
                 }
-                String sql = "UPDATE cadastrarcontrolecontimatic set DatadeCadastroAndamento='"+
-                new java.sql.Date(data.getTime())+"',"+
-                "Obsevacao='"+txtObsCadastro.getText()+"',"+
-                "Usuario= '"+usuario+"',"+
-                "AndamentoCadastrarControlEContimatic='"+andamento+"' "+
-                "where CodCadastrarControlEContimatic = "+txtCodCadastro.getText();
+                String sql = "UPDATE cadastrarcontrolecontimatic set DatadeCadastroAndamento='"
+                        + new java.sql.Date(data.getTime()) + "',"
+                        + "Obsevacao='" + txtObsCadastro.getText() + "',"
+                        + "Usuario= '" + usuario + "',"
+                        + "AndamentoCadastrarControlEContimatic='" + andamento + "' "
+                        + "where CodCadastrarControlEContimatic = " + txtCodCadastro.getText();
 
                 con.statement.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
@@ -2401,10 +2403,10 @@ public class Contratos extends javax.swing.JFrame {
                 preencher_tabela_cadastro();
                 atualizar_cadastro_cliente();
 
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao atualizar os dados da tabela Cadastro Control e Contmatic: \n " +erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar os dados da tabela Cadastro Control e Contmatic: \n " + erro);
             } catch (ParseException ex) {
-                JOptionPane.showMessageDialog(null, "Você digitou uma data não valida!\n"+ex);
+                JOptionPane.showMessageDialog(null, "Você digitou uma data não valida!\n" + ex);
             }
 
         }
@@ -2422,76 +2424,76 @@ public class Contratos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoCadastroActionPerformed
 
     private void btnApelidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApelidoActionPerformed
-        txtIdApelido.setVisible(true);
+        txtIdApelido.setEditable(true);
         txtIdApelido.setText(id);
     }//GEN-LAST:event_btnApelidoActionPerformed
 
     private void tbIdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbIdMouseClicked
         Integer linha = tbId.getSelectedRow();
-        String codigo = (String)tbId.getValueAt(linha, 0);
-        String data = (String)tbId.getValueAt(linha, 1);
-        String observacao = (String)tbId.getValueAt(linha, 3);
-        String tipo = (String)tbId.getValueAt(linha, 4);
+        String codigo = (String) tbId.getValueAt(linha, 0);
+        String data = (String) tbId.getValueAt(linha, 1);
+        String observacao = (String) tbId.getValueAt(linha, 3);
+        String tipo = (String) tbId.getValueAt(linha, 4);
 
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
         String ano = data.substring(6);
-        String recebedataTabela = dia+mes+ano;
+        String recebedataTabela = dia + mes + ano;
 
         txtDataId.setText(recebedataTabela);
 
         txtCodId.setText(codigo);
         txtObsId.setText(observacao);
-        if(tipo.equalsIgnoreCase("Finalizado")){
+        if (tipo.equalsIgnoreCase("Finalizado")) {
             cbTipoId.setSelectedItem("Finalizado");
-        }
-        else
+        } else {
             cbTipoId.setSelectedItem("Novo Andamento");
+        }
 
     }//GEN-LAST:event_tbIdMouseClicked
 
     private void btnExcluirIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirIdActionPerformed
         //se não selecionado nenhum cadastro, exclusão não será permitida
-        if(txtCodId.getText().equals("")){
+        if (txtCodId.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Primeiro selecione um registro para exclusão!");
-        }
-        else{
-            try{
+        } else {
+            try {
                 String sql = "select * from geraridnaplancadastro  "
-                + "where CodGerarIdNaPlanCadastro="+txtCodId.getText();
+                        + "where CodGerarIdNaPlanCadastro=" + txtCodId.getText();
                 con.executeSQL(sql);
-                con.resultset.first();
-                String cliente = "Tem certeza que deseja excluir esse cadastro do cliente : " +nome+"?";
-                String operacao = con.resultset.getString("AndamentoGerarIdNaPlanCadastro");
-                int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
-                if(opcao_escolhida == JOptionPane.YES_OPTION){
+                if(con.resultset.first()){
+                    String cliente = "Tem certeza que deseja excluir esse cadastro do cliente : " + nome + "?";
+                    String operacao = con.resultset.getString("AndamentoGerarIdNaPlanCadastro");
+                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão ", JOptionPane.YES_NO_OPTION);
+                    if (opcao_escolhida == JOptionPane.YES_OPTION) {
 
-                    sql = "DELETE FROM geraridnaplancadastro Where CodGerarIdNaPlanCadastro = "+txtCodId.getText();
-                    int conseguiu_excluir = con.statement.executeUpdate(sql);
-                    if (conseguiu_excluir == 1){
-                        JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
-                        limpar_tela_id();
-                        limpar_tabela_id();
-                        preencher_tabela_id();
-                        //verificar se não existe outro registro com o status finalizado nesse cliente
-                        if("Finalizado".equals(operacao)){
-                            con.executeSQL("select * from geraridnaplancadastro where NumeroProcesso="+processo+" and AndamentoEnioDiagnose='Finalizado'");
-                            if(!con.resultset.first()){
-                                try{
-                                    con_geral.statement.executeUpdate("update contratos set AndamentoGerarIDPlanCadastro='Em Aberto'"
-                                        +"Numerodoprocesso="+processo);
-                                    preencher_status();
-                                    atualizar_cadastro_cliente();
+                        sql = "DELETE FROM geraridnaplancadastro Where CodGerarIdNaPlanCadastro = " + txtCodId.getText();
+                        int conseguiu_excluir = con.statement.executeUpdate(sql);
+                        if (conseguiu_excluir == 1) {
+                            JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso");
+                            limpar_tela_id();
+                            limpar_tabela_id();
+                            preencher_tabela_id();
+                            //verificar se não existe outro registro com o status finalizado nesse cliente
+                            if ("Finalizado".equals(operacao)) {
+                                con.executeSQL("select * from geraridnaplancadastro where NumeroProcesso='" +processo+ "' and AndamentoGerarIdNaPlanCadastro='Finalizado'");
+                                if (!con.resultset.first()) {
+                                    try {
+                                        con_geral.statement.executeUpdate("update contratos set AndamentoGerarIDPlanCadastro='Em Aberto'"
+                                                + " where Numerodoprocesso='"+processo+"'");
+                                        preencher_status();
+                                        atualizar_cadastro_cliente();
 
-                                }catch(SQLException erro){
-                                    JOptionPane.showMessageDialog(null,"Falha ao atualizar a tabela Contratos:\n" +erro);
+                                    } catch (SQLException erro) {
+                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos:\n" + erro);
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro\n"+erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro\n" + erro);
             }
         }
     }//GEN-LAST:event_btnExcluirIdActionPerformed
@@ -2503,31 +2505,29 @@ public class Contratos extends javax.swing.JFrame {
 
     private void btnSalvarIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarIdActionPerformed
         //nao permitir que a primeira data fique vazia
-        if(txtDataId.getText().equals("  /  /    ") || txtDataId.getText().trim().length()<10){
+        if (txtDataId.getText().equals("  /  /    ") || txtDataId.getText().trim().length() < 10) {
             JOptionPane.showMessageDialog(null, "Digite uma data valida no campo novo andamento!");
-        }
-        else if(cbTipoId.getSelectedItem().equals("")){
-            JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
-        }
-        //evitando erros com cadastro ja salvo antes
-        else if(txtCodId.getText().equals("")){
-            try{
+        } else if (cbTipoId.getSelectedItem().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo Tipo não pode ficar em branco");
+        } //evitando erros com cadastro ja salvo antes
+        else if (txtCodId.getText().equals("")) {
+            try {
 
                 String apelido;
                 //regra para cadastrar apelido do cliente
-                if(txtIdApelido.getText().trim().length()>0
-                    && !txtIdApelido.getText().equals(id)){
+                if (txtIdApelido.getText().trim().length() > 0
+                        && !txtIdApelido.getText().equals(id)) {
                     apelido = txtIdApelido.getText().trim();
 
-                    try{
-                        con.statement.executeUpdate("update cadastrodeprocesso set Apelido='"+apelido+"' where codNumerodoprocesso="+processo);
+                    try {
+                        con.statement.executeUpdate("update cadastrodeprocesso set Apelido='" + apelido + "' where codNumerodoprocesso=" + processo);
 
                         txtId.setText(apelido);
                         TelaPrincipal.txt_id.setText(apelido);
                         Ativador.id = apelido;
 
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Erro ao atualizar o apelido do cliente!\n"+erro);
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(null, "Erro ao atualizar o apelido do cliente!\n" + erro);
                     }
 
                 }
@@ -2538,21 +2538,20 @@ public class Contratos extends javax.swing.JFrame {
 
                 String andamento;
 
-                if(cbTipoId.getSelectedItem().equals("Finalizado")){
+                if (cbTipoId.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
 
                 String gry = "insert into geraridnaplancadastro("
-                +"NumeroProcesso, DatadeCadastroAndamento, Obsevacao,"
-                +"Usuario, AndamentoGerarIdNaPlanCadastro) "
-                +"values ('"+processo+"','"
-                +new java.sql.Date(data.getTime())+"','"
-                +txtObsId.getText()+"','"
-                +usuario+"','"
-                +andamento+"')";
+                        + "NumeroProcesso, DatadeCadastroAndamento, Obsevacao,"
+                        + "Usuario, AndamentoGerarIdNaPlanCadastro) "
+                        + "values ('" +processo+ "','"
+                        + new java.sql.Date(data.getTime()) + "','"
+                        + txtObsId.getText() + "','"
+                        + usuario + "','"
+                        + andamento + "')";
 
                 con.exeQuery(gry);
 
@@ -2564,28 +2563,27 @@ public class Contratos extends javax.swing.JFrame {
                 limpar_tabela_id();
                 preencher_tabela_id();
 
-            }catch(ParseException | HeadlessException add){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Cadastro de ID: "+add);
+            } catch (ParseException | HeadlessException add) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Cadastro de ID: " + add);
             }
-        }
-        else if(!txtCodId.getText().equals("")){
-            try{
+        } else if (!txtCodId.getText().equals("")) {
+            try {
 
                 String apelido;
                 //regra para cadastrar apelido do cliente
-                if(txtIdApelido.getText().trim().length()>0
-                    && !txtIdApelido.getText().equals(id)){
+                if (txtIdApelido.getText().trim().length() > 0
+                        && !txtIdApelido.getText().equals(id)) {
                     apelido = txtIdApelido.getText().trim();
 
-                    try{
-                        con.statement.executeUpdate("update cadastrodeprocesso set Apelido='"+apelido+"' where codNumerodoprocesso="+processo);
+                    try {
+                        con.statement.executeUpdate("update cadastrodeprocesso set Apelido='" + apelido + "' where codNumerodoprocesso=" + processo);
 
                         txtId.setText(apelido);
                         TelaPrincipal.txt_id.setText(apelido);
                         Ativador.id = apelido;
 
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Erro ao atualizar o apelido do cliente!\n"+erro);
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(null, "Erro ao atualizar o apelido do cliente!\n" + erro);
                     }
 
                 }
@@ -2595,19 +2593,18 @@ public class Contratos extends javax.swing.JFrame {
 
                 String andamento;
 
-                if(cbTipoId.getSelectedItem().equals("Finalizado")){
+                if (cbTipoId.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
 
-                String sql = "UPDATE geraridnaplancadastro set DatadeCadastroAndamento='"+
-                new java.sql.Date(datatermo.getTime())+"',"+
-                "Obsevacao='"+txtObsId.getText()+"',"+
-                "Usuario = '"+usuario+"',"+
-                "AndamentoGerarIdNaPlanCadastro='"+andamento+"' "+
-                "where CodGerarIdNaPlanCadastro = "+txtCodId.getText();
+                String sql = "UPDATE geraridnaplancadastro set DatadeCadastroAndamento='"
+                        + new java.sql.Date(datatermo.getTime()) + "',"
+                        + "Obsevacao='" + txtObsId.getText() + "',"
+                        + "Usuario = '" + usuario + "',"
+                        + "AndamentoGerarIdNaPlanCadastro='" + andamento + "' "
+                        + "where CodGerarIdNaPlanCadastro = " + txtCodId.getText();
 
                 con.statement.executeUpdate(sql);
 
@@ -2619,10 +2616,10 @@ public class Contratos extends javax.swing.JFrame {
                 limpar_tabela_id();
                 preencher_tabela_id();
 
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao atualizar os dados da tabela Cadastro de ID: " +erro);
-            }catch (ParseException ex) {
-                JOptionPane.showMessageDialog(null, "Verifique a data informada, valor incorreto!\n"+ex);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar os dados da tabela Cadastro de ID: " + erro);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "Verifique a data informada, valor incorreto!\n" + ex);
             }
         }
     }//GEN-LAST:event_btnSalvarIdActionPerformed
@@ -2637,14 +2634,19 @@ public class Contratos extends javax.swing.JFrame {
         limpar_tela_id();
         desbloquear_tela_id();
     }//GEN-LAST:event_btnNovoIdActionPerformed
-    public static void main(String args[]){
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        con.desconecta();
+        con_geral.desconecta();
+    }//GEN-LAST:event_formWindowClosing
+    public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run(){
-            Contratos reg = new Contratos();
-            reg.setVisible(true);
+            public void run() {
+                Contratos reg = new Contratos();
+                reg.setVisible(true);
             }
         });
-}
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterarAtivar;
     private javax.swing.JButton btnAlterarCadastro;
@@ -2747,7 +2749,7 @@ public class Contratos extends javax.swing.JFrame {
     private javax.swing.JTable tbId;
     private javax.swing.JTable tbPerfil;
     private javax.swing.JTable tbRec;
-    private javax.swing.JLabel txtAndamento;
+    public static javax.swing.JLabel txtAndamento;
     private javax.swing.JTextField txtCodAtivar;
     private javax.swing.JTextField txtCodCadastro;
     private javax.swing.JTextField txtCodContrato;
@@ -2770,239 +2772,239 @@ public class Contratos extends javax.swing.JFrame {
     private javax.swing.JTextArea txtObsId;
     private javax.swing.JTextArea txtObsPerfil;
     private javax.swing.JTextArea txtObsRec;
-    private javax.swing.JLabel txtStatusAtivar;
-    private javax.swing.JLabel txtStatusCadastro;
-    private javax.swing.JLabel txtStatusContrato;
-    private javax.swing.JLabel txtStatusId;
-    private javax.swing.JLabel txtStatusPerfil;
-    private javax.swing.JLabel txtStatusRecContratos;
+    public static javax.swing.JLabel txtStatusAtivar;
+    public static javax.swing.JLabel txtStatusCadastro;
+    public static javax.swing.JLabel txtStatusContrato;
+    public static javax.swing.JLabel txtStatusId;
+    public static javax.swing.JLabel txtStatusPerfil;
+    public static javax.swing.JLabel txtStatusRecContratos;
     public static javax.swing.JLabel txtUsuario;
     // End of variables declaration//GEN-END:variables
-    public void preencher_tabela_id(){
+    public void preencher_tabela_id() {
+        
         tbId.getColumnModel().getColumn(0);
         tbId.getColumnModel().getColumn(1);
         tbId.getColumnModel().getColumn(2);
         tbId.getColumnModel().getColumn(3);
         tbId.getColumnModel().getColumn(4);
         tbId.getColumnModel().getColumn(5);
-        
 
-        con.executeSQL("select * from geraridnaplancadastro WHERE NumeroProcesso='"+processo+"'");
-        DefaultTableModel modelo = (DefaultTableModel)tbId.getModel();
+        con.executeSQL("select * from geraridnaplancadastro WHERE NumeroProcesso='" +processo+ "'");
+        DefaultTableModel modelo = (DefaultTableModel) tbId.getModel();
         //modelo.setNumRows(0);
-        
-        try
-        {
-            
-            while (con.resultset.next())
-                modelo.addRow(new Object [] {
+
+        try {
+
+            while (con.resultset.next()) {
+                modelo.addRow(new Object[]{
                     con.resultset.getString("CodGerarIdNaPlanCadastro"),
-                    sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                     con.resultset.getString("NumeroProcesso"),
                     con.resultset.getString("Obsevacao"),
-                    con.resultset.getString("AndamentoGerarIdNaPlanCadastro"),                    
+                    con.resultset.getString("AndamentoGerarIdNaPlanCadastro"),
                     con.resultset.getString("Usuario")});
+            }
             con.resultset.first();
-        }   catch (SQLException erro){
-    JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Gerar ID " +erro);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar na tabela Gerar ID " + erro);
+        }
     }
-}
-    public void preencher_tabela_cadastro(){
+
+    public void preencher_tabela_cadastro() {
         tbCadastro.getColumnModel().getColumn(0);
         tbCadastro.getColumnModel().getColumn(1);
         tbCadastro.getColumnModel().getColumn(2);
         tbCadastro.getColumnModel().getColumn(3);
         tbCadastro.getColumnModel().getColumn(4);
         tbCadastro.getColumnModel().getColumn(5);
-        con.executeSQL("select * from cadastrarcontrolecontimatic WHERE NumeroProcesso='"+processo+"'");
+        con.executeSQL("select * from cadastrarcontrolecontimatic WHERE NumeroProcesso='" +processo+ "'");
         //
-        DefaultTableModel modelo = (DefaultTableModel)tbCadastro.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) tbCadastro.getModel();
         //modelo.setNumRows(0);
-        try
-        {
-            while (con.resultset.next())
-                modelo.addRow(new Object [] {
+        try {
+            while (con.resultset.next()) {
+                modelo.addRow(new Object[]{
                     con.resultset.getString("CodCadastrarControlEContimatic"),
-                    sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                     con.resultset.getString("NumeroProcesso"),
                     con.resultset.getString("Obsevacao"),
                     con.resultset.getString("AndamentoCadastrarControlEContimatic"),
                     con.resultset.getString("Usuario")});
+            }
             con.resultset.first();
-        }catch(SQLException erro){
-          JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Cadastro "+erro);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar na tabela Cadastro " + erro);
         }
     }
-    public void preencher_tabela_contrato(){
+
+    public void preencher_tabela_contrato() {
         tbContrato.getColumnModel().getColumn(0);
         tbContrato.getColumnModel().getColumn(1);
         tbContrato.getColumnModel().getColumn(2);
         tbContrato.getColumnModel().getColumn(3);
         tbContrato.getColumnModel().getColumn(4);
         tbContrato.getColumnModel().getColumn(5);
-        con.executeSQL("select * from elaborarcontratodeprestacaodeservico where NumeroProcesso='"+processo+"'");
-        
-        DefaultTableModel modelo = (DefaultTableModel)tbContrato.getModel();
-        
-        try{
-            while(con.resultset.next())
-                modelo.addRow(new Object [] {
+        con.executeSQL("select * from elaborarcontratodeprestacaodeservico where NumeroProcesso='" +processo+ "'");
+
+        DefaultTableModel modelo = (DefaultTableModel) tbContrato.getModel();
+
+        try {
+            while (con.resultset.next()) {
+                modelo.addRow(new Object[]{
                     con.resultset.getString("CodEleborarPropostaPrestacaoDeServico"),
-                    sdf.format(con.resultset.getString("DatadeCadastroAndamento")),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                     con.resultset.getString("NumeroProcesso"),
                     con.resultset.getString("Obsevacao"),
                     con.resultset.getString("AndamentoElaborarPropostaPrestacaoDeServico"),
                     con.resultset.getString("Usuario")});
+            }
             con.resultset.first();
-        }catch(SQLException erro){
-          JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Elaborar Contrato " +erro);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar na tabela Elaborar Contrato " + erro);
         }
     }
-    public void limpar_tabela_id(){
-        DefaultTableModel tbm = (DefaultTableModel)tbId.getModel();
-            for(int i = tbm.getRowCount()-1; i>=0; i--){
-                tbm.removeRow(i);
-            }
+
+    public void limpar_tabela_id() {
+        DefaultTableModel tbm = (DefaultTableModel) tbId.getModel();
+        for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
+            tbm.removeRow(i);
+        }
     }
-    public void limpar_tabela_cadastro(){
-        DefaultTableModel tbm = (DefaultTableModel)tbCadastro.getModel();
-            for(int i = tbm.getRowCount()-1; i>=0; i--){
-                tbm.removeRow(i);
-            }
+
+    public void limpar_tabela_cadastro() {
+        DefaultTableModel tbm = (DefaultTableModel) tbCadastro.getModel();
+        for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
+            tbm.removeRow(i);
+        }
     }
-    public void limpar_tabela_contrato(){
-        DefaultTableModel tbm = (DefaultTableModel)tbContrato.getModel();
-            for(int i = tbm.getRowCount()-1; i>=0; i--){
-                tbm.removeRow(i);
-            }
+
+    public void limpar_tabela_contrato() {
+        DefaultTableModel tbm = (DefaultTableModel) tbContrato.getModel();
+        for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
+            tbm.removeRow(i);
+        }
     }
-    public void preencher_status(){
-        try{
-            String sql = "select * from contratos WHERE Numerodoprocesso='"+processo+"'";
+
+    public void preencher_status() {
+        try {
+            String sql = "select * from contratos WHERE Numerodoprocesso='" +processo+ "'";
             con_geral.executeSQL(sql);
             con_geral.resultset.first();
-            
+
             gerarid = con_geral.resultset.getString("AndamentoGerarIDPlanCadastro");
             cadastro = con_geral.resultset.getString("AndamentoCadastrarControlEContmatic");
             contratos = con_geral.resultset.getString("AndamentoElaborarContratoPrestacaoDeServico");
             receber = con_geral.resultset.getString("AndamentoReceberContratoAssCliente");
             ativar = con_geral.resultset.getString("AndamentoAtivarCliente");
             perfil = con_geral.resultset.getString("AndamentoElaborarPrefilFiscal");
-                        
+
             txtStatusId.setText(gerarid);
             txtStatusCadastro.setText(cadastro);
             txtStatusContrato.setText(contratos);
             txtStatusRecContratos.setText(receber);
             txtStatusAtivar.setText(ativar);
             txtStatusPerfil.setText(perfil);
-            
-        }catch(SQLException erro){
-            JOptionPane.showMessageDialog(null, "Falha ao preencher status!\n" +erro);
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Falha ao preencher status!\n" + erro);
         }
     }
-    public void atualizar_cadastro_cliente(){
-        
-        if(txtStatusId.getText().equalsIgnoreCase("Em Aberto") &&
-                txtStatusCadastro.getText().equalsIgnoreCase("Em Aberto") &&
-                txtStatusContrato.getText().equalsIgnoreCase("Em Aberto") &&
-                txtStatusRecContratos.getText().equalsIgnoreCase("Em Aberto") &&
-                txtStatusAtivar.getText().equalsIgnoreCase("Em Aberto") &&
-                txtStatusPerfil.getText().equalsIgnoreCase("Em Aberto")){
-       
-                try{
-                    String sql = "UPDATE cadastrodeprocesso set AndamentoContratos='' where codNumerodoprocesso=" +processo;
-                    con_geral.statement.executeUpdate(sql);
 
-                    String andamento = "Não Iniciado";
-                    txtAndamento.setText(andamento);
-                }catch(SQLException erro){
-                    JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" +erro);
-                }
-        }
-        else if(txtStatusId.getText().equalsIgnoreCase("Em Aberto") ||
-                txtStatusCadastro.getText().equalsIgnoreCase("Em Aberto") ||
-                txtStatusContrato.getText().equalsIgnoreCase("Em Aberto") ||
-                txtStatusRecContratos.getText().equalsIgnoreCase("Em Aberto") ||
-                txtStatusAtivar.getText().equalsIgnoreCase("Em Aberto") ||
-                txtStatusPerfil.getText().equalsIgnoreCase("Em Aberto")){
-                    
-                try{
-                    String sql = "UPDATE cadastrodeprocesso set AndamentoContratos='Em Aberto' where codNumerodoprocesso=" +processo;
-                    con_geral.statement.executeUpdate(sql);
+    public void atualizar_cadastro_cliente() {
 
-                    String andamento = "Em Andamento";
-                    txtAndamento.setText(andamento);
-                }catch(SQLException erro){
-                    JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" +erro);
-                }
-        }
-        else if(txtStatusId.getText().equalsIgnoreCase("Finalizado") &&
-                txtStatusCadastro.getText().equalsIgnoreCase("Finalizado") &&
-                txtStatusContrato.getText().equalsIgnoreCase("Finalizado") &&
-                txtStatusRecContratos.getText().equalsIgnoreCase("Finalizado") &&
-                txtStatusAtivar.getText().equalsIgnoreCase("Finalizado") &&
-                txtStatusPerfil.getText().equalsIgnoreCase("Finalizado")){
-       
-                try{
-                    String sql = "UPDATE cadastrodeprocesso set AndamentoContratos='Finalizado' where codNumerodoprocesso="+processo;
-                    con_geral.statement.executeUpdate(sql);
+        if (txtStatusId.getText().equalsIgnoreCase("Em Aberto")
+                && txtStatusCadastro.getText().equalsIgnoreCase("Em Aberto")
+                && txtStatusContrato.getText().equalsIgnoreCase("Em Aberto")
+                && txtStatusRecContratos.getText().equalsIgnoreCase("Em Aberto")
+                && txtStatusAtivar.getText().equalsIgnoreCase("Em Aberto")
+                && txtStatusPerfil.getText().equalsIgnoreCase("Em Aberto")) {
 
-                    String andamento = "Em Andamento";
-                    txtAndamento.setText(andamento);
-                }catch(SQLException erro){
-                    JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" +erro);
-                }
+            try {
+                String sql = "UPDATE cadastrodeprocesso set AndamentoContratos='Em Aberto' where codNumerodoprocesso=" + processo;
+                con_geral.statement.executeUpdate(sql);
+
+                String andamento = "Em Aberto";
+                txtAndamento.setText(andamento);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" + erro);
+            }
+        } else if (txtStatusId.getText().equalsIgnoreCase("Em Aberto")
+                || txtStatusCadastro.getText().equalsIgnoreCase("Em Aberto")
+                || txtStatusContrato.getText().equalsIgnoreCase("Em Aberto")
+                || txtStatusRecContratos.getText().equalsIgnoreCase("Em Aberto")
+                || txtStatusAtivar.getText().equalsIgnoreCase("Em Aberto")
+                || txtStatusPerfil.getText().equalsIgnoreCase("Em Aberto")) {
+
+            try {
+                String sql = "UPDATE cadastrodeprocesso set AndamentoContratos='Em Aberto' where codNumerodoprocesso=" + processo;
+                con_geral.statement.executeUpdate(sql);
+
+                String andamento = "Em Andamento";
+                txtAndamento.setText(andamento);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" + erro);
+            }
+        } else if (txtStatusId.getText().equalsIgnoreCase("Finalizado")
+                && txtStatusCadastro.getText().equalsIgnoreCase("Finalizado")
+                && txtStatusContrato.getText().equalsIgnoreCase("Finalizado")
+                && txtStatusRecContratos.getText().equalsIgnoreCase("Finalizado")
+                && txtStatusAtivar.getText().equalsIgnoreCase("Finalizado")
+                && txtStatusPerfil.getText().equalsIgnoreCase("Finalizado")) {
+
+            try {
+                String sql = "UPDATE cadastrodeprocesso set AndamentoContratos='Concluido' where codNumerodoprocesso=" + processo;
+                con_geral.statement.executeUpdate(sql);
+
+                String andamento = "Concluido";
+                txtAndamento.setText(andamento);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" + erro);
+            }
         }
         distribuir_cores();
     }
-    public void distribuir_cores(){
-        if(txtStatusId.getText().equalsIgnoreCase("Em Aberto")){
+
+    public void distribuir_cores() {
+        if (txtStatusId.getText().equalsIgnoreCase("Em Aberto")) {
             txtStatusId.setBackground(Color.red);
-        }
-        else{
+        } else {
             txtStatusId.setBackground(Color.green);
         }
-        if(txtStatusCadastro.getText().equalsIgnoreCase("Em Aberto")){
+        if (txtStatusCadastro.getText().equalsIgnoreCase("Em Aberto")) {
             txtStatusCadastro.setBackground(Color.red);
-        }
-        else{
+        } else {
             txtStatusCadastro.setBackground(Color.green);
         }
-        if(txtStatusContrato.getText().equalsIgnoreCase("Em Aberto")){
+        if (txtStatusContrato.getText().equalsIgnoreCase("Em Aberto")) {
             txtStatusContrato.setBackground(Color.red);
+        } else {
+            txtStatusContrato.setBackground(Color.green);
         }
-        else{
-            txtStatusContrato.setBackground(Color.green);    
-            }
-        if(txtStatusRecContratos.getText().equalsIgnoreCase("Em Aberto")){
+        if (txtStatusRecContratos.getText().equalsIgnoreCase("Em Aberto")) {
             txtStatusRecContratos.setBackground(Color.red);
-        }
-        else{
+        } else {
             txtStatusRecContratos.setBackground(Color.green);
         }
-        if(txtStatusAtivar.getText().equalsIgnoreCase("Em Aberto")){
+        if (txtStatusAtivar.getText().equalsIgnoreCase("Em Aberto")) {
             txtStatusAtivar.setBackground(Color.red);
-        }
-        else{
+        } else {
             txtStatusAtivar.setBackground(Color.green);
         }
-        if(txtStatusPerfil.getText().equalsIgnoreCase("Em Aberto")){
+        if (txtStatusPerfil.getText().equalsIgnoreCase("Em Aberto")) {
             txtStatusPerfil.setBackground(Color.red);
+        } else {
+            txtStatusPerfil.setBackground(Color.green);
         }
-        else{
-            txtStatusPerfil.setBackground(Color.green);    
-            }
-        if(txtAndamento.getText().equalsIgnoreCase("Concluido")){
+        if (txtAndamento.getText().equalsIgnoreCase("Concluido")) {
             txtAndamento.setBackground(Color.green);
-        }
-        else if(txtAndamento.getText().equalsIgnoreCase("Em Andamento")){
+        } else if (txtAndamento.getText().equalsIgnoreCase("Em Andamento")) {
             txtAndamento.setBackground(Color.orange);
-        }
-        else{
+        } else {
             txtAndamento.setBackground(Color.red);
         }
     }
-    public void limpar_tela_id(){
+
+    public void limpar_tela_id() {
         txtCodId.setText("");
         txtObsId.setText("");
         txtCodId.setEditable(false);
@@ -3010,9 +3012,10 @@ public class Contratos extends javax.swing.JFrame {
         Date data = new Date();
         String datahoje = sdf.format(data);
         txtDataId.setText(datahoje);
-        
+
     }
-    public void limpar_tela_cadastro(){
+
+    public void limpar_tela_cadastro() {
         txtCodCadastro.setEditable(false);
         txtCodCadastro.setText("");
         cbTipoCadastro.setSelectedItem("");
@@ -3021,7 +3024,8 @@ public class Contratos extends javax.swing.JFrame {
         String datahoje = sdf.format(data);
         txtDataCadastro.setText(datahoje);
     }
-    public void limpar_tela_contrato(){
+
+    public void limpar_tela_contrato() {
         txtCodContrato.setEditable(false);
         txtCodContrato.setText("");
         cbTipoContrato.setSelectedItem("");
@@ -3031,224 +3035,229 @@ public class Contratos extends javax.swing.JFrame {
         txtDataContrato.setText(datahoje);
     }
 
-    public void atualizar_id(){
-        if(cbTipoId.getSelectedItem().equals("Finalizado")){
-                    try{
-                        String sql = "UPDATE contratos set AndamentoGerarIDPlanCadastro='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>GerarID\n" +erro);
-                    }
-        }
-        else{
-            try{
-                con_geral.executeSQL("select * from contratos where Numerodoprocesso='" +processo+"' and AndamentoGerarIDPlanCadastro ='Finalizado'");
-                if(con_geral.resultset.next()){
+    public void atualizar_id() {
+        if (cbTipoId.getSelectedItem().equals("Finalizado")) {
+            try {
+                String sql = "UPDATE contratos set AndamentoGerarIDPlanCadastro='Finalizado' where Numerodoprocesso='" +processo+ "'";
+                con_geral.statement.executeUpdate(sql);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>GerarID\n" + erro);
+            }
+        } else {
+            try {
+                con_geral.executeSQL("select * from contratos where Numerodoprocesso='" +processo+ "' and AndamentoGerarIDPlanCadastro ='Finalizado'");
+                if (con_geral.resultset.first()) {
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua ou altere todos os registros finalizados nesse painel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-     
-                    con_geral.executeSQL("select * from geraridnaplancadastro  where NumeroProcesso='"+processo+
-                            "'and AndamentoGerarIdNaPlanCadastro='Finalizado'");
-                    
-                    if(!con_geral.resultset.first()){
-                        try{
-                
-                        String sql = "UPDATE contratos set AndamentoGerarIDPlanCadastro='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                        }catch(SQLException erro){
-                            JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>GerarID\n" +erro);
+
+                    con_geral.executeSQL("select * from geraridnaplancadastro  where NumeroProcesso='" + processo
+                            + "'and AndamentoGerarIdNaPlanCadastro='Finalizado'");
+
+                    if (!con_geral.resultset.first()) {
+                        try {
+
+                            String sql = "UPDATE contratos set AndamentoGerarIDPlanCadastro='Em Aberto' where Numerodoprocesso='" +processo+ "'";
+                            con_geral.statement.executeUpdate(sql);
+                        } catch (SQLException erro) {
+                            JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>GerarID\n" + erro);
                         }
-                        
+
                     }
-                }
-                else{
-                    try{
-                        String sql = "UPDATE contratos set AndamentoGerarIDPlanCadastro ='Em Aberto' where Numerodoprocesso='" +txtCodigo.getText()+"'";
+                } else {
+                    try {
+                        String sql = "UPDATE contratos set AndamentoGerarIDPlanCadastro ='Em Aberto' where Numerodoprocesso='" + txtCodigo.getText() + "'";
                         con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>GerarID\n" +erro);
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>GerarID\n" + erro);
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Contratos>GerarID \n" +erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Contratos>GerarID \n" + erro);
             }
-                    
+
         }
     }
-    public void atualizar_cadastro(){
-        if(cbTipoCadastro.getSelectedItem().equals("Finalizado")){
-                    try{
-                        String sql = "UPDATE contratos set AndamentoCadastrarControlEContmatic='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos>Cadastro de Id:\n" +erro);
-                    }
-        }
-        else{
-            try{
-                con_geral.executeSQL("select * from contratos where Numerodoprocesso='" +processo+"' and AndamentoCadastrarControlEContmatic ='Finalizado'");
-                if(con_geral.resultset.next()){
+
+    public void atualizar_cadastro() {
+        if (cbTipoCadastro.getSelectedItem().equals("Finalizado")) {
+            try {
+                String sql = "UPDATE contratos set AndamentoCadastrarControlEContmatic='Finalizado' where Numerodoprocesso='" +processo+ "'";
+                con_geral.statement.executeUpdate(sql);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos>Cadastro de Id:\n" + erro);
+            }
+        } else {
+            try {
+                con_geral.executeSQL("select * from contratos where Numerodoprocesso='" +processo+ "' and AndamentoCadastrarControlEContmatic ='Finalizado'");
+                if (con_geral.resultset.next()) {
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua ou altere todos os registros finalizados nesse painel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-     
-                    con_geral.executeSQL("select * from cadastrarcontrolecontimatic where NumeroProcesso='"+processo+
-                            "'and AndamentoCadastrarControlEContimatic='Finalizado'");
-                    
-                    if(!con_geral.resultset.first()){
-                        try{
-                
-                        String sql = "UPDATE contratos set AndamentoCadastrarControlEContmatic='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                        }catch(SQLException erro){
-                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos>Cadastro de Id:\n" +erro);
+
+                    con_geral.executeSQL("select * from cadastrarcontrolecontimatic where NumeroProcesso='" + processo
+                            + "'and AndamentoCadastrarControlEContimatic='Finalizado'");
+
+                    if (!con_geral.resultset.first()) {
+                        try {
+
+                            String sql = "UPDATE contratos set AndamentoCadastrarControlEContmatic='Em Aberto' where Numerodoprocesso='" +processo+ "'";
+                            con_geral.statement.executeUpdate(sql);
+                        } catch (SQLException erro) {
+                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos>Cadastro de Id:\n" + erro);
                         }
-                        
+
                     }
-                }
-                else{
-                    try{
-                        String sql = "UPDATE contratos set AndamentoCadastroDependentesdoSocioADM ='Em Aberto' where Numerodoprocesso='" +txtCodigo.getText()+"'";
+                } else {
+                    try {
+                        String sql = "UPDATE contratos set AndamentoCadastroDependentesdoSocioADM ='Em Aberto' where Numerodoprocesso='" + txtCodigo.getText() + "'";
                         con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Cadastro de Id\n" +erro);
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Cadastro de Id\n" + erro);
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Contratos>Cadastro de Id\n" +erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Contratos>Cadastro de Id\n" + erro);
             }
-                    
+
         }
     }
-    public void atualizar_contrato(){
-        if(cbTipoContrato.getSelectedItem().equals("Finalizado")){
-                    try{
-                        String sql = "UPDATE contratos set AndamentoElaborarContratoPrestacaoDeServico='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Elaborar Contrato\n" +erro);
-                    }
-        }
-        else{
-            try{
-                con_geral.executeSQL("select * from contratos where Numerodoprocesso='" +processo+"' and AndamentoElaborarContratoPrestacaoDeServico ='Finalizado'");
-                if(con_geral.resultset.next()){
+
+    public void atualizar_contrato() {
+        if (cbTipoContrato.getSelectedItem().equals("Finalizado")) {
+            try {
+                String sql = "UPDATE contratos set AndamentoElaborarContratoPrestacaoDeServico='Finalizado' where Numerodoprocesso='" +processo+ "'";
+                con_geral.statement.executeUpdate(sql);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Elaborar Contrato\n" + erro);
+            }
+        } else {
+            try {
+                con_geral.executeSQL("select * from contratos where Numerodoprocesso='" +processo+ "' and AndamentoElaborarContratoPrestacaoDeServico ='Finalizado'");
+                if (con_geral.resultset.next()) {
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua ou altere todos os registros finalizados nesse painel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-     
-                    con_geral.executeSQL("select * from elaborarcontratodeprestacaodeservico where NumeroProcesso='"+processo+"'and AndamentoElaborarPropostaPrestacaoDeServico='Finalizado'");
-                    
-                    if(!con_geral.resultset.first()){
-                        try{
-                
-                        String sql = "UPDATE contratos set AndamentoElaborarContratoPrestacaoDeServico='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                        }catch(SQLException erro){
-                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos>Elaborar Contrato\n" +erro);
+
+                    con_geral.executeSQL("select * from elaborarcontratodeprestacaodeservico where NumeroProcesso='" +processo+ "'and AndamentoElaborarPropostaPrestacaoDeServico='Finalizado'");
+
+                    if (!con_geral.resultset.first()) {
+                        try {
+
+                            String sql = "UPDATE contratos set AndamentoElaborarContratoPrestacaoDeServico='Em Aberto' where Numerodoprocesso='" +processo+ "'";
+                            con_geral.statement.executeUpdate(sql);
+                        } catch (SQLException erro) {
+                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos>Elaborar Contrato\n" + erro);
                         }
-                        
+
                     }
-                }
-                else{
-                    try{
-                        String sql = "UPDATE contratos set AndamentoElaborarContratoPrestacaoDeServico ='Em Aberto' where Numerodoprocesso='" +txtCodigo.getText()+"'";
+                } else {
+                    try {
+                        String sql = "UPDATE contratos set AndamentoElaborarContratoPrestacaoDeServico ='Em Aberto' where Numerodoprocesso='" + txtCodigo.getText() + "'";
                         con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Elaborar Contrato\n" +erro);
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Elaborar Contrato\n" + erro);
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Contratos>Elaborar Contrato\n" +erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Contratos>Elaborar Contrato\n" + erro);
             }
-                    
+
         }
     }
-    public void bloquear_tela_cadastro(){
+
+    public void bloquear_tela_cadastro() {
         txtCodCadastro.setEditable(false);
         txtDataCadastro.setEditable(false);
         cbTipoCadastro.setEditable(false);
         txtObsCadastro.setEditable(false);
     }
 
-    public void desbloquear_tela_cadastro(){
+    public void desbloquear_tela_cadastro() {
         txtDataCadastro.setEditable(true);
         cbTipoCadastro.setEditable(true);
         txtObsCadastro.setEditable(true);
     }
-    public void bloquear_tela_id(){
+
+    public void bloquear_tela_id() {
         txtCodId.setEditable(false);
         txtDataId.setEditable(false);
         cbTipoId.setEditable(false);
         txtObsId.setEditable(false);
     }
 
-    public void desbloquear_tela_id(){
+    public void desbloquear_tela_id() {
         txtDataId.setEditable(true);
         cbTipoId.setEditable(true);
         txtObsId.setEditable(true);
     }
-    public void bloquear_tela_contrato(){
+
+    public void bloquear_tela_contrato() {
         txtCodContrato.setEditable(false);
         txtDataContrato.setEditable(false);
         cbTipoContrato.setEditable(false);
         txtObsContrato.setEditable(false);
     }
 
-    public void desbloquear_tela_contrato(){
+    public void desbloquear_tela_contrato() {
         txtDataContrato.setEditable(true);
         cbTipoContrato.setEditable(true);
         txtObsContrato.setEditable(true);
     }
-    public void criar_backup_id(){
+
+    public void criar_backup_id() {
         codgerar_backup = txtCodId.getText();
-        tipogerar_backup = (String)cbTipoId.getSelectedItem();
+        tipogerar_backup = (String) cbTipoId.getSelectedItem();
         datagerar_backup = txtDataId.getText();
         obsgerar_backup = txtObsId.getText();
     }
-    public void restaurar_backup_id(){
+
+    public void restaurar_backup_id() {
         txtCodId.setText(codgerar_backup);
         cbTipoId.setSelectedItem(tipogerar_backup);
         txtDataId.setText(datagerar_backup);
         txtObsId.setText(obsgerar_backup);
     }
-    public void criar_backup_cadastro(){
+
+    public void criar_backup_cadastro() {
         codCad_backup = txtCodCadastro.getText();
-        tipoCad_backup = (String)cbTipoCadastro.getSelectedItem();
+        tipoCad_backup = (String) cbTipoCadastro.getSelectedItem();
         dataCad_backup = txtDataCadastro.getText();
         obsCad_backup = txtObsCadastro.getText();
     }
-    public void restaurar_backup_cadastro(){
+
+    public void restaurar_backup_cadastro() {
         txtCodCadastro.setText(codCad_backup);
         cbTipoCadastro.setSelectedItem(tipoCad_backup);
         txtDataCadastro.setText(dataCad_backup);
         txtObsCadastro.setText(obsCad_backup);
     }
-    public void criar_backup_contrato(){
+
+    public void criar_backup_contrato() {
         codCont_backup = txtCodContrato.getText();
-        tipoCont_backup = (String)cbTipoContrato.getSelectedItem();
+        tipoCont_backup = (String) cbTipoContrato.getSelectedItem();
         dataCont_backup = txtDataContrato.getText();
         obsCont_backup = txtObsContrato.getText();
     }
-    public void restaurar_backup_contrato(){
+
+    public void restaurar_backup_contrato() {
         txtCodContrato.setText(codCont_backup);
         cbTipoContrato.setSelectedItem(tipoCont_backup);
         txtDataContrato.setText(dataCont_backup);
         txtObsContrato.setText(obsCont_backup);
     }
 
-    private void criar_backup_receber() {
+    public void criar_backup_receber() {
         codRec_backup = txtCodRec.getText();
-        tipoRec_backup = (String)cbTipoRec.getSelectedItem();
+        tipoRec_backup = (String) cbTipoRec.getSelectedItem();
         dataRec_backup = txtDataRec.getText();
         obsRec_backup = txtObsRec.getText();
     }
 
-    private void limpar_tela_receber() {
+    public void limpar_tela_receber() {
         txtCodRec.setEditable(false);
         txtCodRec.setText("");
         cbTipoRec.setSelectedItem("");
@@ -3258,110 +3267,107 @@ public class Contratos extends javax.swing.JFrame {
         txtDataRec.setText(datahoje);
     }
 
-    private void desbloquear_tela_receber() {
+    public void desbloquear_tela_receber() {
         txtDataRec.setEditable(true);
         cbTipoRec.setEditable(true);
         txtObsRec.setEditable(true);
     }
 
-    private void restaurar_backup_receber() {
+    public void restaurar_backup_receber() {
         txtCodRec.setText(codRec_backup);
         cbTipoRec.setSelectedItem(tipoRec_backup);
         txtDataRec.setText(dataRec_backup);
         txtObsRec.setText(obsRec_backup);
     }
 
-    private void atualizar_receber() {
-        if(cbTipoRec.getSelectedItem().equals("Finalizado")){
-                    try{
-                        String sql = "UPDATE contratos set AndamentoReceberContratoAssCliente='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Receber Contrato\n" +erro);
-                    }
-        }
-        else{
-            try{
-                con_geral.executeSQL("select * from contratos where Numerodoprocesso='" +processo+"' and AndamentoReceberContratoAssCliente ='Finalizado'");
-                if(con_geral.resultset.next()){
+    public void atualizar_receber() {
+        if (cbTipoRec.getSelectedItem().equals("Finalizado")) {
+            try {
+                String sql = "UPDATE contratos set AndamentoReceberContratoAssCliente='Finalizado' where Numerodoprocesso='" +processo+ "'";
+                con_geral.statement.executeUpdate(sql);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Receber Contrato\n" + erro);
+            }
+        } else {
+            try {
+                con_geral.executeSQL("select * from contratos where Numerodoprocesso='" +processo+ "' and AndamentoReceberContratoAssCliente ='Finalizado'");
+                if (con_geral.resultset.next()) {
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua ou altere todos os registros finalizados nesse painel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-     
-                    con_geral.executeSQL("select * from recebercontratoasscliente where NumeroProcesso='"+processo+"'and AndamentoReceberContratoAssCliente='Finalizado'");
-                    
-                    if(!con_geral.resultset.first()){
-                        try{
-                
-                        String sql = "UPDATE contratos set AndamentoReceberContratoAssCliente='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                        }catch(SQLException erro){
-                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos>Receber Contrato\n" +erro);
+
+                    con_geral.executeSQL("select * from recebercontratoasscliente where NumeroProcesso='" +processo+ "'and AndamentoReceberContratoAssCliente='Finalizado'");
+
+                    if (!con_geral.resultset.first()) {
+                        try {
+
+                            String sql = "UPDATE contratos set AndamentoReceberContratoAssCliente='Em Aberto' where Numerodoprocesso='" +processo+ "'";
+                            con_geral.statement.executeUpdate(sql);
+                        } catch (SQLException erro) {
+                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos>Receber Contrato\n" + erro);
                         }
-                        
+
                     }
-                }
-                else{
-                    try{
-                        String sql = "UPDATE contratos set AndamentoReceberContratoAssCliente ='Em Aberto' where Numerodoprocesso='" +txtCodigo.getText()+"'";
+                } else {
+                    try {
+                        String sql = "UPDATE contratos set AndamentoReceberContratoAssCliente ='Em Aberto' where Numerodoprocesso='" + txtCodigo.getText() + "'";
                         con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Receber Contrato\n" +erro);
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Receber Contrato\n" + erro);
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Contratos>Receber Contrato\n" +erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Contratos>Receber Contrato\n" + erro);
             }
-                    
+
         }
     }
 
-    private void limpar_tabela_receber() {
-        DefaultTableModel tbm =(DefaultTableModel)tbRec.getModel();
-        for(int i = tbm.getRowCount()-1; i>=0; i--){
-        tbm.removeRow(i);
+    public void limpar_tabela_receber() {
+        DefaultTableModel tbm = (DefaultTableModel) tbRec.getModel();
+        for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
+            tbm.removeRow(i);
         }
     }
 
-    private void preencher_tabela_receber() {
-        tbId.getColumnModel().getColumn(0);
-        tbId.getColumnModel().getColumn(1);
-        tbId.getColumnModel().getColumn(2);
-        tbId.getColumnModel().getColumn(3);
-        tbId.getColumnModel().getColumn(4);
-        tbId.getColumnModel().getColumn(5);
-        
+    public void preencher_tabela_receber() {
+        tbRec.getColumnModel().getColumn(0);
+        tbRec.getColumnModel().getColumn(1);
+        tbRec.getColumnModel().getColumn(2);
+        tbRec.getColumnModel().getColumn(3);
+        tbRec.getColumnModel().getColumn(4);
+        tbRec.getColumnModel().getColumn(5);
 
-        con.executeSQL("select * from recebercontratoasscliente WHERE NumeroProcesso='"+processo+"'");
-        DefaultTableModel modelo = (DefaultTableModel)tbId.getModel();
+        con.executeSQL("select * from recebercontratoasscliente WHERE NumeroProcesso='" +processo+ "'");
+        DefaultTableModel modelo = (DefaultTableModel) tbRec.getModel();
         //modelo.setNumRows(0);
-        
-        try
-        {
-            
-            while (con.resultset.next())
-                modelo.addRow(new Object [] {
+
+        try {
+
+            while (con.resultset.next()) {
+                modelo.addRow(new Object[]{
                     con.resultset.getString("CodReceberContratoAssCliente"),
-                    sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                     con.resultset.getString("NumeroProcesso"),
                     con.resultset.getString("Obsevacao"),
-                    con.resultset.getString("AndamentoReceberContratoAssCliente"),                    
+                    con.resultset.getString("AndamentoReceberContratoAssCliente"),
                     con.resultset.getString("Usuario")});
+            }
             con.resultset.first();
-        }   catch (SQLException erro){
-            JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Receber Contrato " +erro);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar na tabela Receber Contrato " + erro);
         }
     }
 
-    private void bloquear_tela_receber() {
+    public void bloquear_tela_receber() {
         txtCodRec.setEditable(false);
         txtDataRec.setEditable(false);
         cbTipoRec.setEditable(false);
         txtObsRec.setEditable(false);
     }
 
-    private void limpar_tela_ativar() {
+    public void limpar_tela_ativar() {
         txtCodAtivar.setEditable(false);
         txtCodAtivar.setText("");
         cbTipoAtivar.setSelectedItem("");
@@ -3371,78 +3377,77 @@ public class Contratos extends javax.swing.JFrame {
         txtDataAtivar.setText(datahoje);
     }
 
-    private void criar_backup_ativar() {
+    public void criar_backup_ativar() {
         codAtivar_backup = txtCodAtivar.getText();
-        tipoAtivar_backup = (String)cbTipoAtivar.getSelectedItem();
+        tipoAtivar_backup = (String) cbTipoAtivar.getSelectedItem();
         dataAtivar_backup = txtDataAtivar.getText();
         obsAtivar_backup = txtObsAtivar.getText();
     }
 
-    private void desbloquear_tela_ativar() {
+    public void desbloquear_tela_ativar() {
         txtDataAtivar.setEditable(true);
         cbTipoAtivar.setEditable(true);
         txtObsAtivar.setEditable(true);
     }
 
-    private void restaurar_backup_ativar() {
+    public void restaurar_backup_ativar() {
         txtCodAtivar.setText(codAtivar_backup);
         cbTipoAtivar.setSelectedItem(tipoAtivar_backup);
         txtDataAtivar.setText(dataAtivar_backup);
         txtObsAtivar.setText(obsAtivar_backup);
     }
 
-    private void bloquear_tela_ativar() {
+    public void bloquear_tela_ativar() {
         txtCodAtivar.setEditable(false);
         txtDataAtivar.setEditable(false);
         cbTipoAtivar.setEditable(false);
         txtObsAtivar.setEditable(false);
     }
 
-    private void preencher_tabela_ativar() {
-        tbId.getColumnModel().getColumn(0);
-        tbId.getColumnModel().getColumn(1);
-        tbId.getColumnModel().getColumn(2);
-        tbId.getColumnModel().getColumn(3);
-        tbId.getColumnModel().getColumn(4);
-        tbId.getColumnModel().getColumn(5);
-        
+    public void preencher_tabela_ativar() {
+        tbAtivar.getColumnModel().getColumn(0);
+        tbAtivar.getColumnModel().getColumn(1);
+        tbAtivar.getColumnModel().getColumn(2);
+        tbAtivar.getColumnModel().getColumn(3);
+        tbAtivar.getColumnModel().getColumn(4);
+        tbAtivar.getColumnModel().getColumn(5);
 
-        con.executeSQL("select * from ativarcliente WHERE NumeroProcesso='"+processo+"'");
-        DefaultTableModel modelo = (DefaultTableModel)tbId.getModel();
+        con.executeSQL("select * from ativarcliente WHERE NumeroProcesso='" +processo+ "'");
+        DefaultTableModel modelo = (DefaultTableModel) tbAtivar.getModel();
         //modelo.setNumRows(0);
-        
-        try
-        {
-            
-            while (con.resultset.next())
-                modelo.addRow(new Object [] {
+
+        try {
+
+            while (con.resultset.next()) {
+                modelo.addRow(new Object[]{
                     con.resultset.getString("CodAtivarCliente"),
-                    sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                     con.resultset.getString("NumeroProcesso"),
                     con.resultset.getString("Obsevacao"),
-                    con.resultset.getString("AndamentoAtivarCliente"),                    
+                    con.resultset.getString("AndamentoAtivarCliente"),
                     con.resultset.getString("Usuario")});
+            }
             con.resultset.first();
-        }   catch (SQLException erro){
-            JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Ativar Cliente " +erro);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar na tabela Ativar Cliente " + erro);
         }
     }
 
-    private void limpar_tabela_ativar() {
-        DefaultTableModel tbm =(DefaultTableModel)tbAtivar.getModel();
-        for(int i = tbm.getRowCount()-1; i>=0; i--){
-        tbm.removeRow(i);
+    public void limpar_tabela_ativar() {
+        DefaultTableModel tbm = (DefaultTableModel) tbAtivar.getModel();
+        for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
+            tbm.removeRow(i);
         }
     }
 
-    private void criar_backup_perfil() {
+    public void criar_backup_perfil() {
         codPerfil_backup = txtCodPerfil.getText();
-        tipoPerfil_backup = (String)cbTipoPerfil.getSelectedItem();
+        tipoPerfil_backup = (String) cbTipoPerfil.getSelectedItem();
         dataPerfil_backup = txtDataPerfil.getText();
         obsPerfil_backup = txtObsPerfil.getText();
     }
 
-    private void limpar_tela_perfil() {
+    public void limpar_tela_perfil() {
         txtCodPerfil.setEditable(false);
         txtCodPerfil.setText("");
         cbTipoPerfil.setSelectedItem("");
@@ -3452,153 +3457,148 @@ public class Contratos extends javax.swing.JFrame {
         txtDataPerfil.setText(datahoje);
     }
 
-    private void desbloquear_tela_perfil() {
+    public void desbloquear_tela_perfil() {
         txtDataRec.setEditable(true);
         cbTipoRec.setEditable(true);
         txtObsRec.setEditable(true);
     }
 
-    private void bloquear_tela_perfil() {
+    public void bloquear_tela_perfil() {
         txtCodRec.setEditable(false);
         txtDataRec.setEditable(false);
         cbTipoRec.setEditable(false);
         txtObsRec.setEditable(false);
     }
 
-    private void restaurar_backup_perfil() {
+    public void restaurar_backup_perfil() {
         txtCodPerfil.setText(codAtivar_backup);
         cbTipoPerfil.setSelectedItem(tipoAtivar_backup);
         txtDataPerfil.setText(dataAtivar_backup);
         txtObsPerfil.setText(obsAtivar_backup);
     }
 
-    private void atualizar_ativar() {
-        if(cbTipoAtivar.getSelectedItem().equals("Finalizado")){
-                    try{
-                        String sql = "UPDATE contratos set AndamentoAtivarCliente='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Ativar Cliente\n" +erro);
-                    }
-        }
-        else{
-            try{
-                con_geral.executeSQL("select * from contratos where Numerodoprocesso='" +processo+"' and AndamentoAtivarCliente ='Finalizado'");
-                if(con_geral.resultset.next()){
+    public void atualizar_ativar() {
+        if (cbTipoAtivar.getSelectedItem().equals("Finalizado")) {
+            try {
+                String sql = "UPDATE contratos set AndamentoAtivarCliente='Finalizado' where Numerodoprocesso='" +processo+ "'";
+                con_geral.statement.executeUpdate(sql);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Ativar Cliente\n" + erro);
+            }
+        } else {
+            try {
+                con_geral.executeSQL("select * from contratos where Numerodoprocesso='" +processo+ "' and AndamentoAtivarCliente ='Finalizado'");
+                if (con_geral.resultset.next()) {
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua ou altere todos os registros finalizados nesse painel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-     
-                    con_geral.executeSQL("select * from ativarcliente where NumeroProcesso='"+processo+"'and AndamentoAtivarCliente='Finalizado'");
-                    
-                    if(!con_geral.resultset.first()){
-                        try{
-                
-                        String sql = "UPDATE contratos set AndamentoAtivarCliente='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                        }catch(SQLException erro){
-                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos>Ativar Cliente\n" +erro);
+
+                    con_geral.executeSQL("select * from ativarcliente where NumeroProcesso='" +processo+ "' and AndamentoAtivarCliente='Finalizado'");
+
+                    if (!con_geral.resultset.first()) {
+                        try {
+
+                            String sql = "UPDATE contratos set AndamentoAtivarCliente='Em Aberto' where Numerodoprocesso='" +processo+ "'";
+                            con_geral.statement.executeUpdate(sql);
+                        } catch (SQLException erro) {
+                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos>Ativar Cliente\n" + erro);
                         }
-                        
+
                     }
-                }
-                else{
-                    try{
-                        String sql = "UPDATE contratos set AndamentoAtivarCliente ='Em Aberto' where Numerodoprocesso='" +txtCodigo.getText()+"'";
+                } else {
+                    try {
+                        String sql = "UPDATE contratos set AndamentoAtivarCliente ='Em Aberto' where Numerodoprocesso='" + txtCodigo.getText() + "'";
                         con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Ativar Cliente\n" +erro);
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Ativar Cliente\n" + erro);
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Contratos>Ativar Cliente\n" +erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Contratos>Ativar Cliente\n" + erro);
             }
-                    
+
         }
     }
 
-    private void atualizar_perfil() {
-        if(cbTipoPerfil.getSelectedItem().equals("Finalizado")){
-                    try{
-                        String sql = "UPDATE contratos set AndamentoElaborarPrefilFiscal='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Perfil\n" +erro);
-                    }
-        }
-        else{
-            try{
-                con_geral.executeSQL("select * from contratos where Numerodoprocesso='" +processo+"' and AndamentoElaborarPrefilFiscal ='Finalizado'");
-                if(con_geral.resultset.next()){
+    public void atualizar_perfil() {
+        if (cbTipoPerfil.getSelectedItem().equals("Finalizado")) {
+            try {
+                String sql = "UPDATE contratos set AndamentoElaborarPrefilFiscal='Finalizado' where Numerodoprocesso='" +processo+ "'";
+                con_geral.statement.executeUpdate(sql);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Perfil\n" + erro);
+            }
+        } else {
+            try {
+                con_geral.executeSQL("select * from contratos where Numerodoprocesso='" +processo+ "' and AndamentoElaborarPrefilFiscal ='Finalizado'");
+                if (con_geral.resultset.first()) {
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua ou altere todos os registros finalizados nesse painel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-     
-                    con_geral.executeSQL("select * from elaborarperfilfiscal where NumeroProcesso='"+processo+
-                            "'and AndamentoElaborarPerfilFiscal='Finalizado'");
-                    
-                    if(!con_geral.resultset.first()){
-                        try{
-                
-                        String sql = "UPDATE contratos set AndamentoElaborarPrefilFiscal='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                        }catch(SQLException erro){
-                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos>Perfil\n" +erro);
+
+                    con_geral.executeSQL("select * from elaborarperfilfiscal where NumeroProcesso='" + processo
+                            + "' and AndamentoElaborarPerfilFiscal='Finalizado'");
+
+                    if (!con_geral.resultset.first()) {
+                        try {
+
+                            String sql = "UPDATE contratos set AndamentoElaborarPrefilFiscal='Em Aberto' where Numerodoprocesso='" +processo+ "'";
+                            con_geral.statement.executeUpdate(sql);
+                        } catch (SQLException erro) {
+                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Contratos>Perfil\n" + erro);
                         }
-                        
+
                     }
-                }
-                else{
-                    try{
-                        String sql = "UPDATE contratos set AndamentoElaborarPrefilFiscal ='Em Aberto' where Numerodoprocesso='" +txtCodigo.getText()+"'";
+                } else {
+                    try {
+                        String sql = "UPDATE contratos set AndamentoElaborarPrefilFiscal ='Em Aberto' where Numerodoprocesso='" + txtCodigo.getText() + "'";
                         con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Perfil\n" +erro);
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Contratos>Perfil\n" + erro);
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Contratos>Perfil\n" +erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Contratos>Perfil\n" + erro);
             }
-                    
+
         }
     }
 
-    private void limpar_tabela_perfil() {
-        DefaultTableModel tbm =(DefaultTableModel)tbPerfil.getModel();
-        for(int i = tbm.getRowCount()-1; i>=0; i--){
-        tbm.removeRow(i);
+    public void limpar_tabela_perfil() {
+        DefaultTableModel tbm = (DefaultTableModel) tbPerfil.getModel();
+        for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
+            tbm.removeRow(i);
         }
     }
 
-    private void preencher_tabela_perfil() {
-        tbId.getColumnModel().getColumn(0);
-        tbId.getColumnModel().getColumn(1);
-        tbId.getColumnModel().getColumn(2);
-        tbId.getColumnModel().getColumn(3);
-        tbId.getColumnModel().getColumn(4);
-        tbId.getColumnModel().getColumn(5);
-        
+    public void preencher_tabela_perfil() {
+        tbPerfil.getColumnModel().getColumn(0);
+        tbPerfil.getColumnModel().getColumn(1);
+        tbPerfil.getColumnModel().getColumn(2);
+        tbPerfil.getColumnModel().getColumn(3);
+        tbPerfil.getColumnModel().getColumn(4);
+        tbPerfil.getColumnModel().getColumn(5);
 
-        con.executeSQL("select * from elaborarperfilfiscal WHERE NumeroProcesso='"+processo+"'");
-        DefaultTableModel modelo = (DefaultTableModel)tbId.getModel();
+        con.executeSQL("select * from elaborarperfilfiscal WHERE NumeroProcesso='" +processo+ "'");
+        DefaultTableModel modelo = (DefaultTableModel) tbPerfil.getModel();
         //modelo.setNumRows(0);
-        
-        try
-        {
-            
-            while (con.resultset.next())
-                modelo.addRow(new Object [] {
+
+        try {
+
+            while (con.resultset.next()) {
+                modelo.addRow(new Object[]{
                     con.resultset.getString("CodElaborarPerfilFiscal"),
-                    sdf.format(con.resultset.getTime("DatadeCadastroAndamento")),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                     con.resultset.getString("NumeroProcesso"),
                     con.resultset.getString("Obsevacao"),
-                    con.resultset.getString("AndamentoElaborarPerfilFiscal"),                    
+                    con.resultset.getString("AndamentoElaborarPerfilFiscal"),
                     con.resultset.getString("Usuario")});
+            }
             con.resultset.first();
-        }   catch (SQLException erro){
-            JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Elaborar Perfil Fiscal " +erro);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar na tabela Elaborar Perfil Fiscal " + erro);
         }
     }
 }

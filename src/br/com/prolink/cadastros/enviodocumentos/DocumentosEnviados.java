@@ -42,6 +42,7 @@ public class DocumentosEnviados extends javax.swing.JFrame {
         irpj();
         iss();    
         
+        con.desconecta();
    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

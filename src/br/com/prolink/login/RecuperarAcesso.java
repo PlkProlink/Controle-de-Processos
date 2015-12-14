@@ -6,12 +6,12 @@
 package br.com.prolink.login;
 
 import br.com.prolink.inicio.Conexao;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author Tiago Dias
@@ -33,8 +33,6 @@ public class RecuperarAcesso extends javax.swing.JFrame {
     public RecuperarAcesso() {
         initComponents();
         
-        con_recuperar = new Conexao();
-        con_recuperar.conecta();
     }
 
     /**
@@ -55,7 +53,6 @@ public class RecuperarAcesso extends javax.swing.JFrame {
         setTitle("Recuperar Acesso");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setToolTipText("Recuperação de Acesso");
 
         jButton1.setText("Recuperar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -65,8 +62,16 @@ public class RecuperarAcesso extends javax.swing.JFrame {
         });
 
         txtRecuperar.setBackground(new java.awt.Color(254, 254, 254));
+        txtRecuperar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtRecuperar.setText("@prolinkcontabil.com.br");
         txtRecuperar.setToolTipText("");
+        txtRecuperar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtRecuperarKeyPressed(evt);
+            }
+        });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Informe o seu e-mail corporativo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -109,63 +114,14 @@ public class RecuperarAcesso extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(txtRecuperar.getText().trim().equals("")){
-            JOptionPane.showMessageDialog(null, "Informe um e-mail válido!");
-        }  
-        else{
-            try{
-                email=txtRecuperar.getText().trim();
-                con_recuperar.executeSQL("select * from login where Email='"+email+"'");
-                if(con_recuperar.resultset.first()){
-                    
-                    usuario = con_recuperar.resultset.getString("Usuario");
-                    senha = con_recuperar.resultset.getString("Senha");
-                    nome = con_recuperar.resultset.getString("Nome");
-                    
-                    /** Parâmetros de conexão com servidor Gmail */
-                    props.put("mail.smtp.host", "smtp.prolinkcontabil.com.br");
-                    //props.put("mail.smtp.socketFactory.port", "587");
-                    //props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-                    props.put("mail.smtp.auth", "true");
-                    props.put("mail.smtp.port", "587");
-                    /** Ativa Debug para sessão */
-
-                    session.setDebug(true);
-
-                     try {
-                          Message message = new MimeMessage(session);
-                          message.setFrom(new InternetAddress("suporte.ti@prolinkcontabil.com.br")); //Remetente
-
-                          Address[] toUser = InternetAddress //Destinatário(s)
-                                     .parse(email);  
-
-                          message.setRecipients(Message.RecipientType.TO, toUser);
-                          //message.setSubject("Enviando email com JavaMail");//Assunto
-                          message.setSubject("Recuperação de Acesso Controle Interno");
-
-                          //message.setText("Enviei este email utilizando JavaMail com minha conta GMail!");
-                          message.setText("Olá "+nome+",\n\n Conforme solicitado, \nSegue seu acesso para o sistema interno de Controle de Processos\n\n"+
-                                            "Usuario: "+usuario+"\nSenha: "+senha+"\n\nIgnore esse e-mail caso você não tenha solicitado");
-
-                          /**Método para enviar a mensagem criada*/
-                          Transport.send(message);
-
-                          JOptionPane.showMessageDialog(null, "Em instantes você receberá um e-mail com os seus dados de acesso!!!");
-
-                          dispose();
-
-                     } catch (MessagingException e) {
-                          throw new RuntimeException(e);
-                     }
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Email informado não existe no cadastro");
-                }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Verifique sua conexao com a internet!\n" +erro);
-            }
-        }
+        enviar();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtRecuperarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRecuperarKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            enviar();
+        }
+    }//GEN-LAST:event_txtRecuperarKeyPressed
 
     /**
      * @param args the command line arguments
@@ -208,4 +164,67 @@ public class RecuperarAcesso extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtRecuperar;
     // End of variables declaration//GEN-END:variables
+    public void enviar(){
+        if(txtRecuperar.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(null, "Informe um e-mail válido!");
+        }  
+        else{
+            con_recuperar = new Conexao();
+            con_recuperar.conecta();
+            try{
+                
+                
+                email=txtRecuperar.getText().trim();
+                con_recuperar.executeSQL("select * from login where Email='"+txtRecuperar.getText().trim()+"'");
+                if(con_recuperar.resultset.first()){
+                    
+                    usuario = con_recuperar.resultset.getString("Usuario");
+                    senha = con_recuperar.resultset.getString("Senha");
+                    nome = con_recuperar.resultset.getString("Nome");
+                    
+                    /** Parâmetros de conexão com servidor Gmail */
+                    props.put("mail.smtp.host", "smtp.prolinkcontabil.com.br");
+                    //props.put("mail.smtp.socketFactory.port", "587");
+                    //props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                    props.put("mail.smtp.auth", "true");
+                    props.put("mail.smtp.port", "587");
+                    /** Ativa Debug para sessão */
+
+                    session.setDebug(true);
+
+                     try {
+                          Message message = new MimeMessage(session);
+                          message.setFrom(new InternetAddress("suporte.ti@prolinkcontabil.com.br")); //Remetente
+
+                          Address[] toUser = InternetAddress //Destinatário(s)
+                                     .parse(email);  
+
+                          message.setRecipients(Message.RecipientType.TO, toUser);
+                          //message.setSubject("Enviando email com JavaMail");//Assunto
+                          message.setSubject("Recuperação de Acesso Controle de Processos");
+
+                          //message.setText("Enviei este email utilizando JavaMail com minha conta GMail!");
+                          message.setText("Olá "+nome+",\n\n Conforme solicitado, \nSegue seu acesso para o sistema interno de Controle de Processos\n\n"+
+                                            "Usuario: "+usuario+"\nSenha: "+senha+"\n\nIgnore esse e-mail caso você não tenha solicitado");
+
+                          /**Método para enviar a mensagem criada*/
+                          Transport.send(message);
+
+                          JOptionPane.showMessageDialog(null, "Em instantes você receberá um e-mail com os seus dados de acesso!!!");
+
+                          dispose();
+
+                     } catch (MessagingException e) {
+                          throw new RuntimeException(e);
+                     }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Email informado não existe no cadastro");
+                }
+            }catch(SQLException erro){
+                JOptionPane.showMessageDialog(null, "Verifique sua conexao com a internet!\n" +erro);
+            }
+            con_recuperar.desconecta();
+        }
+    }
 }

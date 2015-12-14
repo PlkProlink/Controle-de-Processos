@@ -20,8 +20,9 @@ import br.com.prolink.inicio.*;
 
 public class Regularizacao extends javax.swing.JFrame {
     //conexão com as tabelas necessarias
-    Conexao con_regularizacao, con_termo, con_arquivo;
-    //maskara para o JFormattedTextField
+    Conexao con = new Conexao();
+    Conexao con_geral = new Conexao();
+//maskara para o JFormattedTextField
     MaskFormatter formatoArquivo, formatoTermo;
     //Formatador para data
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -36,29 +37,21 @@ public class Regularizacao extends javax.swing.JFrame {
      */
     public Regularizacao() {
         initComponents();
-        //instanciando as conexoes e executando o metodo conecta
-
-        con_termo = new Conexao();
-        con_termo.conecta();
         
-        con_arquivo = new Conexao();
-        con_arquivo.conecta();
-        
-        con_regularizacao = new Conexao();
-        con_regularizacao.conecta();
-        
+        con.conecta();
+        con_geral.conecta();
         //chamando metodo que preencha as tabelas
         preencher_jtable_termo();
         preencher_jtable_arquivo();
         //chamando metodo que preencha tela de status
-        bloqueia_tela_termo();
-        bloqueia_tela_arquivo();
-        
         preencher_status();
         atualizar_cadastro_cliente();
         //bloqueando edição do campo codigo
         limpar_tela_arquivo();
         limpar_tela_termo();
+        
+        bloqueia_tela_termo();
+        bloqueia_tela_arquivo();
         
         tb_arquivo.setAutoCreateRowSorter(true);
         tb_termo.setAutoCreateRowSorter(true);
@@ -148,6 +141,11 @@ public class Regularizacao extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Regularização");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jpRegularizacao.setBackground(new java.awt.Color(245, 245, 245));
 
@@ -284,6 +282,7 @@ public class Regularizacao extends javax.swing.JFrame {
         txt_obs_termo.setRows(5);
         jScrollPane9.setViewportView(txt_obs_termo);
 
+        btnAlterarTermo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarTermo.setText("Alterar");
         btnAlterarTermo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,6 +290,7 @@ public class Regularizacao extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarTermo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarTermo.setText("Salvar");
         btnSalvarTermo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -298,6 +298,7 @@ public class Regularizacao extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarTermo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarTermo.setText("Cancelar");
         btnCancelarTermo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,6 +306,7 @@ public class Regularizacao extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirTermo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirTermo.setText("Excluir");
         btnExcluirTermo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -349,6 +351,7 @@ public class Regularizacao extends javax.swing.JFrame {
             tb_termo.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
+        btnNovoTermo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoTermo.setText("Novo");
         btnNovoTermo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -451,6 +454,7 @@ public class Regularizacao extends javax.swing.JFrame {
         txt_obs_arquivo.setRows(5);
         jScrollPane7.setViewportView(txt_obs_arquivo);
 
+        btnAlterarArquivo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnAlterarArquivo.setText("Alterar");
         btnAlterarArquivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -458,6 +462,7 @@ public class Regularizacao extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarArquivo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnSalvarArquivo.setText("Salvar");
         btnSalvarArquivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -465,6 +470,7 @@ public class Regularizacao extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarArquivo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCancelarArquivo.setText("Cancelar");
         btnCancelarArquivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -472,6 +478,7 @@ public class Regularizacao extends javax.swing.JFrame {
             }
         });
 
+        btnExcluirArquivo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnExcluirArquivo.setText("Excluir");
         btnExcluirArquivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -516,6 +523,7 @@ public class Regularizacao extends javax.swing.JFrame {
             tb_arquivo.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
+        btnNovoArquivo.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnNovoArquivo.setText("Novo");
         btnNovoArquivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -667,20 +675,21 @@ public class Regularizacao extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Primeiro selecione um registro para exclusão!");
         }
         else{
+            
             try{
                 //busca cadastro de acordo com o codigo
                 String sql = "select * from arquivamentodoprocesso where CodArquivamento= "+txt_cod_arquivo.getText();
-                con_arquivo.executeSQL(sql);
-                con_arquivo.resultset.first();
+                con.executeSQL(sql);
+                con.resultset.first();
                 
-                String cliente = "Tem certeza que deseja excluir um registro do cliente : " +con_arquivo.resultset.getString("Cliente")+"?";
+                String cliente = "Tem certeza que deseja excluir um registro do cliente : " +nome+"?";
                 //pegando o status atual do cliente Em aberto ou Finalizado
-                String operacao = con_arquivo.resultset.getString("Andamentoarquivar");
+                String operacao = con.resultset.getString("Andamentoarquivar");
                 
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
                     sql = "DELETE FROM arquivamentodoprocesso Where CodArquivamento="+txt_cod_arquivo.getText();
-                    int conseguiu_excluir = con_arquivo.statement.executeUpdate(sql);
+                    int conseguiu_excluir = con.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
                         limpar_tela_arquivo();
@@ -689,12 +698,11 @@ public class Regularizacao extends javax.swing.JFrame {
                         
                         if("Finalizado".equals(operacao)){
                             try{
-                                con_arquivo.executeSQL("select * from arquivamentodoprocesso where NumeroProcesso='"+processo+"' and Andamentoarquivar='Finalizado'");
-                                if(!con_arquivo.resultset.first()){
-                                    con_regularizacao.statement.executeUpdate("UPDATE regularizacao set AndamentoArquivarProcesso='Em Aberto' where Numerodoprocesso="+processo);
+                                con.executeSQL("select * from arquivamentodoprocesso where NumeroProcesso='"+processo+"' and Andamentoarquivar='Finalizado'");
+                                if(!con.resultset.first()){
+                                    con.statement.executeUpdate("UPDATE regularizacao set AndamentoArquivarProcesso='Em Aberto' where Numerodoprocesso='"+processo+"'");
                                     preencher_status();
                                     atualizar_cadastro_cliente();
-                     
                             }
                             }catch(SQLException erro){
                                 JOptionPane.showMessageDialog(null, "Erro ao localizar dados na tabela Regularização>Arquivo.\n"+erro);
@@ -706,6 +714,8 @@ public class Regularizacao extends javax.swing.JFrame {
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null, "Erro ao excluir o registro da tabela Regularização!\n" +erro);
             }
+            
+        
         }
         
     }//GEN-LAST:event_btnExcluirArquivoActionPerformed
@@ -723,6 +733,7 @@ public class Regularizacao extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Campo Tipo não pode ficar em branco!");
         }
         else if(!txt_cod_arquivo.getText().equals("")){
+            
             try{
                 String dataandamento = txt_data_arquivo.getText();
                 Date data = sdf.parse(dataandamento);
@@ -740,7 +751,7 @@ public class Regularizacao extends javax.swing.JFrame {
                 "Andamentoarquivar='"+andamento+"' "+
                 "where CodArquivamento = "+txt_cod_arquivo.getText();
 
-                con_arquivo.statement.executeUpdate(sql);
+                con.statement.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
 
                 atualizar_regularizacao_arquivo();
@@ -754,8 +765,10 @@ public class Regularizacao extends javax.swing.JFrame {
             } catch (ParseException ex) {
                 JOptionPane.showMessageDialog(null, "Erro na conversão da data ou data incorreta!\n"+ex);
             }
+            
         }//evitando erros com cadastro ja salvo antes
         else if(txt_cod_arquivo.getText().equals("")){
+            
             try{
                 String dataandamento = txt_data_arquivo.getText();
                 Date dataarquivo = sdf.parse(dataandamento);
@@ -776,11 +789,11 @@ public class Regularizacao extends javax.swing.JFrame {
                 usuario+"','"+
                 andamentoarquivo+"')";
 
-                con_arquivo.exeQuery(gry);
+                con.exeQuery(gry);
                 
                 JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
                 
-                atualizar_regularizacao_arquivo();
+                //atualizar_regularizacao_arquivo();
                 limpar_tabela_arquivo();
                 preencher_jtable_arquivo();
                 preencher_status();
@@ -789,6 +802,7 @@ public class Regularizacao extends javax.swing.JFrame {
             }catch(Exception add){
                 JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Arquivo: \n"+add);
             }
+            
         }
         
     }//GEN-LAST:event_btnSalvarArquivoActionPerformed
@@ -804,27 +818,28 @@ public class Regularizacao extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Primeiro selecione um registro para exclusão!");
         }
         else{
+            
             try{
                 //busca cadastro de acordo com o codigo
                 String sql = "select * from enviartermoderesponsabilidadeparacomercial where CodEnviartermoderesponsaparaComercial= "+txt_cod_termo.getText();
-                con_termo.executeSQL(sql);
-                con_termo.resultset.first();
-                String operacao = con_termo.resultset.getString("AndamentoEnvioTermoResponsabiidadeparaComercial");
+                con.executeSQL(sql);
+                con.resultset.first();
+                String operacao = con.resultset.getString("AndamentoEnvioTermoResponsabiidadeparaComercial");
                 String cliente = "Tem certeza que deseja excluir um registro do cliente : " +nome+"?";
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if(opcao_escolhida == JOptionPane.YES_OPTION){
                     sql = "DELETE FROM enviartermoderesponsabilidadeparacomercial Where CodEnviartermoderesponsaparaComercial ="+txt_cod_termo.getText();
-                    int conseguiu_excluir = con_termo.statement.executeUpdate(sql);
+                    int conseguiu_excluir = con.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                         JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
                         limpar_tela_termo();
                         limpar_tabela_termo();
                         preencher_jtable_termo();
                         if("Finalizado".equals(operacao)){
-                            con_termo.executeSQL("select * from enviartermoderesponsabilidadeparacomercial where NumeroProcesso='"+processo+"' and AndamentoEnvioTermoResponsabiidadeparaComercial='Finalizado'");
-                            if(!con_termo.resultset.first()){
+                            con.executeSQL("select * from enviartermoderesponsabilidadeparacomercial where NumeroProcesso='"+processo+"' and AndamentoEnvioTermoResponsabiidadeparaComercial='Finalizado'");
+                            if(!con.resultset.first()){
                                 try{
-                                    con_regularizacao.statement.executeUpdate("update regularizacao set AndamentoEnviarTernoReponsaParaComercial='Em Aberto' where Numerodoprocesso='"+processo+"'");
+                                    con.statement.executeUpdate("update regularizacao set AndamentoEnviarTernoReponsaParaComercial='Em Aberto' where Numerodoprocesso='"+processo+"'");
                                     
                                     preencher_status();
                                     atualizar_cadastro_cliente();
@@ -839,6 +854,7 @@ public class Regularizacao extends javax.swing.JFrame {
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null, "Erro ao excluir o registro da tabela Arquivo!\n" +erro);
             }
+            
         }
 
     }//GEN-LAST:event_btnExcluirTermoActionPerformed
@@ -856,7 +872,8 @@ public class Regularizacao extends javax.swing.JFrame {
         else if(cb_tipo_termo.getSelectedItem().equals("")){
             JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
         }
-        else if(!txt_codigo.getText().equals("")){
+        else if(!txt_cod_termo.getText().equals("")){
+            
             try{
                 String dataandamento = txt_data_termo.getText();
                 Date datatermo = sdf.parse(dataandamento);
@@ -872,11 +889,10 @@ public class Regularizacao extends javax.swing.JFrame {
                 String sql = "UPDATE enviartermoderesponsabilidadeparacomercial set DataCadastroAndamento='"+
                 new java.sql.Date(datatermo.getTime())+"',"+
                 "Obsevacao='"+txt_obs_termo.getText()+"',"+
-                "Usuario= '"+usuario+"',"+
+                "Usuario='"+usuario+"',"+
                 "AndamentoEnvioTermoResponsabiidadeparaComercial='"+andamentotermo+"' "+
                 "where CodEnviartermoderesponsaparaComercial = "+txt_cod_termo.getText();
-
-                con_termo.statement.executeUpdate(sql);
+                con.statement.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
                 
                 atualizar_regularizacao_termo();
@@ -890,9 +906,11 @@ public class Regularizacao extends javax.swing.JFrame {
             }catch (ParseException ex) {
                 JOptionPane.showMessageDialog(null, "Erro na conversao da data ou data incorreta!\n"+ex);
             }
+            
         }
         //evitando erros com cadastro ja salvo antes
         else if(txt_cod_termo.getText().equals("")){
+            
             try{
                 //convertendo a primeira data
                 String dataandamento = txt_data_termo.getText();
@@ -905,17 +923,14 @@ public class Regularizacao extends javax.swing.JFrame {
                 else{
                     andamentotermo = "Em Aberto";
                 }
-
-                    String gry = "insert into enviartermoderesponsabilidadeparacomercial ("+
-                    "NumeroProcesso, DataCadastroAndamento, Obsevacao,"+
-                    "Usuario, AndamentoEnvioTermoResponsabiidadeparaComercial) values ('"+
+                    String gry = "insert into enviartermoderesponsabilidadeparacomercial (NumeroProcesso, DataCadastroAndamento, Obsevacao, Usuario, AndamentoEnvioTermoResponsabiidadeparaComercial) values ('"+
                     processo+"','"+
-                    "Envio Termo para Comercial','"+
                     new java.sql.Date(datatermo.getTime())+"','"+
                     txt_obs_termo.getText()+"','"+
                     usuario+"','"+
-                    andamentotermo+"',)";
-                    con_termo.exeQuery(gry);
+                    andamentotermo+"')";
+                    
+                    con.exeQuery(gry);
                     
                     JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
 
@@ -928,6 +943,7 @@ public class Regularizacao extends javax.swing.JFrame {
             }catch(ParseException | HeadlessException add){
                 JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Termo: "+add);
             }
+            
         }
 
     }//GEN-LAST:event_btnSalvarTermoActionPerformed
@@ -996,6 +1012,12 @@ public class Regularizacao extends javax.swing.JFrame {
         limpar_tela_arquivo();
         desbloqueia_tela_arquivo();
     }//GEN-LAST:event_btnNovoArquivoActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        con.desconecta();
+        con_geral.desconecta();
+//        dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      *
@@ -1074,7 +1096,7 @@ public class Regularizacao extends javax.swing.JFrame {
         tb_termo.getColumnModel().getColumn(3);
         tb_termo.getColumnModel().getColumn(4);
         tb_termo.getColumnModel().getColumn(5);
-        con_termo.executeSQL("select * from enviartermoderesponsabilidadeparacomercial WHERE NumeroProcesso='"+processo+"' order by CodEnviartermoderesponsaparaComercial");
+        con.executeSQL("select * from enviartermoderesponsabilidadeparacomercial WHERE NumeroProcesso='"+processo+"' order by CodEnviartermoderesponsaparaComercial");
         //
         DefaultTableModel modelo = (DefaultTableModel)tb_termo.getModel();
         //modelo.setNumRows(0);
@@ -1082,15 +1104,15 @@ public class Regularizacao extends javax.swing.JFrame {
         try
         {
             
-            while (con_termo.resultset.next())
+            while (con.resultset.next())
                 modelo.addRow(new Object [] {
-                    con_termo.resultset.getString("CodEnviartermoderesponsaparaComercial"),
-                    sdf.format(con_termo.resultset.getTime("DataCadastroAndamento")),
-                    con_termo.resultset.getString("NumeroProcesso"),
-                    con_termo.resultset.getString("Obsevacao"),
-                    con_termo.resultset.getString("AndamentoEnvioTermoResponsabiidadeparaComercial"),
-                    con_termo.resultset.getString("Usuario")});
-            con_termo.resultset.first();
+                    con.resultset.getString("CodEnviartermoderesponsaparaComercial"),
+                    sdf.format(con.resultset.getDate("DataCadastroAndamento")),
+                    con.resultset.getString("NumeroProcesso"),
+                    con.resultset.getString("Obsevacao"),
+                    con.resultset.getString("AndamentoEnvioTermoResponsabiidadeparaComercial"),
+                    con.resultset.getString("Usuario")});
+            con.resultset.first();
         }   catch (SQLException erro){
     JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Termo "+erro);
     }
@@ -1106,21 +1128,21 @@ public class Regularizacao extends javax.swing.JFrame {
         tb_arquivo.getColumnModel().getColumn(3);
         tb_arquivo.getColumnModel().getColumn(4);
         tb_arquivo.getColumnModel().getColumn(5);
-        con_arquivo.executeSQL("select * from arquivamentodoprocesso WHERE NumeroProcesso='"+processo+"' order by CodArquivamento");
+        con.executeSQL("select * from arquivamentodoprocesso WHERE NumeroProcesso='"+processo+"' order by CodArquivamento");
         //
         DefaultTableModel modelo = (DefaultTableModel)tb_arquivo.getModel();
         //modelo.setNumRows(0);
         try
         {
-            while (con_arquivo.resultset.next())
+            while (con.resultset.next())
                 modelo.addRow(new Object [] {
-                    con_arquivo.resultset.getString("CodArquivamento"),
-                    sdf.format(con_arquivo.resultset.getTime("DatadeCadastroAndamento")),
-                    con_arquivo.resultset.getString("NumeroProcesso"),
-                    con_arquivo.resultset.getString("Obsevacao"),
-                    con_arquivo.resultset.getString("Andamentoarquivar"),
-                    con_arquivo.resultset.getString("Usuario")});
-            con_arquivo.resultset.first();
+                    con.resultset.getString("CodArquivamento"),
+                    sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
+                    con.resultset.getString("NumeroProcesso"),
+                    con.resultset.getString("Obsevacao"),
+                    con.resultset.getString("Andamentoarquivar"),
+                    con.resultset.getString("Usuario")});
+            con.resultset.first();
         }catch(SQLException erro){
           JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Arquivo "+erro);
         }
@@ -1150,37 +1172,25 @@ public class Regularizacao extends javax.swing.JFrame {
      *
      */
     public void preencher_status(){
+        
         try{
             String sql = "select * from regularizacao WHERE Numerodoprocesso='"+processo+"'";
             //
-            con_regularizacao.executeSQL(sql);
-                if(con_regularizacao.resultset.first()){
+            con_geral.executeSQL(sql);
+                if(con_geral.resultset.first()){
 
-                termo = con_regularizacao.resultset.getString("AndamentoEnviarTernoReponsaParaComercial");
-                arquivo = con_regularizacao.resultset.getString("AndamentoArquivarProcesso");
+                termo = con_geral.resultset.getString("AndamentoEnviarTernoReponsaParaComercial");
+                arquivo = con_geral.resultset.getString("AndamentoArquivarProcesso");
 
                 txt_status_termo.setText(termo);
                 txt_status_arquivo.setText(arquivo);
+                
+                distribuir_cores();
             }
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null, "Falha ao atualizar status!" +erro);
         }
-        if(termo.equals("Finalizado") && arquivo.equals("Finalizado"))
-        {
-            try{
-                String sql = "UPDATE cadastrodeprocesso set AndamentoRegularizacao ='Concluido' "+
-                             "where Numerodoprocesso = " +processo;
-                             con_regularizacao.statement.executeUpdate(sql);
-
-                             txt_andamento_regularizacao.setText("Concluido");
-            }catch(Exception erro){
-                JOptionPane.showMessageDialog(null, "Falha ao atualizar status geral!" +erro);
-                }
-        }
-        else if(txt_status_termo.getText().equals("Em Aberto") || txt_status_arquivo.getText().equals("Em Aberto"))
-        {
-            txt_andamento_regularizacao.setText("Em Aberto");
-        }
+        
     }
 
     /**
@@ -1214,28 +1224,29 @@ public class Regularizacao extends javax.swing.JFrame {
      *
      */
     public void atualizar_regularizacao_arquivo(){
+        
         if(cb_tipo_arquivo.getSelectedItem().equals("Finalizado")){
             try{
-                con_regularizacao.statement.executeUpdate("Update regularizacao set AndamentoArquivarProcesso='Finalizado' where Numerodoprocesso="+processo );
+                con_geral.statement.executeUpdate("UPDATE regularizacao set AndamentoArquivarProcesso='Finalizado' where Numerodoprocesso='"+processo+"'");
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Regularização>Arquivo: \n" +erro);
             }
         }
         else{
             try{    
-                    con_regularizacao.executeSQL("select * from regularizacao where Numerodoprocesso='" +processo+"' and AndamentoArquivarProcesso ='Finalizado'");
-                if(con_regularizacao.resultset.next()){
+                    con_geral.executeSQL("select * from regularizacao where Numerodoprocesso='" +processo+"' and AndamentoArquivarProcesso ='Finalizado'");
+                if(con_geral.resultset.next()){
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua todos os registros finalizados \n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-                    con_arquivo.executeSQL("select * from arquivamentodoprocesso where NumeroProcesso='"+processo+"'and Andamentoarquivar='Finalizado'");
+                    con_geral.executeSQL("select * from arquivamentodoprocesso where NumeroProcesso='"+processo+"'and Andamentoarquivar='Finalizado'");
                     
-                    if(!con_arquivo.resultset.first()){
+                    if(!con_geral.resultset.first()){
                         try{
                 
                         String sql = "UPDATE regularizacao set AndamentoArquivarProcesso ='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_regularizacao.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                         }catch(SQLException erro){
                             JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Regularização>Arquivo: \n" +erro);
                         }
@@ -1246,7 +1257,7 @@ public class Regularizacao extends javax.swing.JFrame {
                     try{
                 
                         String sql = "UPDATE regularizacao set AndamentoArquivarProcesso ='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_regularizacao.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Regularização>Arquivo: \n" +erro);
                     }
@@ -1256,34 +1267,36 @@ public class Regularizacao extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erro ao buscar status na Tabela Regularização>Arquivo: \n" +erro);
             }
     }
+        
 }
 
     /**
      *
      */
     public void atualizar_regularizacao_termo(){
+        
     if(cb_tipo_termo.getSelectedItem().equals("Finalizado")){
             try{
-                con_regularizacao.statement.executeUpdate("Update regularizacao set AndamentoEnviarTernoReponsaParaComercial='Finalizado' where Numerodoprocesso='"+processo+"'" );
+                con_geral.statement.executeUpdate("UPDATE regularizacao set AndamentoEnviarTernoReponsaParaComercial='Finalizado' where Numerodoprocesso='"+processo+"'");
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Regularização>Termo: \n" +erro);
             }
         }
         else{
             try{    
-                    con_regularizacao.executeSQL("select * from regularizacao where Numerodoprocesso='" +processo+"' and AndamentoEnviarTernoReponsaParaComercial ='Finalizado'");
-                if(con_regularizacao.resultset.next()){
+                    con_geral.executeSQL("select * from regularizacao where Numerodoprocesso='" +processo+"' and AndamentoEnviarTernoReponsaParaComercial ='Finalizado'");
+                if(con_geral.resultset.next()){
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua todos os registros finalizados \n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-                    con_arquivo.executeSQL("select * from enviartermoderesponsabilidadeparacomercial where NumeroProcesso='"+processo+"'and AndamentoEnvioTermoResponsabiidadeparaComercial='Finalizado'");
+                    con_geral.executeSQL("select * from enviartermoderesponsabilidadeparacomercial where NumeroProcesso='"+processo+"'and AndamentoEnvioTermoResponsabiidadeparaComercial='Finalizado'");
                     
-                    if(!con_arquivo.resultset.first()){
+                    if(!con_geral.resultset.first()){
                         try{
                 
                         String sql = "UPDATE regularizacao set AndamentoEnviarTernoReponsaParaComercial ='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_regularizacao.statement.executeUpdate(sql);
+                        con_geral.statement.executeUpdate(sql);
                         }catch(SQLException erro){
                             JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Regularização>Termo: \n" +erro);
                         }
@@ -1293,8 +1306,8 @@ public class Regularizacao extends javax.swing.JFrame {
                 else{
                     try{
                 
-                        String sql = "UPDATE regularizacao set AndamentoEnviarTernoReponsaParaComercial ='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_regularizacao.statement.executeUpdate(sql);
+                        String sql = "UPDATE regularizacao set AndamentoEnviarTernoReponsaParaComercial ='Em Aberto' where Numerodoprocesso='"+processo+"'";
+                        con_geral.statement.executeUpdate(sql);
                     }catch(SQLException erro){
                         JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Regularização>Termo: \n" +erro);
                     }
@@ -1303,30 +1316,44 @@ public class Regularizacao extends javax.swing.JFrame {
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Regularização>Termo: \n" +erro);
             }
+            
     }
+    
 }
-    private void atualizar_cadastro_cliente() {
-    if(txt_status_termo.getText().equalsIgnoreCase("Em Aberto") && txt_status_arquivo.getText().equalsIgnoreCase("Em Aberto")){
+    public void atualizar_cadastro_cliente() {
+    
+    if(termo.equals("Em Aberto") && arquivo.equals("Em Aberto")){
         try{
                 String sql = "update cadastrodeprocesso set AndamentoRegularizacao='Em Aberto' where codNumerodoProcesso="+processo;
-                con_regularizacao.statement.executeUpdate(sql);
+                con_geral.statement.executeUpdate(sql);
+                txt_andamento_regularizacao.setText("Em Aberto");
                 
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null, "Falha ao atualizar o cadastro do cliente!\n"+erro);
         }
         
     }
-    else if(txt_status_termo.getText().equalsIgnoreCase("Finalizado") && txt_status_arquivo.getText().equalsIgnoreCase("Finalizado")){
+    else if(termo.equals("Finalizado") && arquivo.equals("Finalizado")){
         try{
-                String sql = "update cadastrodeprocesso set AndamentoRegularizacao='Finalizado' where codNumerodoProcesso="+processo;
-                con_regularizacao.statement.executeUpdate(sql);
+                String sql = "update cadastrodeprocesso set AndamentoRegularizacao='Concluido' where codNumerodoProcesso="+processo;
+                con_geral.statement.executeUpdate(sql);
+                
+                txt_andamento_regularizacao.setText("Concluido");
                 
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null, "Falha ao atualizar o cadastro do cliente!\n"+erro);
         }
     }
     else{
-        txt_andamento_regularizacao.setText("Em andamento");
+        try{
+                String sql = "update cadastrodeprocesso set AndamentoRegularizacao='Em Aberto' where codNumerodoProcesso="+processo;
+                con_geral.statement.executeUpdate(sql);
+                
+                txt_andamento_regularizacao.setText("Em Andamento");
+                
+        }catch(SQLException erro){
+            JOptionPane.showMessageDialog(null, "Falha ao atualizar o cadastro do cliente!\n"+erro);
+        }
     }
     distribuir_cores();
     }
@@ -1436,4 +1463,6 @@ public class Regularizacao extends javax.swing.JFrame {
         txt_data_termo.setText(dataTermo_backup);
         txt_obs_termo.setText(obsTermo_backup);
     }
+
+    
 }

@@ -29,7 +29,7 @@ public class EmailView extends javax.swing.JFrame {
                         new javax.mail.Authenticator() {
                              protected PasswordAuthentication getPasswordAuthentication() 
                              {
-                                   return new PasswordAuthentication("tiago.dias@prolinkcontabil.com.br", "plkc2004");
+                                   return new PasswordAuthentication("documentos@prolinkcontabil.com.br", "plkc2004");
                              }
                         });
 
@@ -46,7 +46,6 @@ public class EmailView extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lb_titulo = new javax.swing.JLabel();
         bt_ok = new javax.swing.JButton();
-        jb_cancelar = new javax.swing.JButton();
         lb_destinatario = new javax.swing.JLabel();
         txt_destinatario = new javax.swing.JTextField();
         lb_assunto = new javax.swing.JLabel();
@@ -57,32 +56,37 @@ public class EmailView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lb_titulo.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jPanel1.setBackground(new java.awt.Color(245, 245, 245));
+        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lb_titulo.setBackground(new java.awt.Color(245, 245, 245));
+        lb_titulo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lb_titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_titulo.setText("Enviar Email");
+        lb_titulo.setText("Alertar Responsável!");
+        lb_titulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         bt_ok.setText("OK");
+        bt_ok.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         bt_ok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_okActionPerformed(evt);
             }
         });
 
-        jb_cancelar.setText("Cancelar");
-        jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_cancelarActionPerformed(evt);
-            }
-        });
-
         lb_destinatario.setText("Destino:");
 
+        txt_destinatario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
         lb_assunto.setText("Assunto:");
+
+        txt_assunto.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         lb_mensagem.setText("Mensagem:");
 
         txt_mensagem.setColumns(20);
+        txt_mensagem.setLineWrap(true);
         txt_mensagem.setRows(5);
+        txt_mensagem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane1.setViewportView(txt_mensagem);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -91,6 +95,9 @@ public class EmailView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,40 +109,35 @@ public class EmailView extends javax.swing.JFrame {
                             .addComponent(txt_assunto)
                             .addComponent(jScrollPane1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txt_destinatario, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_destinatario, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(26, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jb_cancelar))
-                            .addComponent(lb_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(20, Short.MAX_VALUE)
+                        .addComponent(lb_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(lb_titulo)
-                .addGap(43, 43, 43)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_destinatario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lb_destinatario))
+                .addComponent(lb_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_assunto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lb_assunto))
+                    .addComponent(txt_destinatario, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_destinatario, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txt_assunto, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                    .addComponent(lb_assunto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lb_mensagem))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bt_ok)
-                    .addComponent(jb_cancelar))
-                .addGap(21, 21, 21))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lb_mensagem)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(bt_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -150,14 +152,16 @@ public class EmailView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jb_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cancelarActionPerformed
-        dispose();
-    }//GEN-LAST:event_jb_cancelarActionPerformed
-
     private void bt_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_okActionPerformed
-             /** Parâmetros de conexão com servidor Gmail */
+            if(txt_destinatario.getText().trim().length()<10){
+                JOptionPane.showMessageDialog(null, "Isso é meio embaraçoso... \nPor algum motivo"
+                        + "não achei o e-mail desse funcionário, ajude-me informando o email dele no campo em branco e clique em OK!");
+            }
+            else{
+            /** Parâmetros de conexão com servidor Gmail */
             props.put("mail.smtp.host", "smtp.prolinkcontabil.com.br");
             //props.put("mail.smtp.socketFactory.port", "587");
             //props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -169,7 +173,7 @@ public class EmailView extends javax.swing.JFrame {
 
              try {
                   Message message = new MimeMessage(session);
-                  message.setFrom(new InternetAddress("tiago.dias@prolinkcontabil.com.br")); //Remetente
+                  message.setFrom(new InternetAddress("documentos@prolinkcontabil.com.br")); //Remetente
 
                   Address[] toUser = InternetAddress //Destinatário(s)
                              .parse(txt_destinatario.getText());  
@@ -189,8 +193,10 @@ public class EmailView extends javax.swing.JFrame {
                   dispose();
 
              } catch (MessagingException e) {
-                  throw new RuntimeException(e);
+                  JOptionPane.showMessageDialog(null, "Ops! Não consegui enviar o e-mail!"
+                          + "?");
              }
+            }
     }//GEN-LAST:event_bt_okActionPerformed
 
     public static void main(String args[]) {
@@ -229,7 +235,6 @@ public class EmailView extends javax.swing.JFrame {
     private javax.swing.JButton bt_ok;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jb_cancelar;
     private javax.swing.JLabel lb_assunto;
     private javax.swing.JLabel lb_destinatario;
     private javax.swing.JLabel lb_mensagem;

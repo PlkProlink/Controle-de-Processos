@@ -18,7 +18,7 @@ import br.com.prolink.controle.*;
  */
 public class CadastroClassificacao extends javax.swing.JFrame {
     
-    Conexao con_classificacao, con_log;
+    Conexao con_classificacao = new Conexao();;
     //variavel para recuperar valores do campo
     String codigo_backup, nome_backup;
     
@@ -30,12 +30,10 @@ public class CadastroClassificacao extends javax.swing.JFrame {
     public CadastroClassificacao() {
         initComponents();
         
-        con_classificacao = new Conexao();
         con_classificacao.conecta();
-        
-        con_log = new Conexao();
-        
         preencher_jtable();
+        
+        
         bloqueia_campos();
         
         tb_classificacao.setAutoCreateRowSorter(true);
@@ -65,6 +63,11 @@ public class CadastroClassificacao extends javax.swing.JFrame {
         setTitle("Classificação");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(245, 245, 245));
 
@@ -261,12 +264,12 @@ public class CadastroClassificacao extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_fecharActionPerformed
 
     private void btn_GravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GravarActionPerformed
-        if(txt_nome.getText().isEmpty()){
+        if(txt_nome.getText().equals("")){
         JOptionPane.showMessageDialog(null, "Campo nome não pode ficar em branco!");
         txt_nome.requestFocus(true);
         }
-        else if(txt_codigo.getText().isEmpty()){
-        con_classificacao.conecta();
+        else if(txt_codigo.getText().equals("")){
+        
              try{
                 String gry = "insert into classificacao (Status) values ('"+
                                // txt_data.setDate(2, new java.sql.Date(data.getTime()));
@@ -287,8 +290,10 @@ public class CadastroClassificacao extends javax.swing.JFrame {
                 } catch(Exception add){
                          JOptionPane.showMessageDialog(null,"Falha ao gravar o registro " +add);
                 }
+        
         }//area para impossibilitar duplicar cadastros de empresas de mesmo nome
-        else if(!txt_codigo.getText().isEmpty()){
+        else if(!txt_codigo.getText().equals("")){
+            
                 try{
                 String sql ="UPDATE classificacao SET Status ='" 
                                         +txt_nome.getText()+
@@ -307,7 +312,8 @@ public class CadastroClassificacao extends javax.swing.JFrame {
                 preencher_jtable();
                } catch (SQLException erro){
                 JOptionPane.showMessageDialog(null,"Erro a tentar Alterar o registro..."+erro);
-            }
+               }
+                
         }
 
         
@@ -320,36 +326,40 @@ public class CadastroClassificacao extends javax.swing.JFrame {
 
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
         cria_backup();
-        if(txt_codigo.getText().equals("") || txt_codigo.getText().isEmpty()){
+        if(txt_codigo.getText().equals("") || txt_codigo.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Selecione um registro!");
-        } 
-        try{
-            String sql = "select * from classificacao where cod=" +txt_codigo.getText();
-            con_classificacao.executeSQL(sql);
-            con_classificacao.resultset.first();
-            String nome = "Tem certeza que deseja excluir o cadastro da classificacao " +con_classificacao.resultset.getString("Status")+"?";
-            int opcao_escolhida = JOptionPane.showConfirmDialog(null,nome,"Exclusão ",JOptionPane.YES_NO_OPTION);
-            if (opcao_escolhida == JOptionPane.YES_OPTION)
-            {
-            sql = "DELETE FROM classificacao Where cod ="+txt_codigo.getText();
-                int conseguiu_excluir = con_classificacao.statement.executeUpdate(sql);
-                if (conseguiu_excluir == 1){
-                JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
-                
-                logbean.setTela("Cadastro de Classificacao");
-                logbean.setAcao("Exclusao");
-                logbean.setDescricao("Excluido o registro: "+txt_nome.getText());
-                logdao.inserir(logbean);
+        }
+        else{
+            
+            try{
+                String sql = "select * from classificacao where cod=" +txt_codigo.getText();
+                con_classificacao.executeSQL(sql);
+                con_classificacao.resultset.first();
+                String nome = "Tem certeza que deseja excluir o cadastro da classificacao " +con_classificacao.resultset.getString("Status")+"?";
+                int opcao_escolhida = JOptionPane.showConfirmDialog(null,nome,"Exclusão ",JOptionPane.YES_NO_OPTION);
+                if (opcao_escolhida == JOptionPane.YES_OPTION)
+                {
+                sql = "DELETE FROM classificacao Where cod ="+txt_codigo.getText();
+                    int conseguiu_excluir = con_classificacao.statement.executeUpdate(sql);
+                    if (conseguiu_excluir == 1){
+                    JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
 
-                    //*chamando tres metodos, um que limpa a tabela, campo, e o outro que atualiza
-                limpar_campos();
-                limpar_tabela();
-                preencher_jtable();
+                    logbean.setTela("Cadastro de Classificacao");
+                    logbean.setAcao("Exclusao");
+                    logbean.setDescricao("Excluido o registro: "+txt_nome.getText());
+                    logdao.inserir(logbean);
+
+                        //*chamando tres metodos, um que limpa a tabela, campo, e o outro que atualiza
+                    limpar_campos();
+                    limpar_tabela();
+                    preencher_jtable();
+                    }
                 }
-            }
-            }catch (SQLException erro){
-                    JOptionPane.showMessageDialog(null,"Erro a tentar excluir o registro..."+erro);
-            }
+                }catch (SQLException erro){
+                        JOptionPane.showMessageDialog(null,"Erro a tentar excluir o registro..."+erro);
+                }
+            
+        }
     }//GEN-LAST:event_btn_excluirActionPerformed
 
     private void btn_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novoActionPerformed
@@ -380,6 +390,10 @@ public class CadastroClassificacao extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btn_AlterarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        con_classificacao.desconecta();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      *

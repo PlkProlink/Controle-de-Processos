@@ -45,7 +45,6 @@ public class Sobre extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -135,10 +134,7 @@ public class Sobre extends javax.swing.JFrame {
         jLabel11.setText("UML:  (Integral + Resumido)");
 
         jLabel12.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        jLabel12.setText("API: www.github.com/plkprojects/Controle-de-Processos");
-
-        jLabel10.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        jLabel10.setText("Autor: tiago.dias@prolinkcontabil.com.br; github.com/tiagods");
+        jLabel12.setText("API: www.github.com/tiagods/Controle-de-Processos");
 
         jLabel13.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
         jLabel13.setText("11-31074505");
@@ -155,7 +151,6 @@ public class Sobre extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel13))
-                    .addComponent(jLabel10)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,9 +192,7 @@ public class Sobre extends javax.swing.JFrame {
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -254,7 +247,6 @@ public class Sobre extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
