@@ -1,7 +1,11 @@
 package br.com.prolink.recepcao;
 
 
+import br.com.prolink.inicio.Conexao;
+import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -23,9 +27,10 @@ import javax.swing.JOptionPane;
  * @author Tiago Dias
  */
 public class EmailView extends javax.swing.JFrame {
-
+    
+   
     Properties props = new Properties();
-     Session session = Session.getDefaultInstance(props,
+    Session session = Session.getDefaultInstance(props,
                         new javax.mail.Authenticator() {
                              protected PasswordAuthentication getPasswordAuthentication() 
                              {
@@ -191,7 +196,6 @@ public class EmailView extends javax.swing.JFrame {
                   JOptionPane.showMessageDialog(null, "Mensagem enviada com sucesso!!!");
                   
                   dispose();
-
              } catch (MessagingException e) {
                   JOptionPane.showMessageDialog(null, "Ops! Não consegui enviar o e-mail!"
                           + "?");

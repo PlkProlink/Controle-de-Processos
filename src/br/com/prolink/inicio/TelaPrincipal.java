@@ -19,6 +19,7 @@ import br.com.prolink.cadastros.*;
 import br.com.prolink.usuario.*;;
 import br.com.prolink.login.*;
 import br.com.prolink.recepcao.*;
+import br.com.prolink.relatorios.RelatCadastro;
 import javax.swing.JOptionPane;
 
 /**
@@ -74,6 +75,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnConfirmarDocumento = new javax.swing.JButton();
         btnNovoDocumentoRec = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jpBarraInfo = new javax.swing.JPanel();
         txt_finalizada = new javax.swing.JLabel();
         lbFinalizada = new javax.swing.JLabel();
@@ -129,6 +134,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         menu_regulazicacao = new javax.swing.JMenuItem();
         jmAtivar = new javax.swing.JMenu();
+        jmRelatorios = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        mnRelCadastroUm = new javax.swing.JMenuItem();
+        mnRelCadastroTodos = new javax.swing.JMenuItem();
+        jSeparator12 = new javax.swing.JPopupMenu.Separator();
+        jmRelatorioAcompanhamento = new javax.swing.JMenu();
+        jmAcompanhamentoIndividual = new javax.swing.JMenuItem();
+        jmAcompanhamentoGeral = new javax.swing.JMenuItem();
         jmSobre = new javax.swing.JMenu();
         jmSair = new javax.swing.JMenu();
 
@@ -449,6 +462,49 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/logo_grande.jpg"))); // NOI18N
 
+        jPanel1.setBackground(new java.awt.Color(245, 245, 245));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Atualizações"));
+        jPanel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel2.setBackground(new java.awt.Color(245, 245, 245));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel2.setText("!Inclusão de Relatórios(PDF, XLS)");
+
+        jLabel3.setBackground(new java.awt.Color(245, 245, 245));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel3.setText("!Relatórios cadastro resumido ");
+
+        jLabel4.setBackground(new java.awt.Color(245, 245, 245));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel4.setText("!Recepcao (Exportar PDF, XLS)");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addContainerGap(138, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
         jpPrincipal.setLayout(jpPrincipalLayout);
         jpPrincipalLayout.setHorizontalGroup(
@@ -456,17 +512,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jpPrincipalLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpProcessos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpRececepcao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
-                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jpDepartamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpOutros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPrincipalLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jpDepartamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jpOutros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(418, Short.MAX_VALUE))))
         );
         jpPrincipalLayout.setVerticalGroup(
             jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -480,8 +539,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jpDepartamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpOutros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(27, 27, 27)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPrincipalLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
+                        .addGap(178, 178, 178)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(47, 47, 47))
         );
 
@@ -529,6 +593,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnModificarData.setText("Modificar");
         btnModificarData.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnModificarData.setContentAreaFilled(false);
+        btnModificarData.setFocusPainted(false);
         btnModificarData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarDataActionPerformed(evt);
@@ -575,7 +640,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_nome, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                        .addComponent(txt_nome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbClassificacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -850,6 +915,53 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         barraGuias.add(jmAtivar);
 
+        jmRelatorios.setText("Relatórios");
+        jmRelatorios.setFocusable(false);
+        jmRelatorios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jMenu1.setText("Resumo de Cadastro");
+
+        mnRelCadastroUm.setText("Apenas 1(um) Registro");
+        mnRelCadastroUm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnRelCadastroUmActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnRelCadastroUm);
+
+        mnRelCadastroTodos.setText("Todos os Clientes");
+        mnRelCadastroTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnRelCadastroTodosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnRelCadastroTodos);
+
+        jmRelatorios.add(jMenu1);
+        jmRelatorios.add(jSeparator12);
+
+        jmRelatorioAcompanhamento.setText("Acompanhamento de Documentos Enviados");
+
+        jmAcompanhamentoIndividual.setText("Relatório de Acompanhamento Individual");
+        jmAcompanhamentoIndividual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmAcompanhamentoIndividualActionPerformed(evt);
+            }
+        });
+        jmRelatorioAcompanhamento.add(jmAcompanhamentoIndividual);
+
+        jmAcompanhamentoGeral.setText("Relatório de Acompanhamento Geral");
+        jmAcompanhamentoGeral.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmAcompanhamentoGeralActionPerformed(evt);
+            }
+        });
+        jmRelatorioAcompanhamento.add(jmAcompanhamentoGeral);
+
+        jmRelatorios.add(jmRelatorioAcompanhamento);
+
+        barraGuias.add(jmRelatorios);
+
         jmSobre.setText("Sobre");
         jmSobre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jmSobre.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -876,7 +988,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jpBarraInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 1320, Short.MAX_VALUE)
+            .addComponent(jpPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 1320, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1064,6 +1176,40 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jmSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmSairMouseClicked
         System.exit(0);
     }//GEN-LAST:event_jmSairMouseClicked
+
+    private void mnRelCadastroUmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnRelCadastroUmActionPerformed
+        if(Ativador.processo!=null){
+            relCliente = new RelatCadastro();
+            relCliente.relatorioResumidoUm();
+        }
+        else{
+            JOptionPane.showMessageDialog(null ,"Primeiro ative um cliente!");
+            Ativador ma = new Ativador();
+            ma.setVisible(true);
+        }
+    }//GEN-LAST:event_mnRelCadastroUmActionPerformed
+
+    private void mnRelCadastroTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnRelCadastroTodosActionPerformed
+        relCliente = new RelatCadastro();
+        relCliente.relatorioResumidoGeral();
+    }//GEN-LAST:event_mnRelCadastroTodosActionPerformed
+
+    private void jmAcompanhamentoIndividualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAcompanhamentoIndividualActionPerformed
+        if(Ativador.processo!=null){
+            relCliente = new RelatCadastro();
+            relCliente.acompanhamentosUm();
+        }
+        else{
+            JOptionPane.showMessageDialog(null ,"Primeiro ative um cliente!");
+            Ativador ma = new Ativador();
+            ma.setVisible(true);
+        }
+    }//GEN-LAST:event_jmAcompanhamentoIndividualActionPerformed
+
+    private void jmAcompanhamentoGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAcompanhamentoGeralActionPerformed
+        relCliente = new RelatCadastro();
+        relCliente.acompanhamentosGeral();
+    }//GEN-LAST:event_jmAcompanhamentoGeralActionPerformed
     
     /**
      *
@@ -1099,14 +1245,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnRegularizacao;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
+    private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -1115,6 +1267,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
+    private javax.swing.JMenuItem jmAcompanhamentoGeral;
+    private javax.swing.JMenuItem jmAcompanhamentoIndividual;
     private javax.swing.JMenuItem jmAlteraSenha;
     private javax.swing.JMenu jmAtivar;
     private javax.swing.JMenu jmCadastro;
@@ -1124,6 +1278,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmDepartamento;
     private javax.swing.JMenuItem jmPerfil;
     private javax.swing.JMenu jmRecepcao;
+    private javax.swing.JMenu jmRelatorioAcompanhamento;
+    private javax.swing.JMenu jmRelatorios;
     private javax.swing.JMenu jmSair;
     private javax.swing.JMenu jmSobre;
     private javax.swing.JMenuItem jmTrocadeUsuario;
@@ -1149,6 +1305,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menu_financeiro;
     private javax.swing.JMenuItem menu_fiscal;
     private javax.swing.JMenuItem menu_regulazicacao;
+    private javax.swing.JMenuItem mnRelCadastroTodos;
+    private javax.swing.JMenuItem mnRelCadastroUm;
     private org.netbeans.examples.lib.timerbean.Timer timer1;
     public static javax.swing.JLabel txtData;
     public static javax.swing.JLabel txtHora;
@@ -1174,11 +1332,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     TrocadeSenha ts;
     CadastroDepartamento cd;
     ConferirDocumento conferirdoc;
-    ListagemDocumentos listaDocumentos;
+    Listagem listaDocumentos;
     DocumentosEnviados docEnv;
     Documentos documentos;
     Sobre sobre;
     LoginTrocadeAcesso trocarAcesso;
+    RelatCadastro relCliente;
 
     public void contabil(){
         //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
@@ -1355,7 +1514,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         conferirdoc.setVisible(true);
     }
     public void recepcao_confirmar(){
-        listaDocumentos = new ListagemDocumentos();
+        listaDocumentos = new Listagem();
         listaDocumentos.setVisible(true);
     }
     public void usuarios(){

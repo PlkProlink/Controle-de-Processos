@@ -10,8 +10,10 @@
         </buildExtensions>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
             <name>Controle-de-Processos</name>
+            <explicit-platform explicit-source-supported="true"/>
             <source-roots>
                 <root id="src.dir"/>
+                <root id="src.relatorios.dir"/>
             </source-roots>
             <test-roots>
                 <root id="test.src.dir"/>

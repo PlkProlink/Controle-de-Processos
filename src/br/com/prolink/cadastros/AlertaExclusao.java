@@ -29,7 +29,7 @@ public class AlertaExclusao {
                         new javax.mail.Authenticator() {
                              protected PasswordAuthentication getPasswordAuthentication() 
                              {
-                                   return new PasswordAuthentication("tiago.dias@prolinkcontabil.com.br", "plkc2004");
+                                   return new PasswordAuthentication("documentos@prolinkcontabil.com.br", "plkc2004");
                              }
                         });
 public void enviar_alerta(){
@@ -45,7 +45,7 @@ public void enviar_alerta(){
 
              try {
                   Message message = new MimeMessage(session);
-                  message.setFrom(new InternetAddress("tiago.dias@prolinkcontabil.com.br")); //Remetente
+                  message.setFrom(new InternetAddress("documentos@prolinkcontabil.com.br")); //Remetente
 
                   Address[] toUser = InternetAddress //Destinatário(s)
                              .parse(destino);  

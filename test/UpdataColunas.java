@@ -16,32 +16,24 @@ public class UpdataColunas {
     Conexao con = new Conexao();
     
     public UpdataColunas(){
-        int cont=1;
         con.conecta();
-        while(cont<=100){
-        
             try{    
-                    con.executeSQL("select * from documentos_recebidos where cod="+cont);
-                    if(con.resultset.first()){
-                        con.statement.executeUpdate("update documentos_recebidos set Confirmado='Y' where cod="+cont);
-                        cont++;
-                    }
-                    else
-                        cont++;
+                con.executeSQL("select AndamentoFiscal from cadastrodeprocesso where AndamentoFiscal='Concluido'");
+                while(con.resultset.next()){
+                    con.statement.executeUpdate("update cadastrodeprocesso set "
+                            + "AndamentoFiscal='Finalizado'");
+            }   
             }catch(SQLException erro){
-                System.out.print("Erro ao atualizar");
+                System.out.print("Erro ao atualizar : "+erro);
             }
-        }
         con.desconecta();
-        
-        
     }
+        
+        
+        
+    
     public static void main(String[] args){
-        
-        
+        new UpdataColunas();
     }
 
-    private void initComponents() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

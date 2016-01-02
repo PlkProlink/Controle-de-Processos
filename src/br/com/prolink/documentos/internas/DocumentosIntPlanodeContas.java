@@ -148,6 +148,7 @@ public class DocumentosIntPlanodeContas extends javax.swing.JInternalFrame {
         lbEnvio2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbEnvio2.setText("2º Envio:");
 
+        txtData2.setDoubleBuffered(true);
         txtData2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         lbEnvio3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N

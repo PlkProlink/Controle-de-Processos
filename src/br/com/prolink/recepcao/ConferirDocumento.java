@@ -56,6 +56,8 @@ public class ConferirDocumento extends javax.swing.JFrame {
         }
         con_para.desconecta();
         
+        cb_para.setEditable(false);
+        cb_departamento.setEditable(false);
         data_atual();
         bloqueia_tela();
         desbloqueia_tela();
@@ -292,77 +294,77 @@ public class ConferirDocumento extends javax.swing.JFrame {
         jp_Geral.setLayout(jp_GeralLayout);
         jp_GeralLayout.setHorizontalGroup(
             jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_GeralLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_remetente)
-                    .addComponent(lb_idempresa))
-                .addGap(18, 18, 18)
-                .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_remetente, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_idempresa, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jp_GeralLayout.createSequentialGroup()
                 .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jp_GeralLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(lb_codigo)
-                        .addGap(54, 54, 54)
-                        .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(324, 324, 324)
-                        .addComponent(lb_data)
-                        .addGap(21, 21, 21)
-                        .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jp_GeralLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(lb_nome)
-                        .addGap(27, 27, 27)
-                        .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jp_GeralLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(lb_destino)
-                        .addGap(50, 50, 50)
-                        .addComponent(cb_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb_remetente)
+                            .addComponent(lb_idempresa))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addGap(10, 10, 10)
-                        .addComponent(cb_para, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jp_GeralLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(lb_resumo)
-                        .addGap(48, 48, 48)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jp_GeralLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(lb_recebidopor)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_recebidopor, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lb_recebidoem)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_recebidoem, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jp_GeralLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(lb_observacao)
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jp_GeralLayout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(bt_novo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_GeralLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1)))
-                .addGap(15, 15, 15))
+                        .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_remetente, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_idempresa, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jp_GeralLayout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(lb_codigo)
+                            .addGap(54, 54, 54)
+                            .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(324, 324, 324)
+                            .addComponent(lb_data)
+                            .addGap(21, 21, 21)
+                            .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jp_GeralLayout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(lb_nome)
+                            .addGap(27, 27, 27)
+                            .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jp_GeralLayout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(lb_destino)
+                            .addGap(50, 50, 50)
+                            .addComponent(cb_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel2)
+                            .addGap(10, 10, 10)
+                            .addComponent(cb_para, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jp_GeralLayout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(lb_resumo)
+                            .addGap(48, 48, 48)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jp_GeralLayout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(lb_recebidopor)
+                            .addGap(18, 18, 18)
+                            .addComponent(txt_recebidopor, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(lb_recebidoem)
+                            .addGap(18, 18, 18)
+                            .addComponent(txt_recebidoem, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jp_GeralLayout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(lb_observacao)
+                            .addGap(27, 27, 27)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jp_GeralLayout.createSequentialGroup()
+                            .addGap(104, 104, 104)
+                            .addComponent(bt_novo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(6, 6, 6)
+                            .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(6, 6, 6)
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(5, 5, 5)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(6, 6, 6)
+                            .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(6, 6, 6)
+                            .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_GeralLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jButton1))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jp_GeralLayout.setVerticalGroup(
             jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,7 +530,7 @@ public class ConferirDocumento extends javax.swing.JFrame {
                 
                 String gry = "insert into documentos_recebidos "
                         + "(Data_Recebimento, Hora, Quem_Entregou, Empresa, ID, "
-                        + "Historico, Departamento, Para_Quem, Alerta) values ('"
+                        + "Historico, Departamento, Para_Quem) values ('"
                         + new java.sql.Date(data.getTime())+"','"
                         + hora+"','"
                         + txt_remetente.getText()+"','"
@@ -536,14 +538,16 @@ public class ConferirDocumento extends javax.swing.JFrame {
                         + txt_idempresa.getText()+"','"
                         + txt_resumo.getText()+"','"
                         + cb_departamento.getSelectedItem()+"','"
-                        + cb_para.getSelectedItem()+"','S')";
-                con_documentos.exeQuery(gry);
-                
-                enviar_email();
+                        + cb_para.getSelectedItem()+"')";
+                int conseguiu_salvar = con_documentos.exeQuery(gry);
+                if(conseguiu_salvar == 1){
+                        enviar_email();
+                        limpa_tela();
+                }
                 
                 //JOptionPane.showMessageDialog(null, "Registro salvo com sucesso");
-            }catch(Exception add){
-                JOptionPane.showMessageDialog(null,"Erro ao inserir novo registro!" +add);
+            }catch(ParseException erro){
+                JOptionPane.showMessageDialog(null,"Erro ao salvar o registro!" +erro);
             }
             con_documentos.desconecta();
         }
@@ -679,7 +683,7 @@ public class ConferirDocumento extends javax.swing.JFrame {
     private javax.swing.JLabel lb_recebidopor;
     private javax.swing.JLabel lb_remetente;
     private javax.swing.JLabel lb_resumo;
-    private javax.swing.JTextField txt_codigo;
+    public static javax.swing.JTextField txt_codigo;
     private javax.swing.JFormattedTextField txt_data;
     private javax.swing.JTextField txt_idempresa;
     private javax.swing.JTextField txt_nome;
@@ -765,16 +769,19 @@ public void enviar_email(){
             enviaemail.txt_destinatario.setText(email);
             enviaemail.txt_assunto.setText(""+txt_idempresa.getText()+" - Novo Documento Pendente de Validação");
             enviaemail.txt_mensagem.setText("Olá "+cb_para.getSelectedItem()+
-                    ",\n\nNova documentação do cliente disponivel foi entregue na recepção!\n\nCliente: "+txt_idempresa.getText()+" - "+txt_nome.getText()+
+                    "; \n\nNova documentação do cliente disponivel foi entregue na recepção!\n\nCliente: "+txt_idempresa.getText()+" - "+txt_nome.getText()+
                     "\n\nDescrição: "+txt_resumo.getText()+
                     "\n\nÉ de extrema importancia que você valide o recebimento"+
                     " através do Controle de Processos!"
             );
-
             enviaemail.setVisible(true);
             }
         }catch(Exception erro){
         }
     con_para.desconecta();
 }
+    /**
+     * @return the protocolo
+     */
+    
 }

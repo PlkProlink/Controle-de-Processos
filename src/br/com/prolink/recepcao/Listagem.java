@@ -7,6 +7,8 @@ import javax.swing.table.DefaultTableModel;
 
 import br.com.prolink.inicio.Conexao;
 import br.com.prolink.inicio.Login;
+import br.com.prolink.relatorios.*;
+import br.com.prolink.relatorios.exportExcel.ListagemExcel;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.HeadlessException;
@@ -28,6 +30,8 @@ public class Listagem extends javax.swing.JFrame {
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     Conexao con_lista = new Conexao();
+    ListagemExcel toExcel = new ListagemExcel();
+    RelatorioRecepcao relatorio = new RelatorioRecepcao();
     /**
      * Creates new form Listagem
      */
@@ -35,7 +39,8 @@ public class Listagem extends javax.swing.JFrame {
     
     String pesquisa="1", situacao="1", pega_ano="";
     String para, recebido, departamento, codigo, usuario= Login.usuario;
-    
+    boolean liberarRelatorio=false;
+    private String comando;
     
     public Listagem() {
         initComponents();
@@ -89,6 +94,8 @@ public class Listagem extends javax.swing.JFrame {
         check = new javax.swing.JCheckBox();
         Geral = new javax.swing.JRadioButton();
         jRadioButton7 = new javax.swing.JRadioButton();
+        btRelatorio = new javax.swing.JButton();
+        btRelatorio1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         lbHora = new javax.swing.JLabel();
         lbPara = new javax.swing.JLabel();
@@ -225,6 +232,7 @@ public class Listagem extends javax.swing.JFrame {
             }
         });
 
+        Geral.setBackground(new java.awt.Color(245, 245, 245));
         ordenacao.add(Geral);
         Geral.setText("Geral");
         Geral.addActionListener(new java.awt.event.ActionListener() {
@@ -242,44 +250,67 @@ public class Listagem extends javax.swing.JFrame {
             }
         });
 
+        btRelatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/relatorio_icon.png"))); // NOI18N
+        btRelatorio.setToolTipText("Exportar resultados para leitura em tela");
+        btRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRelatorioActionPerformed(evt);
+            }
+        });
+
+        btRelatorio1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btRelatorio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/excel_icon.png"))); // NOI18N
+        btRelatorio1.setToolTipText("Exportar resultados para leitura em Excel(.xls)");
+        btRelatorio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRelatorio1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Geral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Usuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
-                    .addComponent(ID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Aberto)
-                            .addComponent(Fechado))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Geral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Usuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(check, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Aberto)
+                                    .addComponent(Fechado))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(37, 37, 37)
+                                        .addComponent(check, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtData1, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtData1, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))))
+                                .addComponent(jRadioButton7)
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtData2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jRadioButton7)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtData2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnOK)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btRelatorio1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(btnOK)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,10 +336,13 @@ public class Listagem extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(Geral, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnOK))
-                .addGap(16, 16, 16))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnOK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtPesquisa))
+                    .addComponent(btRelatorio1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(245, 245, 245));
@@ -356,7 +390,6 @@ public class Listagem extends javax.swing.JFrame {
         txtHistorico.setRows(5);
         txtHistorico.setWrapStyleWord(true);
         txtHistorico.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txtHistorico.setOpaque(false);
         jScrollPane2.setViewportView(txtHistorico);
 
         txtObservacao.setColumns(20);
@@ -421,7 +454,7 @@ public class Listagem extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 128, Short.MAX_VALUE)
+                        .addGap(0, 116, Short.MAX_VALUE)
                         .addComponent(btnValidar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
@@ -599,7 +632,7 @@ public class Listagem extends javax.swing.JFrame {
     }//GEN-LAST:event_GeralActionPerformed
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
-        buscar();
+            buscar();
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void txtPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyPressed
@@ -607,6 +640,33 @@ public class Listagem extends javax.swing.JFrame {
             buscar();
         }
     }//GEN-LAST:event_txtPesquisaKeyPressed
+
+    private void btRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRelatorioActionPerformed
+        relatorio = new RelatorioRecepcao();
+        buscar();
+        if(liberarRelatorio==false){
+            JOptionPane.showMessageDialog(null, "Relatório não liberado!\n"
+                    + "Verifique as informações foram marcadas corretamente!");
+        } 
+        else {
+            relatorio.setComando(this.getComando());
+            relatorio.listagem();
+        }
+    }//GEN-LAST:event_btRelatorioActionPerformed
+
+    private void btRelatorio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRelatorio1ActionPerformed
+        toExcel = new ListagemExcel();
+        buscar();
+        if(liberarRelatorio==false){
+            JOptionPane.showMessageDialog(null, "Relatório não liberado!\n"
+                    + "Verifique as informações foram marcadas corretamente!");
+        } 
+        else {
+            toExcel.setComando(this.getComando());
+            toExcel.openFileChooser();
+        }
+        
+    }//GEN-LAST:event_btRelatorio1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -650,6 +710,8 @@ public class Listagem extends javax.swing.JFrame {
     private javax.swing.JRadioButton Geral;
     private javax.swing.JRadioButton ID;
     private javax.swing.JRadioButton Usuario;
+    private javax.swing.JButton btRelatorio;
+    private javax.swing.JButton btRelatorio1;
     private javax.swing.JButton btnOK;
     private javax.swing.JButton btnValidar;
     private javax.swing.JCheckBox check;
@@ -755,6 +817,7 @@ private void limpar_tela(){
 }
 private void carrega_usuario(){ 
     try{
+        
         con_lista.executeSQL("select * from documentos_recebidos where Para_Quem like '"+usuario+"' and Recebido='N'");
         if(con_lista.resultset.first()){
             preencher_tabela();
@@ -768,26 +831,47 @@ private void carrega_usuario(){
 }
 private void bloqueia_data(){
     txtData1.setEditable(false);
-    txtData1.setBackground(Color.GRAY);
+    txtData1.setBackground(Color.lightGray);
     txtData2.setEditable(false);
-    txtData2.setBackground(Color.GRAY);
+    txtData2.setBackground(Color.lightGray);
 }
 private void buscar(){
-    if(txtPesquisa.getText().trim().equals("")){
+    if(pesquisa.equals("1")){
+        JOptionPane.showMessageDialog(null, "Selecione o Status!(Protocolo, ID, Funcionario, Geral)");
+        liberarRelatorio=false;
+    }
+    else if(pesquisa.equals("Geral")){
+        if(situacao.equals("1")){
+            JOptionPane.showMessageDialog(null, "Selecione o Status!(Aberto, Fechado)");
+            liberarRelatorio=false;
+        }
+        else{
+            verificarData();
+            buscar2();
+            liberarRelatorio=true;
+        }
+    }
+    else if(txtPesquisa.getText().trim().equals("")){
         JOptionPane.showMessageDialog(null, "Vefique o campo digitado, não pode ficar em branco");
+        liberarRelatorio=false;
     }
-    else if(pesquisa.equals("Protocolo")){
-       buscar2();
-    }
+//    else if(pesquisa.equals("Protocolo")){
+//       buscar2();
+//    }
     else if(situacao.equals("1")){
         JOptionPane.showMessageDialog(null, "Selecione o Status!(Aberto, Fechado)");
+        liberarRelatorio=false;
     }
-    else if(pesquisa.equals("1")){
-        JOptionPane.showMessageDialog(null, "Selecione o Status!(Protocolo, ID, Funcionario, Geral)");
-    }
-    else if(check.isSelected()){
-        if(txtData1.getText().trim().length()<10 || txtData2.getText().trim().length()<10)
+    else
+        verificarData();
+    //pega o resultado geral
+}
+private void verificarData(){
+    if(check.isSelected()){
+        if(txtData1.getText().trim().length()<10 || txtData2.getText().trim().length()<10){
             JOptionPane.showMessageDialog(null, "Verifique a data informada!");
+            liberarRelatorio=false;
+        }
         else{
             //
             //pegando a data informada e convertendo para consulta
@@ -806,15 +890,17 @@ private void buscar(){
             pega_ano = " and Data_Recebimento between '"+campo1+"' and '"+campo2+"'";
 
             buscar2();
+            liberarRelatorio=true;
         }
     }
     else{
         pega_ano="";
         buscar2();
+        liberarRelatorio=true;
     }
-    //pega o resultado geral
 }
 private void buscar2(){
+    
         switch (pesquisa) {
 //            case "Protocolo":
 //                try{
@@ -830,22 +916,23 @@ private void buscar2(){
             case "Geral":
                 try{
                     limpar_tabela();
-                    con_lista.executeSQL("select * from documentos_recebidos where "
+                    
+                    this.setComando("select * from documentos_recebidos where "
                             +situacao+""+pega_ano);
+                    con_lista.executeSQL(this.getComando());
                     if(con_lista.resultset.first()){
                         preencher_tabela();
                     }
-                    else
-                        JOptionPane.showMessageDialog(null, "Não existe registro com o critério informado: !"
-                                +txtPesquisa.getText().toUpperCase());
+                    
                 }catch(SQLException e){
                     JOptionPane.showMessageDialog(null, "Erro pesquisa GERAL!\n"+e);
                 }       break;
             case "ID":
                 try{
                     limpar_tabela();
-                    con_lista.executeSQL("select * from documentos_recebidos where ID='"
+                    this.setComando("select * from documentos_recebidos where ID='"
                             +txtPesquisa.getText()+"' and "+situacao+""+pega_ano);
+                    con_lista.executeSQL(this.getComando());
                     if(con_lista.resultset.first()){
                         preencher_tabela();
                     }
@@ -857,8 +944,11 @@ private void buscar2(){
             default:
                 try{
                     limpar_tabela();
-                    con_lista.executeSQL("select * from documentos_recebidos where "
+                    
+                    this.setComando("select * from documentos_recebidos where "
                             +pesquisa+"'"+txtPesquisa.getText()+"' and "+situacao+""+pega_ano);
+                    con_lista.executeSQL(this.getComando());
+                    
                     if(con_lista.resultset.first()){
                         preencher_tabela();
                     }
@@ -893,5 +983,20 @@ private void gravar(){
     }catch(SQLException erro){
         JOptionPane.showMessageDialog(null,"Erro ao atualizar a tabela de documentos :\n" +erro);
     }
-}
+  }
+
+    /**
+     * @return the comando
+     */
+    public String getComando() {
+        return comando;
+    }
+
+    /**
+     * @param comando the comando to set
+     */
+    public void setComando(String comando) {
+        this.comando = comando;
+    }
+        
 }

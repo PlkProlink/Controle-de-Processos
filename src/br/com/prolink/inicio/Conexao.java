@@ -9,11 +9,11 @@ import javax.swing.*;
  */
 public class Conexao
 {
-    final private String driver = "com.mysql.jdbc.Driver";
-    final private String url = "jdbc:mysql://192.168.0.202/clientev1";
+    final public static String driver = "com.mysql.jdbc.Driver";
+    final public static String url = "jdbc:mysql://192.168.0.202/clientev1";
 //    final private String url = "jdbc:mysql://localhost/clientev1";
-    final private String usuario = "root";
-    final private String senha = "123456";
+    final public static String usuario = "root";
+    final public static String senha = "123456";
     private Connection Conexao;  //vai chamar a conexao
 
     /**

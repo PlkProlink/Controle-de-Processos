@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -21,7 +19,7 @@ public class ListagemDocumentos extends javax.swing.JFrame {
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
-    MaskFormatter formatoData;
+    MaskFormatter formatoData, formatoDataInicial, formatoDataFim;
     
     Conexao con_lista = new Conexao();
     Conexao con_funcionario= new Conexao();
@@ -54,19 +52,34 @@ public class ListagemDocumentos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbLista = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        btnPesqTodos = new javax.swing.JButton();
-        btnPesqAberto = new javax.swing.JButton();
         lbInfobusca = new javax.swing.JLabel();
         lbPesqId = new javax.swing.JLabel();
         txtPesqId = new javax.swing.JTextField();
         lbPesqEmpresa = new javax.swing.JLabel();
-        txtPesqEmpresa = new javax.swing.JTextField();
         lbPesqFuncionario = new javax.swing.JLabel();
         txtPesqFuncionario = new javax.swing.JTextField();
         lbInfobusca1 = new javax.swing.JLabel();
         btnPesqID = new javax.swing.JButton();
         btnPesqEmpresa = new javax.swing.JButton();
         btnPesqFuncionario = new javax.swing.JButton();
+        try{
+     formatoDataInicial = new MaskFormatter("##/##/####");
+ }catch(Exception e){
+     JOptionPane.showMessageDialog(null, "Erro na data inicial")
+ ;}
+        txtData1 = new JFormattedTextField(formatoDataInicial);
+        try{
+            formatoDataFim = new MaskFormatter("##/##/####");
+        }catch(Exception erro){
+            JOptionPane.showMessageDialog(null, "Erro na data fim");
+        }
+        txtData2 = new JFormattedTextField(formatoDataFim);
+        lbPesqId1 = new javax.swing.JLabel();
+        txtPesqCod = new javax.swing.JTextField();
+        lbPesCod = new javax.swing.JLabel();
+        btnPesqCod = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         txtPara = new javax.swing.JTextField();
         btnSeleciona = new javax.swing.JButton();
@@ -157,22 +170,6 @@ public class ListagemDocumentos extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(245, 245, 245));
 
-        btnPesqTodos.setText("Geral");
-        btnPesqTodos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnPesqTodos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPesqTodosActionPerformed(evt);
-            }
-        });
-
-        btnPesqAberto.setText("Tudo Em Aberto");
-        btnPesqAberto.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnPesqAberto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPesqAbertoActionPerformed(evt);
-            }
-        });
-
         lbInfobusca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbInfobusca.setText("Filtrar por:");
 
@@ -186,13 +183,7 @@ public class ListagemDocumentos extends javax.swing.JFrame {
         });
 
         lbPesqEmpresa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lbPesqEmpresa.setText("Empresa:");
-
-        txtPesqEmpresa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPesqEmpresaActionPerformed(evt);
-            }
-        });
+        lbPesqEmpresa.setText("Data:");
 
         lbPesqFuncionario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbPesqFuncionario.setText("Funcionario:");
@@ -233,41 +224,81 @@ public class ListagemDocumentos extends javax.swing.JFrame {
             }
         });
 
+        lbPesqId1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbPesqId1.setText("a");
+
+        txtPesqCod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPesqCodActionPerformed(evt);
+            }
+        });
+
+        lbPesCod.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lbPesCod.setText("Protocolo:");
+
+        btnPesqCod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/green_seta_menor.png"))); // NOI18N
+        btnPesqCod.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnPesqCod.setContentAreaFilled(false);
+        btnPesqCod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesqCodActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Todos os Documentos");
+
+        jLabel3.setText("Relação Pendente/Geral");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbPesqEmpresa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtData1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(lbPesqId1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtData2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPesqEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(btnPesqAberto, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnPesqTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbPesqFuncionario)
-                                    .addComponent(lbPesqEmpresa)
-                                    .addComponent(lbPesqId))
-                                .addGap(22, 22, 22)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtPesqId, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPesqEmpresa)
-                                    .addComponent(txtPesqFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnPesqID, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                                    .addComponent(btnPesqEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                                    .addComponent(btnPesqFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(0, 20, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(lbInfobusca)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbInfobusca1)))))
-                .addContainerGap())
+                                .addComponent(lbInfobusca1))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbPesqFuncionario)
+                                    .addComponent(lbPesqId))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPesqCod, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPesqId, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPesqFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(42, 42, 42)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnPesqCod, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnPesqFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnPesqID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbPesCod)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel3)))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,25 +306,39 @@ public class ListagemDocumentos extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbInfobusca, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbInfobusca1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbPesqId, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPesqId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesqID, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtPesqEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesqEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbPesqEmpresa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtPesqCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbPesCod))
+                    .addComponent(btnPesqCod, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbPesqId, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPesqId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbPesqFuncionario)
+                            .addComponent(txtPesqFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnPesqID, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPesqFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbPesqEmpresa)
+                            .addComponent(txtData1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbPesqId1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtData2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnPesqEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbPesqFuncionario)
-                    .addComponent(txtPesqFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesqFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnPesqTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesqAberto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addContainerGap())
         );
 
@@ -410,7 +455,7 @@ public class ListagemDocumentos extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lbHistorico1, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                                .addComponent(lbHistorico1, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -486,7 +531,7 @@ public class ListagemDocumentos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -495,10 +540,10 @@ public class ListagemDocumentos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -516,55 +561,10 @@ public class ListagemDocumentos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnPesqTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqTodosActionPerformed
-        
-        limpar_tabela();
-        try{
-            String pesquisa = "select * from documentos_recebidos order by Data_Recebimento desc";
-            con_lista.executeSQL(pesquisa);
-            con_lista.resultset.first();
-            preencher_tabela();
-        }catch(Exception erro){
-            JOptionPane.showMessageDialog(null,"Não foi possivel localizar os dados geral da tabela!" +erro);
-        }
-        
-    }//GEN-LAST:event_btnPesqTodosActionPerformed
-
-    private void btnPesqAbertoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqAbertoActionPerformed
-        limpar_tabela();
-        
-        try{
-            String pesquisa = "select * from documentos_recebidos where Quem_recebeu='' order by Data_Recebimento desc";
-            con_lista.executeSQL(pesquisa);
-            con_lista.resultset.first();
-            preencher_tabela();
-        }catch(SQLException erro){
-            JOptionPane.showMessageDialog(null,"Não foi possivel localizar os dados geral da tabela!" +erro);
-        }
-        
-    }//GEN-LAST:event_btnPesqAbertoActionPerformed
-
-    private void txtPesqEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesqEmpresaActionPerformed
-        limpar_tabela();
-        try{
-            String pesquisa = "select * from documentos_recebidos where Empresa like '"+txtEmpresa.getText()+"%' order by Data_Recebimento desc";
-            con_lista.executeSQL(pesquisa);
-            if(con_lista.resultset.first())
-            {
-                preencher_tabela();
-            }
-            else
-                JOptionPane.showMessageDialog(null, "Não existe dados com "+txtEmpresa.getText().toUpperCase());
-        }catch(SQLException erro){
-            JOptionPane.showMessageDialog(null,"Não foi possivel localizar os dados via digitação..."+erro);
-        }
-        
-    }//GEN-LAST:event_txtPesqEmpresaActionPerformed
-
     private void txtPesqIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesqIdActionPerformed
         limpar_tabela();
         try{
-            String pesquisa = "select * from documentos_recebidos where ID like '"+txtPesqId.getText()+"' order by Data_Recebimento desc";
+            String pesquisa = "select * from documentos_recebidos where ID like '"+txtPesqId.getText()+"' order by cod desc";
             con_lista.executeSQL(pesquisa);
             if(con_lista.resultset.first())
             {
@@ -678,7 +678,7 @@ public class ListagemDocumentos extends javax.swing.JFrame {
         else{
             try{
             String pesquisa = "select * from documentos_recebidos where Para_Quem like '"+
-                    txtPesqFuncionario.getText()+"' order by Data_Recebimento desc";
+                    txtPesqFuncionario.getText()+"' order by cod desc";
             con_lista.executeSQL(pesquisa);
             if(con_lista.resultset.first()){
                 preencher_tabela();
@@ -696,7 +696,7 @@ public class ListagemDocumentos extends javax.swing.JFrame {
         
         try{
             String pesquisa = "select * from documentos_recebidos where ID='"+
-                    txtPesqId.getText()+"' and Quem_recebeu is null or ID='"+txtPesqId.getText()+"' and Quem_recebeu='' order by Data_Recebimento desc";
+                    txtPesqId.getText()+"' and Quem_recebeu is null or ID='"+txtPesqId.getText()+"' and Quem_recebeu='' order by cod desc";
             con_lista.executeSQL(pesquisa);
             if(con_lista.resultset.first())
             {
@@ -714,27 +714,86 @@ public class ListagemDocumentos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesqIDActionPerformed
 
     private void btnPesqEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqEmpresaActionPerformed
-    if(!txtPesqEmpresa.getText().equals("")){
-        limpar_tabela();
-        
-        try{
-            String pesquisa = "select * from documentos_recebidos where Empresa like '"+
-                    txtPesqEmpresa.getText()+"%' and Quem_recebeu is null or Empresa like '"+txtPesqEmpresa.getText()+
-                    "%' and Quem_recebeu='' order by Data_Recebimento desc";
-            con_lista.executeSQL(pesquisa);
-            if(con_lista.resultset.first())
-            {
-                preencher_tabela();
-            }
-            else
-                JOptionPane.showMessageDialog(null, "Não existe dados em aberto com "+txtPesqEmpresa.getText().toUpperCase());
-        }catch(SQLException erro){
-            JOptionPane.showMessageDialog(null,"Não foi possivel localizar os dados via digitação..."+erro);
+        if(txtData1.getText().trim().length()<10 || txtData2.getText().trim().length()<10){
+            JOptionPane.showMessageDialog(null, "Campo data deve ser infomado");
         }
         
-    }
-    else
-        JOptionPane.showMessageDialog(null, "Informe no campo empresa um nome para pesquisa");
+        else{
+            limpar_tabela();
+            
+            Date data1=null, data2=null;
+            try{
+                String data = txtData1.getText();
+                data1 = sdf.parse(data);
+                
+            }catch(ParseException erro){
+                JOptionPane.showMessageDialog(null, "A 1ª data informada esta incorreta");
+            }
+            try{
+                String data = txtData1.getText();
+                data2 = sdf.parse(data);
+                
+            }catch(ParseException erro){
+                JOptionPane.showMessageDialog(null, "A 1ª data informada esta incorreta");
+            }
+            
+            if(txtPesqFuncionario.getText().trim().equals("")){
+                try{
+                    con_lista.executeSQL("select * from documentos_recebidos where "
+                        + "Data_Recebimento between '"+new java.sql.Date(data1.getTime())+"'"
+                        + " and '"+ new java.sql.Date(data2.getTime())+"' order by cod desc");
+                        if(con_lista.resultset.first()){
+                            preencher_tabela();
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Nenhum registro com o critério infomado");
+                        }
+                }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null, "Erro ao carregar tabela (Filtro Data)");
+                }
+            }
+            else{
+                try{
+                    con_lista.executeSQL("select * from documentos_recebidos where Para_Quem like '"
+                        + txtPesqFuncionario.getText()+"' and "
+                        + "Data_Recebimento between '"+new java.sql.Date(data1.getTime())+"'"
+                        + " and '"+ new java.sql.Date(data2.getTime())+"' order by cod desc");
+                        if(con_lista.resultset.first()){
+                            preencher_tabela();
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Nenhum registro com o critério infomado");
+                        }
+                }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null, "Erro ao carregar tabela (Filtro Data + Nome)");
+                }
+            }
+        }
+        txtPesqFuncionario.setText("");
+        txtData1.setText("");
+        txtData2.setText("");
+
+//    if(!txtPesqEmpresa.getText().equals("")){
+//        limpar_tabela();
+//        
+//        try{
+//            String pesquisa = "select * from documentos_recebidos where Empresa like '"+
+//                    txtPesqEmpresa.getText()+"%' and Quem_recebeu is null or Empresa like '"+txtPesqEmpresa.getText()+
+//                    "%' and Quem_recebeu='' order by cod desc";
+//            con_lista.executeSQL(pesquisa);
+//            if(con_lista.resultset.first())
+//            {
+//                preencher_tabela();
+//            }
+//            else
+//                JOptionPane.showMessageDialog(null, "Não existe dados em aberto com "+txtPesqEmpresa.getText().toUpperCase());
+//        }catch(SQLException erro){
+//            JOptionPane.showMessageDialog(null,"Não foi possivel localizar os dados via digitação..."+erro);
+//        }
+//        
+//    }
+//    else
+//        JOptionPane.showMessageDialog(null, "Informe no campo empresa um nome para pesquisa");
     }//GEN-LAST:event_btnPesqEmpresaActionPerformed
 
     private void btnPesqFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqFuncionarioActionPerformed
@@ -742,8 +801,8 @@ public class ListagemDocumentos extends javax.swing.JFrame {
         limpar_tabela();
         try{
             String pesquisa = "select * from documentos_recebidos where Para_Quem like '"+
-                    txtPesqFuncionario.getText()+"' and Quem_recebeu is null or Para_Quem like '"+
-                    txtPesqFuncionario.getText()+"' and Quem_recebeu='' order by Data_Recebimento desc";
+                    txtPesqFuncionario.getText()+"' and Quem_recebeu is null and Recebido='N' or Para_Quem like '"+
+                    txtPesqFuncionario.getText()+"' and Quem_recebeu='' and Recebido='N' order by cod desc";
             
             con_lista.executeSQL(pesquisa);
             if(con_lista.resultset.first())
@@ -765,6 +824,23 @@ public class ListagemDocumentos extends javax.swing.JFrame {
         con_funcionario.desconecta();
         con_lista.desconecta();
     }//GEN-LAST:event_formWindowClosing
+
+    private void txtPesqCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesqCodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPesqCodActionPerformed
+
+    private void btnPesqCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqCodActionPerformed
+        if(txtPesqCod.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(null, "Campo vazio!!!");
+        }
+        else{
+            try{
+                
+            }catch(Exception erro){
+                
+            }
+        }
+    }//GEN-LAST:event_btnPesqCodActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -799,12 +875,13 @@ public class ListagemDocumentos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnPesqAberto;
+    private javax.swing.JButton btnPesqCod;
     private javax.swing.JButton btnPesqEmpresa;
     private javax.swing.JButton btnPesqFuncionario;
     private javax.swing.JButton btnPesqID;
-    private javax.swing.JButton btnPesqTodos;
     private javax.swing.JButton btnSeleciona;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -823,12 +900,16 @@ public class ListagemDocumentos extends javax.swing.JFrame {
     private javax.swing.JLabel lbInfobusca;
     private javax.swing.JLabel lbInfobusca1;
     private javax.swing.JLabel lbPara;
+    private javax.swing.JLabel lbPesCod;
     private javax.swing.JLabel lbPesqEmpresa;
     private javax.swing.JLabel lbPesqFuncionario;
     private javax.swing.JLabel lbPesqId;
+    private javax.swing.JLabel lbPesqId1;
     private javax.swing.JTable tbLista;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JFormattedTextField txtData;
+    private javax.swing.JFormattedTextField txtData1;
+    private javax.swing.JFormattedTextField txtData2;
     private javax.swing.JTextField txtEmpresa;
     private javax.swing.JTextField txtEntreguePor;
     private javax.swing.JTextArea txtHistorico;
@@ -836,7 +917,7 @@ public class ListagemDocumentos extends javax.swing.JFrame {
     private javax.swing.JTextField txtId;
     private javax.swing.JTextArea txtObservacao;
     private javax.swing.JTextField txtPara;
-    private javax.swing.JTextField txtPesqEmpresa;
+    private javax.swing.JTextField txtPesqCod;
     private javax.swing.JTextField txtPesqFuncionario;
     private javax.swing.JTextField txtPesqId;
     private javax.swing.JTextField txtRecebidoPor;
@@ -854,10 +935,10 @@ public class ListagemDocumentos extends javax.swing.JFrame {
         tbLista.getColumnModel().getColumn(8);
         tbLista.getColumnModel().getColumn(9);
         tbLista.getColumnModel().getColumn(10);
-        //con_lista.executeSQL("select * from documentos_recebidos order by Data_Recebimento desc limit 300");
+        //con_lista.executeSQL("select * from documentos_recebidos order by cod desc limit 300");
           
         DefaultTableModel modelo =(DefaultTableModel)tbLista.getModel();
-        modelo.setNumRows(0);
+        //modelo.setNumRows(0);
         try{
             while (con_lista.resultset.next())
                 modelo.addRow(new Object [] {
@@ -910,26 +991,14 @@ public class ListagemDocumentos extends javax.swing.JFrame {
 //        }
 //        
 //    }
-    public void todos(){
-        
-        limpar_tabela();
-        try{
-            con_lista.executeSQL("select * from documentos_recebidos order by Data_Recebimento desc limit 300");
-            if(con_lista.resultset.first()){
-                preencher_tabela();
-            }
-        }catch(Exception erro){
-            JOptionPane.showMessageDialog(null,"Não foi possivel localizar os dados geral da tabela!" +erro);
-        }
-        
-    }
+
 
     public void carrega_usuario() {
     
         try{
             con_lista.executeSQL("select * from documentos_recebidos Where Para_Quem like '"+
                     usuario+"' and Quem_recebeu is null or Para_Quem like '"+
-                    usuario+"' and Quem_recebeu='' order by Data_Recebimento desc");
+                    usuario+"' and Quem_recebeu='' order by cod desc");
             if(con_lista.resultset.first()){
                 preencher_tabela();
             }
@@ -940,6 +1009,7 @@ public class ListagemDocumentos extends javax.swing.JFrame {
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null,"Não foi possivel localizar carregar com os critérios informados. "+erro);
         }
+         
     
     }
 }
