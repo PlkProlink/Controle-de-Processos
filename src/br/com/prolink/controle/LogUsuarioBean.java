@@ -12,6 +12,8 @@ package br.com.prolink.controle;
 
 public class LogUsuarioBean {
     private String usuario;
+    private String departamento;
+    private String menu;
     private String tela;
     private String acao;
     private String descricao;
@@ -22,6 +24,22 @@ public class LogUsuarioBean {
     private String hora;
     private String endereco;
     private String hostname;
+    
+    public String getDepartamento(){
+        return departamento;
+    }
+    
+    public void setDepartamento(String departamento){
+        this.departamento = departamento;
+    }
+    
+    public String getMenu(){
+        return menu;
+    }
+    
+    public void setMenu(String menu){
+        this.menu = menu;
+    }
     
     public String getTela() {
         return tela;

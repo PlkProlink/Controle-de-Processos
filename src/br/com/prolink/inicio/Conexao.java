@@ -11,7 +11,6 @@ public class Conexao
 {
     final public static String driver = "com.mysql.jdbc.Driver";
     final public static String url = "jdbc:mysql://192.168.0.202/clientev1";
-//    final private String url = "jdbc:mysql://localhost/clientev1";
     final public static String usuario = "root";
     final public static String senha = "123456";
     private Connection Conexao;  //vai chamar a conexao
@@ -107,7 +106,8 @@ public class Conexao
                result=statement.executeUpdate(gry);
                statement.close();
            }catch(SQLException erro){
-               JOptionPane.showMessageDialog(null,"Erro exeQuery: Inserir registro \nClass Conexao!" +erro);               
+               JOptionPane.showMessageDialog(null,
+                       "Erro exeQuery: Inserir registro \nClass Conexao!" +erro);               
            }
            return result;
        }

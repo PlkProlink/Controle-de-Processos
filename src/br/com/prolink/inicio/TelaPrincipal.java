@@ -12,6 +12,7 @@ Tiago Dias de Souza tiagoice@hotmail.com
 */
 package br.com.prolink.inicio;
 
+import br.com.prolink.login.Login;
 import br.com.prolink.cadastros.enviodocumentos.*;
 import br.com.prolink.documentos.*;
 import br.com.prolink.departamentos.*;
@@ -21,6 +22,8 @@ import br.com.prolink.login.*;
 import br.com.prolink.recepcao.*;
 import br.com.prolink.relatorios.RelatCadastro;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  *
@@ -502,7 +505,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addGap(119, 119, 119))
         );
 
         javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
@@ -544,9 +547,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
-                        .addGap(178, 178, 178)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(47, 47, 47))
+                        .addGap(185, 185, 185)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(34, 34, 34))
         );
 
         jpBarraInfo.setBackground(new java.awt.Color(245, 245, 245));
@@ -1338,7 +1341,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     Sobre sobre;
     LoginTrocadeAcesso trocarAcesso;
     RelatCadastro relCliente;
-
+    TeladeLog log;
+    
     public void contabil(){
         //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa
         if(txt_codigo.getText().equals("")){
@@ -1367,10 +1371,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         else{
             regularizacao = new Regularizacao();
             //Chamando a tela, enviando os dados do cliente para a tela solicitada
-//            regularizacao.txt_codigo.setText(Ativador.processo);
-//            regularizacao.txt_nome.setText(Ativador.nome);
-//            regularizacao.txt_id.setText(Ativador.id);
-//            regularizacao.txt_usuario.setText(Login.usuario);
+            regularizacao.txt_codigo.setText(Ativador.processo);
+            regularizacao.txt_nome.setText(Ativador.nome);
+            regularizacao.txt_id.setText(Ativador.id);
+            regularizacao.txt_usuario.setText(Login.usuario);
             
             regularizacao.setVisible(true);
             //JOptionPane.showMessageDialog(null, "A tela solicitada já se encontra aberta!");
@@ -1474,6 +1478,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
     }
     public void documentos(){
+//        JOptionPane.showMessageDialog(null, "Essa tela esta sendo atualizada! Tente mais tarde...");
        if(txt_codigo.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ativador = new Ativador();

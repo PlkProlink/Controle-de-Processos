@@ -1,25 +1,29 @@
 package br.com.prolink.documentos;
 
-import br.com.prolink.documentos.internas.DocumentosIntPerfil;
-import br.com.prolink.documentos.internas.DocumentosIntSenhaInss;
+import br.com.prolink.login.Login;
 import br.com.prolink.documentos.internas.*;
 import br.com.prolink.inicio.*;
 import java.text.SimpleDateFormat;
-
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 public class Documentos extends javax.swing.JFrame {
 
     String nome=Ativador.nome, id=Ativador.id, processo=Ativador.processo, usuario=Login.usuario;
-
+    //String nome="", id="", processo="48", usuario="Tiago";
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     Conexao con;
+    
+    DocumentosDao docDao = new DocumentosDao();
  /**
  *
  * @author Tiago Dias
  */
     public Documentos() {
         initComponents();
+        
+        lookandfeel();
         
         con = new Conexao();
         con.conecta();
@@ -28,6 +32,8 @@ public class Documentos extends javax.swing.JFrame {
         txtNome.setText(nome);
         txtID.setText(id);
         txtUsuario.setText(usuario);
+        
+        //docDao.tudo();
         
         afastamentos();
         ato();
@@ -55,6 +61,7 @@ public class Documentos extends javax.swing.JFrame {
         folha();
         
         con.desconecta();
+        
    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -202,9 +209,10 @@ public class Documentos extends javax.swing.JFrame {
         btnContas = new javax.swing.JButton();
         lbContas3 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Documentos Enviados");
+        setTitle("Documentos");
 
         jPanel1.setBackground(new java.awt.Color(250, 250, 250));
 
@@ -1427,31 +1435,41 @@ public class Documentos extends javax.swing.JFrame {
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(16, 16, 16))
+                .addGap(4, 4, 4))
         );
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Novos relatórios serão liberados...previsto em 10/02/2015!");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbProcesso)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(lbId)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(lbNome)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(282, 282, 282)
-                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lbProcesso)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(lbId)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(lbNome)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(282, 282, 282)
+                                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(263, 263, 263)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -1470,7 +1488,9 @@ public class Documentos extends javax.swing.JFrame {
                         .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1504,7 +1524,7 @@ public class Documentos extends javax.swing.JFrame {
     private void btnAtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtoActionPerformed
         jDesktopPane.removeAll();
         if(atoconstitutivo==null){
-            atoconstitutivo = new DocumentosIntAtoConstitutivo();
+            atoconstitutivo = new DocumentosIntModelo();
         }
         jDesktopPane.add(atoconstitutivo);
         atoconstitutivo.setVisible(true);
@@ -1521,11 +1541,11 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnComSociosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComSociosActionPerformed
         jDesktopPane.removeAll();
-        if(docsocios==null){
-            docsocios = new DocumentosIntDocumentosSocios();
+        if(comsocios==null){
+            comsocios = new DocumentosIntComprovantesSocios();
         }
-        jDesktopPane.add(docsocios);
-        docsocios.setVisible(true);
+        jDesktopPane.add(comsocios);
+        comsocios.setVisible(true);
     }//GEN-LAST:event_btnComSociosActionPerformed
 
     private void btnPisSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPisSocioActionPerformed
@@ -1719,37 +1739,14 @@ public class Documentos extends javax.swing.JFrame {
 
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Documentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Documentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Documentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Documentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
+        
          java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Documentos().setVisible(true);
+                
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LBFolha;
     private javax.swing.JButton btnAfastamentos;
@@ -1777,6 +1774,7 @@ public class Documentos extends javax.swing.JFrame {
     private javax.swing.JButton btnSindical;
     private javax.swing.JButton btnTermo;
     private javax.swing.JDesktopPane jDesktopPane;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -1896,7 +1894,7 @@ public class Documentos extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     
     DocumentosIntAfastamento afastamento;
-    DocumentosIntAtoConstitutivo atoconstitutivo;
+    DocumentosIntModelo atoconstitutivo;
     DocumentosIntDocumentosSocios docsocios;
     DocumentosIntComprovantesSocios comsocios;
     DocumentosIntNumeroPis npis;
@@ -1920,6 +1918,15 @@ public class Documentos extends javax.swing.JFrame {
     DocumentosIntTermo termo;
     DocumentosIntSenhaInss sinss;
     
+    public void lookandfeel(){
+        try{
+            String lookandfeel ="com.birosoft.liquid.LiquidLookAndFeel";
+            UIManager.setLookAndFeel(lookandfeel);
+            SwingUtilities.updateComponentTreeUI(this);
+        }catch(Exception e){
+            System.out.println("Documentos: \n"+e);
+        }
+    }
     public void afastamentos(){
     
     lbAfastamentos1.setText("");
@@ -1948,18 +1955,18 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbAfastamentos2.setText(ndata2);
             }
             
             
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
             
                 lbAfastamentos3.setText(ndata3);
@@ -1973,7 +1980,6 @@ public class Documentos extends javax.swing.JFrame {
     lbAto1.setText("");
     lbAto2.setText("");
     lbAto3.setText("");
-    
     
     try{
         con.executeSQL("select * from atoconstitutivo where NumeroProcesso='"+processo+"'");
@@ -1996,18 +2002,18 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbAto2.setText(ndata2);
             }
             
             
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
             
                 lbAto3.setText(ndata3);
@@ -2044,18 +2050,18 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbBalancete2.setText(ndata2);
             }
             
             
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
             
                 lbBalancete3.setText(ndata3);
@@ -2092,18 +2098,18 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbBalanco2.setText(ndata2);
             }
             
             
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
             
                 lbBalanco3.setText(ndata3);
@@ -2140,16 +2146,16 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbCaged2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
             
                 lbCaged3.setText(ndata3);
@@ -2186,18 +2192,18 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbComp2.setText(ndata2);
             }
             
             
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
             
                 lbComp3.setText(ndata3);
@@ -2234,18 +2240,18 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbContas2.setText(ndata2);
             }
             
             
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
             
                 lbContas3.setText(ndata3);
@@ -2282,17 +2288,17 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbDarf2.setText(ndata2);
             }
             
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
             
                 lbDarf3.setText(ndata3);
@@ -2303,9 +2309,9 @@ public class Documentos extends javax.swing.JFrame {
     }
 
     private void docSocios() {
-    lbComp1.setText("");
-    lbComp2.setText("");
-    lbComp3.setText("");
+    lbDoc1.setText("");
+    lbDoc2.setText("");
+    lbDoc3.setText("");
     
     
     try{
@@ -2325,24 +2331,24 @@ public class Documentos extends javax.swing.JFrame {
                 String mes = data1.substring(5, 7);
                 String dia = data1.substring(8);
                 ndata1 = dia+"/"+mes+"/"+ano;
-                lbComp1.setText(ndata1);
+                lbDoc1.setText(ndata1);
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
-                lbComp2.setText(ndata2);
+                lbDoc2.setText(ndata2);
             }
             
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
             
-                lbComp3.setText(ndata3);
+                lbDoc3.setText(ndata3);
             }
         }
     }catch(Exception erro){
@@ -2376,18 +2382,18 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbFerias2.setText(ndata2);
             }
             
             
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
             
                 lbFerias3.setText(ndata3);
@@ -2424,16 +2430,16 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbFuncionarios2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 lbFuncionarios3.setText(ndata3);
             }
@@ -2469,16 +2475,16 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbHab2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 lbHab3.setText(ndata3);
             }
@@ -2514,16 +2520,16 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbInss2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 lbInss3.setText(ndata3);
             }
@@ -2558,16 +2564,16 @@ public class Documentos extends javax.swing.JFrame {
                 lbPis1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbPis2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 lbPis3.setText(ndata3);
             }
@@ -2602,16 +2608,16 @@ public class Documentos extends javax.swing.JFrame {
                 lbPlano1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbPlano2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 lbPlano3.setText(ndata3);
             }
@@ -2647,16 +2653,16 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbPosto2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 lbPosto3.setText(ndata3);
             }
@@ -2691,16 +2697,16 @@ public class Documentos extends javax.swing.JFrame {
                 lbPrefeitura1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbPrefeitura2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                lbPrefeitura3.setText(ndata3);
             }
@@ -2736,16 +2742,16 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbReceita2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 lbReceita3.setText(ndata3);
             }
@@ -2780,16 +2786,16 @@ public class Documentos extends javax.swing.JFrame {
                 lbRecisoes1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbRecisoes2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 lbRecisoes3.setText(ndata3);
             }
@@ -2825,16 +2831,16 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbSefip2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 lbSefip3.setText(ndata3);
             }
@@ -2869,16 +2875,16 @@ public class Documentos extends javax.swing.JFrame {
                 lbSimples1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbSimples2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 lbSimples3.setText(ndata3);
             }
@@ -2914,16 +2920,16 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbSindical2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                lbSindical3.setText(ndata3);
             }
@@ -2959,16 +2965,16 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbTermo2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 lbTermo3.setText(ndata3);
             }
@@ -3004,18 +3010,18 @@ public class Documentos extends javax.swing.JFrame {
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 lbFolha2.setText(ndata2);
             }
             
             
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 lbFolha3.setText(ndata3);
             }

@@ -5,7 +5,6 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 //importando as outras classes importantes
 import br.com.prolink.inicio.Conexao;
-import br.com.prolink.inicio.Login;
 import br.com.prolink.inicio.TelaPrincipal;
 import java.awt.event.KeyEvent;
 

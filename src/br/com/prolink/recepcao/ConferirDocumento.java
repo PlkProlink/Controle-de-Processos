@@ -8,8 +8,6 @@ import javax.swing.text.MaskFormatter;
 import br.com.prolink.inicio.*;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author Tiago Dias
@@ -113,6 +111,7 @@ public class ConferirDocumento extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cb_para = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Controle de Documentos");
@@ -290,6 +289,11 @@ public class ConferirDocumento extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setForeground(new java.awt.Color(51, 0, 204));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Proxima atualização prevista em 10/02/2016!");
+        jLabel3.setToolTipText("");
+
         javax.swing.GroupLayout jp_GeralLayout = new javax.swing.GroupLayout(jp_Geral);
         jp_Geral.setLayout(jp_GeralLayout);
         jp_GeralLayout.setHorizontalGroup(
@@ -363,8 +367,11 @@ public class ConferirDocumento extends javax.swing.JFrame {
                             .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_GeralLayout.createSequentialGroup()
                             .addContainerGap()
-                            .addComponent(jButton1))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButton1)))
+                    .addGroup(jp_GeralLayout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jp_GeralLayout.setVerticalGroup(
             jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,19 +379,21 @@ public class ConferirDocumento extends javax.swing.JFrame {
                 .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jp_GeralLayout.createSequentialGroup()
                         .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jp_GeralLayout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jp_GeralLayout.createSequentialGroup()
-                                        .addGap(5, 5, 5)
-                                        .addComponent(lb_codigo))
-                                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jp_GeralLayout.createSequentialGroup()
-                                        .addGap(2, 2, 2)
-                                        .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_GeralLayout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(lb_data, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jp_GeralLayout.createSequentialGroup()
+                                    .addGap(17, 17, 17)
+                                    .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jp_GeralLayout.createSequentialGroup()
+                                            .addGap(5, 5, 5)
+                                            .addComponent(lb_codigo))
+                                        .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jp_GeralLayout.createSequentialGroup()
+                                            .addGap(2, 2, 2)
+                                            .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jp_GeralLayout.createSequentialGroup()
+                                    .addGap(19, 19, 19)
+                                    .addComponent(lb_data, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel3))
                         .addGap(10, 10, 10)
                         .addGroup(jp_GeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jp_GeralLayout.createSequentialGroup()
@@ -669,6 +678,7 @@ public class ConferirDocumento extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

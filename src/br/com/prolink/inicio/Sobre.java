@@ -13,13 +13,14 @@ import br.com.prolink.inicio.*;
  */
 public class Sobre extends javax.swing.JFrame {
 
+    VersaoSistema versao = new VersaoSistema();
     /**
      * Creates new form Sobre
      */
     public Sobre() {
         initComponents();
         
-        lbVersaoSistema.setText(Login.versaosistema);
+        lbVersaoSistema.setText(versao.getVersao());
     }
 
     /**

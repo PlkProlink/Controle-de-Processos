@@ -7,6 +7,7 @@
 
 package br.com.prolink.controle;
 
+import br.com.prolink.login.Login;
 import br.com.prolink.inicio.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -46,7 +47,7 @@ public class LogUsuarioDao {
         log.setHora(hora);
         
         log.setUsuario(Login.usuario);
-        
+        log.setDepartamento(Login.departamento);
         //JOptionPane.showMessageDialog(null, "Data:" +enviaDataBanco+ "\nHora: "+hora);
         try {
             InetAddress ip = InetAddress.getLocalHost();
@@ -58,14 +59,13 @@ public class LogUsuarioDao {
         }
         
         try{
-            con_log.exeQuery("insert into log_usuario (Usuario,Tela,Acao,Descricao,Processo, Apelido, Cliente, Data,Hora, Endereco, Hostname) values ('"+
-                            log.getUsuario()+"','"+log.getTela()+"','"+log.getAcao()+"','"+log.getDescricao()+"','"
+            con_log.exeQuery("insert into log_usuario (Usuario, Departamento, Menu, Tela, Acao, Descricao, Processo, Apelido, Cliente, Data,Hora, Endereco, Hostname) values ('"+
+                            log.getUsuario()+"','"+log.getDepartamento()+"','"+log.getMenu()+"','"+log.getTela()+"','"+log.getAcao()+"','"+log.getDescricao()+"','"
                             +log.getProcesso()+"','"+log.getApelido()+"','"+log.getCliente()+"','"
                            +log.getData()+"','"+log.getHora()+"','"+log.getEndereco()+"','"+log.getHostname()+"')");
         
-        con_log.desconecta();
         }catch(Exception add){
-            JOptionPane.showMessageDialog(null,"Erro log\n"+add);
+            JOptionPane.showMessageDialog(null,"Erro no log\n"+add);
         }
         con_log.desconecta();
     }

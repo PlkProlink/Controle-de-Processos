@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.*;
 import javax.swing.JOptionPane;
 import br.com.prolink.inicio.Conexao;
-import br.com.prolink.inicio.Login;
+import br.com.prolink.login.Login;
 import br.com.prolink.inicio.TelaPrincipal;
 
 /**
@@ -22,7 +22,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
    
     String privilegio, nivel_backup, codigo_backup, nome_backup, login_backup, senha_backup, email_backup, departamento_backup;
     
-    String nivel=Login.departamento, usuario=Login.departamento, departamento=Login.departamento;
+    String nivel=Login.nivel, usuario=Login.departamento, departamento=Login.departamento;
     
     /**
      *
@@ -42,7 +42,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
                 
                 preencher_tabela();
                 
-                if(!nivel.equals("1") || !departamento.equals("Tecnologia")){
+                if(!nivel.equals("1")){
                     btnAlterar.setEnabled(false);
                     btnExcluir.setEnabled(false);
                     JOptionPane.showMessageDialog(null, "Você não tem autorização para alterar informações dos usuarios!"+
@@ -613,7 +613,9 @@ public class CadastroUsuarios extends javax.swing.JFrame {
             txt_nome.setText(nome);
             txt_email.setText(email);
             cb_departamento.setSelectedItem(departamento);
-
+			
+			btnAlterar.setEnabled(true);
+			
             if("1".equals(grupo)){
                 cb_grupo.setSelectedItem("Privilegiado");
             }

@@ -6,12 +6,12 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import br.com.prolink.inicio.Conexao;
-import br.com.prolink.inicio.Login;
+import br.com.prolink.login.Login;
 import br.com.prolink.relatorios.*;
 import br.com.prolink.relatorios.exportExcel.ListagemExcel;
-import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import javax.swing.JFormattedTextField;
@@ -133,15 +133,22 @@ public class Listagem extends javax.swing.JFrame {
         tbLista.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tbLista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
                 "Cod", "Data", "Hora", "ID", "Empresa", "Recebido Por", "Historico", "Para", "Departamento", "Quem Recebeu", "Observacao"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Long.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -520,7 +527,8 @@ public class Listagem extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -51,14 +51,14 @@ public class TeladeLog extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Data", "Hora", "Tela", "Usuario", "Acao", "Descrição", "Processo", "ID", "Cliente", "Maquina", "Localização"
+                "Data", "Hora", "Menu", "Tela", "Usuario", "Acao", "Descrição", "Processo", "ID", "Cliente", "Maquina", "Localização"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -71,8 +71,8 @@ public class TeladeLog extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(6).setPreferredWidth(80);
             jTable1.getColumnModel().getColumn(7).setPreferredWidth(80);
+            jTable1.getColumnModel().getColumn(8).setPreferredWidth(80);
         }
 
         jLabel1.setText("Filtrar por:");
@@ -234,4 +234,9 @@ public class TeladeLog extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+void preencher_tabela(){
+    
+    
+}
+
 }

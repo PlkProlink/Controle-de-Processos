@@ -60,17 +60,17 @@ public void boleto(){
             }
             
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbBol2.setText(ndata2);
             }
          
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
             
                 DocumentosEnviados.lbBol3.setText(ndata3);
@@ -108,16 +108,16 @@ public void das(){
                 DocumentosEnviados.lbDas1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbDas2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbDas3.setText(ndata3);
             }
@@ -155,16 +155,16 @@ public void cofins(){
                 DocumentosEnviados.lbCofins1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbCofins2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbCofins3.setText(ndata3);
             }
@@ -201,16 +201,16 @@ public void irpj(){
                 DocumentosEnviados.lbIrpj1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIrpj2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIrpj3.setText(ndata3);
             }
@@ -247,16 +247,16 @@ public void csll(){
                 DocumentosEnviados.lbCsll1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbCsll2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbCsll3.setText(ndata3);
             }
@@ -293,16 +293,16 @@ public void iss(){
                 DocumentosEnviados.lbIss1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIss2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIss3.setText(ndata3);
             }
@@ -340,16 +340,16 @@ public void gps(){
                 DocumentosEnviados.lbGps1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbGps2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbGps3.setText(ndata3);
             }
@@ -387,16 +387,16 @@ public void irpf_salario(){
                 DocumentosEnviados.lbIrpfSal1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIrpfSal2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIrpfSal3.setText(ndata3);
             }
@@ -434,16 +434,16 @@ public void irpf_servico(){
                 DocumentosEnviados.lbIrpfServ1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIrpfServ2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIrpfServ3.setText(ndata3);
             }
@@ -480,16 +480,16 @@ public void fgts(){
                 DocumentosEnviados.lbFgts1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbFgts2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbFgts3.setText(ndata3);
             }
@@ -525,16 +525,16 @@ public void icms(){
                 DocumentosEnviados.lbIcms1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIcms2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIcms3.setText(ndata3);
             }
@@ -570,16 +570,16 @@ public void ipi(){
                 DocumentosEnviados.lbIpi1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIpi2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIpi3.setText(ndata3);
             }
@@ -616,16 +616,16 @@ public void icms_servico(){
                 DocumentosEnviados.lbIcmsServ1.setText(ndata1);
             }
             if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data2.substring(0, 4);
+                String mes = data2.substring(5, 7);
+                String dia = data2.substring(8);
                 ndata2 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIcmsServ2.setText(ndata2);
             }
             if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
+                String ano = data3.substring(0, 4);
+                String mes = data3.substring(5, 7);
+                String dia = data3.substring(8);
                 ndata3 = dia+"/"+mes+"/"+ano;
                 DocumentosEnviados.lbIcmsServ3.setText(ndata3);
             }

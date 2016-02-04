@@ -1,7 +1,6 @@
 package br.com.prolink.login;
 
 import br.com.prolink.inicio.Conexao;
-import br.com.prolink.inicio.Login;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 /**

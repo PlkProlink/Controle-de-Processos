@@ -63,6 +63,7 @@ public class RecuperarAcesso extends javax.swing.JFrame {
 
         txtRecuperar.setBackground(new java.awt.Color(254, 254, 254));
         txtRecuperar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtRecuperar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtRecuperar.setText("@prolinkcontabil.com.br");
         txtRecuperar.setToolTipText("");
         txtRecuperar.addKeyListener(new java.awt.event.KeyAdapter() {

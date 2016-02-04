@@ -1,5 +1,6 @@
 package br.com.prolink.cadastros.enviodocumentos.internas;
 
+import br.com.prolink.login.Login;
 import br.com.prolink.cadastros.enviodocumentos.*;
 import br.com.prolink.controle.*;
 import br.com.prolink.inicio.*;

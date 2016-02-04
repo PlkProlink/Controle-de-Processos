@@ -3,7 +3,7 @@ package br.com.prolink.usuario;
 
 
 import br.com.prolink.inicio.Conexao;
-import br.com.prolink.inicio.Login;
+import br.com.prolink.login.Login;
 import java.awt.Component;
 import javax.swing.table.*;
 import java.sql.*;

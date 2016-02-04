@@ -1,5 +1,6 @@
 package br.com.prolink.departamentos;
 
+import br.com.prolink.login.Login;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
