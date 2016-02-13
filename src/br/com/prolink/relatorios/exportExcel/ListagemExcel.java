@@ -85,7 +85,9 @@ public class ListagemExcel {
     public void openFileChooser(){
         JFileChooser chooser = new JFileChooser();
         chooser.setAcceptAllFileFilterUsed(false);
-        chooser.addChoosableFileFilter(new FileNameExtensionFilter("Planilha do Excel .xls", ".xls"));
+        chooser.setDialogTitle("Criando Planilha de Seleção");
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("Planilha do Excel (*.xls)", ".xls"));
+        
         
         int retorno = chooser.showSaveDialog(null);
         if(retorno==JFileChooser.APPROVE_OPTION){

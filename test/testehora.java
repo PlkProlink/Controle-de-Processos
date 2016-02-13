@@ -27,21 +27,24 @@ public class testehora {
 //        String minuto = hora.substring(3, 5);
 //        
 //        System.out.print(horaf+":"+minuto);
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 //        
-//        Date data2 = new Date();
-//        String datarec = sdf.format(data2);
-//        try {
-//            Date datarec2 = sdf.parse(datarec);
-//            System.out.println(datarec2);
-//        } catch (ParseException ex) {
-//            Logger.getLogger(testehora.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        Date data2 = new Date();
         
         
-        String s="wetrtyyu";
-        int pos=s.indexOf("yyu");
-        System.out.print(pos);
+        String datarec = sdf.format(data2);
+        
+        try {
+            Date datarec2 = sdf.parse(datarec);
+            System.out.println(new java.sql.Date(data2.getTime())+"/n"+datarec2);
+        } catch (ParseException ex) {
+            Logger.getLogger(testehora.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+//        
+//        String s="wetrtyyu";
+//        int pos=s.indexOf("yyu");
+//        System.out.print(pos);
         
     }
 }

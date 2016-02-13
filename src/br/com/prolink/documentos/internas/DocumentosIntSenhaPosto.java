@@ -14,12 +14,12 @@ import br.com.prolink.inicio.Conexao;
  */
 public class DocumentosIntSenhaPosto extends DocumentosIntModelo{
     
-    String campo1="SenhaPostoFiscal", tabela1="autorizacaonotafiscaleletronica", tela1 = "Senha do Posto Fiscal";
+    String campo1="SenhaPostoFiscal", tabela1="senhapostofiscal", tela1 = "Senha do Posto Fiscal";
     
     public DocumentosIntSenhaPosto(){
         setTitle("Contratos - Senha do Posto Fiscal");
         
-        super.inicializacao("SenhaPostoFiscal","autorizacaonotafiscaleletronica", "Senha do Posto Fiscal");
+        super.inicializacao("SenhaPostoFiscal","senhapostofiscal", "Senha do Posto Fiscal");
         
 		conexao = new Conexao(); 
         conexao.conecta();

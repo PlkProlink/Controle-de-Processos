@@ -1524,7 +1524,7 @@ public class Documentos extends javax.swing.JFrame {
     private void btnAtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtoActionPerformed
         jDesktopPane.removeAll();
         if(atoconstitutivo==null){
-            atoconstitutivo = new DocumentosIntModelo();
+            atoconstitutivo = new DocumentosIntAtoConstitutivo();
         }
         jDesktopPane.add(atoconstitutivo);
         atoconstitutivo.setVisible(true);
@@ -1894,7 +1894,7 @@ public class Documentos extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     
     DocumentosIntAfastamento afastamento;
-    DocumentosIntModelo atoconstitutivo;
+    DocumentosIntAtoConstitutivo atoconstitutivo;
     DocumentosIntDocumentosSocios docsocios;
     DocumentosIntComprovantesSocios comsocios;
     DocumentosIntNumeroPis npis;

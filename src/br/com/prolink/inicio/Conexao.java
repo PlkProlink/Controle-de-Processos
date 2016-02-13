@@ -13,7 +13,8 @@ public class Conexao
     final public static String url = "jdbc:mysql://192.168.0.202/clientev1";
     final public static String usuario = "root";
     final public static String senha = "123456";
-    private Connection Conexao;  //vai chamar a conexao
+    
+    public Connection connection;  //vai chamar a conexao
 
     /**
      *
@@ -35,7 +36,7 @@ public class Conexao
             try 
             {
                 Class.forName(driver);//carrega o driver
-                Conexao = DriverManager.getConnection(url, usuario, senha);
+                connection = DriverManager.getConnection(url, usuario, senha);
                 //JOptionPane.showMessageDialog(null,"Conexão bem sucedida");
             }
             catch(ClassNotFoundException Driver) 
@@ -60,7 +61,7 @@ public class Conexao
             boolean result = true;
             try 
             {
-                Conexao.close();
+                connection.close();
                 //JOptionPane.showMessageDialog(null,"Banco fechado");
             }
             catch(SQLException fecha) 
@@ -80,7 +81,7 @@ public class Conexao
        {
             try 
             {
-                statement = Conexao.createStatement(
+                statement = connection.createStatement(
                         ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
                 resultset = statement.executeQuery(sql);
                 
@@ -102,7 +103,7 @@ public class Conexao
            int result = 0;
            try
            {
-               statement = Conexao.createStatement();
+               statement = connection.createStatement();
                result=statement.executeUpdate(gry);
                statement.close();
            }catch(SQLException erro){

@@ -26,11 +26,11 @@ public class AtualizaDocumentos {
         try{
             con.executeSQL("select * from documentos where Numerodoprocesso='"+Ativador.processo+"'");
             if(con.resultset.first()){
-                String sql=("update documentos set AtoConstitutivo='Enviado para o Cliente' where Numerodoprocesso='"+Ativador.processo+"'");
+                String sql=("update documentos set "+campo+"='Enviado para o Cliente' where Numerodoprocesso='"+Ativador.processo+"'");
                 con.statement.executeUpdate(sql);
             }
         }catch(SQLException erro){
-            JOptionPane.showMessageDialog(null, "Erro ao atualizar documentos: tela>Tela\n"+erro);
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar documentos: tela>"+tela+"\n"+erro);
         }
         con.desconecta();
     }

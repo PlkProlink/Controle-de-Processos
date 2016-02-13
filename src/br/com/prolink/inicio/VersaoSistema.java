@@ -11,8 +11,8 @@ package br.com.prolink.inicio;
  */
 public class VersaoSistema {
     
-    private String versaoSistema="2.1.2";
-    
+    private String versaoSistema="2.1.6";
+    private String baseDados= "2.0.0";
     /*
     Historico de versões
     2.0 - Projeto entregue
@@ -22,6 +22,8 @@ public class VersaoSistema {
     2.1.3 - Correção na tela Documentos Enviados
     2.1.4 - Correção de erros nas telas internas de Documentos Enviados
     2.1.5 - Aplicando orientação a objetos em Documentos Enviados em Documentos
+    2.1.6 - Aplicando cores na LIstagem
+    
     
     Orientação a objetos em telas internas de Documentos e Documentos Enviados
     Orientação a objetos em Listagem de documentos
@@ -33,5 +35,7 @@ public class VersaoSistema {
     
         return versaoSistema;
     }
-    
+    public String getVersaoBanco(){
+        return baseDados;
+    }
 }
