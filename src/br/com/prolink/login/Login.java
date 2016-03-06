@@ -1,9 +1,6 @@
 package br.com.prolink.login;
 //importando os pacotes essencias da classe
 
-import br.com.prolink.controle.*;
-import br.com.prolink.login.*;
-import br.com.prolink.inicio.*;
 import br.com.prolink.inicio.Conexao;
 import br.com.prolink.inicio.TelaPrincipal;
 import br.com.prolink.inicio.VersaoSistema;
@@ -12,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import javax.swing.Timer;
@@ -21,7 +20,6 @@ import javax.swing.Timer;
  */
 public class Login extends javax.swing.JFrame {
     int conta=0;
-    Conexao con_login;
     //inicializando um metodo da classe conexao para validação no banco de dados   
     
     public static String senha;
@@ -30,6 +28,8 @@ public class Login extends javax.swing.JFrame {
     public static String nivel;
     
     VersaoSistema versao = new VersaoSistema();
+    
+    Connection con;
     
     private Timer tempo;
     int cont;
@@ -42,6 +42,22 @@ public class Login extends javax.swing.JFrame {
         lbVersao.setText(versao.getVersao());
         
     }
+     public Connection getCon(){
+       
+        try {
+            Class.forName(Conexao.driver);
+        
+                con = DriverManager.getConnection(Conexao.url, Conexao.usuario, Conexao.senha);
+                if (con==null ){
+                    JOptionPane.showMessageDialog(null, "Falha na conexao com o banco de dados!");
+                }
+        } catch (SQLException  ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return con;        
+     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -287,7 +303,9 @@ public void InicioSessao(){
             tela.setVisible(true);
             TelaPrincipal.txt_usuario.setText(usuario);
             TelaPrincipal.txt_departamento.setText(departamento);
-        
+            
+//            JOptionPane.showMessageDialog(null, "usuario: "+usuario+
+//                    "departamento"+departamento+"senha: "+senha+"nivel: "+nivel);
         }
         }
     }
@@ -297,9 +315,7 @@ public void InicioSessao(){
      *
      */
     public void logar(){
-        con_login = new Conexao();
-        con_login.conecta();
-    //validação simples para não permitir campos vazios
+        //validação simples para não permitir campos vazios
         if(txtNome.getText().equals("") || txtSenha.getText().equals(""))
         JOptionPane.showMessageDialog(null,"Os campos não podem ser vazios!\n Tente Novamente!");
      else
@@ -308,14 +324,23 @@ public void InicioSessao(){
          //{    
             try
             {      
-                    //string sql para buscar no banco
-                    String sql = "select * from login Where Usuario like'"+
-                    txtNome.getText()+"' and Senha like'"+
-                    txtSenha.getText()+"'";
-                    con_login.executeSQL(sql);
+                
+                    String sql = "select * from login Where Usuario like ?"
+                            +" and Senha like ?";
+                    
+                    PreparedStatement ps = getCon().prepareStatement(sql);
+                    ps.setString(1, txtNome.getText());
+                    ps.setString(2, txtSenha.getText());
+                    ResultSet rs = ps.executeQuery();
+                //string sql para buscar no banco
+                
+                //Removido por conta do sqlinjection
+//                    String sql = "select * from login Where Usuario like'"+
+//                    txtNome.getText()+"' and Senha like'"+
+//                    txtSenha.getText()+"'";
+//                    con_login.executeSQL(sql);
                      //se  encontrado o primeiro resultado, e se encontrar...   
-                if (con_login.resultset.first())
-                {   
+                if (rs.first()){
                     barra.setVisible(true);
                     cont=-1;
                     barra.setValue(0);
@@ -325,27 +350,19 @@ public void InicioSessao(){
                     //JOptionPane.showMessageDialog(null,"Bem vindo ao Novo Controle de Processos!");
                      //será enviado para a tela principal o usuario logado e seu departamento
                      
-                    usuario = con_login.resultset.getString("Usuario");
-                    departamento = con_login.resultset.getString("Departamento");
-                    senha = con_login.resultset.getString("Senha");
-                    nivel = con_login.resultset.getString("Nivel");
-                    
-                    
+                    usuario = rs.getString(2);
+                    senha = rs.getString(3);
+                    departamento = rs.getString(4);
+                    nivel = rs.getString(9);
                     //dispose();
                 }
-                else{
-                     JOptionPane.showMessageDialog(null, "Senha ou Usuario incorreto(s)!");
-                     
-                }
-                
-             }
-             catch(SQLException erro)
-             {
-                 JOptionPane.showMessageDialog(null, "Falha  ao tentar entrar no sistema" +erro);
-           // }
-        }  
+                else
+                 JOptionPane.showMessageDialog(null, "Senha ou Usuario incorreto(s)!");
+            }catch(SQLException erro){
+                JOptionPane.showMessageDialog(null, "Falha  ao tentar entrar no sistema" +erro);
+            }
       }
-      con_login.desconecta();
+      
     }
     
 }
