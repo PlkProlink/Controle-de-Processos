@@ -31,7 +31,7 @@ public class ListagemBean {
     private String dataRecebimento;
     private String recebido;
 //essa area é dedica a area de consulta
-    private final String usuario= Login.usuario;
+    private final String usuario = Login.usuario;
     private String valorPesquisa;
     private String data1,data2;
     private String comando;

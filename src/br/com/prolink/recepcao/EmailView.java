@@ -197,8 +197,7 @@ public class EmailView extends javax.swing.JFrame {
                   
                   dispose();
              } catch (MessagingException e) {
-                  JOptionPane.showMessageDialog(null, "Ops! Não consegui enviar o e-mail!"
-                          + "?");
+                  JOptionPane.showMessageDialog(null, "Ops! Não consegui enviar o e-mail!");
              }
             }
     }//GEN-LAST:event_bt_okActionPerformed

@@ -86,7 +86,7 @@ public class Listagem extends javax.swing.JFrame {
                     if (valor.equals("N"))
                     component.setBackground(Color.RED);
                     else
-                    component.setBackground(Color.GREEN);
+                    component.setBackground(Color.BLUE);
 
                     //muda as cores conforme se cliente é ativo ou não
                     //boolean ativo = (boolean) getModel().getValueAt(linha, 3);
@@ -159,12 +159,13 @@ public class Listagem extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(245, 245, 245));
 
         tbLista.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tbLista.setForeground(new java.awt.Color(255, 255, 255));
         tbLista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Cod", "Data", "Hora", "ID", "Empresa", "Recebido Por", "Historico", "Para", "Departamento", "Quem Recebeu", "Observacao", "Recebido"
+                "Cod", "Data", "Hora", "ID", "Empresa", "Recebido Por", "Historico", "Para", "Departamento", "Quem Recebeu", "Observacao", "Recebido?"
             }
         ) {
             Class[] types = new Class [] {
@@ -589,17 +590,17 @@ public class Listagem extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione um registro!");
         }
         else{
-            gravar();
-//            if(recebido.trim().length()>0 && !recebido.equalsIgnoreCase(usuario)){
-//                String aviso="Esse registro ja foi baixado! Deseja alterar quem recebeu?";
-//                int escolha = JOptionPane.showConfirmDialog(null, aviso, "Atenção!", JOptionPane.YES_NO_OPTION);
-//                if(escolha==JOptionPane.YES_OPTION){
-//                    gravar();
-//                }
-//            }
-//            else if(recebido==null){
-//                gravar();
-//            }
+            
+            if(recebido.trim().length()>0 && !recebido.equalsIgnoreCase(usuario)){
+                String aviso="Esse registro ja foi baixado! Deseja alterar quem recebeu?";
+                int escolha = JOptionPane.showConfirmDialog(null, aviso, "Atenção!", JOptionPane.YES_NO_OPTION);
+                if(escolha==JOptionPane.YES_OPTION){
+                    gravar();
+                }
+            }
+            else if(recebido.trim().length()==0 || recebido==null){
+                gravar();
+            }
         }
         
     }//GEN-LAST:event_btnValidarActionPerformed
@@ -878,14 +879,15 @@ private void bloqueia_data(){
         lb.setDataRecebimento(String.valueOf(dataatual));
         lb.setObservacao(txtObservacao.getText());
             
-        ld.alterar(lb);
-        ConexaoStatement.fecharConexao(con);
-        
+        JOptionPane.showMessageDialog(null, ld.alterar(lb));
         limpar_tabela();
         lb.carrega_usuario();
         this.comando=lb.getComando();
+        ConexaoStatement.fecharConexao(con);
         preencher_tabela();
         limpar_tela();
+        
+        
     }
 
         

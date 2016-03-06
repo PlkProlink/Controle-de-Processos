@@ -216,9 +216,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="txt_data">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_dataActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoData);"/>
                 <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {&#xd;&#xa;     formatoData = new MaskFormatter(&quot;##/##/####&quot;);&#xd;&#xa; }catch(Exception erro){&#xd;&#xa;     JOptionPane.showMessageDialog(null ,&quot;N&#xe3;o foi possivel receber a data&quot; +erro);&#xd;&#xa; }"/>
+                <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="txt_apelido">

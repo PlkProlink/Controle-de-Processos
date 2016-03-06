@@ -37,6 +37,14 @@ public class Ativador extends javax.swing.JFrame {
     
     String codigo, pesquisa;
     
+    Connection con;
+    
+    public Connection getCon(){
+        this.con = new Conexao().connection;
+        
+        return this.con;
+    }
+    
     public Ativador() {
         initComponents();
         
@@ -411,16 +419,16 @@ public class Ativador extends javax.swing.JFrame {
     private void txtPesqIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesqIdKeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             String st;
-            if(!txtPesqId.getText().equals("")){
+            if(txtPesqId.getText().equals("")){
                 st="";  
             }
             else{
-                st=" where Apelido='"+txtPesqId.getText().trim()+"'";
+                st=" where Apelido like '"+txtPesqId.getText().trim()+"'";
             }
             limpar_tabela();    
             try{
                 con_cliente.executeSQL("select * from cadastrodeprocesso"+st);
-                    if(con_cliente.resultset.first()){
+                    if(con_cliente.resultset.next()){
                         preencher_jtable();
                     }
                     else{
@@ -437,7 +445,7 @@ public class Ativador extends javax.swing.JFrame {
             limpar_tabela();
             try{
             con_cliente.executeSQL("select * from cadastrodeprocesso where Cliente like '"+txtPesqNome.getText()+"%' order by Cliente");
-                if(con_cliente.resultset.first()){
+                if(con_cliente.resultset.next()){
                     preencher_jtable();
                 }
                 else{
@@ -491,7 +499,7 @@ public class Ativador extends javax.swing.JFrame {
         tb_ativacao.getColumnModel().getColumn(1);
         tb_ativacao.getColumnModel().getColumn(2);
         DefaultTableModel modelo = (DefaultTableModel)tb_ativacao.getModel();
-    
+        
         try{
             while(con_cliente.resultset.next())
                 modelo.addRow(new Object []{

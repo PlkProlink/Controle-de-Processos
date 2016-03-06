@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,12 +30,8 @@ public class ListagemDAO {
         }
         public String alterar(ListagemBean tabela){
         
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");    
         Date date = new Date();
         
-        //String dia;
-        
-            
         String sql = "update documentos_recebidos set Quem_recebeu = ?, "
                 + "Data_Funcionario_Recebeu = ?, Observacao= ?, Recebido= ? " ;
         sql += "where cod = ?";
@@ -50,15 +45,14 @@ public class ListagemDAO {
             ps.setInt(5, tabela.getCod());
 
             if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "Alterado com sucesso.");
+                return "Alterado com sucesso.";
             } 
             else{
-                JOptionPane.showMessageDialog(null, "Erro ao alterar");
+                return "Erro ao alterar";
             }
             }catch (SQLException e){
                     return e.getMessage();
             }
-        return null;
         }
 
         public List<ListagemBean> listarTodos(String comando) {
