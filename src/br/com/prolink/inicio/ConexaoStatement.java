@@ -13,18 +13,21 @@ import java.sql.*;
         
 public class ConexaoStatement{
 //vamos abrir a conexao
+    
+    static String driver = "com.mysql.jdbc.Driver";
+    private static String url = "jdbc:mysql://localhost/clientev1";
+    private static String user = "root";
+    private static String password = ""; 
+    
     public static Connection abrirConexao() {
         Connection con = null;
     try {
         /*vamos dizer ao java que esse é o driver que ultilizaremos para todas
         as conexoes*/
-        Class.forName("com.mysql.jdbc.Driver").newInstance();
-        //*criaremos um metodo string que recebera o endereço do banco
-        String url = "";
-        url += "jdbc:mysql://192.168.0.202/clientev1?";
-        url += "user=root&password=123456";
+        Class.forName(driver).newInstance();
+        
         //*faremos a conexao e passar o valor para a vaeriavel
-        con = DriverManager.getConnection(url);
+        con = DriverManager.getConnection(url, user, password);
         //System.out.println("Conexao aberta.");
         /*como abrimos um try devemos ter no minimo um catch ou finally para
         encerra-lo
@@ -48,4 +51,12 @@ public class ConexaoStatement{
             System.out.println(e.getMessage());
         }
     }
+    public Connection getConnetion(){
+		try {
+			Class.forName(driver);
+			return  DriverManager.getConnection(url, user, password);
+		} catch (SQLException | ClassNotFoundException erro) {
+			throw new RuntimeException(erro);		
+		}
+	}
 }
