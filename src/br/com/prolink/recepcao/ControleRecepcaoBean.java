@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  *
  * @author Tiago
  */
-public class ListagemBean {
+public class ControleRecepcaoBean {
 
     private int cod;
     private String data;
@@ -35,7 +35,7 @@ public class ListagemBean {
     private String valorPesquisa;
     private String data1,data2;
     private String comando;
-    Listagem Listagem;
+    ControleRecepcao controle;
 
     public int getCod() {
         return cod;
@@ -226,9 +226,9 @@ public class ListagemBean {
     public boolean gerarRelatorioPDF() {
         RelatorioRecepcao relatorioView = new RelatorioRecepcao();
         buscar(this.data1, this.data2, this.valorPesquisa);
-        if (Listagem.relatorio == false) {
+        if (controle.relatorio == false) {
             JOptionPane.showMessageDialog(null, "Relatório não liberado!\n"
-                    + "Verifique as informações foram marcadas corretamente!");
+                    + "Verifique se as informações foram marcadas corretamente!");
             return false;
         } else {
             relatorioView.setComando(this.comando);
@@ -243,9 +243,9 @@ public class ListagemBean {
     public boolean gerarRelatorioExcel() {
         ListagemExcel toExcel = new ListagemExcel();
         buscar(this.data1, this.data2, valorPesquisa);
-        if (Listagem.relatorio == false) {
+        if (controle.relatorio == false) {
             JOptionPane.showMessageDialog(null, "Relatório não liberado!\n"
-                    + "Verifique as informações foram marcadas corretamente!");
+                    + "Verifique se as informações foram marcadas corretamente!");
             return false;
         } else {
             toExcel.setComando(this.comando);
@@ -255,55 +255,48 @@ public class ListagemBean {
     }
 
     //1ª busca do usuario
-
-    public void carrega_usuario() {
-        this.comando=("select * from documentos_recebidos where Para_Quem like '" + this.usuario + "' and Recebido='N'");
-        
-//        Listagem.preencher_tabela();
-    }
-
-    public boolean buscar(String data1, String data2, String valorPesquisa) {
+        public boolean buscar(String data1, String data2, String valorPesquisa) {
         this.data1 = data1; this.data2=data2; this.valorPesquisa=valorPesquisa;
-        if ("".equals(Listagem.pesquisa)) {
+        if ("".equals(controle.pesquisa)) {
             JOptionPane.showMessageDialog(null, "Selecione o Status!(Protocolo, ID, Funcionario, Geral)");
-            Listagem.relatorio = false;
+            controle.relatorio = false;
             return false;
         }
         else{
-            switch (Listagem.pesquisa) {
+            switch (controle.pesquisa) {
                 case "Geral":
                 case "Protocolo":
-                    if(Listagem.pesquisa.equals("Protocolo") && valorPesquisa.equals("")){
+                    if(controle.pesquisa.equals("Protocolo") && valorPesquisa.equals("")){
                         JOptionPane.showMessageDialog(null, "Vefique o campo digitado, não pode ficar em branco");
-                        Listagem.relatorio = false;
+                        controle.relatorio = false;
                         return false;
                         
                     }
-                    else if(Listagem.pesquisa.equals("Geral") && Listagem.situacao.equals("")){
+                    else if(controle.pesquisa.equals("Geral") && controle.situacao.equals("")){
                         JOptionPane.showMessageDialog(null, "Selecione o Status!(Aberto, Fechado)");
-                        Listagem.relatorio = false;
+                        controle.relatorio = false;
                         return false;
                     }
                     
                     else
                         verificarData();
-                    Listagem.relatorio = true;
+                    controle.relatorio = true;
                     break;
                 case "ID":
                 case "ParaQuem":
                     if(valorPesquisa.equals("")){
                         JOptionPane.showMessageDialog(null, "Vefique o campo digitado, não pode ficar em branco");
-                        Listagem.relatorio = false;
+                        controle.relatorio = false;
                         return false;
                     }
-                    else if(Listagem.situacao.equals("")){
+                    else if(controle.situacao.equals("")){
                         JOptionPane.showMessageDialog(null, "Selecione o Status!(Aberto, Fechado)");
-                        Listagem.relatorio = false;
+                        controle.relatorio = false;
                         return false;
                     }
                     else{
                         verificarData();
-                        Listagem.relatorio = true;
+                        controle.relatorio = true;
                 }   break;
             }
         }
@@ -311,10 +304,10 @@ public class ListagemBean {
     }
     boolean verificarData(){
         
-        if(Listagem.check.isSelected()){
+        if(controle.check.isSelected()){
             if(data1.trim().length()<10 || data2.trim().length()<10){
                 JOptionPane.showMessageDialog(null, "Verifique a data informada!");
-                Listagem.relatorio=false;
+                controle.relatorio=false;
                 return false;
             }
             else{
@@ -323,9 +316,9 @@ public class ListagemBean {
             }
         }
         else{
-            Listagem.pegaAno="";
+            controle.pegaAno="";
             gerarConsulta();
-            Listagem.relatorio = true;
+            controle.relatorio = true;
             return true;
         }
 }
@@ -340,34 +333,34 @@ public class ListagemBean {
         String ano2 = data2.substring(6);
         String campo2 = ano2 + "-" + mes2 + "-" + dia2;
 
-        Listagem.pegaAno = " and Data_Recebimento between '" + campo1 + "' and '" + campo2 + "'";
+        controle.pegaAno = " and Data_Recebimento between '" + campo1 + "' and '" + campo2 + "'";
 
         gerarConsulta();
-        Listagem.relatorio = true;
+        controle.relatorio = true;
     }
 
     boolean gerarConsulta() {
-        switch (Listagem.pesquisa) {
+        switch (controle.pesquisa) {
             case "Protocolo":
                 this.comando=("select * from documentos_recebidos where cod="
                         + valorPesquisa + " order by cod desc");
-//                Listagem.preencher_tabela();
+//                controle.preencher_tabela();
                 break;
 
             case "Geral":
                 this.comando=("select * from documentos_recebidos where "
-                        + Listagem.situacao + "" + Listagem.pegaAno);
-//                Listagem.preencher_tabela();
+                        + controle.situacao + "" + controle.pegaAno);
+//                controle.preencher_tabela();
                 break;
             case "ID":
                 this.comando=("select * from documentos_recebidos where ID='"
-                        + valorPesquisa + "' and " + Listagem.situacao + "" + Listagem.pegaAno);
-//                Listagem.preencher_tabela();
+                        + valorPesquisa + "' and " + controle.situacao + "" + controle.pegaAno);
+//                controle.preencher_tabela();
                 break;
             case "ParaQuem":
                 this.comando=("select * from documentos_recebidos where "
-                        + "Para_Quem like '" + this.valorPesquisa + "' and " + Listagem.situacao + "" + Listagem.pegaAno);
-//                Listagem.preencher_tabela();
+                        + "Para_Quem like '" + this.valorPesquisa + "' and " + controle.situacao + "" + controle.pegaAno);
+//                controle.preencher_tabela();
                 break;
         }
         return true;

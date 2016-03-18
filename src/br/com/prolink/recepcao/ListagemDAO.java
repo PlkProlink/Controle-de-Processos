@@ -28,6 +28,31 @@ public class ListagemDAO {
         public ListagemDAO(Connection con){
             setCon(con);
         }
+        public boolean fecharTudo(ListagemBean tabela){
+            Date date = new Date();
+        
+        String sql = "update documentos_recebidos set Quem_recebeu = ?, "
+                + "Data_Funcionario_Recebeu = ?, Observacao= ?, Recebido = ? " ;
+        sql += "where Para_Quem=?";
+
+        try{
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setString(1, tabela.getUsuario());
+            ps.setDate(2, new java.sql.Date(date.getTime()));
+            ps.setString(3, tabela.getObservacao());
+            ps.setString(4, tabela.getRecebido());
+            ps.setString(5, tabela.getPara());
+
+            if (ps.executeUpdate() > 0) {
+                return true;
+            }
+            
+            }catch (SQLException e){
+                    return false;
+            }
+        return false;
+        }
+        
         public String alterar(ListagemBean tabela){
         
         Date date = new Date();
