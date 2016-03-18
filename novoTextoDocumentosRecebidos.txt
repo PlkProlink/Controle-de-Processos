@@ -1,0 +1,35 @@
+<span style="color:#0000cd;"><strong>Ola Tiago;</strong></span></div>
+		<div style="text-align: left;">
+			&nbsp;</div>
+		<div style="text-align: left;">
+			<span style="font-family:georgia,serif;">Tem um novo documento que acabou de chegar para voc&ecirc;;</span></div>
+		<div style="text-align: left;">
+			&nbsp;</div>
+		<div style="text-align: left;">
+			<span style="font-family:georgia,serif;">Nesse momento ele esta na recep&ccedil;&atilde;o,</span></div>
+		<div style="text-align: left;">
+			&nbsp;</div>
+		<div style="text-align: left;">
+			<span style="font-family:georgia,serif;">Antes de mostrar os detalhes preciso que voc&ecirc; valide o recebimento no Controle de Processos, certo?</span></div>
+		<div style="text-align: left;">
+			<span style="font-family:georgia,serif;">&Eacute; muito importante ter esse controle.</span></div>
+		<div style="text-align: left;">
+			<span style="font-family:georgia,serif;">E mesmo que n&atilde;o seja seu ou n&atilde;o receba &eacute; possivel Contestar a entrega (Op&ccedil;&atilde;o Constestar), f&aacute;cil...</span></div>
+		<div style="text-align: left;">
+			&nbsp;</div>
+		<div style="text-align: left;">
+			<span style="font-family:georgia,serif;">Vamos l&aacute;</span></div>
+		<ul>
+			<li style="text-align: left;">
+				<span style="color:#ff8c00;"><span style="font-size:14px;"><span style="font-family:georgia,serif;">Hora de Entrega:</span></span></span></li>
+			<li style="text-align: left;">
+				<span style="color:#ff8c00;"><span style="font-size:14px;"><span style="font-family:georgia,serif;">Id:</span></span></span></li>
+			<li style="text-align: left;">
+				<span style="color:#ff8c00;"><span style="font-size:14px;"><span style="font-family:georgia,serif;">Nome:</span></span></span></li>
+			<li style="text-align: left;">
+				<span style="color:#ff8c00;"><span style="font-size:14px;"><span style="font-family:georgia,serif;">Detalhes:</span></span></span></li>
+		</ul>
+		<div style="text-align: left;">
+			<span style="font-family:georgia,serif;">Na vers&atilde;o nova tem gr&aacute;ficos onde &eacute; poss&iacute;vel ter uma vis&atilde;o geral.</span></div>
+		<div style="text-align: left;">
+			<span style="color:#a9a9a9;"><em><span style="font-family:georgia,serif;">***Ah! Outra coisa...n&atilde;o responde esse e-mail por favor. Tudo isso &eacute; autom&aacute;tico***</span></em></span></div>

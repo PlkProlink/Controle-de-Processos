@@ -1276,7 +1276,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     CadastroClassificacao classificacao;
     TrocadeSenha ts;
     CadastroDepartamento cd;
-    ConferirDocumento conferirdoc;
+    ControleRecepcao conferirdoc;
     Listagem listaDocumentos;
     DocumentosEnviados docEnv;
     Documentos documentos;
@@ -1457,7 +1457,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }
     public void recepcao_documentos(){
-        conferirdoc = new ConferirDocumento();
+        conferirdoc = new ControleRecepcao();
         conferirdoc.setVisible(true);
     }
     public void recepcao_confirmar(){
