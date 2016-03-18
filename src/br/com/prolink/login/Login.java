@@ -262,9 +262,9 @@ public class Login extends javax.swing.JFrame {
             logar();
         }
     }//GEN-LAST:event_txtSenhaKeyPressed
-public void InicioSessao(){
-    
-}
+    public void InicioSessao(){
+
+    }
     /**
      *
      * @param args
@@ -332,14 +332,6 @@ public void InicioSessao(){
                     ps.setString(1, txtNome.getText());
                     ps.setString(2, txtSenha.getText());
                     ResultSet rs = ps.executeQuery();
-                //string sql para buscar no banco
-                
-                //Removido por conta do sqlinjection
-//                    String sql = "select * from login Where Usuario like'"+
-//                    txtNome.getText()+"' and Senha like'"+
-//                    txtSenha.getText()+"'";
-//                    con_login.executeSQL(sql);
-                     //se  encontrado o primeiro resultado, e se encontrar...   
                 if (rs.first()){
                     barra.setVisible(true);
                     cont=-1;
@@ -348,8 +340,7 @@ public void InicioSessao(){
                     tempo = new Timer(TREE_SECOND,new TimerListener());
                     mostrar();
                     //JOptionPane.showMessageDialog(null,"Bem vindo ao Novo Controle de Processos!");
-                     //será enviado para a tela principal o usuario logado e seu departamento
-                     
+                    
                     usuario = rs.getString(2);
                     senha = rs.getString(3);
                     departamento = rs.getString(4);
