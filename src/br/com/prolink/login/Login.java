@@ -33,7 +33,7 @@ public class Login extends javax.swing.JFrame {
     
     private Timer tempo;
     int cont;
-    public final static int TREE_SECOND=5;
+    public final static int TREE_SECOND=3;
      public Login() {
         initComponents();
         

@@ -209,7 +209,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel6" pref="117" max="32767" attributes="0"/>
+                      <Component id="lbVersaoBanco" pref="117" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -219,7 +219,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbVersaoBanco" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="16" max="32767" attributes="0"/>
                   </Group>
@@ -235,7 +235,7 @@
                 <Property name="text" type="java.lang.String" value="Vers&#xe3;o:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel6">
+            <Component class="javax.swing.JLabel" name="lbVersaoBanco">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Georgia" size="12" style="0"/>

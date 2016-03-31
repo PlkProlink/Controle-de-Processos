@@ -23,8 +23,6 @@ import br.com.prolink.login.*;
 import br.com.prolink.recepcao.*;
 import br.com.prolink.relatorios.RelatCadastro;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  *
@@ -471,15 +469,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jpProcessos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpRececepcao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
-                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jpDepartamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpOutros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
-                .addContainerGap(416, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(418, 418, 418))
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPrincipalLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jpDepartamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jpOutros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(264, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(418, Short.MAX_VALUE))))
         );
         jpPrincipalLayout.setVerticalGroup(
             jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -493,9 +493,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jpDepartamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpOutros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(34, 34, 34))
         );
 
         jpBarraInfo.setBackground(new java.awt.Color(245, 245, 245));
@@ -1276,7 +1276,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     CadastroClassificacao classificacao;
     TrocadeSenha ts;
     CadastroDepartamento cd;
-    ControleRecepcao conferirdoc;
+    ControleRecepcao recepcao;
     Listagem listaDocumentos;
     DocumentosEnviados docEnv;
     Documentos documentos;
@@ -1457,8 +1457,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }
     public void recepcao_documentos(){
-        conferirdoc = new ControleRecepcao();
-        conferirdoc.setVisible(true);
+        recepcao = new ControleRecepcao();
+        recepcao.setVisible(true);
     }
     public void recepcao_confirmar(){
         listaDocumentos = new Listagem();

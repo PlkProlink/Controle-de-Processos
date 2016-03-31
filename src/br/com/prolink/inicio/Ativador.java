@@ -5,18 +5,14 @@
  */
 package br.com.prolink.inicio;
 
-import br.com.prolink.inicio.Conexao;
-import br.com.prolink.inicio.Conexao;
-import java.awt.Component;
-import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
 import javax.swing.table.*;
-import java.sql.*;
-import java.text.ParseException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 /**
  *
@@ -35,35 +31,26 @@ public class Ativador extends javax.swing.JFrame {
     public static String dataativacao;
     public static String datafinalizacao;
     
-    String codigo, pesquisa;
+    String codigo, pesquisa, comando;
     
     Connection con;
     
     public Connection getCon(){
-        this.con = new Conexao().connection;
-        
+        this.con = new ConexaoStatement().getConnetion();
         return this.con;
     }
     
     public Ativador() {
         initComponents();
         
-        con_cliente.conecta();
         tb_ativacao.setAutoCreateRowSorter(true);
+        
         cb_organizar.setSelectedItem("");
-        
-        try{
-            con_cliente.executeSQL("select * from cadastrodeprocesso order by codNumerodoprocesso");
-            preencher_jtable();
-        }
-        catch(Exception erro){
-            erro.printStackTrace();
-        }
-        
+        comando = "select * from cadastrodeprocesso order by codNumerodoprocesso";
+        preencher_jtable(comando);
         
         txt_apelido.setEditable(false);
         txt_nome.setEditable(false);
-        
         
 }
 
@@ -151,8 +138,13 @@ public class Ativador extends javax.swing.JFrame {
 
         lb_organizar2.setBackground(new java.awt.Color(255, 255, 255));
         lb_organizar2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lb_organizar2.setText("Nome:");
+        lb_organizar2.setText("Nome: (inicia com)");
 
+        txtPesqNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPesqNomeActionPerformed(evt);
+            }
+        });
         txtPesqNome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPesqNomeKeyPressed(evt);
@@ -171,6 +163,11 @@ public class Ativador extends javax.swing.JFrame {
         lb_organizar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lb_organizar.setText("Organizar por:");
 
+        txtPesqId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPesqIdActionPerformed(evt);
+            }
+        });
         txtPesqId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPesqIdKeyPressed(evt);
@@ -187,19 +184,15 @@ public class Ativador extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lb_organizar)
+                    .addComponent(lb_organizar1)
+                    .addComponent(lb_organizar2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lb_organizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cb_organizar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lb_organizar2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lb_organizar1, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtPesqNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPesqId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(cb_organizar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPesqNome, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPesqId, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -269,10 +262,7 @@ public class Ativador extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(lbID, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
                             .addComponent(lbNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -286,13 +276,16 @@ public class Ativador extends javax.swing.JFrame {
                                 .addComponent(txt_processo, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
                                 .addGap(202, 202, 202)
                                 .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_nome))))
-                .addContainerGap())
+                            .addComponent(txt_nome))
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(281, 281, 281))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -343,77 +336,52 @@ public class Ativador extends javax.swing.JFrame {
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         if(codigo.trim().equals("")){
-            JOptionPane.showMessageDialog(null, "Por favor, selecione uma empresa!");
+            JOptionPane.showMessageDialog(null, "Selecione uma empresa!");
         }
         else{
             
             try{
-                String sql = "select * from cadastrodeprocesso Where codNumerodoprocesso = "+
-                        codigo;
-                con_cliente.executeSQL(sql);
                 
-                if(con_cliente.resultset.first()){
-                    
-                    processo = con_cliente.resultset.getString("codNumerodoprocesso");
-                    id = con_cliente.resultset.getString("Apelido");
-                    nome = con_cliente.resultset.getString("Cliente");
-                    classificacao = con_cliente.resultset.getString("Classificacao");
-                    dataativacao = con_cliente.resultset.getString("DatadeAtivacao");
-                    datafinalizacao = con_cliente.resultset.getString("DataDeArquivamentodoProcesso");
-                    
-                    envia_para_menu();
-                    
-                    con_cliente.desconecta();
-                    this.dispose();
+                String sql = "select * from cadastrodeprocesso Where codNumerodoprocesso = "+txt_processo.getText();
+                PreparedStatement ps = getCon().prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+                if(rs!=null){
+                    while(rs.next()){
+                        processo = rs.getString("codNumerodoprocesso");
+                        id = rs.getString("Apelido");
+                        nome = rs.getString("Cliente");
+                        classificacao = rs.getString("Classificacao");
+                        dataativacao = rs.getString("DatadeAtivacao");
+                        datafinalizacao = rs.getString("DataDeArquivamentodoProcesso");
+                    }
                 }
+                con.close();
+                envia_para_menu();
+                this.dispose();
+                
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null,"Não foi possivel ativar o cliente informado : " +erro);
-            } catch (Exception ex) {
-                Logger.getLogger(Ativador.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
         }
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void cb_organizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_organizarActionPerformed
          if(cb_organizar.getSelectedItem().equals("Nome")){
-            limpar_tabela();
-            
-            try{
-            con_cliente.executeSQL("select * from cadastrodeprocesso order by Cliente");
-            preencher_jtable();
-            }catch(Exception erro){
-            erro.printStackTrace();
-            }
-            
-        }
-        else if(cb_organizar.getSelectedItem().equals("Codigo")){
-            limpar_tabela();
-            
-            try{
-            con_cliente.executeSQL("select * from cadastrodeprocesso order by codNumerodoprocesso");
-            preencher_jtable();
-        }
-        catch(Exception erro){
-            erro.printStackTrace();
-        }
-            
+                  String valor = "Cliente";
+                  ordenar(valor);
          }
-        else if(cb_organizar.getSelectedItem().equals("Apelido")){
-            limpar_tabela();
-            try{
-            con_cliente.executeSQL("select * from cadastrodeprocesso order by Apelido");
-            preencher_jtable();
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-            
+         else if(cb_organizar.getSelectedItem().equals("Codigo")){
+                  String valor =  "codNumerodoprocesso";
+                  ordenar(valor);
+         }
+         else if(cb_organizar.getSelectedItem().equals("Apelido")){
+                  String valor =  "Apelido";
+                  ordenar(valor);
         }
     }//GEN-LAST:event_cb_organizarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        con_cliente.desconecta();
-        //this.dispose();
+       
     }//GEN-LAST:event_formWindowClosing
 
     private void txtPesqIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesqIdKeyPressed
@@ -425,37 +393,29 @@ public class Ativador extends javax.swing.JFrame {
             else{
                 st=" where Apelido like '"+txtPesqId.getText().trim()+"'";
             }
-            limpar_tabela();    
-            try{
-                con_cliente.executeSQL("select * from cadastrodeprocesso"+st);
-                    if(con_cliente.resultset.next()){
-                        preencher_jtable();
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Não encontrado registro com: "+txtPesqId.getText());
-                    }
-                }catch(SQLException | HeadlessException erro){
-                    JOptionPane.showMessageDialog(null,"Não foi possivel localizar os dados via digitação..."+erro);
-                }
-        }
+                preencher_jtable("select * from cadastrodeprocesso"+st);
+            }
     }//GEN-LAST:event_txtPesqIdKeyPressed
 
     private void txtPesqNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesqNomeKeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            limpar_tabela();
-            try{
-            con_cliente.executeSQL("select * from cadastrodeprocesso where Cliente like '"+txtPesqNome.getText()+"%' order by Cliente");
-                if(con_cliente.resultset.next()){
-                    preencher_jtable();
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Não encontrado registro com: "+txtPesqNome.getText().toUpperCase());
-                }
-            }catch(SQLException | HeadlessException erro){
-                JOptionPane.showMessageDialog(null,"Não foi possivel localizar os dados via digitação..."+erro);
-            }
+                preencher_jtable("select * from cadastrodeprocesso where Cliente like '"+txtPesqNome.getText()+"%' order by Cliente");         
         }
     }//GEN-LAST:event_txtPesqNomeKeyPressed
+
+    private void txtPesqIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesqIdActionPerformed
+              String st;
+              if(txtPesqId.getText().equals("")){
+                       st="";  
+              }else{
+                       st=" where Apelido like '"+txtPesqId.getText().trim()+"'";
+              }
+                       preencher_jtable("select * from cadastrodeprocesso"+st);
+    }//GEN-LAST:event_txtPesqIdActionPerformed
+
+    private void txtPesqNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesqNomeActionPerformed
+         preencher_jtable("select * from cadastrodeprocesso where Cliente like '"+txtPesqNome.getText()+"%' order by Cliente");
+    }//GEN-LAST:event_txtPesqNomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -493,25 +453,39 @@ public class Ativador extends javax.swing.JFrame {
 
     /**
      *
+     * @param valor
      */
-    public void preencher_jtable(){
+    public void preencher_jtable(String valor){
         tb_ativacao.getColumnModel().getColumn(0);
         tb_ativacao.getColumnModel().getColumn(1);
         tb_ativacao.getColumnModel().getColumn(2);
         DefaultTableModel modelo = (DefaultTableModel)tb_ativacao.getModel();
         
+        limpar_tabela();
+        
+        int i=0;
+        
         try{
-            while(con_cliente.resultset.next())
-                modelo.addRow(new Object []{
-                    con_cliente.resultset.getString("codNumerodoprocesso"),
-                    con_cliente.resultset.getString("Apelido"),
-                    con_cliente.resultset.getString("Cliente")});
-                    con_cliente.resultset.first();
+        
+            PreparedStatement ps = getCon().prepareStatement(valor);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs!=null){
+                while(rs.next()){
+                    modelo.addRow(new String[1]);
+                        modelo.setValueAt(rs.getString("codNumerodoprocesso"), i, 0);
+                        modelo.setValueAt(rs.getString("Apelido"), i, 1);
+                        modelo.setValueAt(rs.getString("Cliente"), i, 2);
+                         i++;
+                    
+                }
+            }
+        con.close();
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null, "Erro ao lista tabela: " +erro);
+        }finally{
         }
     }
-    
     public void limpar_tabela(){
     DefaultTableModel tbm = (DefaultTableModel)tb_ativacao.getModel();
         for(int i = tbm.getRowCount()-1; i>=0; i--){
@@ -546,5 +520,15 @@ public class Ativador extends javax.swing.JFrame {
             }
         }catch(Exception erro){
         }
+    }
+    public void ordenar(String valor){
+            comando = "select * from cadastrodeprocesso order by "+valor;
+            preencher_jtable(comando);
+    }
+    public void pesqID(){
+        
+    }
+    public void pesqNome(){
+        
     }
 }
