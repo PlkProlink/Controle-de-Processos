@@ -15,12 +15,12 @@ public class ConexaoStatement{
 //vamos abrir a conexao
     
     static String driver = "com.mysql.jdbc.Driver";
-    //private static String url = "jdbc:mysql://192.168.0.202/clientev1";
+    private static String url = "jdbc:mysql://192.168.0.202/clientev1";
     private static String user = "root";
-    //private static String password = "123456"; 
+    private static String password = "123456"; 
     
-    private static String url = "jdbc:mysql://localhost/clientev1";
-    private static String password = ""; 
+//    private static String url = "jdbc:mysql://localhost/clientev1";
+//    private static String password = ""; 
     
     
     public static Connection abrirConexao() {

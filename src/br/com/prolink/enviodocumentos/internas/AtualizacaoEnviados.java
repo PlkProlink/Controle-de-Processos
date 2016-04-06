@@ -22,8 +22,12 @@ public class AtualizacaoEnviados {
         try{
             conexao = new Conexao();
             conexao.conecta();
+            conexao.executeSQL("select * from acompanhamentodeenvios where Numerodoprocesso='"+Ativador.processo+"'");
+            if(conexao.resultset.first()){
+            
             conexao.statement.executeUpdate("update acompanhamentodeenvios set "
-                                            + "BoletoPLKacompanhamento='1º Envio Realizado' where Numerodoprocesso='"+Ativador.processo+"'");
+                                            + campo+"='1º Envio Realizado' where Numerodoprocesso='"+Ativador.processo+"'");
+            }
             return true;
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null, "Erro ao atualizar acompanhamento: tela>" +tela);
@@ -37,8 +41,11 @@ public class AtualizacaoEnviados {
         try{
             conexao = new Conexao();
             conexao.conecta();
+            conexao.executeSQL("select * from acompanhamentodeenvios where Numerodoprocesso='"+Ativador.processo+"'");
+            if(conexao.resultset.first()){
             conexao.statement.executeUpdate("update acompanhamentodeenvios set "
-                                                + "BoletoPLKacompanhamento='2º Envio Realizado' where Numerodoprocesso='"+Ativador.processo+"'");
+                                                + campo+"='2º Envio Realizado' where Numerodoprocesso='"+Ativador.processo+"'");
+            }
             return true;
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null, "Erro ao atualizar acompanhamento: tela>" +tela);
@@ -51,8 +58,11 @@ public class AtualizacaoEnviados {
         try{
             conexao = new Conexao();
             conexao.conecta();
+            conexao.executeSQL("select * from acompanhamentodeenvios where Numerodoprocesso='"+Ativador.processo+"'");
+            if(conexao.resultset.first()){
             conexao.statement.executeUpdate("update acompanhamentodeenvios set "
-                                            + "BoletoPLKacompanhamento='Finalizado' where Numerodoprocesso='"+Ativador.processo+"'");
+                                            + campo+"='Finalizado' where Numerodoprocesso='"+Ativador.processo+"'");
+            }
             return true;
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null, "Erro ao atualizar acompanhamento: tela>" +tela);

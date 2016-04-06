@@ -4,13 +4,13 @@ import br.com.prolink.enviodocumentos.internas.EnviadosIntIpi;
 import br.com.prolink.enviodocumentos.internas.EnviadosIntIrpfSalario;
 import br.com.prolink.enviodocumentos.internas.EnviadosIntIrpfServicos;
 import br.com.prolink.enviodocumentos.internas.EnviadosIntFgts;
-import br.com.prolink.enviodocumentos.internas.EnviadosIntCsll;
+import br.com.prolink.enviodocumentos.internas.EnviadosIntCofins;
 import br.com.prolink.enviodocumentos.internas.EnviadosIntIss;
 import br.com.prolink.enviodocumentos.internas.EnviadosIntIcms;
 import br.com.prolink.enviodocumentos.internas.EnviadosIntCofins;
 import br.com.prolink.enviodocumentos.internas.EnviadosIntIcmsServicos;
 import br.com.prolink.enviodocumentos.internas.EnviadosIntIrpj;
-import br.com.prolink.enviodocumentos.internas.EnviadosIntGps;
+import br.com.prolink.enviodocumentos.internas.EnviadosIntFgts;
 import br.com.prolink.enviodocumentos.internas.EnviadosIntDas;
 import br.com.prolink.enviodocumentos.internas.EnviadosIntBoletos;
 import br.com.prolink.login.Login;
@@ -973,7 +973,7 @@ public class DocumentosEnviados extends javax.swing.JFrame {
     private void btnCsllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCsllActionPerformed
         jDesktopPane.removeAll();
         if(csll == null){
-            csll = new EnviadosIntCsll();
+            csll = new EnviadosIntCofins();
         }
         jDesktopPane.add(csll);
         csll.setVisible(true);
@@ -991,7 +991,7 @@ public class DocumentosEnviados extends javax.swing.JFrame {
     private void btnGpsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGpsActionPerformed
         jDesktopPane.removeAll();
         if(gps == null){
-            gps = new EnviadosIntGps();
+            gps = new EnviadosIntFgts();
         }
         jDesktopPane.add(gps);
         gps.setVisible(true);
@@ -1171,10 +1171,10 @@ public class DocumentosEnviados extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     EnviadosIntBoletos bol;
     EnviadosIntCofins cofins;
-    EnviadosIntCsll csll;
+    EnviadosIntCofins csll;
     EnviadosIntDas das;
     EnviadosIntFgts fgts;
-    EnviadosIntGps gps;
+    EnviadosIntFgts gps;
     EnviadosIntIcms icms;
     EnviadosIntIcmsServicos icmsServ;
     EnviadosIntIpi ipi;

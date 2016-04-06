@@ -391,7 +391,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         jpAuxLayout.setHorizontalGroup(
             jpAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpAuxLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jpAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jpAuxLayout.createSequentialGroup()
                         .addComponent(lb_data)
@@ -408,8 +408,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
                     .addGroup(jpAuxLayout.createSequentialGroup()
                         .addComponent(lb_hora)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                        .addComponent(txt_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jpAuxLayout.setVerticalGroup(
             jpAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -468,7 +467,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
                                         .addGap(12, 12, 12)
                                         .addComponent(cb_para, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(15, 15, 15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPrincipalLayout.createSequentialGroup()
                                 .addComponent(bt_novo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -486,9 +485,9 @@ public class ControleRecepcao extends javax.swing.JFrame {
                                 .addComponent(btEnviarAlerta)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtAlerta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jpAux, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))))
+                        .addContainerGap(16, Short.MAX_VALUE))))
         );
         jPrincipalLayout.setVerticalGroup(
             jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -967,19 +966,23 @@ public class ControleRecepcao extends javax.swing.JFrame {
                 ps.setString(9, "");
                 ps.setString(10, "N");
                 if (ps.executeUpdate() > 0) {
-                    enviarEmail();
-                    setEnabledAlterar(true);
-                    setEnabledNovo(true);
-                    setEditable(jPrincipal, false);
-                    limparTela(jPrincipal);
-                    limparTela(jpAux);
-                    limparTela(jpObs);
-                    JOptionPane.showMessageDialog(null, "Sucesso!");
+                    String aviso = "Deseja enviar alerta por e-mail?";
+                    int escolha = JOptionPane.showConfirmDialog(null, aviso, "Envio de Alerta!", JOptionPane.YES_NO_OPTION);
+                        if(escolha==JOptionPane.YES_OPTION){
+                        if(enviarEmail()){
+                            setEnabledAlterar(true);
+                            setEnabledNovo(true);
+                            setEditable(jPrincipal, false);
+                            JOptionPane.showMessageDialog(null, "Sucesso!");
+                            preencherTabela("select * from documentos_recebidos where Recebido='N' order by cod desc");
+                            criaGraficos();
+                        }
+                        else
+                            JOptionPane.showMessageDialog(null, "Não consegui enviar o seu e-mail, talvez por problema no servidor,"
+                                    + "\nMas o seu lançamento esta salvo; \naguarde um pouco e tente enviar o alerta mais tarde!");
+                        }
                 }
-                preencherTabela("select * from documentos_recebidos where Recebido='N' order by cod desc");
-                criaGraficos();
                 con.close();
-                //JOptionPane.showMessageDialog(null, "Registro salvo com sucesso");
             } catch (SQLException | ParseException erro) {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar o registro!" + erro);
             }
@@ -1017,22 +1020,23 @@ public class ControleRecepcao extends javax.swing.JFrame {
                 ps.setInt(9, Integer.parseInt(txt_codigo.getText()));
 
                 if (ps.executeUpdate() > 0) {
-                    JOptionPane.showMessageDialog(null, "Atualizado!");
-                    int question = JOptionPane.showConfirmDialog(null, "Deseja alertar esse usuario desse documento!", "Enviar E-mail?",JOptionPane.YES_NO_OPTION);
-                    if(question == JOptionPane.YES_OPTION){
-                        enviarEmail();
+                    String aviso = "Deseja enviar alerta por e-mail?";
+                    int escolha = JOptionPane.showConfirmDialog(null, aviso, "Envio de Alerta!", JOptionPane.YES_NO_OPTION);
+                    if(escolha==JOptionPane.YES_OPTION){
+                        if(enviarEmail()){
+                            preencherTabela("select * from documentos_recebidos where Recebido='N' order by cod desc");
+                            criaGraficos();
+                            Thread.interrupted();
+                            Thread();
+                        }
                     }
                 }
-                preencherTabela("select * from documentos_recebidos where Recebido='N' order by cod desc");
+                setEnabledAlterar(true);
                 con.close();
-                criaGraficos();
-                Thread.interrupted();
-                Thread();
             } catch (SQLException | ParseException ex) {
                 JOptionPane.showMessageDialog(null, "Não foi possivel " + ex);
             }
         }
-        setEnabledAlterar(true);
         setEnabledNovo(true);
         setEditable(jPrincipal, false);
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -1101,9 +1105,15 @@ public class ControleRecepcao extends javax.swing.JFrame {
 
     private void btEnviarAlertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEnviarAlertaActionPerformed
         if (txt_codigo.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Não há nada para ser enviado!");
+            JOptionPane.showMessageDialog(null, "Não há nada selecionado para ser enviado!");
         } else {
-            JOptionPane.showMessageDialog(null, "Enviado com sucesso!");
+            String aviso = "Deseja enviar alerta por e-mail?";
+            int escolha = JOptionPane.showConfirmDialog(null, aviso, "Envio de Alerta!", JOptionPane.YES_NO_OPTION);
+            if(escolha==JOptionPane.YES_OPTION){
+                if(enviarEmail()){
+                    JOptionPane.showMessageDialog(null, "Sucesso!");
+                }
+            }
         }
     }//GEN-LAST:event_btEnviarAlertaActionPerformed
 
@@ -1916,7 +1926,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         }
     }
 
-    private void enviarEmail() {
+    private boolean enviarEmail(){
         AvisoEmail aviso = new AvisoEmail();
         HtmlEntities html = new HtmlEntities();
         String nomeCliente = html.Converter(txt_nome.getText());
@@ -1924,13 +1934,16 @@ public class ControleRecepcao extends javax.swing.JFrame {
         String a = (String) cb_para.getSelectedItem();
         String aux = "Nesse momento ele esta na recep&ccedil;&atilde;o,";
         String email = (buscarEmail(a));
-        if (email != null && !"".equals(email)) {
-            aviso.enviaAlerta(aux, txt_hora.getText(), nomeCliente, txt_idempresa.getText(), email, a, mensagem);
-            System.out.println("Alerta enviado!");
-        } else if (changeRecebido() == true) {
-            JOptionPane.showMessageDialog(null, "Não consegui enviar o email!\nSerá armazenado para tentar entregar o aviso depois!");
+        try{
+            if(aviso.enviaAlerta(aux, txt_hora.getText(), nomeCliente, txt_idempresa.getText(), email, a, mensagem)==true)
+                return true;
+        }catch(Exception e){
+            changeRecebido();
+            return false;
         }
+        return false;
     }
+        
 
     private String buscarEmail(String usuario) {
         try {

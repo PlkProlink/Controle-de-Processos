@@ -10,12 +10,12 @@ import javax.swing.*;
 public class Conexao
 {
     final public static String driver = "com.mysql.jdbc.Driver";
-    //final public static String url = "jdbc:mysql://192.168.0.202/clientev1";
+    final public static String url = "jdbc:mysql://192.168.0.202/clientev1";
     final public static String usuario = "root";
-    //final public static String senha = "123456";
+    final public static String senha = "123456";
     
-    final public static String url = "jdbc:mysql://localhost/clientev1";
-    final public static String senha = "";
+//    final public static String url = "jdbc:mysql://localhost/clientev1";
+//    final public static String senha = "";
     
     
     public Connection connection;  //vai chamar a conexao

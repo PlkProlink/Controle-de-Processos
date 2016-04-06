@@ -595,12 +595,12 @@ public class CadastroClientes extends javax.swing.JFrame {
                             {
                             JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
                             //disparar e-mail para administradores alertando exclusão
-                            AlertaExclusao alerta = new AlertaExclusao();
-                            alerta.destino = "tiago.dias@prolinkcontabil.com.br";
-                            alerta.assunto = "Controle de Processos - Cadastro Excluido";
-                            alerta.mensagem = "Olá,\n Se você recebeu essa mensagem significa que "+Login.usuario+" realizou uma tentativa de exclusão"+
-                                    " no cliente abaixo \n Nome:"+nome+" \nProcesso: "+txt_codigo.getText()+
-                                    "\n Todos os registros desse cliente foram perdidos!";
+//                            AlertaExclusao alerta = new AlertaExclusao();
+//                            alerta.destino = "tiago.dias@prolinkcontabil.com.br";
+//                            alerta.assunto = "Controle de Processos - Cadastro Excluido";
+//                            alerta.mensagem = "Olá,\n Se você recebeu essa mensagem significa que "+Login.usuario+" realizou uma tentativa de exclusão"+
+//                                    " no cliente abaixo \n Nome:"+nome+" \nProcesso: "+txt_codigo.getText()+
+//                                    "\n Todos os registros desse cliente foram perdidos!";
                             
                             limpar_tabela();
                             preencher_jtable();

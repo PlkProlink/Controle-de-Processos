@@ -847,7 +847,7 @@ public class Listagem extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione um registro para poder contestar!");
         }
         else if(!txtPara.getText().equals("") && !txtPara.getText().equals(usuario)){
-            JOptionPane.showMessageDialog(null, "Esse documento não foi registrado para você receber, somente o responsavel pode Constestar!");
+            JOptionPane.showMessageDialog(null, "Esse documento não foi registrado para você receber, somente o responsável pode Contestar!");
         }
         else if(!txtRecebidoPor.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Esse registro ja foi baixado!!");

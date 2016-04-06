@@ -5,6 +5,8 @@
  */
 package br.com.prolink.inicio;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import javax.swing.table.*;
@@ -74,7 +76,31 @@ public class Ativador extends javax.swing.JFrame {
         txtPesqId = new javax.swing.JTextField();
         lb_organizar1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tb_ativacao = new javax.swing.JTable();
+        tb_ativacao = new javax.swing.JTable(){
+            @Override
+            public Component prepareRenderer (TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                //component.setBackground(Color.ORANGE); //muda cor para toda a tabela
+                //component.setBackground(row % 2 == 0 ? Color.ORANGE : Color.WHITE);
+                if (!isRowSelected(row)) {
+                    component.setBackground(getBackground());
+                    int linha = convertRowIndexToModel(row);
+
+                    //as 3 linhas abaixo mudam a cor de todos os que sua idade seja maior ou igual a 30 anos
+                    String valor = (String) getModel().getValueAt(linha, 3);
+                    if (valor.equals("Concluido"))
+                    component.setBackground(Color.GREEN);
+
+                    //muda as cores conforme se cliente é ativo ou não
+                    //boolean ativo = (boolean) getModel().getValueAt(linha, 3);
+                    //if (ativo == true)
+                    //	component.setBackground(Color.CYAN);
+                }
+
+                return component;
+            }
+
+        };
         lbProcesso = new javax.swing.JLabel();
         txt_processo = new javax.swing.JTextField();
 
@@ -152,7 +178,7 @@ public class Ativador extends javax.swing.JFrame {
         });
 
         cb_organizar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cb_organizar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Codigo", "Apelido", "Nome" }));
+        cb_organizar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Codigo", "Apelido", "Nome", "Status" }));
         cb_organizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_organizarActionPerformed(evt);
@@ -218,14 +244,14 @@ public class Ativador extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Apelido", "Nome"
+                "Codigo", "Apelido", "Nome", "Documentos Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -247,6 +273,8 @@ public class Ativador extends javax.swing.JFrame {
             tb_ativacao.getColumnModel().getColumn(0).setMaxWidth(50);
             tb_ativacao.getColumnModel().getColumn(1).setPreferredWidth(75);
             tb_ativacao.getColumnModel().getColumn(1).setMaxWidth(75);
+            tb_ativacao.getColumnModel().getColumn(3).setResizable(false);
+            tb_ativacao.getColumnModel().getColumn(3).setPreferredWidth(50);
         }
 
         lbProcesso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -299,8 +327,7 @@ public class Ativador extends javax.swing.JFrame {
                     .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbNome))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -366,18 +393,23 @@ public class Ativador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void cb_organizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_organizarActionPerformed
-         if(cb_organizar.getSelectedItem().equals("Nome")){
-                  String valor = "Cliente";
-                  ordenar(valor);
-         }
-         else if(cb_organizar.getSelectedItem().equals("Codigo")){
-                  String valor =  "codNumerodoprocesso";
-                  ordenar(valor);
-         }
-         else if(cb_organizar.getSelectedItem().equals("Apelido")){
-                  String valor =  "Apelido";
-                  ordenar(valor);
+        if(cb_organizar.getSelectedItem().equals("Nome")){
+                String valor = "Cliente";
+                ordenar(valor);
         }
+        else if(cb_organizar.getSelectedItem().equals("Codigo")){
+                String valor =  "codNumerodoprocesso";
+                ordenar(valor);
+        }
+        else if(cb_organizar.getSelectedItem().equals("Apelido")){
+                String valor =  "Apelido";
+                ordenar(valor);
+        }
+        else if(cb_organizar.getSelectedItem().equals("Status")){
+                String valor =  "AndamentoDocumentos";
+                ordenar(valor);
+        }
+            
     }//GEN-LAST:event_cb_organizarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -476,7 +508,8 @@ public class Ativador extends javax.swing.JFrame {
                         modelo.setValueAt(rs.getString("codNumerodoprocesso"), i, 0);
                         modelo.setValueAt(rs.getString("Apelido"), i, 1);
                         modelo.setValueAt(rs.getString("Cliente"), i, 2);
-                         i++;
+                        modelo.setValueAt(rs.getString("AndamentoDocumentos"), i, 3);
+                        i++;
                     
                 }
             }
