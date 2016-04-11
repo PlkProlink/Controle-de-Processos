@@ -70,6 +70,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
     public ControleRecepcao() {
         initComponents();
         criaGraficos();
+        
         Thread();
 
         setEditable(jPrincipal, false);
@@ -1271,7 +1272,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
             try {
                 System.out.println("Executando thead");
                 preencherTranferidos();
-                Thread.sleep(300 * 1000);
+                Thread.sleep(10 * 1000);
                 Thread();
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(null, "Falha na executação da thread:" + ex);

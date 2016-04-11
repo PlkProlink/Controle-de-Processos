@@ -18,11 +18,13 @@ import br.com.prolink.login.Login;
 import br.com.prolink.documentos.*;
 import br.com.prolink.departamentos.*;
 import br.com.prolink.cadastros.*;
+import br.com.prolink.inicio.administracaoAlertas.AdministradorDePendencias;
 import br.com.prolink.usuario.*;;
 import br.com.prolink.login.*;
 import br.com.prolink.recepcao.*;
 import br.com.prolink.relatorios.RelatCadastro;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
@@ -56,27 +58,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         timer1 = new org.netbeans.examples.lib.timerbean.Timer();
         jpPrincipal = new javax.swing.JPanel();
-        jpDepartamentos = new javax.swing.JPanel();
-        btnComercial = new javax.swing.JButton();
-        btnContabil = new javax.swing.JButton();
-        btnContratos = new javax.swing.JButton();
-        btnPessoal = new javax.swing.JButton();
-        btnFinanceiro = new javax.swing.JButton();
-        btnFiscal = new javax.swing.JButton();
-        btnRegularizacao = new javax.swing.JButton();
-        jpOutros = new javax.swing.JPanel();
-        btnArqEnviados = new javax.swing.JButton();
-        btnRelatorios = new javax.swing.JButton();
-        btnDocumentos = new javax.swing.JButton();
-        btnAdministracao = new javax.swing.JButton();
-        btnMensagem = new javax.swing.JButton();
         jpProcessos = new javax.swing.JPanel();
-        btnClassificacao = new javax.swing.JButton();
         btnNovoProcesso = new javax.swing.JButton();
+        btnRelatorios = new javax.swing.JButton();
         jpRececepcao = new javax.swing.JPanel();
         btnConfirmarDocumento = new javax.swing.JButton();
         btnNovoDocumentoRec = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jpBarraInfo = new javax.swing.JPanel();
         txt_finalizada = new javax.swing.JLabel();
         lbFinalizada = new javax.swing.JLabel();
@@ -95,6 +82,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         txt_nome = new javax.swing.JLabel();
         txt_id = new javax.swing.JLabel();
         txt_codigo = new javax.swing.JLabel();
+        jDkBody = new javax.swing.JDesktopPane();
+        jpProcessos1 = new javax.swing.JPanel();
+        btnEnviados = new javax.swing.JButton();
+        btnRecebidos = new javax.swing.JButton();
         barraGuias = new javax.swing.JMenuBar();
         jmCadastro = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
@@ -112,7 +103,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem7 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem8 = new javax.swing.JMenuItem();
         jmControle = new javax.swing.JMenu();
         menu_comercial = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
@@ -161,130 +151,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jpPrincipal.setBackground(new java.awt.Color(245, 245, 245));
+        jpPrincipal.setBackground(new java.awt.Color(250, 250, 250));
         jpPrincipal.setToolTipText("");
         jpPrincipal.setMinimumSize(new java.awt.Dimension(800, 600));
         jpPrincipal.setName(""); // NOI18N
         jpPrincipal.setPreferredSize(new java.awt.Dimension(1280, 720));
 
-        jpDepartamentos.setBackground(new java.awt.Color(245, 245, 245));
-        jpDepartamentos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Departamentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
-        jpDepartamentos.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        jpDepartamentos.setOpaque(false);
+        jpProcessos.setBackground(new java.awt.Color(250, 250, 250));
+        jpProcessos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Guia de Processos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
+        jpProcessos.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jpProcessos.setOpaque(false);
 
-        btnComercial.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnComercial.setText("Comercial");
-        btnComercial.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnComercial.setMaximumSize(new java.awt.Dimension(80, 23));
-        btnComercial.setPreferredSize(new java.awt.Dimension(80, 23));
-        btnComercial.addActionListener(new java.awt.event.ActionListener() {
+        btnNovoProcesso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnNovoProcesso.setText("Gerenciar");
+        btnNovoProcesso.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnNovoProcesso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnComercialActionPerformed(evt);
-            }
-        });
-
-        btnContabil.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnContabil.setText("Contabil");
-        btnContabil.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnContabil.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnContabilActionPerformed(evt);
-            }
-        });
-
-        btnContratos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnContratos.setText("Contratos");
-        btnContratos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnContratos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnContratosActionPerformed(evt);
-            }
-        });
-
-        btnPessoal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnPessoal.setText("Dep.Pessoal");
-        btnPessoal.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnPessoal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPessoalActionPerformed(evt);
-            }
-        });
-
-        btnFinanceiro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnFinanceiro.setText("Financeiro");
-        btnFinanceiro.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnFinanceiro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFinanceiroActionPerformed(evt);
-            }
-        });
-
-        btnFiscal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnFiscal.setText("Fiscal");
-        btnFiscal.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnFiscal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFiscalActionPerformed(evt);
-            }
-        });
-
-        btnRegularizacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnRegularizacao.setText("Regularização");
-        btnRegularizacao.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnRegularizacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegularizacaoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jpDepartamentosLayout = new javax.swing.GroupLayout(jpDepartamentos);
-        jpDepartamentos.setLayout(jpDepartamentosLayout);
-        jpDepartamentosLayout.setHorizontalGroup(
-            jpDepartamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpDepartamentosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnComercial, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnContabil, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnContratos, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnPessoal, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnFinanceiro, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRegularizacao, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jpDepartamentosLayout.setVerticalGroup(
-            jpDepartamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpDepartamentosLayout.createSequentialGroup()
-                .addGroup(jpDepartamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnComercial, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnContabil, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnContratos, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPessoal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFinanceiro, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRegularizacao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jpDepartamentosLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnComercial, btnContabil, btnContratos, btnFinanceiro, btnFiscal, btnPessoal, btnRegularizacao});
-
-        jpOutros.setBackground(new java.awt.Color(245, 245, 245));
-        jpOutros.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Controles Gerenciais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
-        jpOutros.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        jpOutros.setOpaque(false);
-
-        btnArqEnviados.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnArqEnviados.setText("Doc.Enviados");
-        btnArqEnviados.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnArqEnviados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnArqEnviadosActionPerformed(evt);
+                btnNovoProcessoActionPerformed(evt);
             }
         });
 
@@ -297,120 +180,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnDocumentos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnDocumentos.setText("Documentos");
-        btnDocumentos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnDocumentos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDocumentosActionPerformed(evt);
-            }
-        });
-
-        btnAdministracao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnAdministracao.setText("Acessos");
-        btnAdministracao.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnAdministracao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdministracaoActionPerformed(evt);
-            }
-        });
-
-        btnMensagem.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnMensagem.setText("Mensagem");
-        btnMensagem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnMensagem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMensagemActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jpOutrosLayout = new javax.swing.GroupLayout(jpOutros);
-        jpOutros.setLayout(jpOutrosLayout);
-        jpOutrosLayout.setHorizontalGroup(
-            jpOutrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpOutrosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnArqEnviados, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAdministracao, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jpOutrosLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAdministracao, btnArqEnviados, btnDocumentos, btnMensagem, btnRelatorios});
-
-        jpOutrosLayout.setVerticalGroup(
-            jpOutrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpOutrosLayout.createSequentialGroup()
-                .addGroup(jpOutrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnArqEnviados, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAdministracao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jpOutrosLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAdministracao, btnArqEnviados, btnDocumentos, btnMensagem, btnRelatorios});
-
-        btnArqEnviados.getAccessibleContext().setAccessibleName("");
-        btnRelatorios.getAccessibleContext().setAccessibleName("");
-        btnDocumentos.getAccessibleContext().setAccessibleName("");
-        btnAdministracao.getAccessibleContext().setAccessibleName("");
-        btnMensagem.getAccessibleContext().setAccessibleName("");
-
-        jpProcessos.setBackground(new java.awt.Color(245, 245, 245));
-        jpProcessos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Guia de Processos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
-        jpProcessos.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        jpProcessos.setOpaque(false);
-
-        btnClassificacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnClassificacao.setText("Perfis");
-        btnClassificacao.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnClassificacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClassificacaoActionPerformed(evt);
-            }
-        });
-
-        btnNovoProcesso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnNovoProcesso.setText("Novo");
-        btnNovoProcesso.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnNovoProcesso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoProcessoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jpProcessosLayout = new javax.swing.GroupLayout(jpProcessos);
         jpProcessos.setLayout(jpProcessosLayout);
         jpProcessosLayout.setHorizontalGroup(
             jpProcessosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpProcessosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnNovoProcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(jpProcessosLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jpProcessosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnNovoProcesso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
-
-        jpProcessosLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnClassificacao, btnNovoProcesso});
-
         jpProcessosLayout.setVerticalGroup(
             jpProcessosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpProcessosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(btnClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnNovoProcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jpProcessosLayout.createSequentialGroup()
+                .addComponent(btnNovoProcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jpProcessosLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnClassificacao, btnNovoProcesso});
-
-        jpRececepcao.setBackground(new java.awt.Color(245, 245, 245));
+        jpRececepcao.setBackground(new java.awt.Color(250, 250, 250));
         jpRececepcao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recepção de Documentos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
         jpRececepcao.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
         jpRececepcao.setOpaque(false);
@@ -437,12 +227,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpRececepcao.setLayout(jpRececepcaoLayout);
         jpRececepcaoLayout.setHorizontalGroup(
             jpRececepcaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpRececepcaoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnNovoDocumentoRec, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConfirmarDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(jpRececepcaoLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jpRececepcaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnNovoDocumentoRec, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConfirmarDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jpRececepcaoLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnConfirmarDocumento, btnNovoDocumentoRec});
@@ -450,94 +240,61 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpRececepcaoLayout.setVerticalGroup(
             jpRececepcaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpRececepcaoLayout.createSequentialGroup()
-                .addGroup(jpRececepcaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNovoDocumentoRec, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConfirmarDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnNovoDocumentoRec, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConfirmarDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jpRececepcaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnConfirmarDocumento, btnNovoDocumentoRec});
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/logo_grande.jpg"))); // NOI18N
-
-        javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
-        jpPrincipal.setLayout(jpPrincipalLayout);
-        jpPrincipalLayout.setHorizontalGroup(
-            jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPrincipalLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jpProcessos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpRececepcao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpPrincipalLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jpDepartamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jpOutros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(264, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(418, Short.MAX_VALUE))))
-        );
-        jpPrincipalLayout.setVerticalGroup(
-            jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPrincipalLayout.createSequentialGroup()
-                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jpPrincipalLayout.createSequentialGroup()
-                        .addComponent(jpRececepcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpProcessos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jpPrincipalLayout.createSequentialGroup()
-                        .addComponent(jpDepartamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpOutros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(27, 27, 27)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
-        );
-
-        jpBarraInfo.setBackground(new java.awt.Color(245, 245, 245));
+        jpBarraInfo.setBackground(new java.awt.Color(250, 250, 250));
         jpBarraInfo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jpBarraInfo.setFont(new java.awt.Font("Cambria", 0, 12)); // NOI18N
 
-        txt_finalizada.setBackground(new java.awt.Color(255, 255, 255));
+        txt_finalizada.setBackground(new java.awt.Color(250, 250, 250));
         txt_finalizada.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_finalizada.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
+        lbFinalizada.setBackground(new java.awt.Color(250, 250, 250));
         lbFinalizada.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbFinalizada.setText("Finalizada:");
 
-        txt_ativada.setBackground(new java.awt.Color(255, 255, 255));
+        txt_ativada.setBackground(new java.awt.Color(250, 250, 250));
         txt_ativada.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_ativada.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
+        lbAtivada.setBackground(new java.awt.Color(250, 250, 250));
         lbAtivada.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbAtivada.setText("Ativada:");
 
+        lbClassificacao.setBackground(new java.awt.Color(250, 250, 250));
         lbClassificacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbClassificacao.setText("Classificação:");
 
+        lbNome.setBackground(new java.awt.Color(250, 250, 250));
         lbNome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbNome.setText("Nome:");
 
+        lbCodigo.setBackground(new java.awt.Color(250, 250, 250));
         lbCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbCodigo.setText("Cod:");
 
-        txt_usuario.setBackground(new java.awt.Color(255, 255, 255));
+        txt_usuario.setBackground(new java.awt.Color(250, 250, 250));
         txt_usuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_usuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_usuario.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        txt_departamento.setBackground(new java.awt.Color(255, 255, 255));
+        txt_departamento.setBackground(new java.awt.Color(250, 250, 250));
         txt_departamento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_departamento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txt_departamento.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
+        lb_apelido.setBackground(new java.awt.Color(250, 250, 250));
         lb_apelido.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lb_apelido.setText("Apelido:");
 
+        btnModificarData.setBackground(new java.awt.Color(250, 250, 250));
         btnModificarData.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnModificarData.setText("Modificar");
         btnModificarData.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -555,19 +312,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         txtHora.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtHora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        txt_classificacao.setBackground(new java.awt.Color(255, 255, 255));
+        txt_classificacao.setBackground(new java.awt.Color(250, 250, 250));
         txt_classificacao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_classificacao.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        txt_nome.setBackground(new java.awt.Color(255, 255, 255));
+        txt_nome.setBackground(new java.awt.Color(250, 250, 250));
         txt_nome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_nome.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        txt_id.setBackground(new java.awt.Color(255, 255, 255));
+        txt_id.setBackground(new java.awt.Color(250, 250, 250));
         txt_id.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_id.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        txt_codigo.setBackground(new java.awt.Color(255, 255, 255));
+        txt_codigo.setBackground(new java.awt.Color(250, 250, 250));
         txt_codigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txt_codigo.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
@@ -589,7 +346,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_nome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbClassificacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -603,55 +360,135 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_finalizada, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnModificarData, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addComponent(btnModificarData, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBarraInfoLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(877, Short.MAX_VALUE)
                         .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23)))
+                        .addGap(23, 23, 23)
+                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13))
         );
         jpBarraInfoLayout.setVerticalGroup(
             jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpBarraInfoLayout.createSequentialGroup()
                 .addGroup(jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpBarraInfoLayout.createSequentialGroup()
-                        .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpBarraInfoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_classificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txt_ativada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbAtivada, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbClassificacao, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                                    .addComponent(txt_finalizada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbFinalizada, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnModificarData, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lb_apelido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txt_codigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25))
+                    .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_classificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_ativada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbAtivada, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_finalizada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbFinalizada, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnModificarData, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lb_apelido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lbCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txt_codigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txt_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpBarraInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         jpBarraInfoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txt_ativada, txt_departamento, txt_finalizada, txt_usuario});
 
-        barraGuias.setBackground(new java.awt.Color(245, 245, 245));
+        jDkBody.setBackground(new java.awt.Color(250, 250, 250));
+
+        javax.swing.GroupLayout jDkBodyLayout = new javax.swing.GroupLayout(jDkBody);
+        jDkBody.setLayout(jDkBodyLayout);
+        jDkBodyLayout.setHorizontalGroup(
+            jDkBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jDkBodyLayout.setVerticalGroup(
+            jDkBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jpProcessos1.setBackground(new java.awt.Color(250, 250, 250));
+        jpProcessos1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Implatação", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
+        jpProcessos1.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jpProcessos1.setOpaque(false);
+
+        btnEnviados.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnEnviados.setText("Doc.Enviados");
+        btnEnviados.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEnviados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviadosActionPerformed(evt);
+            }
+        });
+
+        btnRecebidos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnRecebidos.setText("Doc.Recebidos");
+        btnRecebidos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnRecebidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecebidosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpProcessos1Layout = new javax.swing.GroupLayout(jpProcessos1);
+        jpProcessos1.setLayout(jpProcessos1Layout);
+        jpProcessos1Layout.setHorizontalGroup(
+            jpProcessos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpProcessos1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(jpProcessos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEnviados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRecebidos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        jpProcessos1Layout.setVerticalGroup(
+            jpProcessos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpProcessos1Layout.createSequentialGroup()
+                .addComponent(btnEnviados, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRecebidos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
+        jpPrincipal.setLayout(jpPrincipalLayout);
+        jpPrincipalLayout.setHorizontalGroup(
+            jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPrincipalLayout.createSequentialGroup()
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jpProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jpProcessos1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpRececepcao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jDkBody))
+            .addComponent(jpBarraInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jpPrincipalLayout.setVerticalGroup(
+            jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPrincipalLayout.createSequentialGroup()
+                .addComponent(jpBarraInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPrincipalLayout.createSequentialGroup()
+                        .addComponent(jpRececepcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)
+                        .addComponent(jpProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jpProcessos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(157, Short.MAX_VALUE))
+                    .addComponent(jDkBody)))
+        );
+
+        barraGuias.setBackground(new java.awt.Color(250, 250, 250));
 
         jmCadastro.setText("Cadastro");
         jmCadastro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -750,18 +587,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jmRecepcao.add(jMenuItem7);
         jmRecepcao.add(jSeparator3);
 
-        jMenuItem8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem8.setText("Relação de Recebimentos");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
-            }
-        });
-        jmRecepcao.add(jMenuItem8);
-
         barraGuias.add(jmRecepcao);
 
-        jmControle.setText("Controle");
+        jmControle.setText("Implantação");
         jmControle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         menu_comercial.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -936,18 +764,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpBarraInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jpPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 1320, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 1320, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jpBarraInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE))
+            .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(1336, 728));
+        setSize(new java.awt.Dimension(1336, 726));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -963,63 +787,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jmTrocadeUsuarioActionPerformed
 
-    private void btnRegularizacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegularizacaoActionPerformed
-        regularizacao();
-    }//GEN-LAST:event_btnRegularizacaoActionPerformed
-
     private void timer1OnTime(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timer1OnTime
         mostrar_data.lerHora();
         txtHora.setText(""+mostrar_data.hora);
         
     }//GEN-LAST:event_timer1OnTime
 
-    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        JOptionPane.showMessageDialog(null, "Disponível na proxima atualização");
-    }//GEN-LAST:event_btnRelatoriosActionPerformed
-
     private void btnNovoProcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoProcessoActionPerformed
         clientes();
     }//GEN-LAST:event_btnNovoProcessoActionPerformed
 
-    private void btnClassificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClassificacaoActionPerformed
-        classificacao();
-    }//GEN-LAST:event_btnClassificacaoActionPerformed
-
-    private void btnFiscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiscalActionPerformed
-        fiscal();    
-    }//GEN-LAST:event_btnFiscalActionPerformed
-
     private void btnNovoDocumentoRecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoDocumentoRecActionPerformed
         recepcao_documentos();
     }//GEN-LAST:event_btnNovoDocumentoRecActionPerformed
-
-    private void btnComercialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComercialActionPerformed
-        comercial();
-    }//GEN-LAST:event_btnComercialActionPerformed
-
-    private void btnContabilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContabilActionPerformed
-        contabil();
-    }//GEN-LAST:event_btnContabilActionPerformed
-
-    private void btnMensagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensagemActionPerformed
-        JOptionPane.showMessageDialog(null,"Esse modulo será descontinuado!");
-    }//GEN-LAST:event_btnMensagemActionPerformed
-
-    private void btnContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContratosActionPerformed
-        contratos();
-    }//GEN-LAST:event_btnContratosActionPerformed
-
-    private void btnPessoalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPessoalActionPerformed
-        dp();
-    }//GEN-LAST:event_btnPessoalActionPerformed
-
-    private void btnFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanceiroActionPerformed
-        financeiro();
-    }//GEN-LAST:event_btnFinanceiroActionPerformed
-
-    private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
-        usuarios();
-    }//GEN-LAST:event_btnAdministracaoActionPerformed
 
     private void btnConfirmarDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarDocumentoActionPerformed
         recepcao_confirmar();
@@ -1035,17 +815,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ts.setVisible(true);
     }//GEN-LAST:event_jmAlteraSenhaActionPerformed
 
-    private void btnArqEnviadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArqEnviadosActionPerformed
-        enviar_documentos();
-    }//GEN-LAST:event_btnArqEnviadosActionPerformed
-
     private void jmClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmClientesActionPerformed
         clientes();
     }//GEN-LAST:event_jmClientesActionPerformed
-
-    private void btnDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocumentosActionPerformed
-        documentos();
-    }//GEN-LAST:event_btnDocumentosActionPerformed
 
     private void btnModificarDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarDataActionPerformed
         clientes();
@@ -1081,10 +853,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         recepcao_confirmar();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        JOptionPane.showMessageDialog(null, "Modulo em desenvolvimento");
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void menu_enviadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_enviadosActionPerformed
         enviar_documentos();
@@ -1159,6 +927,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
         relCliente = new RelatCadastro();
         relCliente.acompanhamentosGeral();
     }//GEN-LAST:event_jmAcompanhamentoGeralActionPerformed
+
+    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
+        jDkBody.removeAll();
+        pendencias = new AdministradorDePendencias();
+        ((BasicInternalFrameUI)pendencias.getUI()).setNorthPane(null);
+        
+        jDkBody.add(pendencias);
+        pendencias.setVisible(true);
+    }//GEN-LAST:event_btnRelatoriosActionPerformed
+
+    private void btnEnviadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviadosActionPerformed
+        documentos();
+    }//GEN-LAST:event_btnEnviadosActionPerformed
+
+    private void btnRecebidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecebidosActionPerformed
+        enviar_documentos();
+    }//GEN-LAST:event_btnRecebidosActionPerformed
     
     /**
      *
@@ -1176,30 +961,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraGuias;
-    private javax.swing.JButton btnAdministracao;
-    private javax.swing.JButton btnArqEnviados;
-    private javax.swing.JButton btnClassificacao;
-    private javax.swing.JButton btnComercial;
     private javax.swing.JButton btnConfirmarDocumento;
-    private javax.swing.JButton btnContabil;
-    private javax.swing.JButton btnContratos;
-    private javax.swing.JButton btnDocumentos;
-    private javax.swing.JButton btnFinanceiro;
-    private javax.swing.JButton btnFiscal;
-    private javax.swing.JButton btnMensagem;
+    private javax.swing.JButton btnEnviados;
     private javax.swing.JButton btnModificarData;
     private javax.swing.JButton btnNovoDocumentoRec;
     private javax.swing.JButton btnNovoProcesso;
-    private javax.swing.JButton btnPessoal;
-    private javax.swing.JButton btnRegularizacao;
+    private javax.swing.JButton btnRecebidos;
     private javax.swing.JButton btnRelatorios;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JDesktopPane jDkBody;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
@@ -1230,10 +1004,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmTrocadeUsuario;
     private javax.swing.JMenuItem jmUsuario;
     private javax.swing.JPanel jpBarraInfo;
-    private javax.swing.JPanel jpDepartamentos;
-    private javax.swing.JPanel jpOutros;
     public static javax.swing.JPanel jpPrincipal;
     private javax.swing.JPanel jpProcessos;
+    private javax.swing.JPanel jpProcessos1;
     private javax.swing.JPanel jpRececepcao;
     private javax.swing.JLabel lbAtivada;
     private javax.swing.JLabel lbClassificacao;
@@ -1284,6 +1057,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     LoginTrocadeAcesso trocarAcesso;
     RelatCadastro relCliente;
     TeladeLog log;
+    AdministradorDePendencias pendencias;
     
     public void contabil(){
         //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa

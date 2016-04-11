@@ -6,8 +6,8 @@ package br.com.prolink.inicio;
  */
 public class VersaoSistema {
     
-    private String versaoSistema="2.1.34";
-    private String baseDados= "2.0.4";
+    private String versaoSistema="2.1.37";
+    private String baseDados= "2.0.5";
     /*
     Historico de versões
     2.0 - Projeto entregue
@@ -23,9 +23,13 @@ public class VersaoSistema {
     2.1.32 - Correção em telas Documentos Enviados +16 Telas
     2.1.33 - Alterações no trabalho com alertas em Recepcao de Documentos 
     prevenção no erro do servidor de e-mail
+    
     2.1.34 - Criação da coluna AndamentoDocumentos em cadastrodeprocesso,
     Habilitação da função atualizar status
     2.1.35 - Inserir nova coluna no ativador AndamentoDocumentos
+    2.1.36 - Habilitando função desativar cliente em Cadastro de Cliente
+    2.1.37 - Removido Botoes e Logomarca na tela inicial
+    2.1.44 - Novas telas para Relatorios
     
     Relatorios em Documentos e Documentos Enviados (array de objetos)
     

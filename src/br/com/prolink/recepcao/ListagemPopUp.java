@@ -61,7 +61,7 @@ public class ListagemPopUp extends javax.swing.JFrame {
         });
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Encaminhar: você pode transferir a documentação para responsabilidade de outro funcionário");
+        jLabel2.setText("Encaminhar: você pode transferir TODA a documentação para responsabilidade de outro funcionário");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Constetar: um alerta será enviado para a recepção alegando o não recebimento,");

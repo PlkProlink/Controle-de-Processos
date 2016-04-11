@@ -129,7 +129,7 @@
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Encaminhar: voc&#xea; pode transferir a documenta&#xe7;&#xe3;o para responsabilidade de outro funcion&#xe1;rio"/>
+            <Property name="text" type="java.lang.String" value="Encaminhar: voc&#xea; pode transferir TODA a documenta&#xe7;&#xe3;o para responsabilidade de outro funcion&#xe1;rio"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">

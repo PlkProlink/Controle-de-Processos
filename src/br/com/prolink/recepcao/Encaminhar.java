@@ -50,9 +50,9 @@ public class Encaminhar extends javax.swing.JInternalFrame {
         cb_para = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(null);
         setTitle("Encaminhar");
         setToolTipText("");
-        setOpaque(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentMoved(java.awt.event.ComponentEvent evt) {
                 formComponentMoved(evt);
@@ -116,7 +116,7 @@ public class Encaminhar extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
@@ -138,14 +138,14 @@ public class Encaminhar extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         setBounds(0, 0, 300, 250);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(!cb_para.getSelectedItem().equals(null) && !cb_para.getSelectedItem().equals("")){
+        if(cb_para.getSelectedItem()!=null && !cb_para.getSelectedItem().equals("")){
             String registro = "Você esta informando que o documento pertence a "+cb_para.getSelectedItem()+"? \nDeseja confirmar?";
             int escolha = JOptionPane.showConfirmDialog(null, registro, "Atenção", JOptionPane.YES_NO_OPTION);
             if(escolha==JOptionPane.YES_OPTION){
@@ -232,7 +232,7 @@ private void setUsuario(String departamento){
         }
     }
     private void encaminhar(){
-    String sql = "update documentos_recebidos set Recebido='T', Alerta='N', Departamento=?, Para_Quem=? where cod=?";
+    String sql = "update documentos_recebidos set Recebido='N', Alerta='N', Departamento=?, Para_Quem=? where cod=?";
     try{
     int codigo=Integer.parseInt(Listagem.txtCodigo.getText());
     
@@ -293,7 +293,7 @@ private void setUsuario(String departamento){
     }
 private void atualiza_alerta(int codigo){
     try{
-        String sql2 = "update documentos_recebidos set Recebido='S', Alerta='S' where cod=?";
+        String sql2 = "update documentos_recebidos set Recebido='N', Alerta='S' where cod=?";
         PreparedStatement ps = getCon().prepareStatement(sql2);
         ps.setInt(1, codigo);
         ps.executeUpdate();

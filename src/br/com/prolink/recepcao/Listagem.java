@@ -844,7 +844,7 @@ public class Listagem extends javax.swing.JFrame {
 
     private void btnConstestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConstestarActionPerformed
         if(txtCodigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Selecione um registro para poder contestar!");
+            JOptionPane.showMessageDialog(null, "Selecione um registro para contestar!");
         }
         else if(!txtPara.getText().equals("") && !txtPara.getText().equals(usuario)){
             JOptionPane.showMessageDialog(null, "Esse documento não foi registrado para você receber, somente o responsável pode Contestar!");

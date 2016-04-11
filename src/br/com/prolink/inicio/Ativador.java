@@ -33,7 +33,9 @@ public class Ativador extends javax.swing.JFrame {
     public static String dataativacao;
     public static String datafinalizacao;
     
-    String codigo, pesquisa, comando;
+    String codigo, pesquisa, comando, ativada, desativada;
+    
+    boolean ativo=true, inativo=false;
     
     Connection con;
     
@@ -47,14 +49,16 @@ public class Ativador extends javax.swing.JFrame {
         
         tb_ativacao.setAutoCreateRowSorter(true);
         
+        ckAtivada.setSelected(true);
         cb_organizar.setSelectedItem("");
-        comando = "select * from cadastrodeprocesso order by codNumerodoprocesso";
+        comando = "select * from cadastrodeprocesso"+verificaStatus()+" order by codNumerodoprocesso";
         preencher_jtable(comando);
         
         txt_apelido.setEditable(false);
         txt_nome.setEditable(false);
         
 }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -88,8 +92,10 @@ public class Ativador extends javax.swing.JFrame {
 
                     //as 3 linhas abaixo mudam a cor de todos os que sua idade seja maior ou igual a 30 anos
                     String valor = (String) getModel().getValueAt(linha, 3);
-                    if (valor.equals("Concluido"))
+                    if (valor.equals("Ativada"))
                     component.setBackground(Color.GREEN);
+                    else
+                    component.setBackground(Color.RED);
 
                     //muda as cores conforme se cliente é ativo ou não
                     //boolean ativo = (boolean) getModel().getValueAt(linha, 3);
@@ -103,6 +109,8 @@ public class Ativador extends javax.swing.JFrame {
         };
         lbProcesso = new javax.swing.JLabel();
         txt_processo = new javax.swing.JTextField();
+        ckAtivada = new javax.swing.JCheckBox();
+        ckFinalizada = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ativador");
@@ -244,7 +252,7 @@ public class Ativador extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Apelido", "Nome", "Documentos Status"
+                "Codigo", "Apelido", "Nome", "Situação"
             }
         ) {
             Class[] types = new Class [] {
@@ -273,14 +281,30 @@ public class Ativador extends javax.swing.JFrame {
             tb_ativacao.getColumnModel().getColumn(0).setMaxWidth(50);
             tb_ativacao.getColumnModel().getColumn(1).setPreferredWidth(75);
             tb_ativacao.getColumnModel().getColumn(1).setMaxWidth(75);
-            tb_ativacao.getColumnModel().getColumn(3).setResizable(false);
-            tb_ativacao.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tb_ativacao.getColumnModel().getColumn(3).setPreferredWidth(80);
+            tb_ativacao.getColumnModel().getColumn(3).setMaxWidth(80);
         }
 
         lbProcesso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbProcesso.setText("Processo:");
 
         txt_processo.setEditable(false);
+
+        ckAtivada.setBackground(new java.awt.Color(245, 245, 245));
+        ckAtivada.setText("Ativada");
+        ckAtivada.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                ckAtivadaStateChanged(evt);
+            }
+        });
+
+        ckFinalizada.setBackground(new java.awt.Color(245, 245, 245));
+        ckFinalizada.setText("Finalizada");
+        ckFinalizada.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ckFinalizadaItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -304,17 +328,26 @@ public class Ativador extends javax.swing.JFrame {
                                 .addComponent(txt_processo, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
                                 .addGap(202, 202, 202)
                                 .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_nome))
-                        .addContainerGap())
+                            .addComponent(txt_nome)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(281, 281, 281))))
+                        .addGap(125, 125, 125)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ckAtivada, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                            .addComponent(ckFinalizada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(ckAtivada)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ckFinalizada)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -327,7 +360,7 @@ public class Ativador extends javax.swing.JFrame {
                     .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbNome))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -365,7 +398,7 @@ public class Ativador extends javax.swing.JFrame {
         if(codigo.trim().equals("")){
             JOptionPane.showMessageDialog(null, "Selecione uma empresa!");
         }
-        else{
+        else if(codigo!=null){
             
             try{
                 
@@ -406,7 +439,7 @@ public class Ativador extends javax.swing.JFrame {
                 ordenar(valor);
         }
         else if(cb_organizar.getSelectedItem().equals("Status")){
-                String valor =  "AndamentoDocumentos";
+                String valor =  "Situacao";
                 ordenar(valor);
         }
             
@@ -449,6 +482,15 @@ public class Ativador extends javax.swing.JFrame {
          preencher_jtable("select * from cadastrodeprocesso where Cliente like '"+txtPesqNome.getText()+"%' order by Cliente");
     }//GEN-LAST:event_txtPesqNomeActionPerformed
 
+    private void ckAtivadaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ckAtivadaStateChanged
+        ordenar("codNumerodoprocesso desc");
+    }//GEN-LAST:event_ckAtivadaStateChanged
+
+    private void ckFinalizadaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ckFinalizadaItemStateChanged
+        // TODO add your handling code here:
+        ordenar("codNumerodoprocesso desc");
+    }//GEN-LAST:event_ckFinalizadaItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -464,6 +506,8 @@ public class Ativador extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSelecionar;
     private javax.swing.JComboBox cb_organizar;
+    private javax.swing.JCheckBox ckAtivada;
+    private javax.swing.JCheckBox ckFinalizada;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -508,7 +552,7 @@ public class Ativador extends javax.swing.JFrame {
                         modelo.setValueAt(rs.getString("codNumerodoprocesso"), i, 0);
                         modelo.setValueAt(rs.getString("Apelido"), i, 1);
                         modelo.setValueAt(rs.getString("Cliente"), i, 2);
-                        modelo.setValueAt(rs.getString("AndamentoDocumentos"), i, 3);
+                        modelo.setValueAt(converter(rs.getString("Situacao")), i, 3);
                         i++;
                     
                 }
@@ -555,13 +599,27 @@ public class Ativador extends javax.swing.JFrame {
         }
     }
     public void ordenar(String valor){
-            comando = "select * from cadastrodeprocesso order by "+valor;
+            comando = "select * from cadastrodeprocesso"+verificaStatus()+" order by "+valor;
             preencher_jtable(comando);
     }
-    public void pesqID(){
-        
+    public String verificaStatus(){
+        if(ckAtivada.isSelected()){
+            if(ckFinalizada.isSelected()){
+                return "";
+            }
+            else{
+                return " where Situacao=1";
+            }
+        }
+        else if(ckFinalizada.isSelected())
+            return " where Situacao=0";
+        return "";
     }
-    public void pesqNome(){
-        
+    public String converter(String valor){
+        int v = Integer.parseInt(valor);
+        if(v==0){
+            return "Desativada";
+        }else
+            return "Ativada";
     }
 }
