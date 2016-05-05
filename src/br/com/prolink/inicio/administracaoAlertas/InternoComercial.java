@@ -4,6 +4,9 @@
  */
 package br.com.prolink.inicio.administracaoAlertas;
 
+import br.com.prolink.departamentos.Comercial;
+import br.com.prolink.documentos.Documentos;
+import br.com.prolink.inicio.Ativador;
 import br.com.prolink.inicio.ConexaoStatement;
 import br.com.prolink.inicio.TelaPrincipal;
 import java.awt.Color;
@@ -11,10 +14,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,13 +28,13 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class InternoComercial extends javax.swing.JInternalFrame {
-    
     /**
      * Creates new form InternoComercial
      */
     public InternoComercial() {
         initComponents();
         carregaCombo();
+        btRelatorio.setVisible(false);
         String value = TelaPrincipal.txt_codigo.getText();
         if(value!=null && value!=""){
             comercial(TelaPrincipal.txt_codigo.getText());
@@ -53,13 +59,13 @@ public class InternoComercial extends javax.swing.JInternalFrame {
         jLabel15 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btAlerta = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        btRelatorio = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        jDkBody = new javax.swing.JDesktopPane();
         jLabel10 = new javax.swing.JLabel();
         jPDepartamento = new javax.swing.JPanel();
         lbTermo = new javax.swing.JLabel();
@@ -114,19 +120,29 @@ public class InternoComercial extends javax.swing.JInternalFrame {
         jLabel14.setText("Requisição de Documentos:");
 
         jButton1.setText("Visualizar Tela");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel15.setText("Taxa de Implantação:");
 
         jButton2.setText("Visualizar Tela");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel16.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel16.setText("Recebimento de Depósito:");
 
-        jButton3.setText("Gerar Alerta");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btAlerta.setText("Gerar Alerta");
+        btAlerta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btAlertaActionPerformed(evt);
             }
         });
 
@@ -139,22 +155,27 @@ public class InternoComercial extends javax.swing.JInternalFrame {
         jLabel19.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel19.setText("Gravar Senhas Fiscais:");
 
-        jButton4.setText("Relatório");
+        btRelatorio.setText("Relatório");
+        btRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRelatorioActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel7.setText("Documentos:");
 
-        jDesktopPane1.setBackground(new java.awt.Color(250, 250, 250));
-        jDesktopPane1.setPreferredSize(new java.awt.Dimension(500, 245));
+        jDkBody.setBackground(new java.awt.Color(250, 250, 250));
+        jDkBody.setPreferredSize(new java.awt.Dimension(500, 245));
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jDkBodyLayout = new javax.swing.GroupLayout(jDkBody);
+        jDkBody.setLayout(jDkBodyLayout);
+        jDkBodyLayout.setHorizontalGroup(
+            jDkBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 500, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jDkBodyLayout.setVerticalGroup(
+            jDkBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 250, Short.MAX_VALUE)
         );
 
@@ -353,14 +374,14 @@ public class InternoComercial extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                             .addComponent(jLabel7)
-                            .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDkBody, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(137, 137, 137)
                                 .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btAlerta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(23, 23, 23))))
         );
         layout.setVerticalGroup(
@@ -405,15 +426,15 @@ public class InternoComercial extends javax.swing.JInternalFrame {
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
+                            .addComponent(btAlerta)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jDkBody, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btAlerta, btRelatorio, jButton1, jButton2});
 
         setBounds(0, 0, 860, 600);
     }// </editor-fold>//GEN-END:initComponents
@@ -422,31 +443,41 @@ public class InternoComercial extends javax.swing.JInternalFrame {
         this.setLocation(0,0);
     }//GEN-LAST:event_formComponentMoved
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btAlertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlertaActionPerformed
+        abrirRelatorio("Alerta");
+    }//GEN-LAST:event_btAlertaActionPerformed
 
     private void jComboBox1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusLost
         
     }//GEN-LAST:event_jComboBox1FocusLost
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-        if(!jComboBox1.getSelectedItem().equals("")  &&
-                !jComboBox1.getSelectedItem().equals(null)){
+        if(!jComboBox1.getSelectedItem().equals("Clique aqui para Ativar!")){
             combo((String)jComboBox1.getSelectedItem());
             comercial(TelaPrincipal.txt_codigo.getText());
             add(TelaPrincipal.txt_codigo.getText());
-            
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        abrirComercial();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        abrirDocumentos();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRelatorioActionPerformed
+        //abrirRelatorio("Relatorio");
+    }//GEN-LAST:event_btRelatorioActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAlerta;
+    private javax.swing.JButton btRelatorio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JDesktopPane jDkBody;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -475,38 +506,75 @@ public class InternoComercial extends javax.swing.JInternalFrame {
     private javax.swing.JTable tbRecebimento;
     private javax.swing.JTable tbSolicitacao;
     // End of variables declaration//GEN-END:variables
+    Relatorios intRelatorio;    
+    Comercial comercial;
+    Documentos documentos;
+    private void abrirRelatorio(String valor){
+        jDkBody.removeAll();
+        //if(intRelatorio==null){
+        List<String> lista = new ArrayList<>();
+            intRelatorio = new Relatorios(valor,"Comercial", lista);
+            ((BasicInternalFrameUI)intRelatorio.getUI()).setNorthPane(null);
+        //}
+        jDkBody.add(intRelatorio);
+        intRelatorio.setVisible(true);
+        
+    }
+    private void abrirDocumentos(){
+        if(TelaPrincipal.txt_codigo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
+            Ativador ativador = new Ativador();
+            ativador.setVisible(true);
+        }
+        else{
+            documentos = new Documentos();
+            documentos.setVisible(true);
+            
+        }
+    }
+    
+    private void abrirComercial(){
+        if(TelaPrincipal.txt_codigo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
+            Ativador ma = new Ativador();
+            ma.setVisible(true);
+        }
+        else{   
+            comercial = new Comercial();
+            comercial.setVisible(true);
+        }
+    }
     public void carregaCombo(){
+        Connection con = null;
         try{
-            String sql ="select Cliente from cadastrodeprocesso";
-            Connection con = new ConexaoStatement().getConnetion();
+            String sql ="select SUBSTRING_INDEX(SUBSTRING_INDEX(Cliente, ' ', 3), ' ', -3) as Cliente from cadastrodeprocesso where Situacao=1";
+            con = new ConexaoStatement().getConnetion();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             jComboBox1.removeAll();
-            jComboBox1.addItem("");
-            
-            String valor = TelaPrincipal.txt_nome.getText();
-            if(!valor.equals(null) && !valor.equals(""))
-                jComboBox1.setSelectedItem("");
-            else
-                jComboBox1.setSelectedItem(valor);
-            
+            jComboBox1.addItem("Clique aqui para Ativar!");
+                       
             if(rs!=null){
                 while(rs.next()){
                     jComboBox1.addItem(rs.getString("Cliente"));
                 }
+                String valor = TelaPrincipal.txt_nome.getText();
+                if(!valor.equals(null) && !valor.equals(""))
+                    jComboBox1.setSelectedItem(valor);
+                else
+                    jComboBox1.setSelectedItem("Clique aqui para Ativar!");
+ 
             }
-            
-            
         }catch(SQLException e){
-        }
+        }finally{try{if(con!=null)con.close();}catch(Exception e){}}
     }
     
     public void combo(String valor){
+        Connection con = null;
         try{
-            String sql ="select * from cadastrodeprocesso where Cliente=?";
-            Connection con = new ConexaoStatement().getConnetion();
+            String sql ="select * from cadastrodeprocesso where Cliente like '"+valor+"%'";
+            con = new ConexaoStatement().getConnetion();
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, valor);
             ResultSet rs = ps.executeQuery();
             
             if(rs!=null){
@@ -521,7 +589,7 @@ public class InternoComercial extends javax.swing.JInternalFrame {
             }
             
         }catch(SQLException e){
-        }
+        }finally{try{if(con!=null)con.close();}catch(Exception e){}}
     }
     public void comercial(String processo){
         Connection con = new ConexaoStatement().getConnetion();
@@ -561,8 +629,7 @@ public class InternoComercial extends javax.swing.JInternalFrame {
             colorir(jPDepartamento);
            }catch (SQLException erro){
             JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Diagnose " +erro);
-            }finally{try{con.close();}catch(Exception e){}
-        }
+            }finally{try{if(con!=null)con.close();}catch(Exception e){}}
 }
 private void colorir(JPanel jpanel){
     
@@ -583,8 +650,10 @@ private void colorir(JPanel jpanel){
 }
 
 private void add(String processo){
-    tbRecebimento.remove(0);
-    tbSolicitacao.remove(0);
+    
+    limpar_tabela(tbRecebimento);
+    limpar_tabela(tbSolicitacao);
+    
     Connection con = new ConexaoStatement().getConnetion();
     String sql = "select * from documentos where Numerodoprocesso='"+processo+"'";
     try{
@@ -626,12 +695,10 @@ private void add(String processo){
 //            statusTabel(tbSolicitacao);
            }catch (SQLException erro){
             JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Diagnose " +erro);
-            }finally{try{con.close();}catch(Exception e){}
-        }
-    
+            }finally{try{if(con!=null)con.close();}catch(Exception e){}}
 }
 private void contexto(String nomeLabel, String valor){
-    if(valor.equals("") || valor.contains("Em Aberto")){
+    if(valor.trim().equals("") || valor.contains("Em Aberto")){
          criaLabel(tbSolicitacao, nomeLabel);
     }
     else if(valor.contains("Enviado")){
@@ -644,6 +711,12 @@ private void criaLabel(JTable tabela, String text){
     modelo.addRow(new String[1]);
         tabela.setValueAt(text, linha, 0);
     
+}
+public static void limpar_tabela(JTable jtable){
+  DefaultTableModel tbm = (DefaultTableModel)jtable.getModel();
+            for(int i = tbm.getRowCount()-1; i>=0; i--){
+            tbm.removeRow(i);
+        }
 }
 //private void statusTabel(JTable tabela){
 //    DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();

@@ -54,47 +54,42 @@ public static void main(String[] args){
             
             session.setDebug(true);
 
-             try {
-                  Message message = new MimeMessage(session);
-                  message.setFrom(new InternetAddress("prolinkcontabil@gmail.com")); //Remetente
-                  
-                  HtmlEmail email = new HtmlEmail();
-                  String idArquivo = email.embed(new File("robot.png"));
-                  
-                  
-                  Address[] toUser = InternetAddress //Destinatário(s)
-                             .parse("tiago.dias@prolinkcontabil.com.br");  
+            try {
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress("prolinkcontabil@gmail.com")); //Remetente
 
-                  message.setRecipients(Message.RecipientType.TO, toUser);
-                  //message.setSubject("Enviando email com JavaMail");//Assunto
-                  message.setSubject("Teste mail");
-                  
-                  StringBuilder builder = new StringBuilder();
-                  builder.append("<p style=\"color: blue;\">Ol&aacute; Tiago"
-                          +"<span style=\"color:#000000;\"><img alt=\"\" height=\"210\" src=\"cid:"
-                  ).append(idArquivo).append("\" style=\"float: right;\" width=\"210\" /></span><br />");
+                HtmlEmail email = new HtmlEmail();
+                String idArquivo = email.embed(new File("robot.png"));
 
-                  Multipart multipart = new MimeMultipart("related");
-                  BodyPart htmlPart = new MimeBodyPart();
-                  htmlPart.setContent(builder.toString(), "text/html");
-                  
-                  EmailAttachment anexo = new EmailAttachment();
-                  anexo.setPath("anexo.pdf");
-                  anexo.setDisposition(EmailAttachment.ATTACHMENT);
-                  anexo.setName("boteco.pdf");
-                  
-                  multipart.addBodyPart(htmlPart);
-                  message.setContent(multipart);
-                  
-                  //message.setText("Enviei este email utilizando JavaMail com minha conta GMail!");
-                  
-                  /**Método para enviar a mensagem criada*/
-                  Transport.send(message);
 
-                  //JOptionPane.showMessageDialog(null, "E-mail enviado com sucesso!!!");
-                  
-             } catch (MessagingException | EmailException e) {
+                Address[] toUser = InternetAddress //Destinatário(s)
+                         .parse("tiago.dias@prolinkcontabil.com.br");  
+
+                message.setRecipients(Message.RecipientType.TO, toUser);
+                //message.setSubject("Enviando email com JavaMail");//Assunto
+                message.setSubject("Teste mail");
+
+                StringBuilder builder = new StringBuilder();
+                builder.append("<p style=\"color: blue;\">Ol&aacute; Tiago"
+                      +"<span style=\"color:#000000;\"><img alt=\"\" height=\"210\" src=\"cid:"
+                ).append(idArquivo).append("\" style=\"float: right;\" width=\"210\" /></span><br />");
+
+                Multipart multipart = new MimeMultipart("related");
+                BodyPart htmlPart = new MimeBodyPart();
+                htmlPart.setContent(builder.toString(), "text/html");
+
+                EmailAttachment anexo = new EmailAttachment();
+                anexo.setPath("anexo.pdf");
+                anexo.setDisposition(EmailAttachment.ATTACHMENT);
+                anexo.setName("boteco.pdf");
+
+                multipart.addBodyPart(htmlPart);
+                message.setContent(multipart);
+
+                Transport.send(message);
+
+            } catch (MessagingException | EmailException e) {
                   throw new RuntimeException(e);
-             }
+            }
 }
 }

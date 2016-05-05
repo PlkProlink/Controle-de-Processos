@@ -63,7 +63,7 @@
         <Component class="javax.swing.JTree" name="trArvore">
           <Properties>
             <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.editors2.TreeModelEditor">
-              <TreeModel code="Visao Geral&#xa; Comercial&#xa; Contabil&#xa; Contratos&#xa; Financeiro&#xa; Fiscal&#xa; Pessoal&#xa; Regulariza&#xe7;&#xe3;o"/>
+              <TreeModel code="Processos&#xa; Vis&#xe3;o Geral&#xa; Comercial&#xa; Contabil&#xa; Contratos&#xa; Fiscal&#xa; Pessoal&#xa; Regulariza&#xe7;&#xe3;o"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Cursor Padr&#xe3;o"/>

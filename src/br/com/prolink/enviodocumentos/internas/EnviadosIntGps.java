@@ -4,15 +4,19 @@
  */
 package br.com.prolink.enviodocumentos.internas;
 
+import br.com.prolink.controle.LogUsuarioBean;
+import br.com.prolink.controle.LogUsuarioDao;
 import br.com.prolink.enviodocumentos.DocumentosEnviados;
+import br.com.prolink.enviodocumentos.DocumentosEnviadosDao;
 import br.com.prolink.inicio.Conexao;
+import br.com.prolink.inicio.TelaPrincipal;
 
 /**
  *
  * @author User
  */
 public class EnviadosIntGps extends EnviadosIntModelo{
-    String campo1="GPSacompanhamento", tabela1="gpsacompanamento", tela1 = "GPS";
+    String campo1="GPSacompanhamento", tabela1="gpsacompanhamento", tela1 = "GPS";
     public EnviadosIntGps(){
         setTitle("Acompanhamento de Envios - GPS");
         
@@ -22,6 +26,15 @@ public class EnviadosIntGps extends EnviadosIntModelo{
         conexao.conecta();
         preencher_tabela();
         pegar_ultimo_registro();
+        
+        doc = new DocumentosEnviadosDao();
+        log = new LogUsuarioDao();
+        logb = new LogUsuarioBean();
+        
+        logb.setCliente(nome);
+        logb.setApelido(TelaPrincipal.txt_id.getText());
+        logb.setProcesso(processo);
+        logb.setTela(tela);
     }
     public static void main(String[] args){
         EnviadosIntModelo telaBoletos = new EnviadosIntGps();

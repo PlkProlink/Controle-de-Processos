@@ -936,7 +936,7 @@ public class Listagem extends javax.swing.JFrame {
         );
 
         final PiePlot3D plot = (PiePlot3D) chart.getPlot();
-        plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0} ({2})"));
+        plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}={1} ({2})"));
         plot.setStartAngle(290);
         plot.setDirection(Rotation.CLOCKWISE);
         plot.setForegroundAlpha(0.5f);
@@ -952,7 +952,7 @@ public class Listagem extends javax.swing.JFrame {
         int j = 0;
         while(j<10){
             if(usuarioPos[j]!=null)
-                dataset.addValue(positivo[j], usuarioPos[j], "Documentos");
+                dataset.addValue(positivo[j], usuarioPos[j], "Documentos Baixados");
             j++;
         }
         return dataset;
@@ -964,7 +964,7 @@ public class Listagem extends javax.swing.JFrame {
         int j=0;
         while(j<10){
             if(usuarioNeg[j]!=null)
-                dataset.addValue(negativo[j], usuarioNeg[j], "Documentos Entregues");
+                dataset.addValue(negativo[j], usuarioNeg[j], "Documentos não Baixados");
             j++;
         }
         return dataset;
@@ -992,7 +992,7 @@ public class Listagem extends javax.swing.JFrame {
 
     private void criaGraficoGreat() {
         CategoryDataset cds = createDatasetGreat();
-        String titulo = "Ranking - Top Finalizados";
+        String titulo = "Ranking - Top Finalizadores";
         String eixoy = "Quantidade";
         String txt_legenda = "Legenda:";
         boolean legenda = true;

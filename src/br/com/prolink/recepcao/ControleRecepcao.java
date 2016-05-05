@@ -338,7 +338,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         lb_codigo.setAlignmentY(0.8F);
 
         btEnviarAlerta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btEnviarAlerta.setText("Disparar Alerta");
+        btEnviarAlerta.setText("Alerta");
         btEnviarAlerta.setAlignmentY(0.8F);
         btEnviarAlerta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -391,8 +391,8 @@ public class ControleRecepcao extends javax.swing.JFrame {
         jpAux.setLayout(jpAuxLayout);
         jpAuxLayout.setHorizontalGroup(
             jpAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpAuxLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpAuxLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
                 .addGroup(jpAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jpAuxLayout.createSequentialGroup()
                         .addComponent(lb_data)
@@ -409,7 +409,8 @@ public class ControleRecepcao extends javax.swing.JFrame {
                     .addGroup(jpAuxLayout.createSequentialGroup()
                         .addComponent(lb_hora)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txt_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jpAuxLayout.setVerticalGroup(
             jpAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -430,7 +431,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
                 .addGroup(jpAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_hora)
                     .addComponent(txt_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPrincipalLayout = new javax.swing.GroupLayout(jPrincipal);
@@ -442,12 +443,31 @@ public class ControleRecepcao extends javax.swing.JFrame {
                 .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPrincipalLayout.createSequentialGroup()
                         .addComponent(lb_codigo)
-                        .addGap(368, 368, 368)
-                        .addComponent(lb_resumo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(329, 329, 329)
+                        .addComponent(lb_resumo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPrincipalLayout.createSequentialGroup()
-                        .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtAlerta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPrincipalLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txt_codigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPrincipalLayout.createSequentialGroup()
+                                        .addComponent(bt_novo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(5, 5, 5)
+                                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(btEnviarAlerta))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPrincipalLayout.createSequentialGroup()
                                 .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lb_remetente)
                                     .addComponent(lb_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -455,67 +475,55 @@ public class ControleRecepcao extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPrincipalLayout.createSequentialGroup()
-                                        .addComponent(txt_remetente, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(6, 6, 6)
-                                        .addComponent(lb_idempresa)
-                                        .addGap(12, 12, 12)
-                                        .addComponent(txt_idempresa, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPrincipalLayout.createSequentialGroup()
-                                        .addComponent(cb_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(6, 6, 6)
+                                        .addComponent(cb_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel2)
                                         .addGap(12, 12, 12)
                                         .addComponent(cb_para, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPrincipalLayout.createSequentialGroup()
-                                .addComponent(bt_novo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(5, 5, 5)
-                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(btEnviarAlerta)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtAlerta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txt_nome, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPrincipalLayout.createSequentialGroup()
+                                            .addComponent(txt_remetente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(lb_idempresa)
+                                            .addGap(12, 12, 12)
+                                            .addComponent(txt_idempresa, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jpAux, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(16, Short.MAX_VALUE))))
+                        .addGap(37, 37, 37))))
         );
+
+        jPrincipalLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btEnviarAlerta, btExcluir, btSair, bt_novo, btnAlterar, btnCancelar, btnSalvar});
+
         jPrincipalLayout.setVerticalGroup(
             jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPrincipalLayout.createSequentialGroup()
-                .addGap(7, 7, 7)
                 .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPrincipalLayout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addComponent(lb_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPrincipalLayout.createSequentialGroup()
+                            .addGap(7, 7, 7)
+                            .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPrincipalLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(lb_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_codigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPrincipalLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
+                        .addGap(10, 10, 10)
                         .addComponent(lb_resumo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(9, 9, 9)
-                .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpAux, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPrincipalLayout.createSequentialGroup()
                         .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPrincipalLayout.createSequentialGroup()
-                                .addGap(8, 8, 8)
+                                .addGap(5, 5, 5)
                                 .addComponent(lb_remetente)
                                 .addGap(22, 22, 22)
                                 .addComponent(lb_nome)
-                                .addGap(22, 22, 22)
+                                .addGap(18, 18, 18)
                                 .addComponent(lb_destino, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPrincipalLayout.createSequentialGroup()
-                                .addGap(3, 3, 3)
                                 .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txt_remetente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPrincipalLayout.createSequentialGroup()
@@ -528,8 +536,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
                                 .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cb_departamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cb_para, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cb_para, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(bt_novo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -538,10 +545,11 @@ public class ControleRecepcao extends javax.swing.JFrame {
                             .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btEnviarAlerta, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(12, 12, 12)
+                            .addComponent(btEnviarAlerta, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jpAux, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
                 .addComponent(txtAlerta, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cadastro", jPrincipal);
@@ -1272,7 +1280,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
             try {
                 System.out.println("Executando thead");
                 preencherTranferidos();
-                Thread.sleep(10 * 1000);
+                Thread.sleep(1800 * 1000);
                 Thread();
             } catch (InterruptedException ex) {
                 JOptionPane.showMessageDialog(null, "Falha na executação da thread:" + ex);
@@ -1340,9 +1348,9 @@ public class ControleRecepcao extends javax.swing.JFrame {
     private PieDataset createSampleDataset() {
 
         final DefaultPieDataset result = new DefaultPieDataset();
-        result.setValue("Aberto", new Double(qtdN));
-        result.setValue("Fechado", new Double(qtdY));
-        result.setValue("Transferido", new Double(qtdTransfer));
+        result.setValue("Abertos", new Double(qtdN));
+        result.setValue("Fechados", new Double(qtdY));
+        result.setValue("Transferidos", new Double(qtdTransfer));
         return result;
 
     }
@@ -1358,7 +1366,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         );
 
         final PiePlot3D plot = (PiePlot3D) chart.getPlot();
-        plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0} ({2})"));
+        plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}={1} ({2})"));
         plot.setStartAngle(290);
         plot.setDirection(Rotation.CLOCKWISE);
         plot.setForegroundAlpha(0.5f);
@@ -1374,7 +1382,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         int j = 0;
         while(j<10){
             if(usuarioPos[j]!=null)
-                dataset.addValue(positivo[j], usuarioPos[j], "Documentos");
+                dataset.addValue(positivo[j], usuarioPos[j], "Documentos Baixados");
             j++;
         }
         return dataset;
@@ -1386,7 +1394,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         int j=0;
         while(j<10){
             if(usuarioNeg[j]!=null)
-                dataset.addValue(negativo[j], usuarioNeg[j], "Documentos Entregues");
+                dataset.addValue(negativo[j], usuarioNeg[j], "Documentos não Baixados");
             j++;
         }
         return dataset;
@@ -1414,7 +1422,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
 
     private void criaGraficoGreat() {
         CategoryDataset cds = createDatasetGreat();
-        String titulo = "Ranking - Top 10 Finalizados";
+        String titulo = "Ranking - Top 10 Finalizadores";
         String eixoy = "Quantidade";
         String txt_legenda = "Legenda:";
         boolean legenda = true;
@@ -1933,7 +1941,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         String nomeCliente = html.Converter(txt_nome.getText());
         String mensagem = html.Converter(txt_resumo.getText());
         String a = (String) cb_para.getSelectedItem();
-        String aux = "Nesse momento ele esta na recep&ccedil;&atilde;o,";
+        String aux = "Foi lançado na recep&ccedil;&atilde;o,";
         String email = (buscarEmail(a));
         try{
             if(aviso.enviaAlerta(aux, txt_hora.getText(), nomeCliente, txt_idempresa.getText(), email, a, mensagem)==true)

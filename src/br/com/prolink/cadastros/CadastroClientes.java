@@ -124,10 +124,8 @@ public class CadastroClientes extends javax.swing.JFrame {
 
                     //as 3 linhas abaixo mudam a cor de todos os que sua idade seja maior ou igual a 30 anos
                     String valor = (String) getModel().getValueAt(linha, 6);
-                    if (valor.equals("Ativada"))
+                    if (valor.equals("Finalizada"))
                     component.setBackground(Color.GREEN);
-                    else
-                    component.setBackground(Color.RED);
 
                     //muda as cores conforme se cliente é ativo ou não
                     //boolean ativo = (boolean) getModel().getValueAt(linha, 3);
@@ -175,7 +173,7 @@ public class CadastroClientes extends javax.swing.JFrame {
         lblDatadeCadastro2.setText("Finalizada em:");
 
         chStatus.setBackground(new java.awt.Color(250, 250, 250));
-        chStatus.setText("Inativo");
+        chStatus.setText("Finalizada");
 
         btImport.setText("Importar Novo Cadatro");
         btImport.setToolTipText("Possibilita importar um contato direto da planilha de Cadastro.xls");
@@ -257,28 +255,26 @@ public class CadastroClientes extends javax.swing.JFrame {
                                 .addGap(2, 2, 2)
                                 .addComponent(lblDatadeCadastro2)))
                         .addGap(11, 11, 11)
-                        .addComponent(btImport)
-                        .addGap(7, 7, 7))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(chStatus))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(2, 2, 2)
-                                        .addComponent(lblNome))
-                                    .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(14, 14, 14)
-                                        .addComponent(lbClassificacao))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cb_classificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(29, 29, 29))))
+                        .addComponent(btImport))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(chStatus))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(2, 2, 2)
+                                    .addComponent(lblNome))
+                                .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(14, 14, 14)
+                                    .addComponent(lbClassificacao))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(cb_classificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(7, 7, 7))
         );
 
         jPanel3.setBackground(new java.awt.Color(250, 250, 250));
@@ -590,7 +586,7 @@ public class CadastroClientes extends javax.swing.JFrame {
                     "Apelido = '" +txt_apelido.getText()+"',"+
                     "Datadecadastro = '" +new java.sql.Date(data.getTime())+"',"+
                     "Classificacao = '" +cb_classificacao.getSelectedItem()+"',"+
-                    "Situacao="+status+"',"+
+                    "Situacao='"+status+"',"+
                     "Usuario = '" +Login.usuario+
                     "' where codNumerodoprocesso = "+txt_codigo.getText();
             con_cliente.statement.executeUpdate(sql);
@@ -1063,7 +1059,7 @@ catch (SQLException erro){
     public String converter(String valor){
         int v = Integer.parseInt(valor);
         if(v==0){
-            return "Desativada";
+            return "Finalizada";
         }else
             return "Ativada";
     }

@@ -6,7 +6,7 @@ package br.com.prolink.inicio;
  */
 public class VersaoSistema {
     
-    private String versaoSistema="2.1.37";
+    private String versaoSistema="2.1.37 - Beta 2.0 ";
     private String baseDados= "2.0.5";
     /*
     Historico de versões

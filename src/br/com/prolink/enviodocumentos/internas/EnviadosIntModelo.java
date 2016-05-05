@@ -1,9 +1,10 @@
 package br.com.prolink.enviodocumentos.internas;
 
-import br.com.prolink.login.Login;
 import br.com.prolink.enviodocumentos.*;
 import br.com.prolink.controle.*;
-import br.com.prolink.inicio.*;
+import br.com.prolink.inicio.Conexao;
+import br.com.prolink.inicio.TelaPrincipal;
+
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,7 +13,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
-
 /**
  *
  * @author Tiago Dias
@@ -33,7 +33,7 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
     String tabela; //tabela do formulario
     String tela;
     
-    String nome=Ativador.nome, processo=Ativador.processo, usuario=Login.usuario;
+    String nome=TelaPrincipal.txt_nome.getText(), processo=TelaPrincipal.txt_codigo.getText(), usuario=TelaPrincipal.txt_usuario.getText();
     
     AtualizacaoEnviados atualizaDoc;
     
@@ -43,11 +43,6 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
     
     public EnviadosIntModelo() {
         initComponents();
-    
-        doc = new DocumentosEnviadosDao();
-        log = new LogUsuarioDao();
-        logb = new LogUsuarioBean();
-        
         
         table.setAutoCreateRowSorter(true);
         
@@ -60,10 +55,12 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
 //        preencher_tabela();
 //        
 //        pegar_ultimo_registro();
-       
-        logb.setCliente(Ativador.nome);
-        logb.setApelido(Ativador.id);
-        logb.setProcesso(Ativador.processo);
+        doc = new DocumentosEnviadosDao();
+        log = new LogUsuarioDao();
+        logb = new LogUsuarioBean();
+        logb.setCliente(nome);
+        logb.setApelido(TelaPrincipal.txt_id.getText());
+        logb.setProcesso(processo);
         logb.setTela(tela);
        
     }
@@ -437,9 +434,8 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
                         
                         String mensagem = "Atualizado com sucesso!";
                         lbMensagem.setText(mensagem);
-                        descricao = "1º,2º e 3º envio de "+tela+" informado";
+                        descricao = "1º, 2º e 3º Envio de "+tela+" informado";
                         acao = "Inserir";
-                        descricao = "1º, 2º e 3º envio de FGTS informado";
                         
                         gravar_log();
                         
@@ -473,7 +469,7 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
                                 + txtObservacao.getText()+"','"
                                 + new java.sql.Date(novadata1.getTime())+"','"
                                 + new java.sql.Date(novadata2.getTime())+"','"
-                                + "1º e 2º envio realizado')";
+                                + "1º e 2º Envio Realizado')";
                                 
                         conexao.exeQuery(gry);
                         
@@ -482,7 +478,7 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
                         
                         String mensagem = "Atualizado com sucesso!";
                         lbMensagem.setText(mensagem);
-                        descricao = "1º envio de "+tela+" informado";
+                        descricao = "1º, 2º Envio de "+tela+" informado";
                         acao = "Inserir";
                         gravar_log();
                         
@@ -512,7 +508,7 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
                                 + usuario+"','"
                                 + txtObservacao.getText()+"','"
                                 + new java.sql.Date(novadata1.getTime())+"','"
-                                + "1º envio realizado')";
+                                + "1º Envio Realizado')";
                                 
                         conexao.exeQuery(gry);
                         atualizaDoc = new AtualizacaoEnviados();
@@ -563,7 +559,7 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
                         lbMensagem.setText(mensagem);
                         
                         acao = "Inserir";
-                        descricao = "1º, 2º e 3º envio de "+tela+" informado";
+                        descricao = "1º, 2º e 3º Envio de "+tela+" informado";
                         gravar_log();
                         
                         enviar_label1();
@@ -591,7 +587,7 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
                                 +"Observacao='" +txtObservacao.getText()+"',"
                                 +"Data1Envio='" +new java.sql.Date(novadata1.getTime())+"',"
                                 +"Data2Envio='" +new java.sql.Date(novadata2.getTime())+"',"
-                                +"Andamento='1º e 2º envio realizado' where Cod="+txtCodigo.getText();
+                                +"Andamento='1º e 2º Envio realizado' where Cod="+txtCodigo.getText();
                         conexao.statement.executeUpdate(sql);
                         
                         atualizaDoc = new AtualizacaoEnviados();
@@ -626,7 +622,7 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
                                 +"Usuario='" +usuario+"',"
                                 +"Observacao='" +txtObservacao.getText()+"',"
                                 +"Data1Envio='" +new java.sql.Date(novadata1.getTime())+"',"
-                                +"Andamento='1º envio realizado' where Cod="+txtCodigo.getText();
+                                +"Andamento='1º Envio realizado' where Cod="+txtCodigo.getText();
                         conexao.statement.executeUpdate(sql);
                         
                         atualizaDoc = new AtualizacaoEnviados();
@@ -668,7 +664,7 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
             setCampoDocumentos();
             setTabela();
             
-            String cliente = "Deseja excluir o registro do cliente "+Ativador.nome+"?";
+            String cliente = "Deseja excluir o registro do cliente "+nome+"?";
             int escolha = JOptionPane.showConfirmDialog(null, cliente, "Exclusão", JOptionPane.YES_NO_OPTION);
             if(escolha==JOptionPane.YES_OPTION){
                 try{
@@ -894,16 +890,22 @@ public void preencher_tabela(){
         while(conexao.resultset.next())
             modelo.addRow(new Object []{
                 conexao.resultset.getString("Cod"),
-                conexao.resultset.getString("DatadeCadastroAndamento"),
-                conexao.resultset.getString("DataDevulucaoCliente"),
-                conexao.resultset.getString("DataFinalAndamento"),
-                conexao.resultset.getString("Obsevacao"),
+                conexao.resultset.getString("Data1Envio"),
+                limparData(conexao.resultset.getString("Data2Envio")),
+                limparData(conexao.resultset.getString("Data3Envio")),
+                conexao.resultset.getString("Observacao"),
                 conexao.resultset.getString("Usuario")});
                 conexao.resultset.first();
     }catch(Exception erro){
         JOptionPane.showMessageDialog(null, "Erro ao preencher tabela da tela" +logb.getTela()+" !\n"+erro);
     }
             
+}
+private String limparData(String valor){
+    if( valor!=null && !valor.equals("1111-11-11")) 
+        return valor;
+    else 
+        return "";
 }
 public void limpar_tabela(){
     DefaultTableModel tbm = (DefaultTableModel)table.getModel();
@@ -1016,6 +1018,7 @@ public void atualizar_acompanhamento_exclusao(){
     setTela();
     setCampoDocumentos();
     setTabela();
+    
     if(txtData1.getText().trim().length()==10 &&
             txtData2.getText().trim().length()==10 &&
             txtData3.getText().trim().length()==10){
@@ -1047,9 +1050,9 @@ public void setTabela(){
     this.tabela="";
 }
 public void setCampoDocumentos(){
-    this.campoDocumentos = "";
+    this.campoDocumentos="";
 }
 public void setTela(){
-    this.tela = "";
+    this.tela="";
 }
 }

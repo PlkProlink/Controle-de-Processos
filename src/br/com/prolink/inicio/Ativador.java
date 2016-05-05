@@ -92,10 +92,8 @@ public class Ativador extends javax.swing.JFrame {
 
                     //as 3 linhas abaixo mudam a cor de todos os que sua idade seja maior ou igual a 30 anos
                     String valor = (String) getModel().getValueAt(linha, 3);
-                    if (valor.equals("Ativada"))
+                    if (valor.equals("Finalizada"))
                     component.setBackground(Color.GREEN);
-                    else
-                    component.setBackground(Color.RED);
 
                     //muda as cores conforme se cliente é ativo ou não
                     //boolean ativo = (boolean) getModel().getValueAt(linha, 3);
@@ -395,11 +393,10 @@ public class Ativador extends javax.swing.JFrame {
     }//GEN-LAST:event_tb_ativacaoMouseClicked
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
-        if(codigo.trim().equals("")){
+        if(txt_processo.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Selecione uma empresa!");
         }
-        else if(codigo!=null){
-            
+        else
             try{
                 
                 String sql = "select * from cadastrodeprocesso Where codNumerodoprocesso = "+txt_processo.getText();
@@ -422,7 +419,6 @@ public class Ativador extends javax.swing.JFrame {
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null,"Não foi possivel ativar o cliente informado : " +erro);
             }
-        }
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void cb_organizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_organizarActionPerformed
@@ -483,12 +479,12 @@ public class Ativador extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPesqNomeActionPerformed
 
     private void ckAtivadaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ckAtivadaStateChanged
-        ordenar("codNumerodoprocesso desc");
+        ordenar("codNumerodoprocesso");
     }//GEN-LAST:event_ckAtivadaStateChanged
 
     private void ckFinalizadaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ckFinalizadaItemStateChanged
         // TODO add your handling code here:
-        ordenar("codNumerodoprocesso desc");
+        ordenar("codNumerodoprocesso");
     }//GEN-LAST:event_ckFinalizadaItemStateChanged
 
     /**
@@ -618,7 +614,7 @@ public class Ativador extends javax.swing.JFrame {
     public String converter(String valor){
         int v = Integer.parseInt(valor);
         if(v==0){
-            return "Desativada";
+            return "Finalizada";
         }else
             return "Ativada";
     }

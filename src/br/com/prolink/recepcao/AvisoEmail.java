@@ -32,38 +32,56 @@ public class AvisoEmail {
         String idArquivo = email.embed(new File("robot.png"));
         
         StringBuilder builder = new StringBuilder();
-//+"<span style=\"color:#000000;\"><img alt=\"\" height=\"210\" src=\"http://img.actualidadgadget.com/wp-content/uploads/2015/04/robot-question-300x300.jpg\" style=\"float: right;\" width=\"210\" /></span><br />"
-        //+"<span style=\"color:#000000;\"><img alt=\"\" height=\"210\" src=\"cid:").append(idArquivo).append("\" style=\"float: right;\" width=\"210\" /></span><br />"
 
-        builder.append("<span style=\"color:#0000cd;\"><strong>Ola ").append(user).append(";</strong></span></div>"
-		+"<div style=\"text-align: left;\">&nbsp;</div>"
-		+"<div style=\"text-align: left;\"><span style=\"font-family:verdana,geneva,sans-serif;\">Tem um novo documento que acabou de chegar para voc&ecirc;;</span></div>"
-		+"<div style=\"text-align: left;\">&nbsp;</div>"
-                                    +"<div style=\"text-align: left;\"><span style=\"font-family:verdana,geneva,sans-serif;\">").append(aux).append("</span></div>"
-		+"<div style=\"text-align: left;\">&nbsp;</div>"
-		+"<div style=\"text-align: left;\"><span style=\"font-family:verdana,geneva,sans-serif;\">Antes de mostrar os detalhes preciso que voc&ecirc; valide o recebimento no Controle de Processos, certo?</span></div>"
-		+"<div style=\"text-align: left;\"><span style=\"font-family:verdana,geneva,sans-serif;\">&Eacute; muito importante ter esse controle.</span></div>"
-		+"<div style=\"text-align: left;\"><span style=\"font-family:verdana,geneva,sans-serif;\">E mesmo que n&atilde;o seja seu ou n&atilde;o receba &eacute; possivel Contestar a entrega (Op&ccedil;&atilde;o Constestar), f&aacute;cil...</span></div>"
-		+"<div style=\"text-align: left;\">&nbsp;</div>"
-		+"<div style=\"text-align: left;\"><span style=\"font-family:verdana,geneva,sans-serif;\">Vamos l&aacute;</span></div>"
-		+"<ul><li style=\"text-align: left;\">"
-                                             +"<span style=\"color:#ff8c00;\"><span style=\"font-size:14px;\"><span style=\"font-family:verdana,geneva,sans-serif;\">Hora da Entrega:").append(hora).append("</span></span></span></li>"
-			+"<li style=\"text-align: left;\">"
-				+"<span style=\"color:#ff8c00;\"><span style=\"font-size:14px;\"><span style=\"font-family:verdana,geneva,sans-serif;\">Id:").append(idCliente).append("</span></span></span></li>"
-			+"<li style=\"text-align: left;\">"
-				+"<span style=\"color:#ff8c00;\"><span style=\"font-size:14px;\"><span style=\"font-family:verdana,geneva,sans-serif;\">Nome:").append(cliente).append("</span></span></span></li>"
-			+"<li style=\"text-align: left;\">"
-				+"<span style=\"color:#ff8c00;\"><span style=\"font-size:14px;\"><span style=\"font-family:verdana,geneva,sans-serif;\">Detalhes:").append(mensagem).append("</span></span></span></li>"
-		+"</ul>"
-		+"<p><span style=\"color:#000000;\"><img alt=\"\" height=\"300\" src=\"cid:").append(idArquivo).append("\" style=\"float: right;\" width=\"300\" /></span></p>"
-		+"<p>&nbsp;</p><p>&nbsp;</p>"
-		+"<p>&nbsp;</p><div style=\"text-align: left;\">"
-			+"<span style=\"font-family:verdana,geneva,sans-serif;\">Na vers&atilde;o nova tem gr&aacute;ficos onde &eacute; poss&iacute;vel ter uma vis&atilde;o geral.</span></div>"
-		+"<p>&nbsp;</p><div style=\"text-align: left;\">"
-			+"<span style=\"color:#a9a9a9;\"><em><span style=\"font-family:verdana,geneva,sans-serif;\">***Ah! Outra coisa...n&atilde;o responde esse e-mail por favor. Tudo isso &eacute; autom&aacute;tico***</span></em></span></div>"
-            );
+        builder.append("<p>" +
+"			<span style=\"font-family:arial,helvetica,sans-serif;\"><span style=\"color:#0000cd;\"><strong>Ola ").append(user).append(";</strong></span></span></p>" +
+"		<div style=\"text-align: left;\">&nbsp;</div>" +
+"		<div style=\"text-align: left;\">" +
+"			<span style=\"font-family:arial,helvetica,sans-serif;\">Tem um novo documento que acabou de chegar para voc&ecirc;;</span></div>" +
+"		<div style=\"text-align: left;\">&nbsp;</div>" +
+"		<div style=\"text-align: left;\">" +
+"			<span style=\"font-family:arial,helvetica,sans-serif;\">").append(aux).append("</span></div>" +
+"		<div style=\"text-align: left;\">&nbsp;</div>" +
+"		<div style=\"text-align: left;\">" +
+"			<span style=\"font-family:arial,helvetica,sans-serif;\">Antes de mostrar os detalhes preciso que voc&ecirc; valide o recebimento no Controle de Processos, certo?</span></div>" +
+"		<div style=\"text-align: left;\">" +
+"			<span style=\"font-family:arial,helvetica,sans-serif;\">E mesmo que n&atilde;o seja seu ou n&atilde;o receba &eacute; possivel Contestar a entrega (Op&ccedil;&atilde;o Constestar), f&aacute;cil...</span></div>" +
+"		<div style=\"text-align: left;\">&nbsp;</div>" +
+"		<div style=\"text-align: left;\">" +
+"			<span style=\"font-family:arial,helvetica,sans-serif;\">Vamos l&aacute;:</span></div>" +
+"		<div style=\"text-align: left;\">&nbsp;</div>" +
+"		<div style=\"text-align: left;\">" +
+"			<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width: 500px\">" +
+"				<thead>" +
+"					<tr>" +
+"						<th scope=\"col\">" +
+"							<span style=\"font-family:arial,helvetica,sans-serif;\">Hora da Entrada</span></th>" +
+"						<th scope=\"col\">" +
+"							<span style=\"font-family:arial,helvetica,sans-serif;\">ID Cliente</span></th>" +
+"						<th scope=\"col\">" +
+"							<span style=\"font-family:arial,helvetica,sans-serif;\">Nome</span></th>" +
+"						<th scope=\"col\">" +
+"							<span style=\"font-family:arial,helvetica,sans-serif;\">Detalhes</span></th>" +
+"					</tr>" +
+"				</thead>" +
+"				<tbody>" +
+"					<tr>" +
+"						<td>" +
+"							<span style=\"font-family:arial,helvetica,sans-serif;\">").append(hora).append("</span></td>" +
+"						<td>" +
+"							<span style=\"font-family:arial,helvetica,sans-serif;\">").append(idCliente).append("</span></td>" +
+"						<td>" +
+"							<span style=\"font-family:arial,helvetica,sans-serif;\">").append(cliente).append("</span></td>" +
+"						<td>" +
+"							<span style=\"font-family:arial,helvetica,sans-serif;\">").append(mensagem).append("</span></td>" +
+"					</tr>" +
+"				</tbody>" +
+"			</table>" +
+"		</div>" +
+"		<p>&nbsp;</p>" +
+"		<p><span style=\"font-family:arial,helvetica,sans-serif;\"><em style=\"color: rgb(169, 169, 169);\">***Ah! Outra coisa...n&atilde;o responde esse e-mail por favor. Tudo isso &eacute; autom&aacute;tico***</em></span></p>");
         
-        email.setHtmlMsg( builder.toString()+"\n");
+        email.setHtmlMsg( builder.toString()+"");
         
         email.addTo(conta);
         email.send();

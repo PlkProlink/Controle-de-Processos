@@ -11,11 +11,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
@@ -23,17 +24,76 @@ import javax.swing.table.DefaultTableModel;
  */
 public class InternoGeral extends javax.swing.JInternalFrame {
     
+    
+    int departamento=0;
+    int documento=0;
+    int comercial=0;
+    
+    String valor = TelaPrincipal.txt_codigo.getText(), abrir="";
+    
+    List<String> nomeUser = new ArrayList<>();
+    List<String> dep = new ArrayList<>();
+    
+    
     /**
      * Creates new form InternoComercial
      */
     public InternoGeral() {
         initComponents();
-//        carregaCombo();
-//        String value = TelaPrincipal.txt_codigo.getText();
-//        if(value!=null && value!=""){
-//            comercial(TelaPrincipal.txt_codigo.getText());
-//            add(TelaPrincipal.txt_codigo.getText());
-//        }
+        btRelatorio.setVisible(false);
+        carregaCombo();
+        preencherDepartamentos(valor);
+        
+        try{
+            Connection con = new ConexaoStatement().getConnetion();
+            String sql = "select SUBSTRING_INDEX(SUBSTRING_INDEX(Nome, ' ', 2), ' ', -2) as Nome, Departamento from login order by Departamento";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if(rs!=null){
+                while(rs.next()){
+                    nomeUser.add(rs.getString("Nome"));
+                    dep.add(rs.getString("Departamento"));
+                }
+            }
+            String vazio = "";
+            cbComercial.addItem(vazio);
+            cbContabil.addItem(vazio);
+            cbContratos.addItem(vazio);
+            cbDP.addItem(vazio);
+            cbFisc.addItem(vazio);
+            cbReg.addItem(vazio);
+
+            //adicionar departamentos
+            for(int i = 0;i<dep.size();i++){
+                if(dep.get(i).equals("Comercial")){
+                    cbComercial.addItem(nomeUser.get(i));
+                }
+                if(dep.get(i).equals("Contabil")){
+                    cbContabil.addItem(nomeUser.get(i));
+                }
+                if(dep.get(i).equals("Contratos")){
+                    cbContratos.addItem(nomeUser.get(i));
+                }
+                if(dep.get(i).equals("Fiscal")){
+                    cbFisc.addItem(nomeUser.get(i));
+                }
+                if(dep.get(i).equals("Pessoal")){
+                    cbDP.addItem(nomeUser.get(i));
+                }
+                if(dep.get(i).equals("Regularizacao")){
+                    cbReg.addItem(nomeUser.get(i));
+                }
+            }
+            cbComercial.setSelectedItem(vazio);
+            cbContabil.setSelectedItem(vazio);
+            cbContratos.setSelectedItem(vazio);
+            cbDP.setSelectedItem(vazio);
+            cbFisc.setSelectedItem(vazio);
+            cbReg.setSelectedItem(vazio);
+            con.close();
+        }catch(SQLException e){
+        }
+        jpResp.setVisible(false);
     }
 
     /**
@@ -45,39 +105,49 @@ public class InternoGeral extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tbSolicitacao = new javax.swing.JTable();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jLabel16 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        jLabel10 = new javax.swing.JLabel();
-        jPDepartamento = new javax.swing.JPanel();
-        lbTermo = new javax.swing.JLabel();
-        lbSenha = new javax.swing.JLabel();
-        lbDiagnose = new javax.swing.JLabel();
-        lbGeral = new javax.swing.JLabel();
-        lbProposta = new javax.swing.JLabel();
-        lbRequisicao = new javax.swing.JLabel();
-        lbTaxa = new javax.swing.JLabel();
-        lbOS = new javax.swing.JLabel();
-        lbDeposito = new javax.swing.JLabel();
-        lbPesquisa = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tbRecebimento = new javax.swing.JTable();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jpPendencias = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        btRelatorio = new javax.swing.JButton();
+        btAlerta = new javax.swing.JButton();
+        jpCalc = new javax.swing.JPanel();
+        lbCFisc = new javax.swing.JLabel();
+        lbCReg = new javax.swing.JLabel();
+        lbCCom = new javax.swing.JLabel();
+        lbCContabil = new javax.swing.JLabel();
+        lbCContratos = new javax.swing.JLabel();
+        lbCDp = new javax.swing.JLabel();
+        lbDFisc = new javax.swing.JLabel();
+        lbDocCom = new javax.swing.JLabel();
+        lbDocContabil = new javax.swing.JLabel();
+        lbDContratos = new javax.swing.JLabel();
+        lbDDp = new javax.swing.JLabel();
+        jpResp = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        cbComercial = new javax.swing.JComboBox<>();
+        cbContabil = new javax.swing.JComboBox<>();
+        cbContratos = new javax.swing.JComboBox<>();
+        cbDP = new javax.swing.JComboBox<>();
+        cbFisc = new javax.swing.JComboBox<>();
+        cbReg = new javax.swing.JComboBox<>();
+        btAvancar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(250, 250, 250));
         setBorder(null);
@@ -88,64 +158,8 @@ public class InternoGeral extends javax.swing.JInternalFrame {
             }
         });
 
-        tbSolicitacao.setBackground(new java.awt.Color(250, 250, 250));
-        tbSolicitacao.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Aguardando Solicitação"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane4.setViewportView(tbSolicitacao);
-
-        jLabel13.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel13.setText("Gerar O.S");
-
-        jLabel14.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel14.setText("Requisição de Documentos:");
-
-        jButton1.setText("Visualizar Tela");
-
-        jLabel15.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel15.setText("Taxa de Implantação:");
-
-        jButton2.setText("Visualizar Tela");
-
-        jLabel16.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel16.setText("Recebimento de Depósito:");
-
-        jButton3.setText("Gerar Alerta");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jLabel17.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel17.setText("Pesquisa de Certidões:");
-
-        jLabel18.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel18.setText("Termo de Responsabilidade:");
-
-        jLabel19.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel19.setText("Gravar Senhas Fiscais:");
-
-        jButton4.setText("Relatório");
-
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel7.setText("Documentos:");
-
         jDesktopPane1.setBackground(new java.awt.Color(250, 250, 250));
-        jDesktopPane1.setPreferredSize(new java.awt.Dimension(500, 245));
+        jDesktopPane1.setPreferredSize(new java.awt.Dimension(500, 250));
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -157,150 +171,6 @@ public class InternoGeral extends javax.swing.JInternalFrame {
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 250, Short.MAX_VALUE)
         );
-
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel10.setText("Controle:");
-
-        jPDepartamento.setBackground(new java.awt.Color(250, 250, 250));
-        jPDepartamento.setAutoscrolls(true);
-
-        lbTermo.setBackground(new java.awt.Color(250, 250, 250));
-        lbTermo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lbTermo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbTermo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lbTermo.setOpaque(true);
-        lbTermo.setPreferredSize(new java.awt.Dimension(0, 22));
-
-        lbSenha.setBackground(new java.awt.Color(250, 250, 250));
-        lbSenha.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lbSenha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbSenha.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lbSenha.setOpaque(true);
-        lbSenha.setPreferredSize(new java.awt.Dimension(0, 22));
-
-        lbDiagnose.setBackground(new java.awt.Color(250, 250, 250));
-        lbDiagnose.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lbDiagnose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbDiagnose.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lbDiagnose.setOpaque(true);
-        lbDiagnose.setPreferredSize(new java.awt.Dimension(0, 22));
-
-        lbGeral.setBackground(new java.awt.Color(250, 250, 250));
-        lbGeral.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lbGeral.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbGeral.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lbGeral.setOpaque(true);
-
-        lbProposta.setBackground(new java.awt.Color(250, 250, 250));
-        lbProposta.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lbProposta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbProposta.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lbProposta.setOpaque(true);
-        lbProposta.setPreferredSize(new java.awt.Dimension(0, 22));
-
-        lbRequisicao.setBackground(new java.awt.Color(250, 250, 250));
-        lbRequisicao.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lbRequisicao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbRequisicao.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lbRequisicao.setOpaque(true);
-        lbRequisicao.setPreferredSize(new java.awt.Dimension(0, 22));
-
-        lbTaxa.setBackground(new java.awt.Color(250, 250, 250));
-        lbTaxa.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lbTaxa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbTaxa.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lbTaxa.setOpaque(true);
-        lbTaxa.setPreferredSize(new java.awt.Dimension(0, 22));
-
-        lbOS.setBackground(new java.awt.Color(250, 250, 250));
-        lbOS.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lbOS.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbOS.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lbOS.setOpaque(true);
-        lbOS.setPreferredSize(new java.awt.Dimension(0, 22));
-
-        lbDeposito.setBackground(new java.awt.Color(250, 250, 250));
-        lbDeposito.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lbDeposito.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbDeposito.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lbDeposito.setOpaque(true);
-        lbDeposito.setPreferredSize(new java.awt.Dimension(0, 22));
-
-        lbPesquisa.setBackground(new java.awt.Color(250, 250, 250));
-        lbPesquisa.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lbPesquisa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbPesquisa.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lbPesquisa.setOpaque(true);
-        lbPesquisa.setPreferredSize(new java.awt.Dimension(0, 22));
-
-        javax.swing.GroupLayout jPDepartamentoLayout = new javax.swing.GroupLayout(jPDepartamento);
-        jPDepartamento.setLayout(jPDepartamentoLayout);
-        jPDepartamentoLayout.setHorizontalGroup(
-            jPDepartamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPDepartamentoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPDepartamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbDiagnose, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbProposta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbOS, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbRequisicao, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbTaxa, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        jPDepartamentoLayout.setVerticalGroup(
-            jPDepartamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPDepartamentoLayout.createSequentialGroup()
-                .addComponent(lbGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(lbDiagnose, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbProposta, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbOS, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbRequisicao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbTaxa, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(lbPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbTermo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        tbRecebimento.setBackground(new java.awt.Color(250, 250, 250));
-        tbRecebimento.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Aguardando Recebimento"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane3.setViewportView(tbRecebimento);
-
-        jLabel11.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel11.setText("Envio Diagnose:");
-
-        jLabel12.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel12.setText("Proposta Comercial:");
 
         jLabel1.setBackground(new java.awt.Color(250, 250, 250));
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -320,6 +190,340 @@ public class InternoGeral extends javax.swing.JInternalFrame {
             }
         });
 
+        jpPendencias.setBackground(new java.awt.Color(250, 250, 250));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Departamento");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Controle");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Total de Pendências");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Documentos");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Comercial");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel9.setText("Contabil");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Contratos");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel15.setText("Dp.Pessoal");
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel18.setText("Fiscal");
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel21.setText("Regularização");
+
+        btRelatorio.setText("Relatório");
+        btRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRelatorioActionPerformed(evt);
+            }
+        });
+
+        btAlerta.setText("Alerta");
+        btAlerta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAlertaActionPerformed(evt);
+            }
+        });
+
+        jpCalc.setBackground(new java.awt.Color(250, 250, 250));
+
+        lbCFisc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbCFisc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbCFisc.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        lbCFisc.setOpaque(true);
+
+        lbCReg.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbCReg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbCReg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        lbCReg.setOpaque(true);
+
+        lbCCom.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbCCom.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbCCom.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        lbCCom.setOpaque(true);
+
+        lbCContabil.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbCContabil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbCContabil.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        lbCContabil.setOpaque(true);
+
+        lbCContratos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbCContratos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbCContratos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        lbCContratos.setOpaque(true);
+
+        lbCDp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbCDp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbCDp.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        lbCDp.setOpaque(true);
+
+        lbDFisc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbDFisc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbDFisc.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        lbDFisc.setOpaque(true);
+
+        lbDocCom.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbDocCom.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbDocCom.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        lbDocCom.setOpaque(true);
+
+        lbDocContabil.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbDocContabil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbDocContabil.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        lbDocContabil.setOpaque(true);
+
+        lbDContratos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbDContratos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbDContratos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        lbDContratos.setOpaque(true);
+
+        lbDDp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbDDp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbDDp.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        lbDDp.setOpaque(true);
+
+        javax.swing.GroupLayout jpCalcLayout = new javax.swing.GroupLayout(jpCalc);
+        jpCalc.setLayout(jpCalcLayout);
+        jpCalcLayout.setHorizontalGroup(
+            jpCalcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCalcLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpCalcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbCContratos, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbCDp, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbCFisc, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbCReg, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpCalcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lbCCom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbCContabil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGroup(jpCalcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbDContratos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbDDp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbDFisc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpCalcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lbDocCom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbDocContabil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(22, 22, 22))
+        );
+
+        jpCalcLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lbCCom, lbCContabil, lbCContratos, lbCDp, lbCFisc, lbCReg, lbDContratos, lbDDp, lbDFisc, lbDocCom, lbDocContabil});
+
+        jpCalcLayout.setVerticalGroup(
+            jpCalcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCalcLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpCalcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpCalcLayout.createSequentialGroup()
+                        .addComponent(lbCCom, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(lbCContabil, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(lbCContratos, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(lbCDp, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(lbCFisc, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(lbCReg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpCalcLayout.createSequentialGroup()
+                        .addComponent(lbDocCom, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(lbDocContabil, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(lbDContratos, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(lbDDp, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(lbDFisc, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        jpCalcLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lbCCom, lbCContabil, lbCContratos, lbCDp, lbCFisc, lbCReg, lbDContratos, lbDDp, lbDFisc, lbDocCom, lbDocContabil});
+
+        javax.swing.GroupLayout jpPendenciasLayout = new javax.swing.GroupLayout(jpPendencias);
+        jpPendencias.setLayout(jpPendenciasLayout);
+        jpPendenciasLayout.setHorizontalGroup(
+            jpPendenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPendenciasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpPendenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPendenciasLayout.createSequentialGroup()
+                        .addGroup(jpPendenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jpPendenciasLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPendenciasLayout.createSequentialGroup()
+                        .addGroup(jpPendenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jpPendenciasLayout.createSequentialGroup()
+                                .addGroup(jpPendenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel21)
+                                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(28, 28, 28)
+                                .addComponent(jpCalc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jpPendenciasLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jpPendenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btAlerta, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btRelatorio))))
+                        .addGap(31, 31, 31))))
+        );
+
+        jpPendenciasLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btAlerta, btRelatorio});
+
+        jpPendenciasLayout.setVerticalGroup(
+            jpPendenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPendenciasLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addGroup(jpPendenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
+                .addGroup(jpPendenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPendenciasLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPendenciasLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jpCalc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addComponent(btRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btAlerta, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jpResp.setBackground(new java.awt.Color(250, 250, 250));
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel24.setText("Dp.Pessoal");
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel25.setText("Fiscal");
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel26.setText("Contabil");
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel27.setText("Regularização");
+
+        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel28.setText("Contratos");
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel29.setText("Comercial");
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel30.setText("Gerenciar Responsável");
+
+        btAvancar.setText("Avançar");
+        btAvancar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAvancarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpRespLayout = new javax.swing.GroupLayout(jpResp);
+        jpResp.setLayout(jpRespLayout);
+        jpRespLayout.setHorizontalGroup(
+            jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpRespLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jpRespLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btAvancar))
+                    .addGroup(jpRespLayout.createSequentialGroup()
+                        .addGroup(jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(154, 154, 154)
+                        .addGroup(jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbComercial, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbContabil, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbContratos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbDP, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbFisc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbReg, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(27, 27, 27))
+        );
+        jpRespLayout.setVerticalGroup(
+            jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpRespLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel30)
+                .addGap(18, 18, 18)
+                .addGroup(jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(cbComercial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(cbContabil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(cbContratos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(cbDP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(cbFisc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpRespLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27)
+                    .addComponent(cbReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btAvancar, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addGap(5, 5, 5))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -328,40 +532,14 @@ public class InternoGeral extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel17)
-                            .addComponent(jLabel18)
-                            .addComponent(jLabel19)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel10)
-                            .addComponent(jButton1))
-                        .addGap(27, 27, 27)
-                        .addComponent(jPDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel7)
+                        .addComponent(jpPendencias, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(137, 137, 137)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(23, 23, 23))))
+                            .addComponent(jpResp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,50 +548,16 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(47, 47, 47)
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel15)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel18)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel19))
-                            .addComponent(jPDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addComponent(jButton1))
+                        .addComponent(jpResp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jpPendencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4});
 
         setBounds(0, 0, 860, 600);
     }// </editor-fold>//GEN-END:initComponents
@@ -422,73 +566,152 @@ public class InternoGeral extends javax.swing.JInternalFrame {
         this.setLocation(0,0);
     }//GEN-LAST:event_formComponentMoved
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jComboBox1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusLost
         
     }//GEN-LAST:event_jComboBox1FocusLost
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-//        if(!jComboBox1.getSelectedItem().equals("")  &&
-//                !jComboBox1.getSelectedItem().equals(null)){
-//            combo((String)jComboBox1.getSelectedItem());
-//            comercial(TelaPrincipal.txt_codigo.getText());
-//            add(TelaPrincipal.txt_codigo.getText());
-//            
-//        }
+        if(!jComboBox1.getSelectedItem().equals("Clique aqui para Ativar!")){
+            combo((String)jComboBox1.getSelectedItem());
+            preencherDepartamentos(TelaPrincipal.txt_codigo.getText());
+        }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
+    private void btRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRelatorioActionPerformed
+        jpResp.setVisible(false);
+        abrir="Relatorio";
+        List <String> nova = new ArrayList<>();
+//                NovoJFrame novo = new NovoJFrame(abrir, "Geral", nova);
+//                novo.setVisible(true);
+                
+        Relatorios relatorio = new Relatorios(abrir, "Geral", nova);
+        jDesktopPane1.removeAll();
+        ((BasicInternalFrameUI)relatorio.getUI()).setNorthPane(null);
+        jDesktopPane1.add(relatorio);
+        relatorio.setVisible(true);
+        
+    }//GEN-LAST:event_btRelatorioActionPerformed
+
+    private void btAlertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlertaActionPerformed
+        jpResp.setVisible(true);
+        abrir="Alerta";
+    }//GEN-LAST:event_btAlertaActionPerformed
+
+    private void btAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAvancarActionPerformed
+        if(TelaPrincipal.txt_codigo.getText()!=null && !TelaPrincipal.txt_codigo.getText().equals("")){
+            if(abrir=="Alerta"){
+                List<String> nome = new ArrayList<>();
+                boolean liberar = false;
+                if(!cbComercial.getSelectedItem().equals("")){
+                    nome.add((String)cbComercial.getSelectedItem());
+                    liberar = true;
+                }
+                if(!cbContabil.getSelectedItem().equals("")){
+                    nome.add((String)cbContabil.getSelectedItem());
+                    liberar = true;
+                }
+                if(!cbContratos.getSelectedItem().equals("")){
+                    nome.add((String)cbContratos.getSelectedItem());
+                    liberar = true;
+                }
+                if(!cbFisc.getSelectedItem().equals("")){
+                    nome.add((String)cbFisc.getSelectedItem());
+                    liberar = true;
+                }
+                if(!cbDP.getSelectedItem().equals("")){
+                    nome.add((String)cbDP.getSelectedItem());
+                    liberar = true;
+                }
+                if(!cbReg.getSelectedItem().equals("")){
+                    nome.add((String)cbReg.getSelectedItem());
+                    liberar = true;
+                }
+                if(liberar==true){
+                    Relatorios relatorio = new Relatorios(abrir, "Geral", nome);
+                    jDesktopPane1.removeAll();
+                    ((BasicInternalFrameUI)relatorio.getUI()).setNorthPane(null);
+                    jDesktopPane1.add(relatorio);
+                    relatorio.setVisible(true);
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Para enviar cobrança selecione ao menos 1(Um) destinatário");
+            }
+            else{
+                List <String> nova = new ArrayList<>();
+//                NovoJFrame novo = new NovoJFrame(abrir, "Geral", nova);
+//                novo.setVisible(true);
+                
+                Relatorios relatorio = new Relatorios(abrir, "Geral", nova);
+                jDesktopPane1.removeAll();
+                ((BasicInternalFrameUI)relatorio.getUI()).setNorthPane(null);
+                jDesktopPane1.add(relatorio);
+                relatorio.setVisible(true);
+            }
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Ative um cliente para prosseguir!");
+    }//GEN-LAST:event_btAvancarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btAlerta;
+    private javax.swing.JButton btAvancar;
+    private javax.swing.JButton btRelatorio;
+    private javax.swing.JComboBox<String> cbComercial;
+    private javax.swing.JComboBox<String> cbContabil;
+    private javax.swing.JComboBox<String> cbContratos;
+    private javax.swing.JComboBox<String> cbDP;
+    private javax.swing.JComboBox<String> cbFisc;
+    private javax.swing.JComboBox<String> cbReg;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPDepartamento;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JLabel lbDeposito;
-    private javax.swing.JLabel lbDiagnose;
-    private javax.swing.JLabel lbGeral;
-    private javax.swing.JLabel lbOS;
-    private javax.swing.JLabel lbPesquisa;
-    private javax.swing.JLabel lbProposta;
-    private javax.swing.JLabel lbRequisicao;
-    private javax.swing.JLabel lbSenha;
-    private javax.swing.JLabel lbTaxa;
-    private javax.swing.JLabel lbTermo;
-    private javax.swing.JTable tbRecebimento;
-    private javax.swing.JTable tbSolicitacao;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jpCalc;
+    private javax.swing.JPanel jpPendencias;
+    private javax.swing.JPanel jpResp;
+    private javax.swing.JLabel lbCCom;
+    private javax.swing.JLabel lbCContabil;
+    private javax.swing.JLabel lbCContratos;
+    private javax.swing.JLabel lbCDp;
+    private javax.swing.JLabel lbCFisc;
+    private javax.swing.JLabel lbCReg;
+    private javax.swing.JLabel lbDContratos;
+    private javax.swing.JLabel lbDDp;
+    private javax.swing.JLabel lbDFisc;
+    private javax.swing.JLabel lbDocCom;
+    private javax.swing.JLabel lbDocContabil;
     // End of variables declaration//GEN-END:variables
+    
     public void carregaCombo(){
         try{
-            String sql ="select Cliente from cadastrodeprocesso";
+            String sql ="select SUBSTRING_INDEX(SUBSTRING_INDEX(Cliente, ' ', 3), ' ', -3) as Cliente from cadastrodeprocesso where Situacao=1";
             Connection con = new ConexaoStatement().getConnetion();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             jComboBox1.removeAll();
-            jComboBox1.addItem("");
+            jComboBox1.addItem("Clique aqui para Ativar!");
             
-            String valor = TelaPrincipal.txt_nome.getText();
-            if(!valor.equals(null) && !valor.equals(""))
-                jComboBox1.setSelectedItem("");
+            String vlr = TelaPrincipal.txt_nome.getText();
+            if(!vlr.equals(null) && !vlr.equals(""))
+                jComboBox1.setSelectedItem(vlr);
             else
-                jComboBox1.setSelectedItem(valor);
+                jComboBox1.setSelectedItem("Clique aqui para Ativar!");
             
             if(rs!=null){
                 while(rs.next()){
@@ -502,89 +725,130 @@ public class InternoGeral extends javax.swing.JInternalFrame {
     }
     
     public void combo(String valor){
-        try{
-            String sql ="select * from cadastrodeprocesso where Cliente=?";
-            Connection con = new ConexaoStatement().getConnetion();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, valor);
-            ResultSet rs = ps.executeQuery();
-            
-            if(rs!=null){
-                if(rs.next()){
-                    TelaPrincipal.txt_codigo.setText(rs.getString("codNumerodoprocesso"));
-                    TelaPrincipal.txt_nome.setText(rs.getString("Cliente"));
-                    TelaPrincipal.txt_id.setText(rs.getString("Apelido"));
-                    TelaPrincipal.txt_classificacao.setText(rs.getString("Classificacao"));
-                    TelaPrincipal.txt_ativada.setText("");
-                    TelaPrincipal.txt_finalizada.setText("");
-                }
-            }
-            
-        }catch(SQLException e){
-        }
-    }
-    public void comercial(String processo){
-        Connection con = new ConexaoStatement().getConnetion();
-        
-        String sql ="select B.AndamentoComercial AS GERAL," 
-                        +"A.AndamentoTaxaDeImplantacaoEFormaDePagamento AS TAXA,"
-                        +"A.AndamentoGravarSenhasFiscais AS SENHAS, "
-                        +"A.AndamentoGerarOS AS OS,"
-                        +"AndamentoEnviarTermoResponsaparacliente AS TERMO,"
-                        +"A.AndamentoPropastaComercial AS PROPOSTA,"
-                        +"A.AndamentoEnvioDiagnose AS DIAGNOSE,"
-                        +"A.AndamentoChekList AS CHECKLIST,"
-                        +"A.AndamentoPesquisaFiscal AS PESQUISA,"
-                        +"A.AndamentoRequisicaoDocumentos AS DOCUMENTOS,"
-                        +"A.AndamentoConfirmarRecebimentoDeposito AS DEPOSITO"
-                        +" from comercial AS A "
-                        +" inner join cadastrodeprocesso as B "
-                        +" on A.Numerodoprocesso=B.codNumerodoprocesso "
-                        +" where A.Numerodoprocesso='"+processo+"'";
-        try{
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            if(rs!=null)
-                while(rs.next()){
-                    lbGeral.setText(rs.getString("GERAL"));
-                    lbDeposito.setText(rs.getString("DEPOSITO"));
-                    lbDiagnose.setText(rs.getString("DIAGNOSE"));
-                    lbOS.setText(rs.getString("OS"));
-                    lbPesquisa.setText(rs.getString("PESQUISA"));
-                    lbProposta.setText(rs.getString("PROPOSTA"));
-                    lbRequisicao.setText(rs.getString("DOCUMENTOS"));
-                    lbSenha.setText(rs.getString("GERAL"));
-                    lbTaxa.setText(rs.getString("TAXA"));
-                    lbTermo.setText(rs.getString("TERMO"));
-                    
-                }
-            colorir(jPDepartamento);
-           }catch (SQLException erro){
-            JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Diagnose " +erro);
-            }finally{try{con.close();}catch(Exception e){}
-        }
-}
-private void colorir(JPanel jpanel){
-    
-    for(int i = 0; i<jpanel.getComponentCount();i++){
-        if(jpanel.getComponent(i) instanceof JLabel){
-            JLabel label =((JLabel)jpanel.getComponent(i));
-            if(label.getText().equals("Concluido") || 
-                label.getText().equals("Finalizado")){
-                        label.setBackground(Color.GREEN);
-                        label.setForeground(Color.WHITE);
-            }else{
-                label.setBackground(Color.RED);
-                label.setForeground(Color.WHITE);
-                
-            }
-        }
-    }
-}
+        if(valor!=null && !valor.equals("")){
+            Connection con = null;
+            try{
+                String sql ="select * from cadastrodeprocesso where Cliente like '"+valor+"%'";
+                con = new ConexaoStatement().getConnetion();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
 
-private void add(String processo){
-    tbRecebimento.remove(0);
-    tbSolicitacao.remove(0);
+                if(rs!=null){
+                    if(rs.next()){
+                        TelaPrincipal.txt_codigo.setText(rs.getString("codNumerodoprocesso"));
+                        TelaPrincipal.txt_nome.setText(rs.getString("Cliente"));
+                        TelaPrincipal.txt_id.setText(rs.getString("Apelido"));
+                        TelaPrincipal.txt_classificacao.setText(rs.getString("Classificacao"));
+                        TelaPrincipal.txt_ativada.setText("");
+                        TelaPrincipal.txt_finalizada.setText("");
+                    }
+                }
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }finally{try{
+                if(con!=null)con.close();}catch(Exception e){}
+            }
+        }
+    }
+    private void preencherDepartamentos(String valor){
+        if(valor!=null){
+            Connection con=null;
+            try{
+                String sql ="select a.AndamentoTaxaDeImplantacaoEFormaDePagamento as COMERCIAL1," +
+                            "a.AndamentoGravarSenhasFiscais AS COMERCIAL2," +
+                            "a.AndamentoGerarOS AS COMERCIAL3," +
+                            "a.AndamentoEnviarTermoResponsaparacliente AS COMERCIAL4," +
+                            "a.AndamentoPropastaComercial AS COMERCIAL5," +
+                            "a.AndamentoEnvioDiagnose AS COMERCIAL6," +
+                            "a.AndamentoPesquisaFiscal AS COMERCIAL7," +
+                            "a.AndamentoRequisicaoDocumentos AS COMERCIAL8," +
+                            "a.AndamentoConfirmarRecebimentoDeposito AS COMERCIAL9," +
+                            "b.AndamentoGerarPlanoDeContas AS CONTABIL1," +
+                            "c.AndamentoElaborarContratoPrestacaoDeServico AS CONTRATOS1," +
+                            "c.AndamentoCadastrarControlEContmatic AS CONTRATOS2," +
+                            "c.AndamentoAtivarCliente AS CONTRATOS3," +
+                            "c.AndamentoElaborarPrefilFiscal AS CONTRATOS4," +
+                            "c.AndamentoReceberContratoAssCliente AS CONTRATOS5," +
+                            "c.AndamentoGerarIDPlanCadastro AS CONTRATOS6," +
+                            "d.AndamentoCadastroDoSocioNoControl AS DP1," +
+                            "d.AndamentoCadastroDependentesdoSocioADM AS DP2," +
+                            "d.AndamentoIplantacaodadosFolhaPg AS DP3," +
+                            "f.AndamenoDistribuirFuncionarioInterno AS FISC1," +
+                            "f.AndamentoValidarPerfilFiscal AS FISC2," +
+                            "r.AndamentoEnviarTernoReponsaParaComercial AS REG1," +
+                            "r.AndamentoArquivarProcesso AS REG2 " +
+                            "from comercial as a " +
+                            "inner join contabil as b " +
+                            "on a.Numerodoprocesso= b.Numerodoprocesso " +
+                            "inner join contratos as c " +
+                            "on b.Numerodoprocesso=c.Numerodoprocesso " +
+                            "inner join fiscal as f " +
+                            "on c.Numerodoprocesso=f.Numerodoprocesso " +
+                            "inner join dp as d " +
+                            "on f.Numerodoprocesso=d.Numerodoprocesso " +
+                            "inner join regularizacao as r " +
+                            "on d.Numerodoprocesso= r.Numerodoprocesso " +
+                            "where a.Numerodoprocesso=?";
+                con = new ConexaoStatement().getConnetion();
+                
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setString(1, valor);
+                ResultSet rs = ps.executeQuery();
+
+                if(rs!=null){
+                    if(rs.next()){
+                        departamento=0;
+                        //comercial
+                        contar(lbCCom, rs.getString("COMERCIAL1"));
+                        contar(lbCCom, rs.getString("COMERCIAL2"));
+                        contar(lbCCom, rs.getString("COMERCIAL3"));
+                        contar(lbCCom, rs.getString("COMERCIAL4"));
+                        contar(lbCCom, rs.getString("COMERCIAL5"));
+                        contar(lbCCom, rs.getString("COMERCIAL6"));
+                        contar(lbCCom, rs.getString("COMERCIAL7"));
+                        contar(lbCCom, rs.getString("COMERCIAL8"));
+                        contar(lbCCom, rs.getString("COMERCIAL9"));
+                        
+                        //contabil
+                        departamento=0;
+                        contar(lbCContabil, rs.getString("CONTABIL1"));
+                        
+                        //contratos
+                        departamento=0;
+                        contar(lbCContratos, rs.getString("CONTRATOS1"));
+                        contar(lbCContratos, rs.getString("CONTRATOS2"));
+                        contar(lbCContratos, rs.getString("CONTRATOS3"));
+                        contar(lbCContratos, rs.getString("CONTRATOS4"));
+                        contar(lbCContratos, rs.getString("CONTRATOS5"));
+                        contar(lbCContratos, rs.getString("CONTRATOS6"));
+                        //dp
+                        departamento=0;
+                        contar(lbCDp, rs.getString("DP1"));
+                        contar(lbCDp, rs.getString("DP2"));
+                        contar(lbCDp, rs.getString("DP3"));
+
+                        //fiscal
+                        departamento=0;
+                        contar(lbCFisc, rs.getString("FISC1"));
+                        contar(lbCFisc, rs.getString("FISC2"));
+                        //regularizacao
+                        departamento=0;
+                        contar(lbCReg, rs.getString("REG1"));
+                        contar(lbCReg, rs.getString("REG2"));
+                    }
+                    preencherDocumentos(valor);
+                }
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }finally{try{
+                if(con!=null)con.close();}catch(Exception e){}
+            }
+        }
+    }
+    private void preencherDocumentos(String processo){
+    
     Connection con = new ConexaoStatement().getConnetion();
     String sql = "select * from documentos where Numerodoprocesso='"+processo+"'";
     try{
@@ -592,64 +856,79 @@ private void add(String processo){
             ResultSet rs = ps.executeQuery();
             if(rs!=null)
                 while(rs.next()){
+                    departamento=0;
+                    comercial=0;
                     //area contratos
-                    contexto("Ato Constitutivo",rs.getString("AtoConstitutivo"));
-                    contexto("Documentos do Socio",rs.getString("RGeCPFSocio"));
-                    contexto("Comprovantes dos Sócios",rs.getString("ComprovanteResidencia"));
-                    contexto("Numero Pis",rs.getString("NumeroPIS"));
-                    contexto("Habilitar NFe PMSP",rs.getString("AutorizacaoNotaFiscalEletronica"));
-                    contexto("Senha Posto Fiscal",rs.getString("SenhaPostoFiscal"));
-                    contexto("Senha Simples Nacional",rs.getString("SenhaSimplesNacional"));
+                    contarDocumentos(lbDContratos,rs.getString("AtoConstitutivo"));
+                    contarDocumentos(lbDContratos,rs.getString("RGeCPFSocio"));
+                    contarDocumentos(lbDContratos,rs.getString("ComprovanteResidencia"));
+                    contarDocumentos(lbDContratos,rs.getString("NumeroPIS"));
+                    contarDocumentos(lbDContratos,rs.getString("AutorizacaoNotaFiscalEletronica"));
+                    contarDocumentos(lbDContratos,rs.getString("SenhaPostoFiscal"));
+                    contarDocumentos(lbDContratos,rs.getString("SenhaSimplesNacional"));
+                    departamento=0;
                     //area contabil
-                    contexto("Balanço e D.R.E",rs.getString("BalancoDRE"));
-                    contexto("Contas Patrimoniais",rs.getString("ComposicaoDeContasPatrimoniais"));
-                    contexto("Plano de Contas",rs.getString("PlanoDeContas"));
-                    contexto("Balancete",rs.getString("BalanceteExercicio"));
+                    contarDocumentos(lbDocContabil,rs.getString("BalancoDRE"));
+                    contarDocumentos(lbDocContabil,rs.getString("ComposicaoDeContasPatrimoniais"));
+                    contarDocumentos(lbDocContabil,rs.getString("PlanoDeContas"));
+                    contarDocumentos(lbDocContabil,rs.getString("BalanceteExercicio"));
+                    departamento=0;
                     //departamento pessoal
-                    contexto("Folha de Pagamento",rs.getString("FolhadePagamentoDocumento"));
-                    contexto("Fichs de Funcionários",rs.getString("LivroOuFichadeRegistroFuncionario"));
-                    contexto("Caged",rs.getString("CAGED"));
-                    contexto("Sefip",rs.getString("SEFIP"));
-                    contexto("Guia Sindical",rs.getString("GuiaSindical"));
-                    contexto("Darf, Gps, Fgts",rs.getString("GuiasDarfGpsFgts"));
-                    contexto("Recisões",rs.getString("Recisao"));
-                    contexto("Recibo de Férias",rs.getString("Ferias"));
-                    contexto("Afastamentos",rs.getString("Afastamento"));
+                    contarDocumentos(lbDDp,rs.getString("FolhadePagamentoDocumento"));
+                    contarDocumentos(lbDDp,rs.getString("LivroOuFichadeRegistroFuncionario"));
+                    contarDocumentos(lbDDp,rs.getString("CAGED"));
+                    contarDocumentos(lbDDp,rs.getString("SEFIP"));
+                    contarDocumentos(lbDDp,rs.getString("GuiaSindical"));
+                    contarDocumentos(lbDDp,rs.getString("GuiasDarfGpsFgts"));
+                    contarDocumentos(lbDDp,rs.getString("Recisao"));
+                    contarDocumentos(lbDDp,rs.getString("Ferias"));
+                    contarDocumentos(lbDDp,rs.getString("Afastamento"));
+                    departamento=0;
                     //fiscal senhas
-                    contexto("Senha Receita Federal",rs.getString("OutorgaSenhaEletronicaReceita"));
-                    contexto("Perfil Fiscal PMSP",rs.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
-                    contexto("Termo Resp.Tecnica",rs.getString("TermodeResponsabilidadeDocumento"));
-                    contexto("Senha do Inss",rs.getString("SenhaINSS"));
+                    contarDocumentos(lbDFisc,rs.getString("OutorgaSenhaEletronicaReceita"));
+                    contarDocumentos(lbDFisc,rs.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
+                    contarDocumentos(lbDFisc,rs.getString("TermodeResponsabilidadeDocumento"));
+                    contarDocumentos(lbDFisc,rs.getString("SenhaINSS"));
                     
+                    colorir(jpCalc);
                     }
 //            statusTabel(tbRecebimento);
 //            statusTabel(tbSolicitacao);
-           }catch (SQLException erro){
-            JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Diagnose " +erro);
-            }finally{try{con.close();}catch(Exception e){}
+            }catch (SQLException erro){
+                erro.printStackTrace();
+            }finally{try{if(con!=null)con.close();}catch(Exception e){}}
+}
+    private void contar(JLabel label, String valor){
+        int novoValor=0;
+        if(valor.trim().equals("Em Aberto") || valor.trim().equals("")){
+            novoValor=1;
         }
-    
-}
-private void contexto(String nomeLabel, String valor){
-    if(valor.equals("") || valor.contains("Em Aberto")){
-         criaLabel(tbSolicitacao, nomeLabel);
+        this.departamento+=novoValor;
+        label.setText(""+departamento);
     }
-    else if(valor.contains("Enviado")){
-        criaLabel(tbRecebimento, nomeLabel);
+    private void contarDocumentos(JLabel label, String valor){
+        int novoValor=1;
+        if(valor.trim().equals("Aguardando Validação")){
+            this.departamento+=novoValor;
+        }
+        else if(!valor.trim().equals("Validação Efetuada") && !valor.trim().equals("Aguardando Validação")){
+            //acumula comercial
+            this.comercial+=novoValor;
+        }
+        lbDocCom.setText(""+comercial);
+        label.setText(""+departamento);
     }
-}
-private void criaLabel(JTable tabela, String text){
-    DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
-    int linha = modelo.getRowCount();
-    modelo.addRow(new String[1]);
-        tabela.setValueAt(text, linha, 0);
-    
-}
-//private void statusTabel(JTable tabela){
-//    DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
-//    if(modelo.getRowCount()==0){
-//        modelo.addRow(new String[1]);
-//        tabela.setValueAt("Nenhuma Pendência", 0, 0);
-//    }
-//}
+    private void colorir(JPanel panel){
+        for(int i = 0;i<panel.getComponentCount(); i++){
+            if(panel.getComponent(i) instanceof JLabel){
+                int qtd = Integer.parseInt(((JLabel)panel.getComponent(i)).getText());
+                if(qtd==0){
+                    ((JLabel)panel.getComponent(i)).setBackground(Color.green);
+                }
+                else if(qtd>=1 && qtd<=100){
+                    ((JLabel)panel.getComponent(i)).setBackground(Color.red);
+                }
+            }
+        }
+    }
 }

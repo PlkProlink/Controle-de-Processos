@@ -26,7 +26,8 @@ public class AdministradorDePendencias extends javax.swing.JInternalFrame {
      */
     public AdministradorDePendencias() {
         initComponents();
-        openInternalGeral(intGeral);
+        intGeral = new InternoGeral();
+        openInternal(intGeral);
     }
 
     /**
@@ -51,14 +52,14 @@ public class AdministradorDePendencias extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Visao Geral");
-        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Comercial");
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Processos");
+        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Visão Geral");
+        treeNode1.add(treeNode2);
+        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Comercial");
         treeNode1.add(treeNode2);
         treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Contabil");
         treeNode1.add(treeNode2);
         treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Contratos");
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Financeiro");
         treeNode1.add(treeNode2);
         treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Fiscal");
         treeNode1.add(treeNode2);
@@ -120,36 +121,40 @@ public class AdministradorDePendencias extends javax.swing.JInternalFrame {
         String menu = trArvore.getLastSelectedPathComponent().toString();
         
         switch(menu){
-            case "Visao Geral":
-                openInternalGeral(intGeral);
             case "Comercial":
-                openInternalComercial(intComercial);
+                intComercial = new InternoComercial();
+                openInternal(intComercial);
                 break;
             case "Contabil":
-                openInternalContabil(intContabil);
+                intContabil = new InternoContabil();
+                openInternal(intContabil);
                 break;
             case "Contratos":
-                openInternalContratos(intContratos);
+                intContratos = new InternoContratos();
+                openInternal(intContratos);
                 break;
             case "Fiscal":
-                openInternalFiscal(intFiscal);
+                intFiscal = new InternoFiscal();
+                openInternal(intFiscal);
                 break;
             case "Pessoal":
-                openInternalPessoal(intPessoal);
+                intPessoal = new InternoPessoal();
+                openInternal(intPessoal);
                 break;
             case "Regularização":
-                openInternalRegularizacao(intReg);
+                intReg = new InternoRegularizacao();
+                openInternal(intReg);
                 break;
-            
-            
             default:
+                intGeral = new InternoGeral();
+                openInternal(intGeral);
                 break;
                 
         }
     }//GEN-LAST:event_trArvoreMouseClicked
 
     private void trArvoreValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_trArvoreValueChanged
-        
+            
     }//GEN-LAST:event_trArvoreValueChanged
 
 
@@ -158,68 +163,9 @@ public class AdministradorDePendencias extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree trArvore;
     // End of variables declaration//GEN-END:variables
-
-
-private void openInternalComercial(JInternalFrame iframe){
+private void openInternal(JInternalFrame iframe){
     jDkBody.removeAll();
-    if(iframe==null){
-        iframe = new InternoComercial();
-        ((BasicInternalFrameUI)iframe.getUI()).setNorthPane(null);
-    }
-    jDkBody.add(iframe);
-    iframe.setVisible(true);
-}
-private void openInternalGeral(JInternalFrame iframe){
-    jDkBody.removeAll();
-    if(iframe==null){
-        iframe = new InternoGeral();
-        ((BasicInternalFrameUI)iframe.getUI()).setNorthPane(null);
-    }
-    jDkBody.add(iframe);
-    iframe.setVisible(true);
-}
-private void openInternalContratos(JInternalFrame iframe){
-    jDkBody.removeAll();
-    if(iframe==null){
-        iframe = new InternoContratos();
-        ((BasicInternalFrameUI)iframe.getUI()).setNorthPane(null);
-    }
-    jDkBody.add(iframe);
-    iframe.setVisible(true);
-}
-private void openInternalContabil(JInternalFrame iframe){
-    jDkBody.removeAll();
-    if(iframe==null){
-        iframe = new InternoContabil();
-        ((BasicInternalFrameUI)iframe.getUI()).setNorthPane(null);
-    }
-    jDkBody.add(iframe);
-    iframe.setVisible(true);
-}
-private void openInternalFiscal(JInternalFrame iframe){
-    jDkBody.removeAll();
-    if(iframe==null){
-        iframe = new InternoFiscal();
-        ((BasicInternalFrameUI)iframe.getUI()).setNorthPane(null);
-    }
-    jDkBody.add(iframe);
-    iframe.setVisible(true);
-}
-private void openInternalRegularizacao(JInternalFrame iframe){
-    jDkBody.removeAll();
-    if(iframe==null){
-        iframe = new InternoRegularizacao();
-        ((BasicInternalFrameUI)iframe.getUI()).setNorthPane(null);
-    }
-    jDkBody.add(iframe);
-    iframe.setVisible(true);
-}
-private void openInternalPessoal(JInternalFrame iframe){
-    jDkBody.removeAll();
-    if(iframe==null){
-        iframe = new InternoPessoal();
-        ((BasicInternalFrameUI)iframe.getUI()).setNorthPane(null);
-    }
+   ((BasicInternalFrameUI)iframe.getUI()).setNorthPane(null);
     jDkBody.add(iframe);
     iframe.setVisible(true);
 }

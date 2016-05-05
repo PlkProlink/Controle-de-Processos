@@ -5,7 +5,7 @@
  */
 package br.com.prolink.documentos.internas;
 
-import br.com.prolink.inicio.Ativador;
+import br.com.prolink.inicio.TelaPrincipal;
 import br.com.prolink.inicio.Conexao;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,9 +27,9 @@ public class AtualizaDocumentos {
         con.conecta();
         
         try{
-            con.executeSQL("select * from documentos where Numerodoprocesso='"+Ativador.processo+"'");
+            con.executeSQL("select * from documentos where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
             if(con.resultset.first()){
-                String sql=("update documentos set "+campo+"='Enviado para o Cliente' where Numerodoprocesso='"+Ativador.processo+"'");
+                String sql=("update documentos set "+campo+"='Enviado para o Cliente' where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
                 con.statement.executeUpdate(sql);
             }
             atualizar_status();
@@ -42,12 +42,12 @@ public class AtualizaDocumentos {
         con.conecta();
         
         try{
-        con.executeSQL("select * from documentos where Numerodoprocesso='"+Ativador.processo+"'");
+        con.executeSQL("select * from documentos where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
         if(con.resultset.first()){
             con.statement.executeUpdate("update documentos set "
-                                                +campo+"='Aguardando Validação' where Numerodoprocesso='"+Ativador.processo+"'");
+                                                +campo+"='Aguardando Validação' where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
         }
-        atualizar_status();
+            atualizar_status();
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null, "Erro ao atualizar documentos: tela>" +tela+"\n"+erro);
         }finally{con.desconecta();}
@@ -58,10 +58,10 @@ public class AtualizaDocumentos {
         con.conecta();
         
         try{
-            con.executeSQL("select * from documentos where Numerodoprocesso='"+Ativador.processo+"'");
+            con.executeSQL("select * from documentos where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
             if(con.resultset.first()){
                 con.statement.executeUpdate("update documentos set "
-                                            +campo+"='Validação Efetuada' where Numerodoprocesso='"+Ativador.processo+"'");
+                                            +campo+"='Validação Efetuada' where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
             }
             atualizar_status();
         }catch(SQLException erro){
@@ -73,7 +73,7 @@ public class AtualizaDocumentos {
         con.conecta();
         
         try{
-            con.executeSQL("select * from documentos where Numerodoprocesso='"+Ativador.processo+"'");
+            con.executeSQL("select * from documentos where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
             if(con.resultset.first()){
                lista.add(con.resultset.getString("Afastamento"));
                lista.add(con.resultset.getString("AtoConstitutivo"));
@@ -105,11 +105,12 @@ public class AtualizaDocumentos {
             for(int i =0 ; i<lista.size(); i++){
                 if(!lista.get(i).contains("Validação Efetuada")){
                     situacao="Em Aberto";
+                    break;
                 }
                 else
                     situacao="Concluido";
             }
-            atualiza_cadastro(Integer.parseInt(Ativador.processo),situacao);
+            atualiza_cadastro(Integer.parseInt(TelaPrincipal.txt_codigo.getText()),situacao);
         }catch(SQLException erro){
             System.out.println(""+erro);
         }finally{con.desconecta();}

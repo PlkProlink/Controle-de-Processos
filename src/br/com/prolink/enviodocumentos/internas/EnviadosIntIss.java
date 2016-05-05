@@ -4,8 +4,12 @@
  */
 package br.com.prolink.enviodocumentos.internas;
 
+import br.com.prolink.controle.LogUsuarioBean;
+import br.com.prolink.controle.LogUsuarioDao;
 import br.com.prolink.enviodocumentos.DocumentosEnviados;
+import br.com.prolink.enviodocumentos.DocumentosEnviadosDao;
 import br.com.prolink.inicio.Conexao;
+import br.com.prolink.inicio.TelaPrincipal;
 
 /**
  *
@@ -20,8 +24,18 @@ public class EnviadosIntIss extends EnviadosIntModelo{
         
 	conexao = new Conexao(); 
         conexao.conecta();
+        
         preencher_tabela();
         pegar_ultimo_registro();
+        
+        doc = new DocumentosEnviadosDao();
+        log = new LogUsuarioDao();
+        logb = new LogUsuarioBean();
+        
+        logb.setCliente(nome);
+        logb.setApelido(TelaPrincipal.txt_id.getText());
+        logb.setProcesso(processo);
+        logb.setTela(tela);
     }
     public static void main(String[] args){
         EnviadosIntModelo telaBoletos = new EnviadosIntIss();

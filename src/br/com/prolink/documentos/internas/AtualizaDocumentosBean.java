@@ -9,7 +9,13 @@ package br.com.prolink.documentos.internas;
  * @author Tiago
  */
 public class AtualizaDocumentosBean {
-    private String AtoConstitutivo,RGeCPFSocio,ComprovanteResidencia,NumeroPIS,AutorizacaoNotaFiscalEletronica,SenhaPostoFiscal,SenhaSimplesNacional,BalancoDRE,ComposicaoDeContasPatrimoniais,PlanoDeContas,BalanceteExercicio,FolhadePagamentoDocumento,LivroOuFichadeRegistroFuncionario,CAGED,SEFIP,GuiaSindical,GuiasDarfGpsFgts,Recisao,Ferias,Afastamento,OutorgaSenhaEletronicaReceita,ConfigurarPerfilFiscalNoSitePrefeituraDocumento,TermodeResponsabilidadeDocumento,SenhaINSS;
+    private String AtoConstitutivo,RGeCPFSocio,ComprovanteResidencia,NumeroPIS,
+            AutorizacaoNotaFiscalEletronica,SenhaPostoFiscal,SenhaSimplesNacional,
+            BalancoDRE,ComposicaoDeContasPatrimoniais,PlanoDeContas,
+            BalanceteExercicio,FolhadePagamentoDocumento,LivroOuFichadeRegistroFuncionario,
+            CAGED,SEFIP,GuiaSindical,GuiasDarfGpsFgts,Recisao,Ferias,Afastamento,
+            OutorgaSenhaEletronicaReceita,ConfigurarPerfilFiscalNoSitePrefeituraDocumento,
+            TermodeResponsabilidadeDocumento,SenhaINSS;
 
     /**
      * @return the AtoConstitutivo

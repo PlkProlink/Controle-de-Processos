@@ -164,7 +164,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         btnNovoProcesso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnNovoProcesso.setText("Gerenciar");
-        btnNovoProcesso.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnNovoProcesso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoProcessoActionPerformed(evt);
@@ -173,7 +172,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         btnRelatorios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnRelatorios.setText("Relatórios");
-        btnRelatorios.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRelatoriosActionPerformed(evt);
@@ -185,11 +183,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpProcessosLayout.setHorizontalGroup(
             jpProcessosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpProcessosLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(25, 25, 25)
                 .addGroup(jpProcessosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNovoProcesso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(btnRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovoProcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpProcessosLayout.setVerticalGroup(
             jpProcessosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,7 +205,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         btnConfirmarDocumento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnConfirmarDocumento.setText("Confirmar");
-        btnConfirmarDocumento.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnConfirmarDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConfirmarDocumentoActionPerformed(evt);
@@ -216,7 +213,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         btnNovoDocumentoRec.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnNovoDocumentoRec.setText("Novo");
-        btnNovoDocumentoRec.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnNovoDocumentoRec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoDocumentoRecActionPerformed(evt);
@@ -230,8 +226,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jpRececepcaoLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jpRececepcaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNovoDocumentoRec, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConfirmarDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnNovoDocumentoRec, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConfirmarDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -240,9 +236,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpRececepcaoLayout.setVerticalGroup(
             jpRececepcaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpRececepcaoLayout.createSequentialGroup()
-                .addComponent(btnNovoDocumentoRec, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNovoDocumentoRec, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnConfirmarDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnConfirmarDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -297,7 +293,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnModificarData.setBackground(new java.awt.Color(250, 250, 250));
         btnModificarData.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnModificarData.setText("Modificar");
-        btnModificarData.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnModificarData.setContentAreaFilled(false);
         btnModificarData.setFocusPainted(false);
         btnModificarData.addActionListener(new java.awt.event.ActionListener() {
@@ -360,7 +355,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_finalizada, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnModificarData, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnModificarData)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBarraInfoLayout.createSequentialGroup()
                         .addContainerGap(877, Short.MAX_VALUE)
                         .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,7 +419,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         btnEnviados.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEnviados.setText("Doc.Enviados");
-        btnEnviados.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnEnviados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEnviadosActionPerformed(evt);
@@ -432,7 +427,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         btnRecebidos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnRecebidos.setText("Doc.Recebidos");
-        btnRecebidos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnRecebidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRecebidosActionPerformed(evt);
@@ -444,15 +438,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpProcessos1Layout.setHorizontalGroup(
             jpProcessos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpProcessos1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(jpProcessos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEnviados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRecebidos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addGroup(jpProcessos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnRecebidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEnviados, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpProcessos1Layout.setVerticalGroup(
             jpProcessos1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpProcessos1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpProcessos1Layout.createSequentialGroup()
                 .addComponent(btnEnviados, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRecebidos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -463,11 +457,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpPrincipalLayout.setHorizontalGroup(
             jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPrincipalLayout.createSequentialGroup()
-                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jpProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jpProcessos1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jpRececepcao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jpRececepcao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpProcessos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpProcessos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jDkBody))
             .addComponent(jpBarraInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -484,7 +477,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jpProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpProcessos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(157, Short.MAX_VALUE))
+                        .addContainerGap(166, Short.MAX_VALUE))
                     .addComponent(jDkBody)))
         );
 
@@ -768,7 +761,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+            .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
         );
 
         setSize(new java.awt.Dimension(1336, 726));
@@ -895,7 +888,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmSairMouseClicked
 
     private void mnRelCadastroUmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnRelCadastroUmActionPerformed
-        if(Ativador.processo!=null){
+        if(txt_codigo.getText()!=null){
             relCliente = new RelatCadastro();
             relCliente.relatorioResumidoUm();
         }
@@ -912,7 +905,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnRelCadastroTodosActionPerformed
 
     private void jmAcompanhamentoIndividualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmAcompanhamentoIndividualActionPerformed
-        if(Ativador.processo!=null){
+        if(txt_codigo.getText()!=null){
             relCliente = new RelatCadastro();
             relCliente.acompanhamentosUm();
         }
@@ -932,17 +925,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jDkBody.removeAll();
         pendencias = new AdministradorDePendencias();
         ((BasicInternalFrameUI)pendencias.getUI()).setNorthPane(null);
-        
         jDkBody.add(pendencias);
         pendencias.setVisible(true);
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void btnEnviadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviadosActionPerformed
-        documentos();
+        enviar_documentos();
+        
     }//GEN-LAST:event_btnEnviadosActionPerformed
 
     private void btnRecebidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecebidosActionPerformed
-        enviar_documentos();
+        documentos();
     }//GEN-LAST:event_btnRecebidosActionPerformed
     
     /**
@@ -1069,9 +1062,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         else{   
             contabil = new Contabil();
             //Chamando a tela, enviando os dados do cliente para a tela solicitada
-            contabil.txt_codigo.setText(Ativador.processo);
-            contabil.txt_nome.setText(Ativador.nome);
-            contabil.txt_id.setText(Ativador.id);
+            contabil.txt_codigo.setText(txt_codigo.getText());
+            contabil.txt_nome.setText(txt_nome.getText());
+            contabil.txt_id.setText(txt_id.getText());
             contabil.txt_usuario.setText(Login.usuario);
             
             contabil.setVisible(true);
@@ -1087,9 +1080,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         else{
             regularizacao = new Regularizacao();
             //Chamando a tela, enviando os dados do cliente para a tela solicitada
-            regularizacao.txt_codigo.setText(Ativador.processo);
-            regularizacao.txt_nome.setText(Ativador.nome);
-            regularizacao.txt_id.setText(Ativador.id);
+            regularizacao.txt_codigo.setText(txt_codigo.getText());
+            regularizacao.txt_nome.setText(txt_nome.getText());
+            regularizacao.txt_id.setText(txt_id.getText());
             regularizacao.txt_usuario.setText(Login.usuario);
             
             regularizacao.setVisible(true);
@@ -1105,9 +1098,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         else{
         financeiro = new Financeiro();
-        financeiro.txt_codigo.setText(Ativador.processo);
-        financeiro.txt_nome.setText(Ativador.nome);
-        financeiro.txt_id.setText(Ativador.id);
+        financeiro.txt_codigo.setText(txt_codigo.getText());
+        financeiro.txt_nome.setText(txt_nome.getText());
+        financeiro.txt_id.setText(txt_id.getText());
         financeiro.txt_usuario.setText(Login.usuario);
             
         financeiro.setVisible(true);
@@ -1123,9 +1116,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         else{   
             comercial = new Comercial();
             //Chamando a tela, enviando os dados do cliente para a tela solicitada
-            comercial.txtCodigo.setText(Ativador.processo);
-            comercial.txtNome.setText(Ativador.nome);
-            comercial.txtId.setText(Ativador.id);
+            comercial.txtCodigo.setText(txt_codigo.getText());
+            comercial.txtNome.setText(txt_nome.getText());
+            comercial.txtId.setText(txt_id.getText());
             comercial.txtUsuario.setText(Login.usuario);
             
             comercial.setVisible(true);
@@ -1140,9 +1133,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         else{   
             fiscal = new Fiscal();
-            fiscal.txt_codigo.setText(Ativador.processo);
-            fiscal.txt_nome.setText(Ativador.nome);
-            fiscal.txt_id.setText(Ativador.id);
+            fiscal.txt_codigo.setText(txt_codigo.getText());
+            fiscal.txt_nome.setText(txt_nome.getText());
+            fiscal.txt_id.setText(txt_id.getText());
             fiscal.txt_usuario.setText(Login.usuario);
             fiscal.setVisible(true);
         }
@@ -1157,9 +1150,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         else{   
             contratos = new Contratos();
             //Chamando a tela, enviando os dados do cliente para a tela solicitada
-            contratos.txtCodigo.setText(Ativador.processo);
-            contratos.txtNome.setText(Ativador.nome);
-            contratos.txtId.setText(Ativador.id);
+            contratos.txtCodigo.setText(txt_codigo.getText());
+            contratos.txtNome.setText(txt_nome.getText());
+            contratos.txtId.setText(txt_id.getText());
             contratos.txtUsuario.setText(Login.usuario);
             
             contratos.setVisible(true);
@@ -1175,9 +1168,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         else{   
             dp = new DepPessoal();
             //Chamando a tela, enviando os dados do cliente para a tela solicitada
-            dp.txtCodigo.setText(Ativador.processo);
-            dp.txtNome.setText(Ativador.nome);
-            dp.txtId.setText(Ativador.id);
+            dp.txtCodigo.setText(txt_codigo.getText());
+            dp.txtNome.setText(txt_nome.getText());
+            dp.txtId.setText(txt_id.getText());
             dp.txtUsuario.setText(Login.usuario);
             
             dp.setVisible(true);
@@ -1203,9 +1196,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         else{
             documentos = new Documentos();
             
-            documentos.txtCodigo.setText(Ativador.processo);
-            documentos.txtNome.setText(Ativador.nome);
-            documentos.txtID.setText(Ativador.id);
+            documentos.txtCodigo.setText(txt_codigo.getText());
+            documentos.txtNome.setText(txt_nome.getText());
+            documentos.txtID.setText(txt_id.getText());
             documentos.txtUsuario.setText(Login.usuario);
             
             documentos.setVisible(true);
@@ -1221,9 +1214,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         else{
             docEnv = new DocumentosEnviados();
             
-            docEnv.txtCodigo.setText(Ativador.processo);
-            docEnv.txtNome.setText(Ativador.nome);
-            docEnv.txtID.setText(Ativador.id);
+            docEnv.txtCodigo.setText(txt_codigo.getText());
+            docEnv.txtNome.setText(txt_nome.getText());
+            docEnv.txtID.setText(txt_id.getText());
             docEnv.txtUsuario.setText(Login.usuario);
             
             docEnv.setVisible(true);
