@@ -21,7 +21,6 @@ public class Sobre extends javax.swing.JFrame {
         initComponents();
         
         lbVersaoSistema.setText(versao.getVersao());
-        lbVersaoBanco.setText(versao.getVersaoBanco());
     }
 
     /**
@@ -41,7 +40,7 @@ public class Sobre extends javax.swing.JFrame {
         lbVersaoSistema = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        lbVersaoBanco = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -99,9 +98,9 @@ public class Sobre extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
         jLabel4.setText("Versão:");
 
-        lbVersaoBanco.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
-        lbVersaoBanco.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbVersaoBanco.setText("2.0.0");
+        jLabel6.setFont(new java.awt.Font("Georgia", 0, 12)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("2.0.0");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -111,7 +110,7 @@ public class Sobre extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbVersaoBanco, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +118,7 @@ public class Sobre extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(lbVersaoBanco))
+                    .addComponent(jLabel6))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -255,13 +254,13 @@ public class Sobre extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JLabel lbVersaoBanco;
     private javax.swing.JLabel lbVersaoSistema;
     // End of variables declaration//GEN-END:variables
 }

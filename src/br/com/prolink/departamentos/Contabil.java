@@ -27,8 +27,8 @@ public class Contabil extends javax.swing.JFrame {
     //Formatador para data
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
-    String todos, processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), 
-            id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario, codigo_backup, obs_backup, data_backup, tipo_backup;
+    String todos, processo = Ativador.processo, id = Ativador.id, nome = Ativador.nome,
+            usuario = Login.usuario, codigo_backup, obs_backup, data_backup, tipo_backup;
     /**
      *
      */

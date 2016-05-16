@@ -26,8 +26,8 @@ public class Fiscal extends javax.swing.JFrame {
     //Formatador para data
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    String perfil, distribuir, processo=TelaPrincipal.txt_codigo.getText(), 
-            nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario,
+    String perfil, distribuir, usuario = Login.usuario,
+            processo=Ativador.processo, nome=Ativador.nome, id=Ativador.id,
            codPerfil_backup, codDist_backup, dataDist_backup, dataPerfil_backup,
            obsPerfil_backup, obsDist_backup, tipoPerfil_backup, tipoDist_backup;
     

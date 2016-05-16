@@ -33,7 +33,7 @@ public class Contratos extends javax.swing.JFrame {
             codAtivar_backup, dataAtivar_backup, obsAtivar_backup, tipoAtivar_backup,
             codPerfil_backup, dataPerfil_backup, obsPerfil_backup, tipoPerfil_backup;
 
-    String processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario;
+    String processo = Ativador.processo, nome = Ativador.nome, id = Ativador.id, usuario = Login.usuario;
 
     public Contratos() {
         initComponents();

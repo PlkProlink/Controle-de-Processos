@@ -6,11 +6,10 @@ import br.com.prolink.inicio.*;
 import java.text.SimpleDateFormat;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public class Documentos extends javax.swing.JFrame {
 
-    String processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario;
+    String nome=Ativador.nome, id=Ativador.id, processo=Ativador.processo, usuario=Login.usuario;
     //String nome="", id="", processo="48", usuario="Tiago";
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
@@ -24,7 +23,7 @@ public class Documentos extends javax.swing.JFrame {
     public Documentos() {
         initComponents();
         
-        //lookandfeel();
+        lookandfeel();
         
         con = new Conexao();
         con.conecta();
@@ -1910,7 +1909,7 @@ public class Documentos extends javax.swing.JFrame {
             String lookandfeel ="com.birosoft.liquid.LiquidLookAndFeel";
             UIManager.setLookAndFeel(lookandfeel);
             SwingUtilities.updateComponentTreeUI(this);
-        }catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e){
+        }catch(Exception e){
             System.out.println("Documentos: \n"+e);
         }
     }

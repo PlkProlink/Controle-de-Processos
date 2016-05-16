@@ -33,7 +33,7 @@ public class Financeiro extends javax.swing.JFrame {
             codBol_backup, dataBol_backup, obsBol_backup, tipoBol_backup,
             codCon_backup, dataCon_backup, obsCon_backup, tipoCon_backup;
     
-    String processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario;
+    String processo=Ativador.processo, nome=Ativador.nome, id=Ativador.id, usuario=Login.usuario;
     
     public Financeiro() {
         initComponents();

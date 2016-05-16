@@ -14,7 +14,7 @@ public class DocumentosEnviadosDao {
     
     Conexao con = new Conexao();
     
-    private String processo=TelaPrincipal.txt_codigo.getText();
+    private String processo=Ativador.processo;
 
 public void tudo(){
         boleto();

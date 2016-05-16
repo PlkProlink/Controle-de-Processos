@@ -16,6 +16,8 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -67,7 +69,6 @@ public class Listagem extends javax.swing.JFrame {
     public static String situacao="", pegaAno ="", statusRecebido="N", pesquisa=""; 
     public static boolean relatorio = false, statusData = false;
     private String comando;
-    private String backupComando;
     int codigo;
 
     int[] positivo = new int[10];
@@ -82,7 +83,12 @@ public class Listagem extends javax.swing.JFrame {
     public Listagem() {
         initComponents();
     
-        criaGraficos();
+        pegaPior();
+        pegaMelhor();
+        gerarResultPizza();
+        criaGraficoBad();
+        criaGraficoGreat();
+        gerarPizza();
         
         ListagemBean lb = new ListagemBean();
         bloquear_tela();
@@ -241,7 +247,7 @@ public class Listagem extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtrar:"));
 
-        Usuario.setBackground(new java.awt.Color(255, 255, 255));
+        Usuario.setBackground(new java.awt.Color(245, 245, 245));
         ordenacao.add(Usuario);
         Usuario.setText("Usuario:");
         Usuario.addActionListener(new java.awt.event.ActionListener() {
@@ -262,7 +268,7 @@ public class Listagem extends javax.swing.JFrame {
 
         jLabel3.setText("Até:");
 
-        ID.setBackground(new java.awt.Color(255, 255, 255));
+        ID.setBackground(new java.awt.Color(245, 245, 245));
         ordenacao.add(ID);
         ID.setText("ID:");
         ID.addActionListener(new java.awt.event.ActionListener() {
@@ -271,7 +277,7 @@ public class Listagem extends javax.swing.JFrame {
             }
         });
 
-        Aberto.setBackground(new java.awt.Color(255, 255, 255));
+        Aberto.setBackground(new java.awt.Color(245, 245, 245));
         situação.add(Aberto);
         Aberto.setText("Em Aberto");
         Aberto.addActionListener(new java.awt.event.ActionListener() {
@@ -280,7 +286,7 @@ public class Listagem extends javax.swing.JFrame {
             }
         });
 
-        Fechado.setBackground(new java.awt.Color(255, 255, 255));
+        Fechado.setBackground(new java.awt.Color(245, 245, 245));
         situação.add(Fechado);
         Fechado.setText("Fechado");
         Fechado.addActionListener(new java.awt.event.ActionListener() {
@@ -297,7 +303,7 @@ public class Listagem extends javax.swing.JFrame {
             }
         });
 
-        check.setBackground(new java.awt.Color(255, 255, 255));
+        check.setBackground(new java.awt.Color(245, 245, 245));
         check.setText("Periodo");
         check.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -305,7 +311,7 @@ public class Listagem extends javax.swing.JFrame {
             }
         });
 
-        Geral.setBackground(new java.awt.Color(255, 255, 255));
+        Geral.setBackground(new java.awt.Color(245, 245, 245));
         ordenacao.add(Geral);
         Geral.setText("Geral");
         Geral.addActionListener(new java.awt.event.ActionListener() {
@@ -314,7 +320,7 @@ public class Listagem extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton7.setBackground(new java.awt.Color(255, 255, 255));
+        jRadioButton7.setBackground(new java.awt.Color(245, 245, 245));
         situação.add(jRadioButton7);
         jRadioButton7.setText("Todos");
         jRadioButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -341,7 +347,7 @@ public class Listagem extends javax.swing.JFrame {
             }
         });
 
-        Protocolo.setBackground(new java.awt.Color(255, 255, 255));
+        Protocolo.setBackground(new java.awt.Color(245, 245, 245));
         ordenacao.add(Protocolo);
         Protocolo.setText("Protocolo");
         Protocolo.addActionListener(new java.awt.event.ActionListener() {
@@ -719,9 +725,7 @@ public class Listagem extends javax.swing.JFrame {
                 }
             }
             else if(recebido.trim().length()==0 || recebido==null){
-                this.backupComando = comando;
                 gravar();
-                criaGraficos();
             }
         }
         
@@ -844,10 +848,10 @@ public class Listagem extends javax.swing.JFrame {
 
     private void btnConstestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConstestarActionPerformed
         if(txtCodigo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Selecione um registro para contestar!");
+            JOptionPane.showMessageDialog(null, "Selecione um registro para poder contestar!");
         }
         else if(!txtPara.getText().equals("") && !txtPara.getText().equals(usuario)){
-            JOptionPane.showMessageDialog(null, "Esse documento não foi registrado para você receber, somente o responsável pode Contestar!");
+            JOptionPane.showMessageDialog(null, "Esse documento não foi registrado para você receber, somente o responsavel pode Constestar!");
         }
         else if(!txtRecebidoPor.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Esse registro ja foi baixado!!");
@@ -877,15 +881,14 @@ public class Listagem extends javax.swing.JFrame {
                         if(ld.fecharTudo(lb)==true){
                             JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
                             limpar_tabela();
-                            
                             lb.carrega_usuario();
+                            
                             this.comando=lb.getComando();
                             preencher_tabela(this.comando);
                             limpar_tela();
                         }
                         else
                             JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
-                        criaGraficos();
                         con.close();
                     } catch (SQLException ex) {
                     }
@@ -919,8 +922,8 @@ public class Listagem extends javax.swing.JFrame {
     private PieDataset createSampleDataset() {
 
         final DefaultPieDataset result = new DefaultPieDataset();
-        result.setValue("Aberto", qtdN);
-        result.setValue("Fechado", qtdY);
+        result.setValue("Aberto", new Double(qtdN));
+        result.setValue("Fechado", new Double(qtdY));
         return result;
 
     }
@@ -936,7 +939,7 @@ public class Listagem extends javax.swing.JFrame {
         );
 
         final PiePlot3D plot = (PiePlot3D) chart.getPlot();
-        plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}={1} ({2})"));
+        plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0} ({2})"));
         plot.setStartAngle(290);
         plot.setDirection(Rotation.CLOCKWISE);
         plot.setForegroundAlpha(0.5f);
@@ -949,31 +952,39 @@ public class Listagem extends javax.swing.JFrame {
     //grafico de barras bad
     private CategoryDataset createDatasetGreat() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        int j = 0;
-        while(j<10){
-            if(usuarioPos[j]!=null)
-                dataset.addValue(positivo[j], usuarioPos[j], "Documentos Baixados");
-            j++;
-        }
+        dataset.addValue(positivo[0], usuarioPos[0], "Documentos");
+        dataset.addValue(positivo[1], usuarioPos[1], "Documentos");
+        dataset.addValue(positivo[2], usuarioPos[2], "Documentos");
+        dataset.addValue(positivo[3], usuarioPos[3], "Documentos");
+        dataset.addValue(positivo[4], usuarioPos[4], "Documentos");
+        dataset.addValue(positivo[5], usuarioPos[5], "Documentos");
+        dataset.addValue(positivo[6], usuarioPos[6], "Documentos");
+        dataset.addValue(positivo[7], usuarioPos[7], "Documentos");
+        dataset.addValue(positivo[8], usuarioPos[8], "Documentos");
+        dataset.addValue(positivo[9], usuarioPos[9], "Documentos");
         return dataset;
 
     }
 
     private CategoryDataset createDatasetBad() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        int j=0;
-        while(j<10){
-            if(usuarioNeg[j]!=null)
-                dataset.addValue(negativo[j], usuarioNeg[j], "Documentos não Baixados");
-            j++;
-        }
+        dataset.addValue(negativo[0], usuarioNeg[0], "Documentos Entregues");
+        dataset.addValue(negativo[1], usuarioNeg[1], "Documentos Entregues");
+        dataset.addValue(negativo[2], usuarioNeg[2], "Documentos Entregues");
+        dataset.addValue(negativo[3], usuarioNeg[3], "Documentos Entregues");
+        dataset.addValue(negativo[4], usuarioNeg[4], "Documentos Entregues");
+        dataset.addValue(negativo[5], usuarioNeg[5], "Documentos Entregues");
+        dataset.addValue(negativo[6], usuarioNeg[6], "Documentos Entregues");
+        dataset.addValue(negativo[7], usuarioNeg[7], "Documentos Entregues");
+        dataset.addValue(negativo[8], usuarioNeg[8], "Documentos Entregues");
+        dataset.addValue(negativo[9], usuarioNeg[9], "Documentos Entregues");
         return dataset;
 
     }
-    
+
     private void criaGraficoBad() {
         CategoryDataset cds = createDatasetBad();
-        String titulo = "Ranking - Top Pendentes";
+        String titulo = "Ranking - Top 10 Pendentes";
         String eixoy = "Quantidade";
         String txt_legenda = "Legenda:";
         boolean legenda = true;
@@ -992,7 +1003,7 @@ public class Listagem extends javax.swing.JFrame {
 
     private void criaGraficoGreat() {
         CategoryDataset cds = createDatasetGreat();
-        String titulo = "Ranking - Top Finalizadores";
+        String titulo = "Ranking - Top 10 Finalizados";
         String eixoy = "Quantidade";
         String txt_legenda = "Legenda:";
         boolean legenda = true;
@@ -1099,15 +1110,6 @@ public class Listagem extends javax.swing.JFrame {
     private javax.swing.JTextField txtPesquisa;
     private javax.swing.JTextField txtRecebidoPor;
     // End of variables declaration//GEN-END:variables
-    public void criaGraficos(){
-        pegaPior();
-        pegaMelhor();
-        gerarResultPizza();
-        criaGraficoBad();
-        criaGraficoGreat();
-        gerarPizza();
-    }
-    
     public static void preencher_tabela(String comando){
         Connection con = ConexaoStatement.abrirConexao();
         ListagemDAO td = new ListagemDAO(con);
@@ -1182,8 +1184,8 @@ private void bloqueia_data(){
 //    txtData2.setBackground(Color.lightGray);
 }
     public void gravar(){
-        Connection cont = ConexaoStatement.abrirConexao();
-        ListagemDAO ld = new ListagemDAO(cont);
+        Connection con = ConexaoStatement.abrirConexao();
+        ListagemDAO ld = new ListagemDAO(con);
         ListagemBean lb = new ListagemBean();
         
         lb.setCod(codigo);
@@ -1196,8 +1198,8 @@ private void bloqueia_data(){
         limpar_tabela();
         lb.carrega_usuario();
         this.comando=lb.getComando();
-        ConexaoStatement.fecharConexao(cont);
-        preencher_tabela(this.backupComando);
+        ConexaoStatement.fecharConexao(con);
+        preencher_tabela(this.comando);
         limpar_tela();
         
         
@@ -1210,7 +1212,7 @@ private void bloqueia_data(){
                 + "on A.Para_Quem=B.Usuario "
                 + "and A.Recebido='S' and B.Ativo=1 "
                 + "group by A.Para_Quem "
-                + "order by count(A.Recebido) desc limit 10";
+                + "order by count(A.Recebido) desc limit 10;";
         /*
     comando anterior 
     select Para_Quem, count(Recebido) as Quantidade from documentos_recebidos where Recebido like 's' group by Para_Quem order by count(Recebido) desc limit 10
@@ -1234,16 +1236,7 @@ private void bloqueia_data(){
     }
 
     private void pegaPior() {
-        //String sql = "select Para_Quem, count(Recebido) as Quantidade from documentos_recebidos where Recebido like 'n' group by Para_Quem order by count(Recebido) desc limit 10";
-        String sql = "select A.Para_Quem, count(A.Recebido) as Quantidade " +
-                            "from documentos_recebidos as A " +
-                            "inner join login as B on " +
-                            "A.Para_Quem = B.Usuario " +
-                            "where A.Recebido like 'n' and B.Ativo='1' " +
-                            "group by A.Para_Quem " +
-                            "order by count(A.Recebido) " +
-                            "desc limit 10";
-        
+        String sql = "select Para_Quem, count(Recebido) as Quantidade from documentos_recebidos where Recebido like 'n' group by Para_Quem order by count(Recebido) desc limit 10";
         con = null;
         PreparedStatement ps;
         try {

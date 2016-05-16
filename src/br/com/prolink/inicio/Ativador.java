@@ -5,16 +5,18 @@
  */
 package br.com.prolink.inicio;
 
-import java.awt.Color;
+import br.com.prolink.inicio.Conexao;
+import br.com.prolink.inicio.Conexao;
 import java.awt.Component;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
 import javax.swing.table.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
+import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 /**
  *
@@ -33,32 +35,37 @@ public class Ativador extends javax.swing.JFrame {
     public static String dataativacao;
     public static String datafinalizacao;
     
-    String codigo, pesquisa, comando, ativada, desativada;
-    
-    boolean ativo=true, inativo=false;
+    String codigo, pesquisa;
     
     Connection con;
     
     public Connection getCon(){
-        this.con = new ConexaoStatement().getConnetion();
+        this.con = new Conexao().connection;
+        
         return this.con;
     }
     
     public Ativador() {
         initComponents();
         
+        con_cliente.conecta();
         tb_ativacao.setAutoCreateRowSorter(true);
-        
-        ckAtivada.setSelected(true);
         cb_organizar.setSelectedItem("");
-        comando = "select * from cadastrodeprocesso"+verificaStatus()+" order by codNumerodoprocesso";
-        preencher_jtable(comando);
+        
+        try{
+            con_cliente.executeSQL("select * from cadastrodeprocesso order by codNumerodoprocesso");
+            preencher_jtable();
+        }
+        catch(Exception erro){
+            erro.printStackTrace();
+        }
+        
         
         txt_apelido.setEditable(false);
         txt_nome.setEditable(false);
         
+        
 }
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -80,35 +87,9 @@ public class Ativador extends javax.swing.JFrame {
         txtPesqId = new javax.swing.JTextField();
         lb_organizar1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tb_ativacao = new javax.swing.JTable(){
-            @Override
-            public Component prepareRenderer (TableCellRenderer renderer, int row, int column) {
-                Component component = super.prepareRenderer(renderer, row, column);
-                //component.setBackground(Color.ORANGE); //muda cor para toda a tabela
-                //component.setBackground(row % 2 == 0 ? Color.ORANGE : Color.WHITE);
-                if (!isRowSelected(row)) {
-                    component.setBackground(getBackground());
-                    int linha = convertRowIndexToModel(row);
-
-                    //as 3 linhas abaixo mudam a cor de todos os que sua idade seja maior ou igual a 30 anos
-                    String valor = (String) getModel().getValueAt(linha, 3);
-                    if (valor.equals("Finalizada"))
-                    component.setBackground(Color.GREEN);
-
-                    //muda as cores conforme se cliente é ativo ou não
-                    //boolean ativo = (boolean) getModel().getValueAt(linha, 3);
-                    //if (ativo == true)
-                    //	component.setBackground(Color.CYAN);
-                }
-
-                return component;
-            }
-
-        };
+        tb_ativacao = new javax.swing.JTable();
         lbProcesso = new javax.swing.JLabel();
         txt_processo = new javax.swing.JTextField();
-        ckAtivada = new javax.swing.JCheckBox();
-        ckFinalizada = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ativador");
@@ -170,13 +151,8 @@ public class Ativador extends javax.swing.JFrame {
 
         lb_organizar2.setBackground(new java.awt.Color(255, 255, 255));
         lb_organizar2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lb_organizar2.setText("Nome: (inicia com)");
+        lb_organizar2.setText("Nome:");
 
-        txtPesqNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPesqNomeActionPerformed(evt);
-            }
-        });
         txtPesqNome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPesqNomeKeyPressed(evt);
@@ -184,7 +160,7 @@ public class Ativador extends javax.swing.JFrame {
         });
 
         cb_organizar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cb_organizar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Codigo", "Apelido", "Nome", "Status" }));
+        cb_organizar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Codigo", "Apelido", "Nome" }));
         cb_organizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_organizarActionPerformed(evt);
@@ -195,11 +171,6 @@ public class Ativador extends javax.swing.JFrame {
         lb_organizar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lb_organizar.setText("Organizar por:");
 
-        txtPesqId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPesqIdActionPerformed(evt);
-            }
-        });
         txtPesqId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPesqIdKeyPressed(evt);
@@ -216,15 +187,19 @@ public class Ativador extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_organizar)
-                    .addComponent(lb_organizar1)
-                    .addComponent(lb_organizar2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cb_organizar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPesqNome, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPesqId, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lb_organizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cb_organizar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lb_organizar2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb_organizar1, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtPesqNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPesqId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -250,14 +225,14 @@ public class Ativador extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Apelido", "Nome", "Situação"
+                "Codigo", "Apelido", "Nome"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -279,30 +254,12 @@ public class Ativador extends javax.swing.JFrame {
             tb_ativacao.getColumnModel().getColumn(0).setMaxWidth(50);
             tb_ativacao.getColumnModel().getColumn(1).setPreferredWidth(75);
             tb_ativacao.getColumnModel().getColumn(1).setMaxWidth(75);
-            tb_ativacao.getColumnModel().getColumn(3).setPreferredWidth(80);
-            tb_ativacao.getColumnModel().getColumn(3).setMaxWidth(80);
         }
 
         lbProcesso.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbProcesso.setText("Processo:");
 
         txt_processo.setEditable(false);
-
-        ckAtivada.setBackground(new java.awt.Color(245, 245, 245));
-        ckAtivada.setText("Ativada");
-        ckAtivada.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                ckAtivadaStateChanged(evt);
-            }
-        });
-
-        ckFinalizada.setBackground(new java.awt.Color(245, 245, 245));
-        ckFinalizada.setText("Finalizada");
-        ckFinalizada.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ckFinalizadaItemStateChanged(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -312,7 +269,10 @@ public class Ativador extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(lbID, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
                             .addComponent(lbNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -326,26 +286,14 @@ public class Ativador extends javax.swing.JFrame {
                                 .addComponent(txt_processo, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
                                 .addGap(202, 202, 202)
                                 .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_nome)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(125, 125, 125)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ckAtivada, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
-                            .addComponent(ckFinalizada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txt_nome))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(ckAtivada)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ckFinalizada)))
+                .addGap(6, 6, 6)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -358,7 +306,8 @@ public class Ativador extends javax.swing.JFrame {
                     .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbNome))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -393,56 +342,78 @@ public class Ativador extends javax.swing.JFrame {
     }//GEN-LAST:event_tb_ativacaoMouseClicked
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
-        if(txt_processo.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Selecione uma empresa!");
+        if(codigo.trim().equals("")){
+            JOptionPane.showMessageDialog(null, "Por favor, selecione uma empresa!");
         }
-        else
+        else{
+            
             try{
+                String sql = "select * from cadastrodeprocesso Where codNumerodoprocesso = "+
+                        codigo;
+                con_cliente.executeSQL(sql);
                 
-                String sql = "select * from cadastrodeprocesso Where codNumerodoprocesso = "+txt_processo.getText();
-                PreparedStatement ps = getCon().prepareStatement(sql);
-                ResultSet rs = ps.executeQuery();
-                if(rs!=null){
-                    while(rs.next()){
-                        processo = rs.getString("codNumerodoprocesso");
-                        id = rs.getString("Apelido");
-                        nome = rs.getString("Cliente");
-                        classificacao = rs.getString("Classificacao");
-                        dataativacao = rs.getString("DatadeAtivacao");
-                        datafinalizacao = rs.getString("DataDeArquivamentodoProcesso");
-                    }
+                if(con_cliente.resultset.first()){
+                    
+                    processo = con_cliente.resultset.getString("codNumerodoprocesso");
+                    id = con_cliente.resultset.getString("Apelido");
+                    nome = con_cliente.resultset.getString("Cliente");
+                    classificacao = con_cliente.resultset.getString("Classificacao");
+                    dataativacao = con_cliente.resultset.getString("DatadeAtivacao");
+                    datafinalizacao = con_cliente.resultset.getString("DataDeArquivamentodoProcesso");
+                    
+                    envia_para_menu();
+                    
+                    con_cliente.desconecta();
+                    this.dispose();
                 }
-                con.close();
-                envia_para_menu();
-                this.dispose();
-                
             }catch(SQLException erro){
                 JOptionPane.showMessageDialog(null,"Não foi possivel ativar o cliente informado : " +erro);
+            } catch (Exception ex) {
+                Logger.getLogger(Ativador.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+        }
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void cb_organizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_organizarActionPerformed
-        if(cb_organizar.getSelectedItem().equals("Nome")){
-                String valor = "Cliente";
-                ordenar(valor);
+         if(cb_organizar.getSelectedItem().equals("Nome")){
+            limpar_tabela();
+            
+            try{
+            con_cliente.executeSQL("select * from cadastrodeprocesso order by Cliente");
+            preencher_jtable();
+            }catch(Exception erro){
+            erro.printStackTrace();
+            }
+            
         }
         else if(cb_organizar.getSelectedItem().equals("Codigo")){
-                String valor =  "codNumerodoprocesso";
-                ordenar(valor);
+            limpar_tabela();
+            
+            try{
+            con_cliente.executeSQL("select * from cadastrodeprocesso order by codNumerodoprocesso");
+            preencher_jtable();
         }
-        else if(cb_organizar.getSelectedItem().equals("Apelido")){
-                String valor =  "Apelido";
-                ordenar(valor);
-        }
-        else if(cb_organizar.getSelectedItem().equals("Status")){
-                String valor =  "Situacao";
-                ordenar(valor);
+        catch(Exception erro){
+            erro.printStackTrace();
         }
             
+         }
+        else if(cb_organizar.getSelectedItem().equals("Apelido")){
+            limpar_tabela();
+            try{
+            con_cliente.executeSQL("select * from cadastrodeprocesso order by Apelido");
+            preencher_jtable();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            
+        }
     }//GEN-LAST:event_cb_organizarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-       
+        con_cliente.desconecta();
+        //this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
     private void txtPesqIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesqIdKeyPressed
@@ -454,38 +425,37 @@ public class Ativador extends javax.swing.JFrame {
             else{
                 st=" where Apelido like '"+txtPesqId.getText().trim()+"'";
             }
-                preencher_jtable("select * from cadastrodeprocesso"+st);
-            }
+            limpar_tabela();    
+            try{
+                con_cliente.executeSQL("select * from cadastrodeprocesso"+st);
+                    if(con_cliente.resultset.next()){
+                        preencher_jtable();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Não encontrado registro com: "+txtPesqId.getText());
+                    }
+                }catch(SQLException | HeadlessException erro){
+                    JOptionPane.showMessageDialog(null,"Não foi possivel localizar os dados via digitação..."+erro);
+                }
+        }
     }//GEN-LAST:event_txtPesqIdKeyPressed
 
     private void txtPesqNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesqNomeKeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-                preencher_jtable("select * from cadastrodeprocesso where Cliente like '"+txtPesqNome.getText()+"%' order by Cliente");         
+            limpar_tabela();
+            try{
+            con_cliente.executeSQL("select * from cadastrodeprocesso where Cliente like '"+txtPesqNome.getText()+"%' order by Cliente");
+                if(con_cliente.resultset.next()){
+                    preencher_jtable();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Não encontrado registro com: "+txtPesqNome.getText().toUpperCase());
+                }
+            }catch(SQLException | HeadlessException erro){
+                JOptionPane.showMessageDialog(null,"Não foi possivel localizar os dados via digitação..."+erro);
+            }
         }
     }//GEN-LAST:event_txtPesqNomeKeyPressed
-
-    private void txtPesqIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesqIdActionPerformed
-              String st;
-              if(txtPesqId.getText().equals("")){
-                       st="";  
-              }else{
-                       st=" where Apelido like '"+txtPesqId.getText().trim()+"'";
-              }
-                       preencher_jtable("select * from cadastrodeprocesso"+st);
-    }//GEN-LAST:event_txtPesqIdActionPerformed
-
-    private void txtPesqNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesqNomeActionPerformed
-         preencher_jtable("select * from cadastrodeprocesso where Cliente like '"+txtPesqNome.getText()+"%' order by Cliente");
-    }//GEN-LAST:event_txtPesqNomeActionPerformed
-
-    private void ckAtivadaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ckAtivadaStateChanged
-        ordenar("codNumerodoprocesso");
-    }//GEN-LAST:event_ckAtivadaStateChanged
-
-    private void ckFinalizadaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ckFinalizadaItemStateChanged
-        // TODO add your handling code here:
-        ordenar("codNumerodoprocesso");
-    }//GEN-LAST:event_ckFinalizadaItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -502,8 +472,6 @@ public class Ativador extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSelecionar;
     private javax.swing.JComboBox cb_organizar;
-    private javax.swing.JCheckBox ckAtivada;
-    private javax.swing.JCheckBox ckFinalizada;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -525,40 +493,25 @@ public class Ativador extends javax.swing.JFrame {
 
     /**
      *
-     * @param valor
      */
-    public void preencher_jtable(String valor){
+    public void preencher_jtable(){
         tb_ativacao.getColumnModel().getColumn(0);
         tb_ativacao.getColumnModel().getColumn(1);
         tb_ativacao.getColumnModel().getColumn(2);
         DefaultTableModel modelo = (DefaultTableModel)tb_ativacao.getModel();
         
-        limpar_tabela();
-        
-        int i=0;
-        
         try{
-        
-            PreparedStatement ps = getCon().prepareStatement(valor);
-            ResultSet rs = ps.executeQuery();
-            
-            if(rs!=null){
-                while(rs.next()){
-                    modelo.addRow(new String[1]);
-                        modelo.setValueAt(rs.getString("codNumerodoprocesso"), i, 0);
-                        modelo.setValueAt(rs.getString("Apelido"), i, 1);
-                        modelo.setValueAt(rs.getString("Cliente"), i, 2);
-                        modelo.setValueAt(converter(rs.getString("Situacao")), i, 3);
-                        i++;
-                    
-                }
-            }
-        con.close();
+            while(con_cliente.resultset.next())
+                modelo.addRow(new Object []{
+                    con_cliente.resultset.getString("codNumerodoprocesso"),
+                    con_cliente.resultset.getString("Apelido"),
+                    con_cliente.resultset.getString("Cliente")});
+                    con_cliente.resultset.first();
         }catch(SQLException erro){
             JOptionPane.showMessageDialog(null, "Erro ao lista tabela: " +erro);
-        }finally{
         }
     }
+    
     public void limpar_tabela(){
     DefaultTableModel tbm = (DefaultTableModel)tb_ativacao.getModel();
         for(int i = tbm.getRowCount()-1; i>=0; i--){
@@ -593,29 +546,5 @@ public class Ativador extends javax.swing.JFrame {
             }
         }catch(Exception erro){
         }
-    }
-    public void ordenar(String valor){
-            comando = "select * from cadastrodeprocesso"+verificaStatus()+" order by "+valor;
-            preencher_jtable(comando);
-    }
-    public String verificaStatus(){
-        if(ckAtivada.isSelected()){
-            if(ckFinalizada.isSelected()){
-                return "";
-            }
-            else{
-                return " where Situacao=1";
-            }
-        }
-        else if(ckFinalizada.isSelected())
-            return " where Situacao=0";
-        return "";
-    }
-    public String converter(String valor){
-        int v = Integer.parseInt(valor);
-        if(v==0){
-            return "Finalizada";
-        }else
-            return "Ativada";
     }
 }

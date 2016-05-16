@@ -29,7 +29,7 @@ public class EmailView extends javax.swing.JFrame {
                         new javax.mail.Authenticator() {
                              protected PasswordAuthentication getPasswordAuthentication() 
                              {
-                                   return new PasswordAuthentication("documentos@prolinkcontabil.com.br", "l!nk2016Cont");
+                                   return new PasswordAuthentication("tiago.dias@prolinkcontabil.com.br", "plkc2004");
                              }
                         });
 

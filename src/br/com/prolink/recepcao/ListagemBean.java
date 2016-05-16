@@ -257,7 +257,7 @@ public class ListagemBean {
     //1ª busca do usuario
 
     public void carrega_usuario() {
-        this.comando=("select * from documentos_recebidos where Para_Quem like '" + this.usuario + "' and Recebido='N' order by cod desc");
+        this.comando=("select * from documentos_recebidos where Para_Quem like '" + this.usuario + "' and Recebido='N'");
         
 //        Listagem.preencher_tabela();
     }
@@ -356,17 +356,17 @@ public class ListagemBean {
 
             case "Geral":
                 this.comando=("select * from documentos_recebidos where "
-                        + Listagem.situacao + "" + Listagem.pegaAno+" order by cod desc");
+                        + Listagem.situacao + "" + Listagem.pegaAno);
 //                Listagem.preencher_tabela();
                 break;
             case "ID":
                 this.comando=("select * from documentos_recebidos where ID='"
-                        + valorPesquisa + "' and " + Listagem.situacao + "" + Listagem.pegaAno+" order by cod desc");
+                        + valorPesquisa + "' and " + Listagem.situacao + "" + Listagem.pegaAno);
 //                Listagem.preencher_tabela();
                 break;
             case "ParaQuem":
                 this.comando=("select * from documentos_recebidos where "
-                        + "Para_Quem like '" + this.valorPesquisa + "' and " + Listagem.situacao + "" + Listagem.pegaAno+" order by cod desc");
+                        + "Para_Quem like '" + this.valorPesquisa + "' and " + Listagem.situacao + "" + Listagem.pegaAno);
 //                Listagem.preencher_tabela();
                 break;
         }

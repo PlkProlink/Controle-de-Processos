@@ -5,11 +5,7 @@ package br.com.prolink.inicio;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.*;
-import java.util.Properties;
-import javax.swing.JOptionPane;
 /**
  *Essa classe vai abrir e fechar conexao com o banco de dados
  * @author User
@@ -19,28 +15,10 @@ public class ConexaoStatement{
 //vamos abrir a conexao
     
     static String driver = "com.mysql.jdbc.Driver";
-    private static String url="jdbc:mysql://200.207.224.87:3306/clientev1";
-    private static String user = "prolink";
-    private static String password = "77i#EU&K"; 
+    private static String url = "jdbc:mysql://localhost/clientev1";
+    private static String user = "root";
+    private static String password = ""; 
     
-//    private static String url = "jdbc:mysql://localhost/clientev1";
-//    private static String password = ""; 
-    
-    public ConexaoStatement(){
-//        lerConfig();
-    }
-    private void lerConfig(){
-        try{
-        Properties propriedades = new Properties();
-            try (
-                FileInputStream file = new FileInputStream("config.txt")) {
-                propriedades.load(file);
-                url = propriedades.getProperty("urlBanco");
-            }
-        }catch(IOException e){
-            JOptionPane.showMessageDialog(null, "Falha ao ler arquivo de configurações!");
-        }
-    }
     public static Connection abrirConexao() {
         Connection con = null;
     try {
@@ -78,8 +56,7 @@ public class ConexaoStatement{
 			Class.forName(driver);
 			return  DriverManager.getConnection(url, user, password);
 		} catch (SQLException | ClassNotFoundException erro) {
-                    JOptionPane.showMessageDialog(null,"Erro! Sem comunicação com o servidor e banco de dados!");
-                    throw new RuntimeException(erro);		
+			throw new RuntimeException(erro);		
 		}
 	}
 }
