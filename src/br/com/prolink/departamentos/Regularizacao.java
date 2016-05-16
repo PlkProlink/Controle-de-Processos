@@ -28,7 +28,7 @@ public class Regularizacao extends javax.swing.JFrame {
     //Formatador para data
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
-    String processo=Ativador.processo, id = Ativador.id, nome = Ativador.nome, usuario = Login.usuario,
+    String processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario,
            termo, arquivo, codTermo_backup, obsTermo_backup, dataTermo_backup, tipoTermo_backup,
            codArquivo_backup, obsArquivo_backup, dataArquivo_backup, tipoArquivo_backup;
     

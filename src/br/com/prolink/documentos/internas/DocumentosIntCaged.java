@@ -5,8 +5,12 @@
  */
 package br.com.prolink.documentos.internas;
 
+import br.com.prolink.controle.LogUsuarioBean;
+import br.com.prolink.controle.LogUsuarioDao;
 import br.com.prolink.documentos.Documentos;
+import br.com.prolink.documentos.DocumentosDao;
 import br.com.prolink.inicio.Conexao;
+import br.com.prolink.inicio.TelaPrincipal;
 
 /**
  *
@@ -21,10 +25,19 @@ public class DocumentosIntCaged extends DocumentosIntModelo{
         
         super.inicializacao("Caged","caged", "Caged");
         
-		conexao = new Conexao(); 
+	conexao = new Conexao(); 
         conexao.conecta();
         preencher_tabela();
         pegar_ultimo_registro();
+        
+        doc = new DocumentosDao();
+        log = new LogUsuarioDao();
+        logb = new LogUsuarioBean();
+        
+        logb.setCliente(nome);
+        logb.setApelido(TelaPrincipal.txt_id.getText());
+        logb.setProcesso(processo);
+        logb.setTela(tela);
     }
     public static void main(String[] args){
         DocumentosIntModelo doc = new DocumentosIntCaged();

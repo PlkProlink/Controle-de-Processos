@@ -32,7 +32,7 @@ public class DepPessoal extends javax.swing.JFrame {
             codDep_backup, dataDep_backup, obsDep_backup, tipoDep_backup,
             codFolha_backup, dataFolha_backup, obsFolha_backup, tipoFolha_backup;
     
-    String processo=Ativador.processo, nome=Ativador.nome, id=Ativador.id, usuario=Login.usuario;
+    String processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario;
     
     public DepPessoal() {
         initComponents();

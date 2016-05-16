@@ -33,7 +33,7 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
     String tabela; //tabela do formulario
     String tela;
     
-    String nome=Ativador.nome, processo=Ativador.processo, usuario=Login.usuario;
+    String nome=TelaPrincipal.txt_nome.getText(), processo=TelaPrincipal.txt_codigo.getText(), usuario=TelaPrincipal.txt_usuario.getText();
     
     AtualizaDocumentos atualizaDoc;
     
@@ -44,11 +44,6 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
     public DocumentosIntModelo() {
         initComponents();
     
-        doc = new DocumentosDao();
-        log = new LogUsuarioDao();
-        logb = new LogUsuarioBean();
-        
-        
         table.setAutoCreateRowSorter(true);
         
         txtCodigo.setEditable(false);
@@ -60,10 +55,14 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
 //        preencher_tabela();
 //        
 //        pegar_ultimo_registro();
-       
-        logb.setCliente(Ativador.nome);
-        logb.setApelido(Ativador.id);
-        logb.setProcesso(Ativador.processo);
+        
+        doc = new DocumentosDao();
+        log = new LogUsuarioDao();
+        logb = new LogUsuarioBean();
+        
+        logb.setCliente(nome);
+        logb.setApelido(TelaPrincipal.txt_id.getText());
+        logb.setProcesso(processo);
         logb.setTela(tela);
        
     }
@@ -167,7 +166,8 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
 
         btnNovo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnNovo.setText("Novo");
-        btnNovo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnNovo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnNovo.setContentAreaFilled(false);
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoActionPerformed(evt);
@@ -176,7 +176,8 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
 
         btnAlterar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAlterar.setText("Alterar");
-        btnAlterar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAlterar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAlterar.setContentAreaFilled(false);
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
@@ -185,7 +186,8 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
 
         btnGravar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnGravar.setText("Gravar");
-        btnGravar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnGravar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnGravar.setContentAreaFilled(false);
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGravarActionPerformed(evt);
@@ -194,7 +196,8 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
-        btnCancelar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCancelar.setContentAreaFilled(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -213,7 +216,8 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
 
         btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnExcluir.setText("Excluir");
-        btnExcluir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnExcluir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnExcluir.setContentAreaFilled(false);
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -919,8 +923,8 @@ public void preencher_tabela(){
             modelo.addRow(new Object []{
                 conexao.resultset.getString("Cod"),
                 conexao.resultset.getString("DatadeCadastroAndamento"),
-                conexao.resultset.getString("DataDevulucaoCliente"),
-                conexao.resultset.getString("DataFinalAndamento"),
+                limparData(conexao.resultset.getString("DataDevulucaoCliente")),
+                limparData(conexao.resultset.getString("DataFinalAndamento")),
                 conexao.resultset.getString("Obsevacao"),
                 conexao.resultset.getString("Usuario")});
                 conexao.resultset.first();
@@ -928,6 +932,12 @@ public void preencher_tabela(){
         JOptionPane.showMessageDialog(null, "Erro ao preencher tabela da tela" +logb.getTela()+" !\n"+erro);
     }
             
+}
+private String limparData(String valor){
+    if( valor!=null && !valor.equals("1111-11-11")) 
+        return valor;
+    else 
+        return "";
 }
 public void limpar_tabela(){
     DefaultTableModel tbm = (DefaultTableModel)table.getModel();

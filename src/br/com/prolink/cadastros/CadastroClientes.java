@@ -17,6 +17,9 @@ import javax.swing.text.MaskFormatter;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import br.com.prolink.inicio.*;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -28,13 +31,13 @@ public class CadastroClientes extends javax.swing.JFrame {
     Conexao con_cliente = new Conexao();
     Conexao con_classificacao= new Conexao();
     
-    String codigo_backup, apelido_backup, nome_backup, classificacao_backup, data_backup, datainicio_backup, datafim_backup;  
+    String codigo_backup, apelido_backup, nome_backup, classificacao_backup, data_backup, datainicio_backup, datafim_backup, backup_situacao;  
     
     SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy" );
     SimpleDateFormat in = new SimpleDateFormat("yyyy-mm-dd");//do sistema para o banco
     SimpleDateFormat out = new SimpleDateFormat("dd/mm/yyyy");//do banco para o sistema
     
-    String pesquisa=null;
+    boolean situacao=false;
     
     public CadastroClientes() {
         initComponents();
@@ -44,9 +47,11 @@ public class CadastroClientes extends javax.swing.JFrame {
         atualiza_combo_box_classificacao();
         
         txt_codigo.setEditable(false);
+        
         txt_data.setEditable(false);
+        btImport.setEnabled(false);
                 
-        verificar_acesso();
+        //verificar_acesso();
         
         preencher_jtable();
         
@@ -74,12 +79,6 @@ public class CadastroClientes extends javax.swing.JFrame {
         txt_codigo = new javax.swing.JTextField();
         txt_nome = new javax.swing.JTextField();
         lbClassificacao = new javax.swing.JLabel();
-        try {
-            formatoData = new MaskFormatter("##/##/####");
-        }catch(Exception erro){
-            JOptionPane.showMessageDialog(null ,"Não foi possivel receber a data" +erro);
-        }
-        txt_data = new JFormattedTextField(formatoData);
         txt_apelido = new javax.swing.JTextField();
         lbid = new javax.swing.JLabel();
         cb_classificacao = new javax.swing.JComboBox();
@@ -97,6 +96,14 @@ public class CadastroClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null ,"Não foi possivel receber a data" +erro);
         }
         txt_datafim = new JFormattedTextField(formatoFim);
+        chStatus = new javax.swing.JCheckBox();
+        btImport = new javax.swing.JButton();
+        try {
+            formatoData = new MaskFormatter("##/##/####");
+        }catch(Exception erro){
+            JOptionPane.showMessageDialog(null ,"Não foi possivel receber a data" +erro);
+        }
+        txt_data = new JFormattedTextField(formatoData);
         jPanel3 = new javax.swing.JPanel();
         btnSalvar = new javax.swing.JButton();
         bt_excluir = new javax.swing.JButton();
@@ -105,7 +112,31 @@ public class CadastroClientes extends javax.swing.JFrame {
         btn_cancelar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tb_clientes = new javax.swing.JTable();
+        tb_clientes = new javax.swing.JTable(){
+            @Override
+            public Component prepareRenderer (TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                //component.setBackground(Color.ORANGE); //muda cor para toda a tabela
+                //component.setBackground(row % 2 == 0 ? Color.ORANGE : Color.WHITE);
+                if (!isRowSelected(row)) {
+                    component.setBackground(getBackground());
+                    int linha = convertRowIndexToModel(row);
+
+                    //as 3 linhas abaixo mudam a cor de todos os que sua idade seja maior ou igual a 30 anos
+                    String valor = (String) getModel().getValueAt(linha, 6);
+                    if (valor.equals("Finalizada"))
+                    component.setBackground(Color.GREEN);
+
+                    //muda as cores conforme se cliente é ativo ou não
+                    //boolean ativo = (boolean) getModel().getValueAt(linha, 3);
+                    //if (ativo == true)
+                    //	component.setBackground(Color.CYAN);
+                }
+
+                return component;
+            }
+
+        };
         jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
 
@@ -113,10 +144,10 @@ public class CadastroClientes extends javax.swing.JFrame {
         setTitle("Novos Processos");
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel4.setBackground(new java.awt.Color(245, 245, 245));
+        jPanel4.setBackground(new java.awt.Color(250, 250, 250));
         jPanel4.setPreferredSize(new java.awt.Dimension(700, 650));
 
-        jPanel2.setBackground(new java.awt.Color(245, 245, 245));
+        jPanel2.setBackground(new java.awt.Color(250, 250, 250));
 
         lblNumero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblNumero.setText("Nº Processo:");
@@ -133,47 +164,66 @@ public class CadastroClientes extends javax.swing.JFrame {
         lbid.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbid.setText("Apelido(ID):");
 
+        cb_classificacao.setBackground(new java.awt.Color(250, 250, 250));
+
         lblDatadeCadastro1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblDatadeCadastro1.setText("Ativada em:");
 
         lblDatadeCadastro2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblDatadeCadastro2.setText("Finalizada em:");
 
+        chStatus.setBackground(new java.awt.Color(250, 250, 250));
+        chStatus.setText("Finalizada");
+
+        btImport.setText("Importar Novo Cadatro");
+        btImport.setToolTipText("Possibilita importar um contato direto da planilha de Cadastro.xls");
+        btImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btImportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbClassificacao)
+                        .addGap(34, 34, 34)
+                        .addComponent(cb_classificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chStatus))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblNumero)
                         .addGap(32, 32, 32)
                         .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(178, 178, 178)
+                        .addGap(65, 65, 65)
                         .addComponent(lbid)
                         .addGap(18, 18, 18)
                         .addComponent(txt_apelido, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblNome)
                         .addGap(66, 66, 66)
-                        .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblDatadeCadastro)
-                        .addGap(4, 4, 4)
-                        .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblDatadeCadastro1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_datainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblDatadeCadastro2)
+                        .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(88, 88, 88)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblDatadeCadastro2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(10, 10, 10)
                         .addComponent(txt_datafim, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbClassificacao)
-                        .addGap(34, 34, 34)
-                        .addComponent(cb_classificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(lblDatadeCadastro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblDatadeCadastro1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_datainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,36 +232,52 @@ public class CadastroClientes extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNumero)
                     .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(lbid))
-                    .addComponent(txt_apelido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(lblNome))
-                    .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_datainicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_datafim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_apelido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblDatadeCadastro)
-                            .addComponent(lblDatadeCadastro1)
-                            .addComponent(lblDatadeCadastro2))))
-                .addGap(10, 10, 10)
+                            .addComponent(lbid)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblDatadeCadastro)
+                                .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(lbClassificacao))
-                    .addComponent(cb_classificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(lblDatadeCadastro1))
+                            .addComponent(txt_datainicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_datafim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(lblDatadeCadastro2)))
+                        .addGap(11, 11, 11)
+                        .addComponent(btImport))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(chStatus))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(2, 2, 2)
+                                    .addComponent(lblNome))
+                                .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(14, 14, 14)
+                                    .addComponent(lbClassificacao))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(cb_classificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(7, 7, 7))
         );
 
-        jPanel3.setBackground(new java.awt.Color(245, 245, 245));
+        jPanel3.setBackground(new java.awt.Color(250, 250, 250));
 
         btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSalvar.setText("Salvar");
@@ -280,7 +346,7 @@ public class CadastroClientes extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bt_novo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAlterar)
@@ -319,14 +385,14 @@ public class CadastroClientes extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Apelido", "Nome", "Entrada", "Classificação", "Cadastrado por"
+                "Codigo", "Apelido", "Nome", "Entrada", "Classificação", "Cadastrado por", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -353,6 +419,8 @@ public class CadastroClientes extends javax.swing.JFrame {
             tb_clientes.getColumnModel().getColumn(4).setPreferredWidth(90);
             tb_clientes.getColumnModel().getColumn(5).setPreferredWidth(100);
             tb_clientes.getColumnModel().getColumn(5).setMaxWidth(100);
+            tb_clientes.getColumnModel().getColumn(6).setPreferredWidth(70);
+            tb_clientes.getColumnModel().getColumn(6).setMaxWidth(80);
         }
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -372,13 +440,14 @@ public class CadastroClientes extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
         );
 
-        jPanel1.setBackground(new java.awt.Color(245, 245, 245));
+        jPanel1.setBackground(new java.awt.Color(250, 250, 250));
 
-        lblTitulo.setBackground(new java.awt.Color(245, 245, 245));
+        lblTitulo.setBackground(new java.awt.Color(250, 250, 250));
         lblTitulo.setFont(new java.awt.Font("Verdana", 1, 22)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Cadastro de Processos");
@@ -404,15 +473,15 @@ public class CadastroClientes extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -429,7 +498,7 @@ public class CadastroClientes extends javax.swing.JFrame {
         String nome = (String)tb_clientes.getValueAt(linha, 2);
         String data = (String)tb_clientes.getValueAt(linha, 3);
         String classificacao = (String)tb_clientes.getValueAt(linha, 4);
-        
+        String status = (String)tb_clientes.getValueAt(linha, 6);
         //2012-00-09
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
@@ -476,7 +545,14 @@ public class CadastroClientes extends javax.swing.JFrame {
             }
         
     }
-        
+        if(status == "Ativada"){
+            situacao = false;
+            chStatus.setSelected(false);
+        }
+        else{
+            situacao = true;
+            chStatus.setSelected(true);
+        }
     }//GEN-LAST:event_tb_clientesMouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -495,6 +571,14 @@ public class CadastroClientes extends javax.swing.JFrame {
     else if(!txt_codigo.getText().equals("")){
         
         try{
+            
+            int status;
+            
+            if(chStatus.isSelected())
+                status=0;
+            else
+                status=1;
+            
             String str = txt_data.getText();  
             Date data = sdf.parse(str);
             
@@ -502,6 +586,7 @@ public class CadastroClientes extends javax.swing.JFrame {
                     "Apelido = '" +txt_apelido.getText()+"',"+
                     "Datadecadastro = '" +new java.sql.Date(data.getTime())+"',"+
                     "Classificacao = '" +cb_classificacao.getSelectedItem()+"',"+
+                    "Situacao='"+status+"',"+
                     "Usuario = '" +Login.usuario+
                     "' where codNumerodoprocesso = "+txt_codigo.getText();
             con_cliente.statement.executeUpdate(sql);
@@ -523,18 +608,25 @@ public class CadastroClientes extends javax.swing.JFrame {
     else if (txt_codigo.getText().equals("")){ 
         
         try{
+            int status;
+            
+            if(chStatus.isSelected())
+                status=0;
+            else
+                status=1;
+            
             String str = txt_data.getText();  
             Date data = sdf.parse(str);
             String gry = "insert into cadastrodeprocesso (Apelido, Datadecadastro,"
                     + " Cliente, Classificacao, Usuario, "
                     + "AndamentoComercial, AndamentoFinanceiro, AndamentoContratos,"
-                    + "AndamentoDP,AndamentoContabil, AndamentoFiscal, AndamentoRegularizacao) values ('"+
+                    + "AndamentoDP,AndamentoContabil, AndamentoFiscal, AndamentoRegularizacao, Situacao) values ('"+
                             txt_apelido.getText()+"','"+
                             new java.sql.Date(data.getTime())+"','"+
                             txt_nome.getText()+"','"+
                             cb_classificacao.getSelectedItem()+"','"+
                             Login.usuario+"','"
-                    + "Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto')";
+                    + "Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', '"+status+"')";
                                 
                 con_cliente.exeQuery(gry);
                 expandir_cadastro();
@@ -595,12 +687,12 @@ public class CadastroClientes extends javax.swing.JFrame {
                             {
                             JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
                             //disparar e-mail para administradores alertando exclusão
-                            AlertaExclusao alerta = new AlertaExclusao();
-                            alerta.destino = "tiago.dias@prolinkcontabil.com.br";
-                            alerta.assunto = "Controle de Processos - Cadastro Excluido";
-                            alerta.mensagem = "Olá,\n Se você recebeu essa mensagem significa que "+Login.usuario+" realizou uma tentativa de exclusão"+
-                                    " no cliente abaixo \n Nome:"+nome+" \nProcesso: "+txt_codigo.getText()+
-                                    "\n Todos os registros desse cliente foram perdidos!";
+//                            AlertaExclusao alerta = new AlertaExclusao();
+//                            alerta.destino = "tiago.dias@prolinkcontabil.com.br";
+//                            alerta.assunto = "Controle de Processos - Cadastro Excluido";
+//                            alerta.mensagem = "Olá,\n Se você recebeu essa mensagem significa que "+Login.usuario+" realizou uma tentativa de exclusão"+
+//                                    " no cliente abaixo \n Nome:"+nome+" \nProcesso: "+txt_codigo.getText()+
+//                                    "\n Todos os registros desse cliente foram perdidos!";
                             
                             limpar_tabela();
                             preencher_jtable();
@@ -623,6 +715,10 @@ public class CadastroClientes extends javax.swing.JFrame {
         trava_campos();
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
+    private void btImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImportActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btImportActionPerformed
+
     /**
      *
      * @param args
@@ -637,6 +733,7 @@ public class CadastroClientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btImport;
     private javax.swing.JButton bt_excluir;
     private javax.swing.JButton bt_fechar;
     private javax.swing.JButton bt_novo;
@@ -644,6 +741,7 @@ public class CadastroClientes extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JComboBox cb_classificacao;
+    private javax.swing.JCheckBox chStatus;
     private javax.swing.ButtonGroup grupo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -698,6 +796,7 @@ public class CadastroClientes extends javax.swing.JFrame {
         tb_clientes.getColumnModel().getColumn(3);
         tb_clientes.getColumnModel().getColumn(4);
         tb_clientes.getColumnModel().getColumn(5);
+        tb_clientes.getColumnModel().getColumn(6);
 
         DefaultTableModel modelo = (DefaultTableModel)tb_clientes.getModel();
         //modelo.setNumRows(0);
@@ -711,7 +810,8 @@ public class CadastroClientes extends javax.swing.JFrame {
                     con_cliente.resultset.getString("Cliente"),
                     sdf.format(con_cliente.resultset.getDate("Datadecadastro")),
                     con_cliente.resultset.getString("Classificacao"),                    
-                    con_cliente.resultset.getString("Usuario")});
+                    con_cliente.resultset.getString("Usuario"),
+                    converter(con_cliente.resultset.getString("Situacao"))});
             con_cliente.resultset.first();
         }
 catch (SQLException erro){
@@ -731,6 +831,7 @@ catch (SQLException erro){
         tb_clientes.getColumnModel().getColumn(3);
         tb_clientes.getColumnModel().getColumn(4);
         tb_clientes.getColumnModel().getColumn(5);
+        tb_clientes.getColumnModel().getColumn(6);
 
         con_cliente.executeSQL("select * from cadastrodeprocesso order by codNumerodoprocesso");
         
@@ -745,7 +846,8 @@ catch (SQLException erro){
                     con_cliente.resultset.getString("Cliente"),
                     sdf.format(con_cliente.resultset.getDate("Datadecadastro")),
                     con_cliente.resultset.getString("Classificacao"),                    
-                    con_cliente.resultset.getString("Usuario")});
+                    con_cliente.resultset.getString("Usuario"),
+                    converter(con_cliente.resultset.getString("Situacao"))});
            
             con_cliente.resultset.first();
         }
@@ -776,6 +878,7 @@ catch (SQLException erro){
     txt_data.setEditable(false);
     txt_datainicio.setEditable(false);
     txt_datafim.setEditable(false);
+    chStatus.setEnabled(false);
 }
 
     /**
@@ -788,6 +891,7 @@ catch (SQLException erro){
     txt_data.setEditable(true);
     txt_datainicio.setEditable(true);
     txt_datafim.setEditable(true);
+    chStatus.setEnabled(true);
 }
 
     /**
@@ -801,6 +905,7 @@ catch (SQLException erro){
     data_agora();
     txt_datafim.setText("");
     txt_datainicio.setText("");
+    chStatus.setSelected(false);
 }
 
     /**
@@ -822,8 +927,11 @@ catch (SQLException erro){
     }
     else
         datafim_backup = "";
+    if(chStatus.isSelected())
+        situacao=true;
+    else
+        situacao=false;
     }
-
     /**
      *
      */
@@ -839,6 +947,10 @@ catch (SQLException erro){
     if(datafim_backup.trim().length()==10){
         txt_datafim.setText(datafim_backup);
     }
+    if(situacao==true)
+        chStatus.setSelected(true);
+    else
+        chStatus.setSelected(false);
 }
 
     /**
@@ -940,6 +1052,16 @@ catch (SQLException erro){
             }catch(Exception erro){
             }  
         }
+    }
+    public String verificaStatus(){
+        return "";
+    }
+    public String converter(String valor){
+        int v = Integer.parseInt(valor);
+        if(v==0){
+            return "Finalizada";
+        }else
+            return "Ativada";
     }
 
 //    private void buscar() {

@@ -39,7 +39,7 @@ public class Comercial extends javax.swing.JFrame {
             codTermo_backup, dataTermo_backup, obsTermo_backup, tipoTermo_backup,
             codSenhas_backup, dataSenhas_backup, obsSenhas_backup, tipoSenhas_backup;
     
-    String processo=Ativador.processo, nome=Ativador.nome, id=Ativador.id, usuario=Login.usuario;
+    String processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario;
 
     public Comercial() {
         initComponents();
