@@ -1,7 +1,7 @@
 package br.com.prolink.login;
 //importando os pacotes essencias da classe
 
-import br.com.prolink.inicio.Conexao;
+import br.com.prolink.inicio.ConexaoStatement;
 import br.com.prolink.inicio.TelaPrincipal;
 import br.com.prolink.inicio.VersaoSistema;
 import java.awt.event.ActionEvent;
@@ -9,8 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import javax.swing.Timer;
@@ -33,29 +31,18 @@ public class Login extends javax.swing.JFrame {
     
     private Timer tempo;
     int cont;
-    public final static int TREE_SECOND=5;
+    public final static int TREE_SECOND=3;
      public Login() {
         initComponents();
         
         barra.setVisible(false);
-        
+        txtNome.setText(System.getProperty("user.name"));
         lbVersao.setText(versao.getVersao());
         
     }
      public Connection getCon(){
        
-        try {
-            Class.forName(Conexao.driver);
-        
-                con = DriverManager.getConnection(Conexao.url, Conexao.usuario, Conexao.senha);
-                if (con==null ){
-                    JOptionPane.showMessageDialog(null, "Falha na conexao com o banco de dados!");
-                }
-        } catch (SQLException  ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        con = new ConexaoStatement().getConnetion();
         return con;        
      }
 
@@ -152,7 +139,7 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(btnSair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addComponent(txtNome, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtRecuperarAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,6 +169,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/logo.png"))); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 12)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Versão:");
         jLabel3.setToolTipText("");
 
@@ -192,26 +180,25 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(91, 91, 91)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(179, 179, 179)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(barra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(6, 6, 6))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(91, 91, 91)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbVersao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,8 +291,6 @@ public class Login extends javax.swing.JFrame {
             TelaPrincipal.txt_usuario.setText(usuario);
             TelaPrincipal.txt_departamento.setText(departamento);
             
-//            JOptionPane.showMessageDialog(null, "usuario: "+usuario+
-//                    "departamento"+departamento+"senha: "+senha+"nivel: "+nivel);
         }
         }
     }
@@ -320,38 +305,44 @@ public class Login extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null,"Os campos não podem ser vazios!\n Tente Novamente!");
      else
      {
-         //if (conta <= 2)
-         //{    
-            try
-            {      
-                
+         getCon();
+         if(con!=null){
+            if (conta <= 2){    
+                try{      
                     String sql = "select * from login Where Usuario like ?"
                             +" and Senha like ?";
-                    
-                    PreparedStatement ps = getCon().prepareStatement(sql);
+                    PreparedStatement ps = con.prepareStatement(sql);
                     ps.setString(1, txtNome.getText());
-                    ps.setString(2, txtSenha.getText());
+                    ps.setString(2, String.valueOf(txtSenha.getPassword()));
                     ResultSet rs = ps.executeQuery();
-                if (rs.first()){
-                    barra.setVisible(true);
-                    cont=-1;
-                    barra.setValue(0);
-                    barra.setStringPainted(true);
-                    tempo = new Timer(TREE_SECOND,new TimerListener());
-                    mostrar();
-                    //JOptionPane.showMessageDialog(null,"Bem vindo ao Novo Controle de Processos!");
-                    
-                    usuario = rs.getString(2);
-                    senha = rs.getString(3);
-                    departamento = rs.getString(4);
-                    nivel = rs.getString(9);
-                    //dispose();
+                    if (rs.first()){
+                        barra.setVisible(true);
+                        cont=-1;
+                        barra.setValue(0);
+                        barra.setStringPainted(true);
+                        tempo = new Timer(TREE_SECOND,new TimerListener());
+                        mostrar();
+                        //JOptionPane.showMessageDialog(null,"Bem vindo ao Novo Controle de Processos!");
+                        usuario = rs.getString(2);
+                        senha = rs.getString(3);
+                        departamento = rs.getString(4);
+                        nivel = rs.getString(9);
+                        //dispose();
+                        con.close();
+                    }
+                    else{
+                     JOptionPane.showMessageDialog(null, "Senha ou Usuario incorreto(s)!");
+                     cont++;
+                    }
+                }catch(SQLException erro){
+                    JOptionPane.showMessageDialog(null, "Falha  ao tentar entrar no sistema" +erro);
                 }
-                else
-                 JOptionPane.showMessageDialog(null, "Senha ou Usuario incorreto(s)!");
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha  ao tentar entrar no sistema" +erro);
             }
+            if(conta==3){
+                JOptionPane.showMessageDialog(null, "Numero de tentativas excedeu o limite!");
+            }
+         }else
+             JOptionPane.showMessageDialog(null, "Falha ao tentar comunicar com o banco de dados!");
       }
       
     }

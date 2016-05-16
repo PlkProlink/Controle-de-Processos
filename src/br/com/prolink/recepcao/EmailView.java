@@ -1,11 +1,7 @@
 package br.com.prolink.recepcao;
 
 
-import br.com.prolink.inicio.Conexao;
-import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -34,7 +30,7 @@ public class EmailView extends javax.swing.JFrame {
                         new javax.mail.Authenticator() {
                              protected PasswordAuthentication getPasswordAuthentication() 
                              {
-                                   return new PasswordAuthentication("documentos@prolinkcontabil.com.br", "plkc2004");
+                                   return new PasswordAuthentication("documentos@prolinkcontabil.com.br", "l!nk2016Cont");
                              }
                         });
 

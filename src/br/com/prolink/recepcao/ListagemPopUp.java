@@ -5,6 +5,8 @@
  */
 package br.com.prolink.recepcao;
 
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+
 /**
  *
  * @author Tiago
@@ -59,7 +61,7 @@ public class ListagemPopUp extends javax.swing.JFrame {
         });
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Encaminhar: você pode transferir a documentação para responsabilidade de outro funcionário");
+        jLabel2.setText("Encaminhar: você pode transferir TODA a documentação para responsabilidade de outro funcionário");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Constetar: um alerta será enviado para a recepção alegando o não recebimento,");
@@ -153,6 +155,7 @@ public class ListagemPopUp extends javax.swing.JFrame {
         jDesktopPane1.removeAll();
         if(encaminhar==null){
            encaminhar = new Encaminhar();
+           ((BasicInternalFrameUI)encaminhar.getUI()).setNorthPane(null);
         }
         jDesktopPane1.add(encaminhar);
         encaminhar.setVisible(true);
@@ -162,6 +165,7 @@ public class ListagemPopUp extends javax.swing.JFrame {
         jDesktopPane1.removeAll();
         if(contestar==null){
             contestar = new Contestar();
+            ((BasicInternalFrameUI)contestar.getUI()).setNorthPane(null);
         }
         jDesktopPane1.add(contestar);
         contestar.setVisible(true);

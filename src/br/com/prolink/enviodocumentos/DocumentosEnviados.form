@@ -261,8 +261,8 @@
                                       <Component id="lbDas2" min="-2" pref="70" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="lbDas3" min="-2" pref="70" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                      <Component id="btnDas" pref="40" max="32767" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="btnDas" linkSize="3" min="-2" pref="40" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
@@ -282,7 +282,7 @@
                                           </Group>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="btnBol" max="32767" attributes="0"/>
+                                      <Component id="btnBol" linkSize="3" min="-2" pref="40" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -303,8 +303,8 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btnIrpj" alignment="0" pref="40" max="32767" attributes="0"/>
-                                          <Component id="btnCofins" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="btnIrpj" linkSize="3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="btnCofins" linkSize="3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" attributes="0">
@@ -340,10 +340,10 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btnIss" alignment="0" pref="40" max="32767" attributes="0"/>
-                                          <Component id="btnCsll" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="btnIrpfSal" alignment="0" pref="40" max="32767" attributes="0"/>
-                                          <Component id="btnGps" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="btnIss" linkSize="3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="btnCsll" linkSize="3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="btnIrpfSal" linkSize="3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="btnGps" linkSize="3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" attributes="0">
@@ -386,11 +386,11 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btnFgts" alignment="0" pref="40" max="32767" attributes="0"/>
-                                          <Component id="btnIrpfServ" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="btnIpi" alignment="0" pref="40" max="32767" attributes="0"/>
-                                          <Component id="btnIcms" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="btnIcmsServ" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="btnFgts" linkSize="3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="btnIrpfServ" linkSize="3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="btnIpi" linkSize="3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="btnIcms" linkSize="3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="btnIcmsServ" linkSize="3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
