@@ -38,10 +38,10 @@ public class InternoRegularizacao extends javax.swing.JInternalFrame {
         btRelatorio.setVisible(false);
         carregaCombo();
         String value = TelaPrincipal.txt_codigo.getText();
-        statusTabel(tbSolicitacao);
+//        statusTabel(tbSolicitacao);
         if(value!=null && value!=""){
-            contratos(TelaPrincipal.txt_codigo.getText());
-            //add(TelaPrincipal.txt_codigo.getText());
+            regularizacao(TelaPrincipal.txt_codigo.getText());
+            add(TelaPrincipal.txt_codigo.getText());
         }
     }
 
@@ -315,8 +315,8 @@ public class InternoRegularizacao extends javax.swing.JInternalFrame {
         if(!jComboBox1.getSelectedItem().equals("Clique aqui para Ativar!")  &&
                 !jComboBox1.getSelectedItem().equals(null)){
             combo((String)jComboBox1.getSelectedItem());
-            contratos(TelaPrincipal.txt_codigo.getText());
-            //add(TelaPrincipal.txt_codigo.getText());
+            regularizacao(TelaPrincipal.txt_codigo.getText());
+            add(TelaPrincipal.txt_codigo.getText());
             
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
@@ -421,7 +421,7 @@ public class InternoRegularizacao extends javax.swing.JInternalFrame {
         }catch(SQLException e){
         }finally{try{if(con!=null)con.close();}catch(Exception e){}}
     }
-    public void contratos(String processo){
+    public void regularizacao(String processo){
         Connection con = new ConexaoStatement().getConnetion();
         
         String sql = "select B.AndamentoRegularizacao as GERAL," +
@@ -457,7 +457,6 @@ private void colorir(JPanel jpanel){
             }else{
                 label.setBackground(Color.RED);
                 label.setForeground(Color.WHITE);
-                
             }
         }
     }
@@ -472,7 +471,7 @@ private void add(String processo){
             ResultSet rs = ps.executeQuery();
             if(rs!=null)
                 while(rs.next()){
-                    //area contratos
+                    //area regularizacao
 //                    contexto("Ato Constitutivo",rs.getString("AtoConstitutivo"));
 //                    contexto("Documentos do Socio",rs.getString("RGeCPFSocio"));
 //                    contexto("Comprovantes dos Sócios",rs.getString("ComprovanteResidencia"));
@@ -480,7 +479,9 @@ private void add(String processo){
 //                    contexto("Habilitar NFe PMSP",rs.getString("AutorizacaoNotaFiscalEletronica"));
 //                    contexto("Senha Posto Fiscal",rs.getString("SenhaPostoFiscal"));
 //                    contexto("Senha Simples Nacional",rs.getString("SenhaSimplesNacional"));
-                    //area contabil
+//                    contexto("Senha Receita Federal",rs.getString("OutorgaSenhaEletronicaReceita"));
+
+//area contabil
 //                    contexto("Balanço e D.R.E",rs.getString("BalancoDRE"));
 //                    contexto("Contas Patrimoniais",rs.getString("ComposicaoDeContasPatrimoniais"));
 //                    contexto("Plano de Contas",rs.getString("PlanoDeContas"));
@@ -489,18 +490,13 @@ private void add(String processo){
 //                    contexto("Folha de Pagamento",rs.getString("FolhadePagamentoDocumento"));
 //                    contexto("Fichs de Funcionários",rs.getString("LivroOuFichadeRegistroFuncionario"));
 //                    contexto("Caged",rs.getString("CAGED"));
-//                    contexto("Sefip",rs.getString("SEFIP"));
-//                    contexto("Guia Sindical",rs.getString("GuiaSindical"));
-//                    contexto("Darf, Gps, Fgts",rs.getString("GuiasDarfGpsFgts"));
 //                    contexto("Recisões",rs.getString("Recisao"));
 //                    contexto("Recibo de Férias",rs.getString("Ferias"));
 //                    contexto("Afastamentos",rs.getString("Afastamento"));
-                    //fiscal senhas
-//                    contexto("Senha Receita Federal",rs.getString("OutorgaSenhaEletronicaReceita"));
-//                    contexto("Perfil Fiscal PMSP",rs.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
-//                    contexto("Termo Resp.Tecnica",rs.getString("TermodeResponsabilidadeDocumento"));
-//                    contexto("Senha do Inss",rs.getString("SenhaINSS"));
-                    
+                    //regulzarizacao senhas
+                    contexto("Senha Receita Federal",rs.getString("OutorgaSenhaEletronicaReceita"));
+                    contexto("Termo Resp.Tecnica",rs.getString("TermodeResponsabilidadeDocumento"));
+                    contexto("Senha do Inss",rs.getString("SenhaINSS"));
                     }
 //            statusTabel(tbRecebimento);
 //            statusTabel(tbSolicitacao);
@@ -526,11 +522,11 @@ public static void limpar_tabela(JTable jtable){
             tbm.removeRow(i);
         }
 }
-private void statusTabel(JTable tabela){
-    DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
-    if(modelo.getRowCount()==0){
-        modelo.addRow(new String[1]);
-        tabela.setValueAt("Nenhuma Pendência", 0, 0);
-    }
-}
+//private void statusTabel(JTable tabela){
+//    DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+//    if(modelo.getRowCount()==0){
+//        modelo.addRow(new String[1]);
+//        tabela.setValueAt("Nenhuma Pendência", 0, 0);
+//    }
+//}
 }

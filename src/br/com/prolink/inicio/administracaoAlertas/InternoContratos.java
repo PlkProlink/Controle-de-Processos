@@ -566,6 +566,8 @@ private void add(String processo){
                     contexto("Habilitar NFe PMSP",rs.getString("AutorizacaoNotaFiscalEletronica"));
                     contexto("Senha Posto Fiscal",rs.getString("SenhaPostoFiscal"));
                     contexto("Senha Simples Nacional",rs.getString("SenhaSimplesNacional"));
+                    contexto("Perfil Fiscal PMSP",rs.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
+
                     //area contabil
 //                    contexto("Balanço e D.R.E",rs.getString("BalancoDRE"));
 //                    contexto("Contas Patrimoniais",rs.getString("ComposicaoDeContasPatrimoniais"));
@@ -581,12 +583,10 @@ private void add(String processo){
 //                    contexto("Recisões",rs.getString("Recisao"));
 //                    contexto("Recibo de Férias",rs.getString("Ferias"));
 //                    contexto("Afastamentos",rs.getString("Afastamento"));
-                    //fiscal senhas
+                    //regularização
 //                    contexto("Senha Receita Federal",rs.getString("OutorgaSenhaEletronicaReceita"));
-//                    contexto("Perfil Fiscal PMSP",rs.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
 //                    contexto("Termo Resp.Tecnica",rs.getString("TermodeResponsabilidadeDocumento"));
 //                    contexto("Senha do Inss",rs.getString("SenhaINSS"));
-                    
                     }
 //            statusTabel(tbRecebimento);
 //            statusTabel(tbSolicitacao);

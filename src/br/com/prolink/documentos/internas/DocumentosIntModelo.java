@@ -479,7 +479,7 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
                         String gry = "insert into "+tabela
                                 + " (NumeroProcesso, Usuario, "
                                 + "Obsevacao, DatadeCadastroAndamento, "
-                                + "DataFinalAndamento, Andamento) values ('"
+                                + "DataDevulucaoCliente, Andamento) values ('"
                                 + processo+"','"
                                 + usuario+"','"
                                 + txtObservacao.getText()+"','"
@@ -652,7 +652,6 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
                                 +"Usuario='" +usuario+"',"
                                 +"Obsevacao='" +txtObservacao.getText()+"',"
                                 +"DatadeCadastroAndamento='" +new java.sql.Date(novadata1.getTime())+"',"
-                                +"DataDevulucaoCliente='" +new java.sql.Date(novadata2.getTime())+"',"
                                 +"Andamento='Enviado para o Cliente' where Cod="+txtCodigo.getText();
                         conexao.statement.executeUpdate(sql);
                         

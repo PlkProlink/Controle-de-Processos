@@ -163,6 +163,8 @@ public class ColhedoraDeDados {
             textoDocumentosComercial("Habilitar NFe PMSP",rs.getString("AutorizacaoNotaFiscalEletronica"));
             textoDocumentosComercial("Senha Posto Fiscal",rs.getString("SenhaPostoFiscal"));
             textoDocumentosComercial("Senha Simples Nacional",rs.getString("SenhaSimplesNacional"));
+            textoDocumentosComercial("Perfil Fiscal PMSP",rs.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
+                        
             //area contabil
             textoDocumentosComercial("Balanço e D.R.E",rs.getString("BalancoDRE"));
             textoDocumentosComercial("Contas Patrimoniais",rs.getString("ComposicaoDeContasPatrimoniais"));
@@ -172,15 +174,11 @@ public class ColhedoraDeDados {
             textoDocumentosComercial("Folha de Pagamento",rs.getString("FolhadePagamentoDocumento"));
             textoDocumentosComercial("Fichs de Funcionários",rs.getString("LivroOuFichadeRegistroFuncionario"));
             textoDocumentosComercial("Caged",rs.getString("CAGED"));
-            textoDocumentosComercial("Sefip",rs.getString("SEFIP"));
-            textoDocumentosComercial("Guia Sindical",rs.getString("GuiaSindical"));
-            textoDocumentosComercial("Darf, Gps, Fgts",rs.getString("GuiasDarfGpsFgts"));
             textoDocumentosComercial("Recisões",rs.getString("Recisao"));
             textoDocumentosComercial("Recibo de Férias",rs.getString("Ferias"));
             textoDocumentosComercial("Afastamentos",rs.getString("Afastamento"));
-            //fiscal senhas
+            //regularizacao senhas
             textoDocumentosComercial("Senha Receita Federal",rs.getString("OutorgaSenhaEletronicaReceita"));
-            textoDocumentosComercial("Perfil Fiscal PMSP",rs.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
             textoDocumentosComercial("Termo Resp.Tecnica",rs.getString("TermodeResponsabilidadeDocumento"));
             textoDocumentosComercial("Senha do Inss",rs.getString("SenhaINSS"));
         }
@@ -198,11 +196,11 @@ public class ColhedoraDeDados {
             textoDocumentosOutros("Numero Pis",rs.getString("NumeroPIS"));
             textoDocumentosOutros("Habilitar NFe PMSP",rs.getString("AutorizacaoNotaFiscalEletronica"));
             textoDocumentosOutros("Senha Posto Fiscal",rs.getString("SenhaPostoFiscal"));
-            textoDocumentosOutros("Senha Simples Nacional",rs.getString("SenhaSimplesNacional"));   
-        }
-        else if(tela.equals("Fiscal")){
-            textoDocumentosOutros("Senha Receita Federal",rs.getString("OutorgaSenhaEletronicaReceita"));
+            textoDocumentosOutros("Senha Simples Nacional",rs.getString("SenhaSimplesNacional"));
             textoDocumentosOutros("Perfil Fiscal PMSP",rs.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
+        }
+        else if(tela.equals("Regularizacao")){
+            textoDocumentosOutros("Senha Receita Federal",rs.getString("OutorgaSenhaEletronicaReceita"));
             textoDocumentosOutros("Termo Resp.Tecnica",rs.getString("TermodeResponsabilidadeDocumento"));
             textoDocumentosOutros("Senha do Inss",rs.getString("SenhaINSS"));
         }
@@ -210,9 +208,6 @@ public class ColhedoraDeDados {
             textoDocumentosOutros("Folha de Pagamento",rs.getString("FolhadePagamentoDocumento"));
             textoDocumentosOutros("Fichs de Funcionários",rs.getString("LivroOuFichadeRegistroFuncionario"));
             textoDocumentosOutros("Caged",rs.getString("CAGED"));
-            textoDocumentosOutros("Sefip",rs.getString("SEFIP"));
-            textoDocumentosOutros("Guia Sindical",rs.getString("GuiaSindical"));
-            textoDocumentosOutros("Darf, Gps, Fgts",rs.getString("GuiasDarfGpsFgts"));
             textoDocumentosOutros("Recisões",rs.getString("Recisao"));
             textoDocumentosOutros("Recibo de Férias",rs.getString("Ferias"));
             textoDocumentosOutros("Afastamentos",rs.getString("Afastamento"));

@@ -492,7 +492,7 @@ private void add(String processo){
             ResultSet rs = ps.executeQuery();
             if(rs!=null)
                 while(rs.next()){
-                    //area pessoal
+                    //area contratos
 //                    contexto("Ato Constitutivo",rs.getString("AtoConstitutivo"));
 //                    contexto("Documentos do Socio",rs.getString("RGeCPFSocio"));
 //                    contexto("Comprovantes dos Sócios",rs.getString("ComprovanteResidencia"));
@@ -500,7 +500,9 @@ private void add(String processo){
 //                    contexto("Habilitar NFe PMSP",rs.getString("AutorizacaoNotaFiscalEletronica"));
 //                    contexto("Senha Posto Fiscal",rs.getString("SenhaPostoFiscal"));
 //                    contexto("Senha Simples Nacional",rs.getString("SenhaSimplesNacional"));
-                    //area contabil
+//                    contexto("Perfil Fiscal PMSP",rs.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
+
+//area contabil
 //                    contexto("Balanço e D.R.E",rs.getString("BalancoDRE"));
 //                    contexto("Contas Patrimoniais",rs.getString("ComposicaoDeContasPatrimoniais"));
 //                    contexto("Plano de Contas",rs.getString("PlanoDeContas"));
@@ -509,15 +511,11 @@ private void add(String processo){
                     contexto("Folha de Pagamento",rs.getString("FolhadePagamentoDocumento"));
                     contexto("Fichs de Funcionários",rs.getString("LivroOuFichadeRegistroFuncionario"));
                     contexto("Caged",rs.getString("CAGED"));
-                    contexto("Sefip",rs.getString("SEFIP"));
-                    contexto("Guia Sindical",rs.getString("GuiaSindical"));
-                    contexto("Darf, Gps, Fgts",rs.getString("GuiasDarfGpsFgts"));
                     contexto("Recisões",rs.getString("Recisao"));
                     contexto("Recibo de Férias",rs.getString("Ferias"));
                     contexto("Afastamentos",rs.getString("Afastamento"));
-                    //fiscal senhas
+                    //regularizaçao senhas
 //                    contexto("Senha Receita Federal",rs.getString("OutorgaSenhaEletronicaReceita"));
-//                    contexto("Perfil Fiscal PMSP",rs.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
 //                    contexto("Termo Resp.Tecnica",rs.getString("TermodeResponsabilidadeDocumento"));
 //                    contexto("Senha do Inss",rs.getString("SenhaINSS"));
                     

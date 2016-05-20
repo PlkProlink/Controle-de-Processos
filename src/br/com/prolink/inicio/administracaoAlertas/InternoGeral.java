@@ -95,7 +95,6 @@ public class InternoGeral extends javax.swing.JInternalFrame {
         }
         jpResp.setVisible(false);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -128,7 +127,7 @@ public class InternoGeral extends javax.swing.JInternalFrame {
         lbCContabil = new javax.swing.JLabel();
         lbCContratos = new javax.swing.JLabel();
         lbCDp = new javax.swing.JLabel();
-        lbDFisc = new javax.swing.JLabel();
+        lbDReg = new javax.swing.JLabel();
         lbDocCom = new javax.swing.JLabel();
         lbDocContabil = new javax.swing.JLabel();
         lbDContratos = new javax.swing.JLabel();
@@ -271,10 +270,10 @@ public class InternoGeral extends javax.swing.JInternalFrame {
         lbCDp.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         lbCDp.setOpaque(true);
 
-        lbDFisc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lbDFisc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbDFisc.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        lbDFisc.setOpaque(true);
+        lbDReg.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbDReg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbDReg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        lbDReg.setOpaque(true);
 
         lbDocCom.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lbDocCom.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -314,20 +313,20 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                 .addGroup(jpCalcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbDContratos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbDDp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbDFisc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbDReg, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpCalcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lbDocCom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lbDocContabil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(22, 22, 22))
         );
 
-        jpCalcLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lbCCom, lbCContabil, lbCContratos, lbCDp, lbCFisc, lbCReg, lbDContratos, lbDDp, lbDFisc, lbDocCom, lbDocContabil});
+        jpCalcLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lbCCom, lbCContabil, lbCContratos, lbCDp, lbCFisc, lbCReg, lbDContratos, lbDDp, lbDReg, lbDocCom, lbDocContabil});
 
         jpCalcLayout.setVerticalGroup(
             jpCalcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpCalcLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpCalcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpCalcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jpCalcLayout.createSequentialGroup()
                         .addComponent(lbCCom, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(9, 9, 9)
@@ -348,12 +347,12 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                         .addComponent(lbDContratos, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(9, 9, 9)
                         .addComponent(lbDDp, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addComponent(lbDFisc, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbDReg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        jpCalcLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lbCCom, lbCContabil, lbCContratos, lbCDp, lbCFisc, lbCReg, lbDContratos, lbDDp, lbDFisc, lbDocCom, lbDocContabil});
+        jpCalcLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {lbCCom, lbCContabil, lbCContratos, lbCDp, lbCFisc, lbCReg, lbDContratos, lbDDp, lbDReg, lbDocCom, lbDocContabil});
 
         javax.swing.GroupLayout jpPendenciasLayout = new javax.swing.GroupLayout(jpPendencias);
         jpPendencias.setLayout(jpPendenciasLayout);
@@ -693,7 +692,7 @@ public class InternoGeral extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lbCReg;
     private javax.swing.JLabel lbDContratos;
     private javax.swing.JLabel lbDDp;
-    private javax.swing.JLabel lbDFisc;
+    private javax.swing.JLabel lbDReg;
     private javax.swing.JLabel lbDocCom;
     private javax.swing.JLabel lbDocContabil;
     // End of variables declaration//GEN-END:variables
@@ -751,7 +750,7 @@ public class InternoGeral extends javax.swing.JInternalFrame {
             }
         }
     }
-    private void preencherDepartamentos(String valor){
+    private void preencherDepartamentos(String valor){//buscar valores apenas no departamento
         if(valor!=null){
             Connection con=null;
             try{
@@ -847,7 +846,7 @@ public class InternoGeral extends javax.swing.JInternalFrame {
             }
         }
     }
-    private void preencherDocumentos(String processo){
+    private void preencherDocumentos(String processo){//buscar valores em documentos
     
     Connection con = new ConexaoStatement().getConnetion();
     String sql = "select * from documentos where Numerodoprocesso='"+processo+"'";
@@ -855,7 +854,7 @@ public class InternoGeral extends javax.swing.JInternalFrame {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if(rs!=null)
-                while(rs.next()){
+                while(rs.next()){//ira somar pendencias de cada resultado
                     departamento=0;
                     comercial=0;
                     //area contratos
@@ -866,6 +865,8 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                     contarDocumentos(lbDContratos,rs.getString("AutorizacaoNotaFiscalEletronica"));
                     contarDocumentos(lbDContratos,rs.getString("SenhaPostoFiscal"));
                     contarDocumentos(lbDContratos,rs.getString("SenhaSimplesNacional"));
+                    contarDocumentos(lbDContratos,rs.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
+                    
                     departamento=0;
                     //area contabil
                     contarDocumentos(lbDocContabil,rs.getString("BalancoDRE"));
@@ -877,19 +878,14 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                     contarDocumentos(lbDDp,rs.getString("FolhadePagamentoDocumento"));
                     contarDocumentos(lbDDp,rs.getString("LivroOuFichadeRegistroFuncionario"));
                     contarDocumentos(lbDDp,rs.getString("CAGED"));
-                    contarDocumentos(lbDDp,rs.getString("SEFIP"));
-                    contarDocumentos(lbDDp,rs.getString("GuiaSindical"));
-                    contarDocumentos(lbDDp,rs.getString("GuiasDarfGpsFgts"));
                     contarDocumentos(lbDDp,rs.getString("Recisao"));
                     contarDocumentos(lbDDp,rs.getString("Ferias"));
                     contarDocumentos(lbDDp,rs.getString("Afastamento"));
                     departamento=0;
-                    //fiscal senhas
-                    contarDocumentos(lbDFisc,rs.getString("OutorgaSenhaEletronicaReceita"));
-                    contarDocumentos(lbDFisc,rs.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
-                    contarDocumentos(lbDFisc,rs.getString("TermodeResponsabilidadeDocumento"));
-                    contarDocumentos(lbDFisc,rs.getString("SenhaINSS"));
-                    
+                    //regularizacao senhas
+                    contarDocumentos(lbDReg,rs.getString("OutorgaSenhaEletronicaReceita"));
+                    contarDocumentos(lbDReg,rs.getString("TermodeResponsabilidadeDocumento"));
+                    contarDocumentos(lbDReg,rs.getString("SenhaINSS"));
                     colorir(jpCalc);
                     }
 //            statusTabel(tbRecebimento);
@@ -906,7 +902,7 @@ public class InternoGeral extends javax.swing.JInternalFrame {
         this.departamento+=novoValor;
         label.setText(""+departamento);
     }
-    private void contarDocumentos(JLabel label, String valor){
+    private void contarDocumentos(JLabel label, String valor){//contara documentos pendentes e informará na tela
         int novoValor=1;
         if(valor.trim().equals("Aguardando Validação")){
             this.departamento+=novoValor;

@@ -1199,7 +1199,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             documentos.txtCodigo.setText(txt_codigo.getText());
             documentos.txtNome.setText(txt_nome.getText());
             documentos.txtID.setText(txt_id.getText());
-            documentos.txtUsuario.setText(Login.usuario);
             
             documentos.setVisible(true);
             

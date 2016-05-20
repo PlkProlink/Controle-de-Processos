@@ -86,15 +86,12 @@ public class AtualizaDocumentos {
                lista.add(con.resultset.getString("ConfigurarPerfilFiscalNoSitePrefeituraDocumento"));
                lista.add(con.resultset.getString("Ferias"));
                lista.add(con.resultset.getString("FolhadePagamentoDocumento"));
-               lista.add(con.resultset.getString("GuiaSindical"));
-               lista.add(con.resultset.getString("GuiasDarfGpsFgts"));
                lista.add(con.resultset.getString("LivroOuFichadeRegistroFuncionario"));
                lista.add(con.resultset.getString("NumeroPIS"));
                lista.add(con.resultset.getString("OutorgaSenhaEletronicaReceita"));
                lista.add(con.resultset.getString("PlanoDeContas"));
                lista.add(con.resultset.getString("RGeCPFSocio"));
                lista.add(con.resultset.getString("Recisao"));
-               lista.add(con.resultset.getString("SEFIP"));
                lista.add(con.resultset.getString("SenhaINSS"));
                lista.add(con.resultset.getString("SenhaPostoFiscal"));
                lista.add(con.resultset.getString("SenhaSimplesNacional"));
