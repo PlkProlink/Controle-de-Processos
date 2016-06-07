@@ -523,7 +523,7 @@ private void recebeValores(){
             preencherCombo("fiscal");
         break;
         case "Pessoal":
-            preencherCombo("dp");
+            preencherCombo("pessoal");
         break;
         case "Regularizacao":
             preencherCombo("regularizacao");
