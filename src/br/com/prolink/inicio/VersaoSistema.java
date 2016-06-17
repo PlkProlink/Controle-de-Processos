@@ -6,7 +6,7 @@ package br.com.prolink.inicio;
  */
 public class VersaoSistema {
     
-    private String versaoSistema="2.1.38 ";
+    private String versaoSistema="2.1.39 Beta";
     private String baseDados= "2.0.5";
     /*
     Historico de versões
@@ -29,6 +29,8 @@ public class VersaoSistema {
     2.1.35 - Inserir nova coluna no ativador AndamentoDocumentos
     2.1.36 - Habilitando função desativar cliente em Cadastro de Cliente
     2.1.37 - Removido Botoes e Logomarca na tela inicial
+    2.1.38 - Correções nas telas de admnistração e documentos
+    2.1.39 - Atualização na tela Visao Geral, e criação da Tela de Acessos
     2.1.44 - Novas telas para Relatorios
     
     Relatorios em Documentos e Documentos Enviados (array de objetos)

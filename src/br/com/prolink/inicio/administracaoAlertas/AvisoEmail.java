@@ -2,10 +2,14 @@ package br.com.prolink.inicio.administracaoAlertas;
 
 
 import br.com.prolink.login.Login;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
+import sun.nio.cs.ext.ISO_8859_11;
 
 public class AvisoEmail {
 
@@ -28,7 +32,10 @@ public class AvisoEmail {
     try {
         email.setFrom( "documentos@grupoprolink.com.br" , "Controle de Processsos - Implantação");
         email.setDebug(true); 
-        email.setSubject("Prolink - Implantação de Cliente - "+usuario+", estamos aguardando sua interação" );
+        
+        String subject = new String(("Prolink - Implantação de Cliente - "+usuario+", estamos aguardando sua interação").getBytes(), "UTF-8");
+        
+        email.setSubject(subject);
         
         StringBuilder builder = new StringBuilder();
 
@@ -78,6 +85,9 @@ public class AvisoEmail {
         return true;
     } catch (EmailException e) {
         JOptionPane.showMessageDialog(null, "Falha ao enviar o email!"+e);
+        return false;
+    } catch (UnsupportedEncodingException ex) { 
+        JOptionPane.showMessageDialog(null,"Falha ao criar o assunto da mensagem"+ex);
         return false;
     } 
     }

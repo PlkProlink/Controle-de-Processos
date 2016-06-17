@@ -1,6 +1,9 @@
 package br.com.prolink.inicio;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
 import javax.swing.*;
 
 /**
@@ -10,14 +13,27 @@ import javax.swing.*;
 public class Conexao
 {
     final public static String driver = "com.mysql.jdbc.Driver";
-    final public static String url = "jdbc:mysql://192.168.0.202/clientev1";
-    final public static String usuario = "root";
-    final public static String senha = "123456";
+    //public static String url="jdbc:mysql://200.207.224.87:3306/clientev1";
+    public static String url="jdbc:mysql://192.168.0.202:3306/clientev1";
+    final public static String usuario = "prolink";
+    final public static String senha = "77i#EU&K";
     
-    //final public static String url = "jdbc:mysql://localhost/clientev1";
-    //final public static String senha = "";
-    
-    
+    public Conexao(){
+//        lerConfig();
+    }
+    private void lerConfig(){
+        try{
+        Properties propriedades = new Properties();
+        FileInputStream file = new FileInputStream("config.txt");
+        propriedades.load(file);
+        url = propriedades.getProperty("urlBanco");
+        file.close();
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, "Falha ao ler arquivo de configurações!\n"
+                    + "Para corrigir copie e cole o arquivo Controle de Processos.lnk do diretorio Sistemas \n"
+                    + "e cole na área de trabalho substituindo o atual");
+        }
+    }
     public Connection connection;  //vai chamar a conexao
 
     /**

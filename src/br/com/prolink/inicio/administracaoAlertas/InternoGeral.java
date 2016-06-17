@@ -46,7 +46,7 @@ public class InternoGeral extends javax.swing.JInternalFrame {
         
         try{
             Connection con = new ConexaoStatement().getConnetion();
-            String sql = "select SUBSTRING_INDEX(SUBSTRING_INDEX(Nome, ' ', 2), ' ', -2) as Nome, Departamento from login order by Departamento";
+            String sql = "select SUBSTRING_INDEX(SUBSTRING_INDEX(Nome, ' ', 2), ' ', -2) as Nome, Departamento from login where Ativo=1 order by Departamento";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if(rs!=null){
@@ -75,6 +75,12 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                     cbContratos.addItem(nomeUser.get(i));
                 }
                 if(dep.get(i).equals("Fiscal")){
+                    
+                    
+                    if(nomeUser.get(i).contains("Robison"))
+                    {  
+                        nomeUser.set(i, "Robison");
+                    }
                     cbFisc.addItem(nomeUser.get(i));
                 }
                 if(dep.get(i).equals("Pessoal")){
