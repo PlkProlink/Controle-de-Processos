@@ -1,0 +1,2 @@
+urlBanco=jdbc:mysql://200.207.224.87:3306/clientev1
+#cuidado, qualquer alteracao na linha acima pode derrubar o serviço

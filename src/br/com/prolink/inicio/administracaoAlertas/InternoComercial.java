@@ -28,6 +28,8 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class InternoComercial extends javax.swing.JInternalFrame {
+    boolean controle = true;
+    int documento = 0;
     /**
      * Creates new form InternoComercial
      */
@@ -510,15 +512,19 @@ public class InternoComercial extends javax.swing.JInternalFrame {
     Comercial comercial;
     Documentos documentos;
     private void abrirRelatorio(String valor){
-        jDkBody.removeAll();
-        //if(intRelatorio==null){
-        List<String> lista = new ArrayList<>();
-            intRelatorio = new Relatorios(valor,"Comercial", lista);
-            ((BasicInternalFrameUI)intRelatorio.getUI()).setNorthPane(null);
-        //}
-        jDkBody.add(intRelatorio);
-        intRelatorio.setVisible(true);
-        
+        if(!controle && documento==0){
+            JOptionPane.showMessageDialog(null,"Não existem pendências do cliente "+TelaPrincipal.txt_nome+" \npara serem validadas para esse departamento!");
+        }
+        else{
+            jDkBody.removeAll();
+            //if(intRelatorio==null){
+            List<String> lista = new ArrayList<>();
+                intRelatorio = new Relatorios(valor,"Comercial", lista);
+                ((BasicInternalFrameUI)intRelatorio.getUI()).setNorthPane(null);
+            //}
+            jDkBody.add(intRelatorio);
+            intRelatorio.setVisible(true);
+        }
     }
     private void abrirDocumentos(){
         if(TelaPrincipal.txt_codigo.getText().equals("")){
@@ -638,8 +644,9 @@ private void colorir(JPanel jpanel){
             JLabel label =((JLabel)jpanel.getComponent(i));
             if(label.getText().equals("Concluido") || 
                 label.getText().equals("Finalizado")){
-                        label.setBackground(Color.GREEN);
-                        label.setForeground(Color.WHITE);
+                    controle=false;
+                    label.setBackground(Color.GREEN);
+                    label.setForeground(Color.WHITE);
             }else{
                 label.setBackground(Color.RED);
                 label.setForeground(Color.WHITE);
@@ -650,7 +657,6 @@ private void colorir(JPanel jpanel){
 }
 
 private void add(String processo){
-    
     limpar_tabela(tbRecebimento);
     limpar_tabela(tbSolicitacao);
     
@@ -697,9 +703,11 @@ private void add(String processo){
 }
 private void contexto(String nomeLabel, String valor){
     if(valor.trim().equals("") || valor.contains("Em Aberto")){
-         criaLabel(tbSolicitacao, nomeLabel);
+        documento+=1;
+        criaLabel(tbSolicitacao, nomeLabel);
     }
     else if(valor.contains("Enviado")){
+        documento+=1;
         criaLabel(tbRecebimento, nomeLabel);
     }
 }

@@ -31,6 +31,8 @@ import javax.swing.table.DefaultTableModel;
 public class InternoContabil extends javax.swing.JInternalFrame {
     Contabil contabil;
     Documentos documentos;
+    boolean controle = true;
+    int documento = 0;
     /**
      * Creates new form InternoComercial
      */
@@ -279,13 +281,18 @@ public class InternoContabil extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formComponentMoved
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        List <String> nova = new ArrayList<>();
-        nova.add("");
-        Relatorios relatorio = new Relatorios("Alerta", "Contabil", nova);
-        jDesktopPane1.removeAll();
-        ((BasicInternalFrameUI)relatorio.getUI()).setNorthPane(null);
-        jDesktopPane1.add(relatorio);
-        relatorio.setVisible(true);
+        if(!controle && documento==0){
+            JOptionPane.showMessageDialog(null,"Não existem pendências do cliente "+TelaPrincipal.txt_nome+" \npara serem validadas para esse departamento!");
+        }
+        else{
+            List <String> nova = new ArrayList<>();
+            nova.add("");
+            Relatorios relatorio = new Relatorios("Alerta", "Contabil", nova);
+            jDesktopPane1.removeAll();
+            ((BasicInternalFrameUI)relatorio.getUI()).setNorthPane(null);
+            jDesktopPane1.add(relatorio);
+            relatorio.setVisible(true);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusLost
@@ -348,8 +355,6 @@ public class InternoContabil extends javax.swing.JInternalFrame {
                 else
                     jComboBox1.setSelectedItem("Clique aqui para Ativar!");
             }
-            
-            
         }catch(SQLException e){
         }finally{try{if(con!=null)con.close();}catch(Exception e){}}
     }
@@ -428,8 +433,10 @@ private void colorir(JPanel jpanel){
             JLabel label =((JLabel)jpanel.getComponent(i));
             if(label.getText().equals("Concluido") || 
                 label.getText().equals("Finalizado")){
-                        label.setBackground(Color.GREEN);
-                        label.setForeground(Color.WHITE);
+                    controle=false;
+                    label.setBackground(Color.GREEN);
+                    label.setForeground(Color.WHITE);
+                        
             }else{
                 label.setBackground(Color.RED);
                 label.setForeground(Color.WHITE);
@@ -487,7 +494,8 @@ private void add(String processo){
 }
 private void contexto(String nomeLabel, String valor){
     if(valor.trim().equals("Aguardando Validação")){
-         criaLabel(tbValidacao, nomeLabel);
+        documento+=1;
+        criaLabel(tbValidacao, nomeLabel);
     }
 }
 private void criaLabel(JTable tabela, String text){

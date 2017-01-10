@@ -61,6 +61,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jpProcessos = new javax.swing.JPanel();
         btnNovoProcesso = new javax.swing.JButton();
         btnRelatorios = new javax.swing.JButton();
+        btnRelatorios1 = new javax.swing.JButton();
         jpRececepcao = new javax.swing.JPanel();
         btnConfirmarDocumento = new javax.swing.JButton();
         btnNovoDocumentoRec = new javax.swing.JButton();
@@ -130,6 +131,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jmRelatorioAcompanhamento = new javax.swing.JMenu();
         jmAcompanhamentoIndividual = new javax.swing.JMenuItem();
         jmAcompanhamentoGeral = new javax.swing.JMenuItem();
+        mnHistoricoAcessos = new javax.swing.JMenuItem();
         jmSobre = new javax.swing.JMenu();
         jmSair = new javax.swing.JMenu();
 
@@ -178,6 +180,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnRelatorios1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnRelatorios1.setText("Historico");
+        btnRelatorios1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatorios1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpProcessosLayout = new javax.swing.GroupLayout(jpProcessos);
         jpProcessos.setLayout(jpProcessosLayout);
         jpProcessosLayout.setHorizontalGroup(
@@ -185,6 +195,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jpProcessosLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jpProcessosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRelatorios1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNovoProcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -195,6 +206,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(btnNovoProcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRelatorios1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -471,14 +484,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jpBarraInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jDkBody)
                     .addGroup(jpPrincipalLayout.createSequentialGroup()
                         .addComponent(jpRececepcao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                         .addComponent(jpProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jpProcessos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(166, Short.MAX_VALUE))
-                    .addComponent(jDkBody)))
+                        .addGap(98, 98, 98))))
         );
 
         barraGuias.setBackground(new java.awt.Color(250, 250, 250));
@@ -730,6 +743,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jmRelatorios.add(jmRelatorioAcompanhamento);
 
+        mnHistoricoAcessos.setText("Historico de Acessos");
+        mnHistoricoAcessos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnHistoricoAcessosActionPerformed(evt);
+            }
+        });
+        jmRelatorios.add(mnHistoricoAcessos);
+
         barraGuias.add(jmRelatorios);
 
         jmSobre.setText("Sobre");
@@ -761,7 +782,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+            .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
         );
 
         setSize(new java.awt.Dimension(1336, 726));
@@ -937,6 +958,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnRecebidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecebidosActionPerformed
         documentos();
     }//GEN-LAST:event_btnRecebidosActionPerformed
+
+    private void btnRelatorios1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorios1ActionPerformed
+        jDkBody.removeAll();
+        historico = new RelatorioAcessos();
+        ((BasicInternalFrameUI)historico.getUI()).setNorthPane(null);
+        jDkBody.add(historico);
+        historico.setVisible(true);
+    }//GEN-LAST:event_btnRelatorios1ActionPerformed
+
+    private void mnHistoricoAcessosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnHistoricoAcessosActionPerformed
+        jDkBody.removeAll();
+        historico = new RelatorioAcessos();
+        ((BasicInternalFrameUI)historico.getUI()).setNorthPane(null);
+        jDkBody.add(historico);
+        historico.setVisible(true);
+    }//GEN-LAST:event_mnHistoricoAcessosActionPerformed
     
     /**
      *
@@ -961,6 +998,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnNovoProcesso;
     private javax.swing.JButton btnRecebidos;
     private javax.swing.JButton btnRelatorios;
+    private javax.swing.JButton btnRelatorios1;
     private javax.swing.JDesktopPane jDkBody;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu5;
@@ -1016,6 +1054,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menu_financeiro;
     private javax.swing.JMenuItem menu_fiscal;
     private javax.swing.JMenuItem menu_regulazicacao;
+    private javax.swing.JMenuItem mnHistoricoAcessos;
     private javax.swing.JMenuItem mnRelCadastroTodos;
     private javax.swing.JMenuItem mnRelCadastroUm;
     private org.netbeans.examples.lib.timerbean.Timer timer1;
@@ -1051,6 +1090,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     RelatCadastro relCliente;
     TeladeLog log;
     AdministradorDePendencias pendencias;
+    RelatorioAcessos historico;
     
     public void contabil(){
         //*Se o campo estiver em branco, solicitara que o usuario ative uma empresa

@@ -1,17 +1,22 @@
 package br.com.prolink.documentos.internas;
 
-import br.com.prolink.login.Login;
 import br.com.prolink.documentos.*;
 import br.com.prolink.controle.*;
 import br.com.prolink.inicio.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+import com.toedter.calendar.JCalendar;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  *
@@ -40,6 +45,7 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
     DocumentosDao doc;
     LogUsuarioDao log;
     LogUsuarioBean logb;
+    JDialog dialog;
     
     public DocumentosIntModelo() {
         initComponents();
@@ -105,6 +111,9 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
         txtObservacao = new javax.swing.JTextArea();
         btnExcluir = new javax.swing.JButton();
         lbMensagem = new javax.swing.JLabel();
+        btn1 = new javax.swing.JButton();
+        btn2 = new javax.swing.JButton();
+        btn3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -153,6 +162,11 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
         lbEnvio1.setText("Solicitado:");
 
         txtData1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtData1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txtData1PropertyChange(evt);
+            }
+        });
 
         lbEnvio2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lbEnvio2.setText("Recebido:");
@@ -226,6 +240,27 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
 
         lbMensagem.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/calendar.png"))); // NOI18N
+        btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn1ActionPerformed(evt);
+            }
+        });
+
+        btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/calendar.png"))); // NOI18N
+        btn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn2ActionPerformed(evt);
+            }
+        });
+
+        btn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/prolink/imagens/calendar.png"))); // NOI18N
+        btn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -245,7 +280,12 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
                             .addComponent(txtData3, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
                             .addComponent(txtData2)
                             .addComponent(txtData1))
-                        .addGap(121, 121, 121)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(72, 72, 72)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbObservacao)))
@@ -263,7 +303,7 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
                                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAlterar, btnCancelar, btnGravar, btnNovo});
@@ -280,15 +320,18 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtData1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbEnvio1))
+                            .addComponent(lbEnvio1)
+                            .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtData2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbEnvio2))
+                            .addComponent(lbEnvio2)
+                            .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtData3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbEnvio3)))
+                            .addComponent(lbEnvio3)
+                            .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lbObservacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -789,13 +832,87 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
-        conexao.desconecta();
+        //if(dialog!=null){
+            dialog.dispose();
+        //}
+        try{
+            conexao.desconecta();
+        }catch(Exception e){}
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
         conexao.desconecta();
+        
     }//GEN-LAST:event_formInternalFrameClosed
-    
+
+    private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
+        setarData(txtData1);
+    }//GEN-LAST:event_btn1ActionPerformed
+
+    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+        setarData(txtData2);
+    }//GEN-LAST:event_btn2ActionPerformed
+
+    private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
+        setarData(txtData3);
+    }//GEN-LAST:event_btn3ActionPerformed
+
+    private void txtData1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtData1PropertyChange
+        if(dialog!=null){
+            dialog.dispose();
+        }
+    }//GEN-LAST:event_txtData1PropertyChange
+    public void setarData(JFormattedTextField jformatted){
+        if(dialog!=null)
+            dialog.dispose();
+        dialog = new JDialog();
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        JCalendar jCalendar1 = new JCalendar();
+        jCalendar1.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                try{
+                    Date data = jCalendar1.getDate();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    jformatted.setText(sdf.format(data));
+                }catch(Exception ex){
+                    jformatted.setText("");
+                }finally{
+
+                }
+
+            }
+        });
+        dialog.setTitle("Calendario");
+        dialog.setBackground(new java.awt.Color(255, 255, 255));
+        dialog.setBounds(new java.awt.Rectangle(800, 200, 310, 290));
+        dialog.setFocusCycleRoot(false);
+        dialog.setResizable(false);
+
+        jCalendar1.setBackground(new java.awt.Color(51, 51, 255));
+        jCalendar1.setDecorationBackgroundColor(new java.awt.Color(0, 0, 204));
+        jCalendar1.setDecorationBordersVisible(true);
+        jCalendar1.setMaxSelectableDate(new java.util.Date(32472154890000L));
+        jCalendar1.setMinSelectableDate(new java.util.Date(-5364647910000L));
+        jCalendar1.setSundayForeground(new java.awt.Color(255, 51, 51));
+        jCalendar1.setTodayButtonVisible(true);
+        jCalendar1.setWeekdayForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(dialog.getContentPane());
+        dialog.getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jCalendar1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jCalendar1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+        );
+        dialog.pack();
+        dialog.setVisible(true);
+        
+    }
     
     /**
      * @param args the command line arguments
@@ -825,6 +942,9 @@ public class DocumentosIntModelo extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn1;
+    private javax.swing.JButton btn2;
+    private javax.swing.JButton btn3;
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;

@@ -6,7 +6,7 @@ package br.com.prolink.inicio;
  */
 public class VersaoSistema {
     
-    private String versaoSistema="2.1.39 Beta";
+    private String versaoSistema="2.1.42";
     private String baseDados= "2.0.5";
     /*
     Historico de versões
@@ -31,6 +31,10 @@ public class VersaoSistema {
     2.1.37 - Removido Botoes e Logomarca na tela inicial
     2.1.38 - Correções nas telas de admnistração e documentos
     2.1.39 - Atualização na tela Visao Geral, e criação da Tela de Acessos
+    2.1.40 - Trava na tela de relatorios que inabilita envio de documentos que não estão pendentes
+    2.1.41 - Inserido JDialog com calendario em Documentos/Internas/Form Modelo solicitado pela Monary
+    2.1.42 - Trocando Calendario com.toedter.calendar.JCalendar para com.towel.swing.calendar.CalendarView;
+    
     2.1.44 - Novas telas para Relatorios
     
     Relatorios em Documentos e Documentos Enviados (array de objetos)

@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -33,7 +34,8 @@ public class InternoGeral extends javax.swing.JInternalFrame {
     
     List<String> nomeUser = new ArrayList<>();
     List<String> dep = new ArrayList<>();
-    
+    boolean continuar = true;//verificar se existe algum destinatario selecionado sem validação
+    StringBuilder builder;
     
     /**
      * Creates new form InternoComercial
@@ -605,41 +607,55 @@ public class InternoGeral extends javax.swing.JInternalFrame {
     private void btAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAvancarActionPerformed
         if(TelaPrincipal.txt_codigo.getText()!=null && !TelaPrincipal.txt_codigo.getText().equals("")){
             if(abrir=="Alerta"){
-                List<String> nome = new ArrayList<>();
-                boolean liberar = false;
-                if(!cbComercial.getSelectedItem().equals("")){
-                    nome.add((String)cbComercial.getSelectedItem());
-                    liberar = true;
+                builder = new StringBuilder();
+                verificarPendenciaDestinatario(lbCCom, lbDocCom, cbComercial, "Comercial");
+                verificarPendenciaDestinatario(lbCContabil, lbDocContabil, cbContabil, "Contabil");
+                verificarPendenciaDestinatario(lbCContratos, lbDContratos, cbContratos, "Contratos");
+                verificarPendenciaDestinatario(lbCDp, lbDDp, cbDP, "Dep. Pessoal");
+                verificarPendenciaDestinatario(lbCFisc, lbCFisc, cbFisc, "Fiscal");
+                verificarPendenciaDestinatario(lbCReg, lbDReg, cbReg, "Regularização");
+                if(!continuar){
+                  JOptionPane.showMessageDialog(null, "Os seguintes departamentos não tem validação pendente \n"
+                          + "e por isso não pode ser enviado nenhuma cobrança \n"+builder.toString()+"\n"
+                          + "Desmarque os dertinatarios dos departamento(s) informado(s) e tente novamente!");  
                 }
-                if(!cbContabil.getSelectedItem().equals("")){
-                    nome.add((String)cbContabil.getSelectedItem());
-                    liberar = true;
+                else{
+                    List<String> nome = new ArrayList<>();
+                    boolean liberar = false;
+                    if(!cbComercial.getSelectedItem().equals("")){
+                        nome.add((String)cbComercial.getSelectedItem());
+                        liberar = true;
+                    }
+                    if(!cbContabil.getSelectedItem().equals("")){
+                        nome.add((String)cbContabil.getSelectedItem());
+                        liberar = true;
+                    }
+                    if(!cbContratos.getSelectedItem().equals("")){
+                        nome.add((String)cbContratos.getSelectedItem());
+                        liberar = true;
+                    }
+                    if(!cbFisc.getSelectedItem().equals("")){
+                        nome.add((String)cbFisc.getSelectedItem());
+                        liberar = true;
+                    }
+                    if(!cbDP.getSelectedItem().equals("")){
+                        nome.add((String)cbDP.getSelectedItem());
+                        liberar = true;
+                    }
+                    if(!cbReg.getSelectedItem().equals("")){
+                        nome.add((String)cbReg.getSelectedItem());
+                        liberar = true;
+                    }
+                    if(liberar==true){
+                        Relatorios relatorio = new Relatorios(abrir, "Geral", nome);
+                        jDesktopPane1.removeAll();
+                        ((BasicInternalFrameUI)relatorio.getUI()).setNorthPane(null);
+                        jDesktopPane1.add(relatorio);
+                        relatorio.setVisible(true);
+                    }
+                    else
+                        JOptionPane.showMessageDialog(null, "Para enviar cobrança selecione ao menos 1(Um) destinatário");
                 }
-                if(!cbContratos.getSelectedItem().equals("")){
-                    nome.add((String)cbContratos.getSelectedItem());
-                    liberar = true;
-                }
-                if(!cbFisc.getSelectedItem().equals("")){
-                    nome.add((String)cbFisc.getSelectedItem());
-                    liberar = true;
-                }
-                if(!cbDP.getSelectedItem().equals("")){
-                    nome.add((String)cbDP.getSelectedItem());
-                    liberar = true;
-                }
-                if(!cbReg.getSelectedItem().equals("")){
-                    nome.add((String)cbReg.getSelectedItem());
-                    liberar = true;
-                }
-                if(liberar==true){
-                    Relatorios relatorio = new Relatorios(abrir, "Geral", nome);
-                    jDesktopPane1.removeAll();
-                    ((BasicInternalFrameUI)relatorio.getUI()).setNorthPane(null);
-                    jDesktopPane1.add(relatorio);
-                    relatorio.setVisible(true);
-                }
-                else
-                    JOptionPane.showMessageDialog(null, "Para enviar cobrança selecione ao menos 1(Um) destinatário");
             }
             else{
                 List <String> nova = new ArrayList<>();
@@ -931,6 +947,16 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                     ((JLabel)panel.getComponent(i)).setBackground(Color.red);
                 }
             }
+        }
+    }
+    /*contar quantas pendencias existem, se o destinatario foi marcado e nao existe pendencias, vai retornar false, 
+    *o que fará com que o usuario desmarque o destinatario de determinado departamento
+    */
+    public void verificarPendenciaDestinatario(JLabel lb1,JLabel lb2,JComboBox combobox, String departamento){
+        if(lb1.getText().equals("0") && lb2.getText().equals("0") && !combobox.getSelectedItem().equals("")){
+            builder.append(departamento);
+            builder.append("\n");
+            continuar=false;
         }
     }
 }
