@@ -23,6 +23,12 @@ import br.com.prolink.usuario.*;;
 import br.com.prolink.login.*;
 import br.com.prolink.recepcao.*;
 import br.com.prolink.relatorios.RelatCadastro;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -50,8 +56,41 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         " de "+mostrar_data.ano);
         timer1.start();
         
+        Tempo();
     }
+    private void Tempo(){
+        VerListagem ver = new VerListagem();
+        Thread t = new Thread(ver);
+        t.start();
+    }
+    public class VerListagem implements Runnable{
 
+        @Override
+        public void run() {
+            try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+        }
+        Connection con = new ConexaoStatement().getConnetion();
+        String sql = "select * from documentos_recebidos where Para_Quem='"+Login.usuario+"' and Recebido='N'";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                recepcao_confirmar();
+            }    
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        try{
+            if(con!=null) con.close();
+        }catch(SQLException e){
+        }
+        }
+        
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

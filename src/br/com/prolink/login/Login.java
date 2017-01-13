@@ -36,9 +36,8 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         
         barra.setVisible(false);
-        txtNome.setText(System.getProperty("user.name"));
+        txtNome.setText(System.getProperty("user.name").replace(".", " "));
         lbVersao.setText(versao.getVersao());
-        
     }
      public Connection getCon(){
        
@@ -283,7 +282,7 @@ public class Login extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
         cont++;
         barra.setValue(cont);
-        if(cont==100){
+        if(cont==50){
             tempo.stop();
             esconder();
             TelaPrincipal tela = new TelaPrincipal();
@@ -307,13 +306,13 @@ public class Login extends javax.swing.JFrame {
      {
          getCon();
          if(con!=null){
-            if (conta <= 2){    
+            if (conta < 2){    
                 try{      
                     String sql = "select * from login Where Usuario like ?"
                             +" and Senha like ?";
                     PreparedStatement ps = con.prepareStatement(sql);
                     ps.setString(1, txtNome.getText());
-                    ps.setString(2, String.valueOf(txtSenha.getPassword()));
+                    ps.setString(2, new String(txtSenha.getPassword()));
                     ResultSet rs = ps.executeQuery();
                     if (rs.first()){
                         barra.setVisible(true);
@@ -332,14 +331,17 @@ public class Login extends javax.swing.JFrame {
                     }
                     else{
                      JOptionPane.showMessageDialog(null, "Senha ou Usuario incorreto(s)!");
-                     cont++;
+                     txtSenha.setText("");
+                     conta++;
                     }
                 }catch(SQLException erro){
-                    JOptionPane.showMessageDialog(null, "Falha  ao tentar entrar no sistema" +erro);
+                    JOptionPane.showMessageDialog(null, "Falha  ao tentar entrar no sistema \n" +erro);
                 }
             }
-            if(conta==3){
-                JOptionPane.showMessageDialog(null, "Numero de tentativas excedeu o limite!");
+            else if(conta==2){
+                JOptionPane.showMessageDialog(null, "Senha ou Usuario incorreto(s)!");
+                JOptionPane.showMessageDialog(null, "Numero de tentativas excedeu o limite! Saindo... ");
+                System.exit(0);
             }
          }else
              JOptionPane.showMessageDialog(null, "Falha ao tentar comunicar com o banco de dados!");

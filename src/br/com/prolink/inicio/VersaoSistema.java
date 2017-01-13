@@ -6,8 +6,8 @@ package br.com.prolink.inicio;
  */
 public class VersaoSistema {
     
-    private String versaoSistema="2.1.42";
-    private String baseDados= "2.0.5";
+    private final String versaoSistema="2.1.43";
+    private final String baseDados= "2.0.5";
     /*
     Historico de versões
     2.0 - Projeto entregue
@@ -17,14 +17,12 @@ public class VersaoSistema {
     2.1.3 - Correção na tela Documentos Enviados
     2.1.4 - Correção de erros nas telas internas de Documentos Enviados
     2.1.6 - Aplicando cores na Listagem
-    2.1.15- Graficos em Documentos Recebidos e Confirmação, 
-    Nova Tela de Encaminhamento + Telas Interna Encaminhar e Contestar
+    2.1.15- Graficos em Documentos Recebidos e Confirmação,Nova Tela de Encaminhamento + Telas Interna Encaminhar e Contestar
     2.1.16 - Correção na tela ativador
     2.1.32 - Correção em telas Documentos Enviados +16 Telas
     2.1.33 - Alterações no trabalho com alertas em Recepcao de Documentos 
     prevenção no erro do servidor de e-mail
-    
-    2.1.34 - Criação da coluna AndamentoDocumentos em cadastrodeprocesso,
+    2.1.34 - Criação da coluna AndamentoDocumentos em cadastrodeprocesso
     Habilitação da função atualizar status
     2.1.35 - Inserir nova coluna no ativador AndamentoDocumentos
     2.1.36 - Habilitando função desativar cliente em Cadastro de Cliente
@@ -34,7 +32,7 @@ public class VersaoSistema {
     2.1.40 - Trava na tela de relatorios que inabilita envio de documentos que não estão pendentes
     2.1.41 - Inserido JDialog com calendario em Documentos/Internas/Form Modelo solicitado pela Monary
     2.1.42 - Trocando Calendario com.toedter.calendar.JCalendar para com.towel.swing.calendar.CalendarView;
-    
+    2.1.43 - Inserido filtros na tela de cadastro de processos, executar listagem ao abrir menu,melhorado design das tabelas Listagem e Recepção
     2.1.44 - Novas telas para Relatorios
     
     Relatorios em Documentos e Documentos Enviados (array de objetos)
@@ -50,7 +48,6 @@ public class VersaoSistema {
     
     
     public String getVersao(){
-    
         return versaoSistema;
     }
     public String getVersaoBanco(){

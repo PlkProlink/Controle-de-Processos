@@ -17,9 +17,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -103,8 +106,9 @@ public class Listagem extends javax.swing.JFrame {
         situação = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbLista =     tbLista = new javax.swing.JTable() {
-            @Override
+        tbLista =     tbLista = new javax.swing.JTable();
+        {
+            /*@Override
             public Component prepareRenderer (TableCellRenderer renderer, int row, int column) {
                 Component component = super.prepareRenderer(renderer, row, column);
                 //component.setBackground(Color.ORANGE); //muda cor para toda a tabela
@@ -123,11 +127,11 @@ public class Listagem extends javax.swing.JFrame {
                     //muda as cores conforme se cliente é ativo ou não
                     //boolean ativo = (boolean) getModel().getValueAt(linha, 3);
                     //if (ativo == true)
-                    //	component.setBackground(Color.CYAN);          		
+                    //	component.setBackground(Color.CYAN);
                 }
 
                 return component;
-            }
+            }*/
         };
         jPanel2 = new javax.swing.JPanel();
         Usuario = new javax.swing.JRadioButton();
@@ -196,7 +200,7 @@ public class Listagem extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         tbLista.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        tbLista.setForeground(new java.awt.Color(255, 255, 255));
+        tbLista.setForeground(new java.awt.Color(0, 0, 0));
         tbLista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -220,6 +224,10 @@ public class Listagem extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbLista.setRowHeight(22);
+        TableCellRenderer tcr = new Colorir();
+        TableColumn column = tbLista.getColumnModel().getColumn(11);
+        column.setCellRenderer(tcr);
         tbLista.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbListaMouseClicked(evt);
@@ -382,7 +390,7 @@ public class Listagem extends javax.swing.JFrame {
                                 .addComponent(jRadioButton7)
                                 .addGap(26, 26, 26)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                                 .addComponent(txtData2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -419,7 +427,7 @@ public class Listagem extends javax.swing.JFrame {
                     .addComponent(txtData2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(Geral, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(btRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1134,7 +1142,12 @@ public class Listagem extends javax.swing.JFrame {
             tbLista.setValueAt(tb.getDepartamento(), i, 8);
             tbLista.setValueAt(tb.getQuemrecebeu(), i, 9);
             tbLista.setValueAt(tb.getObservacao(), i, 10);
-            tbLista.setValueAt(tb.getRecebido(), i, 11);
+            String recebido = "";
+            if("N".equals(tb.getRecebido()))
+                recebido = "Não";
+            else
+                recebido = "Sim";
+            tbLista.setValueAt(recebido, i, 11);
             i++;
         }
         ConexaoStatement.fecharConexao(con);
@@ -1156,6 +1169,7 @@ private void bloquear_tela() {
         if(jPanel3.getComponent(i) instanceof JTextArea)
             ((JTextArea)jPanel3.getComponent(i)).setEnabled(false);
     }
+    txtHistorico.setEditable(false);
 }
 public static void limpar_tela(){
     
@@ -1170,10 +1184,10 @@ public static void limpar_tela(){
 }
 private void bloqueia_data(){
     
-    for(int i=0; i<jPanel2.getComponentCount();i++)
-        if(jPanel2.getComponent(i) instanceof JFormattedTextField){
-            ((JFormattedTextField)jPanel2.getComponent(i)).setEditable(false);
-            ((JFormattedTextField)jPanel2.getComponent(i)).setBackground(Color.lightGray);
+    for(int j=0; j<jPanel2.getComponentCount();j++)
+        if(jPanel2.getComponent(j) instanceof JFormattedTextField){
+            ((JFormattedTextField)jPanel2.getComponent(j)).setEditable(false);
+            ((JFormattedTextField)jPanel2.getComponent(j)).setBackground(Color.lightGray);
         }    
     
 //    txtData1.setEditable(false);
@@ -1286,4 +1300,33 @@ private void bloqueia_data(){
     }
 
         
+}
+class Colorir extends JLabel implements TableCellRenderer{
+    public Colorir(){
+        this.setOpaque(true);
+    }
+  
+    public Component getTableCellRendererComponent(
+        JTable table, 
+        Object value, boolean isSelected, boolean hasFocus,
+           int row, int column){
+
+        if(value.toString().equals("Não")){
+          setBackground(Color.RED);	
+        }
+        else{
+          setBackground(Color.GREEN);		
+        }
+        setText(value.toString());
+        setForeground(Color.WHITE);
+        return this;   	
+    }
+  
+  public void validate() {}
+  public void revalidate() {}
+  protected void firePropertyChange(String propertyName,
+     Object oldValue, Object newValue) {}
+  public void firePropertyChange(String propertyName,
+     boolean oldValue, boolean newValue) {}
+
 }

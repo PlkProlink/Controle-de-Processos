@@ -407,6 +407,7 @@
                     <Property name="alignmentY" type="float" value="0.8"/>
                   </Properties>
                   <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cb_departamentoItemStateChanged"/>
                     <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cb_departamentoFocusLost"/>
                   </Events>
                 </Component>
@@ -768,6 +769,7 @@
                             <TitledBorder title="Filtrar:"/>
                           </Border>
                         </Property>
+                        <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
 
                       <Layout>
@@ -1094,9 +1096,9 @@
                   <Color blue="fa" green="fa" red="fa" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                  <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
-                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="TableCellRenderer tcr = new ColorirJTable();&#xa;    TableColumn column = jTable.getColumnModel().getColumn(9);&#xa;    column.setCellRenderer(tcr);">
                   <Table columnCount="10" rowCount="0">
                     <Column editable="false" title="Protocolo" type="java.lang.Object"/>
                     <Column editable="false" title="Data" type="java.lang.Object"/>
@@ -1164,6 +1166,7 @@
                     </Column>
                   </TableColumnModel>
                 </Property>
+                <Property name="rowHeight" type="int" value="22"/>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
@@ -1172,7 +1175,7 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableMouseClicked"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value=" jTable = new javax.swing.JTable() {&#xd;&#xa;            @Override&#xd;&#xa;            public Component prepareRenderer (TableCellRenderer renderer, int row, int column) {&#xd;&#xa;                Component component = super.prepareRenderer(renderer, row, column);&#xd;&#xa;                //component.setBackground(Color.ORANGE); //muda cor para toda a tabela&#xd;&#xa;                //component.setBackground(row % 2 == 0 ? Color.ORANGE : Color.WHITE);&#xd;&#xa;                if (!isRowSelected(row)) {&#xd;&#xa;                &#x9;component.setBackground(getBackground());&#xd;&#xa;                &#x9;int linha = convertRowIndexToModel(row);&#xd;&#xa;                &#x9;&#xd;&#xa;                &#x9;//as 3 linhas abaixo mudam a cor de todos os que sua idade seja maior ou igual a 30 anos&#xd;&#xa;                &#x9;String valor = (String) getModel().getValueAt(linha, 9);&#xd;&#xa;                &#x9;if (valor.equals(&quot;N&quot;))&#xd;&#xa;                            component.setBackground(Color.RED);&#xd;&#xa;                  else if(valor.equals(&quot;S&quot;))&#xd;&#xa;                            component.setBackground(Color.BLUE);&#xd;&#xa;                &#x9;else&#xd;&#xa;                            component.setBackground(Color.ORANGE);&#xd;&#xa;                &#x9;//muda as cores conforme se cliente &#xe9; ativo ou n&#xe3;o&#xd;&#xa;                &#x9;//boolean ativo = (boolean) getModel().getValueAt(linha, 3);&#xd;&#xa;                &#x9;//if (ativo == true)&#xd;&#xa;                &#x9;//&#x9;component.setBackground(Color.CYAN);          &#x9;&#x9;&#xd;&#xa;                }&#xd;&#xa;                    &#xd;&#xa;                return component;&#xd;&#xa;            }&#xd;&#xa;        };"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value=" jTable = new javax.swing.JTable(); {&#xa;    /*@Override&#xa;    public Component prepareRenderer (TableCellRenderer renderer, int row, int column) {&#xa;        Component component = super.prepareRenderer(renderer, row, column);&#xa;        //component.setBackground(Color.ORANGE); //muda cor para toda a tabela&#xa;        //component.setBackground(row % 2 == 0 ? Color.ORANGE : Color.WHITE);&#xa;        if (!isRowSelected(row)) {&#xa;            component.setBackground(getBackground());&#xa;            int linha = convertRowIndexToModel(row);&#xa;&#xa;            //as 3 linhas abaixo mudam a cor de todos os que sua idade seja maior ou igual a 30 anos&#xa;            String valor = (String) getModel().getValueAt(linha, 9);&#xa;            if (valor.equals(&quot;N&quot;))&#xa;            component.setBackground(Color.RED);&#xa;            else if(valor.equals(&quot;S&quot;))&#xa;            component.setBackground(Color.BLUE);&#xa;            else&#xa;            component.setBackground(Color.ORANGE);&#xa;            //muda as cores conforme se cliente &#xe9; ativo ou n&#xe3;o&#xa;            //boolean ativo = (boolean) getModel().getValueAt(linha, 3);&#xa;            //if (ativo == true)&#xa;            //&#x9;component.setBackground(Color.CYAN);&#xa;        }&#xa;&#xa;        return component;&#xa;    }*/&#xa;&#xa;}"/>
               </AuxValues>
             </Component>
           </SubComponents>

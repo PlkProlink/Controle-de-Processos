@@ -16,6 +16,7 @@ import java.util.Date;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -180,8 +181,8 @@ public class ControleRecepcao extends javax.swing.JFrame {
         Protocolo1 = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable =  jTable = new javax.swing.JTable() {
-            @Override
+        jTable =  jTable = new javax.swing.JTable(); {
+            /*@Override
             public Component prepareRenderer (TableCellRenderer renderer, int row, int column) {
                 Component component = super.prepareRenderer(renderer, row, column);
                 //component.setBackground(Color.ORANGE); //muda cor para toda a tabela
@@ -201,11 +202,12 @@ public class ControleRecepcao extends javax.swing.JFrame {
                     //muda as cores conforme se cliente é ativo ou não
                     //boolean ativo = (boolean) getModel().getValueAt(linha, 3);
                     //if (ativo == true)
-                    //	component.setBackground(Color.CYAN);          		
+                    //	component.setBackground(Color.CYAN);
                 }
 
                 return component;
-            }
+            }*/
+
         };
         pnPizza = new javax.swing.JPanel();
         pnTopBad = new javax.swing.JPanel();
@@ -312,6 +314,11 @@ public class ControleRecepcao extends javax.swing.JFrame {
 
         cb_departamento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cb_departamento.setAlignmentY(0.8F);
+        cb_departamento.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_departamentoItemStateChanged(evt);
+            }
+        });
         cb_departamento.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 cb_departamentoFocusLost(evt);
@@ -589,6 +596,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(245, 245, 245));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtrar:"));
+        jPanel3.setOpaque(false);
 
         Usuario1.setBackground(new java.awt.Color(245, 245, 245));
         buttonGroup1.add(Usuario1);
@@ -819,7 +827,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         jLabel1.setText("Controle de Documentos");
 
         jTable.setBackground(new java.awt.Color(250, 250, 250));
-        jTable.setForeground(new java.awt.Color(255, 255, 255));
+        jTable.setForeground(new java.awt.Color(0, 0, 0));
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -836,6 +844,10 @@ public class ControleRecepcao extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        TableCellRenderer tcr = new ColorirJTable();
+        TableColumn column = jTable.getColumnModel().getColumn(9);
+        column.setCellRenderer(tcr);
+        jTable.setRowHeight(22);
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableMouseClicked(evt);
@@ -1246,15 +1258,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
     }//GEN-LAST:event_cb_paraFocusGained
 
     private void cb_departamentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cb_departamentoFocusLost
-        cb_para.removeAllItems();
-        switch ((String) cb_departamento.getSelectedItem()) {
-            case "":
-                setUsuario("");
-                break;
-            default:
-                setUsuario((String) cb_departamento.getSelectedItem());
-                break;
-        }
+        
     }//GEN-LAST:event_cb_departamentoFocusLost
 
     private void txt_nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nomeActionPerformed
@@ -1266,11 +1270,24 @@ public class ControleRecepcao extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_idempresaActionPerformed
 
     private void txtAlertaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAlertaMouseClicked
-        this.comando = "select * from documentos_recebidos where Recebido='C'";
-        preencherTabela(this.comando);
+        if("".equals(txtAlerta.getText())){
+            this.comando = "select * from documentos_recebidos where Recebido='C'";
+            preencherTabela(this.comando);
+        }
     }//GEN-LAST:event_txtAlertaMouseClicked
-    public class pesquisaTransferidos implements Runnable {
 
+    private void cb_departamentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_departamentoItemStateChanged
+        cb_para.removeAllItems();
+        switch ((String) cb_departamento.getSelectedItem()) {
+            case "":
+                setUsuario("");
+                break;
+            default:
+                setUsuario((String) cb_departamento.getSelectedItem());
+                break;
+        }
+    }//GEN-LAST:event_cb_departamentoItemStateChanged
+    public class pesquisaTransferidos implements Runnable {
         @Override
         public void run() {
             try {
@@ -1555,20 +1572,25 @@ public class ControleRecepcao extends javax.swing.JFrame {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if (rs != null) {
-                int i = 0;
+                int j = 0;
                 while (rs.next()) {
                     tb.addRow(new String[1]);
-                    tb.setValueAt(rs.getString("cod"), i, 0);
-                    tb.setValueAt(tratamento(rs.getString("Data_Recebimento")), i, 1);
-                    tb.setValueAt(rs.getString("Hora"), i, 2);
-                    tb.setValueAt(rs.getString("ID"), i, 3);
-                    tb.setValueAt(rs.getString("Empresa"), i, 4);
-                    tb.setValueAt(rs.getString("Historico"), i, 5);
-                    tb.setValueAt(rs.getString("Para_Quem"), i, 6);
-                    tb.setValueAt(rs.getString("Departamento"), i, 7);
-                    tb.setValueAt(rs.getString("Observacao"), i, 8);
-                    tb.setValueAt(rs.getString("Recebido"), i, 9);
-                    i++;
+                    tb.setValueAt(rs.getString("cod"), j, 0);
+                    tb.setValueAt(tratamento(rs.getString("Data_Recebimento")), j, 1);
+                    tb.setValueAt(rs.getString("Hora"), j, 2);
+                    tb.setValueAt(rs.getString("ID"), j, 3);
+                    tb.setValueAt(rs.getString("Empresa"), j, 4);
+                    tb.setValueAt(rs.getString("Historico"), j, 5);
+                    tb.setValueAt(rs.getString("Para_Quem"), j, 6);
+                    tb.setValueAt(rs.getString("Departamento"), j, 7);
+                    tb.setValueAt(rs.getString("Observacao"), j, 8);
+                    String foiRecebido = "";
+                    if("N".equals(rs.getString("Recebido")))
+                        foiRecebido="Não";
+                    else
+                        foiRecebido="Sim";
+                    tb.setValueAt(foiRecebido, j, 9);
+                    j++;
                 }
             }
             con.close();
@@ -1579,7 +1601,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
 
     public void limpar_tabela() {
         DefaultTableModel tbm = (DefaultTableModel) jTable.getModel();
-        for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
+        for (int j = tbm.getRowCount() - 1; j >= 0; j--) {
             tbm.removeRow(i);
         }
     }
@@ -1774,8 +1796,8 @@ public class ControleRecepcao extends javax.swing.JFrame {
 
     private void setEnabledAlterar(boolean status) {
         JButton[] botoes = {bt_novo, btExcluir, btSair, btEnviarAlerta};
-        for (int i = 0; i < botoes.length; i++) {
-            botoes[i].setEnabled(status);
+        for (JButton botoe : botoes) {
+            botoe.setEnabled(status);
         }
         if (status == false) {
             btnCancelar.setEnabled(true);
@@ -1791,23 +1813,22 @@ public class ControleRecepcao extends javax.swing.JFrame {
 
     private void setUsuario(String departamento) {
         String sql, dep = "";
-        if (!departamento.equals(null) && !departamento.equals("")) {
-            dep = "Departamento='" + departamento + "' and ";
-        }
-        sql = "select Usuario from login where " + dep + "Ativo=1 order by Usuario";
-        try {
-            PreparedStatement ps = getCon().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            if (rs != null) {
-                while (rs.next()) {
-                    cb_para.addItem(rs.getString("Usuario"));
+        if (!departamento.equals("")) 
+                dep = "Departamento='" + departamento + "' and ";
+            sql = "select Usuario from login where " + dep + "Ativo=1 order by Usuario";
+            try {
+                PreparedStatement ps = getCon().prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        cb_para.addItem(rs.getString("Usuario"));
+                    }
                 }
+                con.close();
+
+            } catch (SQLException erro) {
+
             }
-            con.close();
-
-        } catch (SQLException erro) {
-
-        }
     }
 
     private void setDepartamento(String usuario) {
@@ -1861,7 +1882,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
     }
 
     private String trataHora(String hora) {
-        if (hora.length() >= 6 && !hora.equals(null)) {
+        if (hora.length() >= 6) {
             String novaHora = hora.substring(0, 2);
             String minuto = hora.substring(3, 5);
             return novaHora + ":" + minuto;
@@ -1938,9 +1959,9 @@ public class ControleRecepcao extends javax.swing.JFrame {
         String mensagem = html.Converter(txt_resumo.getText());
         String a = (String) cb_para.getSelectedItem();
         String aux = "Foi lançado na recep&ccedil;&atilde;o,";
-        String email = (buscarEmail(a));
+        String novoemail = (buscarEmail(a));
         try{
-            if(aviso.enviaAlerta(aux, txt_hora.getText(), nomeCliente, txt_idempresa.getText(), email, a, mensagem)==true)
+            if(aviso.enviaAlerta(aux, txt_hora.getText(), nomeCliente, txt_idempresa.getText(), novoemail, a, mensagem)==true)
                 return true;
         }catch(Exception e){
             changeRecebido();
@@ -1989,3 +2010,33 @@ public class ControleRecepcao extends javax.swing.JFrame {
         }
     }
 }
+class ColorirJTable extends JLabel implements TableCellRenderer{
+    public ColorirJTable(){
+        this.setOpaque(true);
+    }
+  
+    public Component getTableCellRendererComponent(
+        JTable table, 
+        Object value, boolean isSelected, boolean hasFocus,
+           int row, int column){
+
+        if(value.toString().equals("Não")){
+          setBackground(Color.RED);	
+        }
+        else{
+          setBackground(Color.GREEN);		
+        }
+        setForeground(Color.WHITE);
+        setText(value.toString());
+        return this;   	
+    }
+  
+  public void validate() {}
+  public void revalidate() {}
+  protected void firePropertyChange(String propertyName,
+     Object oldValue, Object newValue) {}
+  public void firePropertyChange(String propertyName,
+     boolean oldValue, boolean newValue) {}
+
+}
+

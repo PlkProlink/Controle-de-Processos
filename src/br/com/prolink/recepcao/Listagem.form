@@ -108,7 +108,7 @@
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                  <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="12" rowCount="0">
@@ -190,6 +190,7 @@
                     </Column>
                   </TableColumnModel>
                 </Property>
+                <Property name="rowHeight" type="int" value="22" postCode="TableCellRenderer tcr = new Colorir();&#xa;    TableColumn column = tbLista.getColumnModel().getColumn(11);&#xa;    column.setCellRenderer(tcr);"/>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
@@ -198,7 +199,7 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbListaMouseClicked"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="    tbLista = new javax.swing.JTable() {&#xd;&#xa;            @Override&#xd;&#xa;            public Component prepareRenderer (TableCellRenderer renderer, int row, int column) {&#xd;&#xa;                Component component = super.prepareRenderer(renderer, row, column);&#xd;&#xa;                //component.setBackground(Color.ORANGE); //muda cor para toda a tabela&#xd;&#xa;                //component.setBackground(row % 2 == 0 ? Color.ORANGE : Color.WHITE);&#xd;&#xa;                if (!isRowSelected(row)) {&#xd;&#xa;                &#x9;component.setBackground(getBackground());&#xd;&#xa;                &#x9;int linha = convertRowIndexToModel(row);&#xd;&#xa;                &#x9;&#xd;&#xa;                &#x9;//as 3 linhas abaixo mudam a cor de todos os que sua idade seja maior ou igual a 30 anos&#xd;&#xa;                &#x9;String valor = (String) getModel().getValueAt(linha, 11);&#xd;&#xa;                &#x9;if (valor.equals(&quot;N&quot;))&#xd;&#xa;                            component.setBackground(Color.RED);&#xd;&#xa;                        else&#xd;&#xa;                            component.setBackground(Color.BLUE);&#xd;&#xa;                &#x9;&#xd;&#xa;                &#x9;//muda as cores conforme se cliente &#xe9; ativo ou n&#xe3;o&#xd;&#xa;                &#x9;//boolean ativo = (boolean) getModel().getValueAt(linha, 3);&#xd;&#xa;                &#x9;//if (ativo == true)&#xd;&#xa;                &#x9;//&#x9;component.setBackground(Color.CYAN);          &#x9;&#x9;&#xd;&#xa;                }&#xd;&#xa;                    &#xd;&#xa;                return component;&#xd;&#xa;            }&#xd;&#xa;        };"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="    tbLista = new javax.swing.JTable();&#xa;{&#xa;    /*@Override&#xa;    public Component prepareRenderer (TableCellRenderer renderer, int row, int column) {&#xa;        Component component = super.prepareRenderer(renderer, row, column);&#xa;        //component.setBackground(Color.ORANGE); //muda cor para toda a tabela&#xa;        //component.setBackground(row % 2 == 0 ? Color.ORANGE : Color.WHITE);&#xa;        if (!isRowSelected(row)) {&#xa;            component.setBackground(getBackground());&#xa;            int linha = convertRowIndexToModel(row);&#xa;&#xa;            //as 3 linhas abaixo mudam a cor de todos os que sua idade seja maior ou igual a 30 anos&#xa;            String valor = (String) getModel().getValueAt(linha, 11);&#xa;            if (valor.equals(&quot;N&quot;))&#xa;            component.setBackground(Color.RED);&#xa;            else&#xa;            component.setBackground(Color.BLUE);&#xa;&#xa;            //muda as cores conforme se cliente &#xe9; ativo ou n&#xe3;o&#xa;            //boolean ativo = (boolean) getModel().getValueAt(linha, 3);&#xa;            //if (ativo == true)&#xa;            //&#x9;component.setBackground(Color.CYAN);&#xa;        }&#xa;&#xa;        return component;&#xa;    }*/&#xa;}"/>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
               </AuxValues>
             </Component>
@@ -253,7 +254,7 @@
                                       <Component id="jRadioButton7" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                       <Component id="jLabel3" min="-2" pref="23" max="-2" attributes="0"/>
-                                      <EmptySpace pref="8" max="32767" attributes="0"/>
+                                      <EmptySpace pref="20" max="32767" attributes="0"/>
                                       <Component id="txtData2" min="-2" pref="72" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
