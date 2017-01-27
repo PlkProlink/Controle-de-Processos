@@ -13,7 +13,6 @@ import javax.swing.*;
 public class Conexao
 {
     final public static String driver = "com.mysql.jdbc.Driver";
-    //public static String url="jdbc:mysql://200.207.224.87:3306/clientev1";
     public static String url="jdbc:mysql://192.168.0.202:3306/clientev1";
     final public static String usuario = "prolink";
     final public static String senha = "77i#EU&K";

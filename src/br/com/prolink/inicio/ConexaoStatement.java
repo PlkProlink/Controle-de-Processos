@@ -19,7 +19,6 @@ public class ConexaoStatement{
 //vamos abrir a conexao
     
     static String driver = "com.mysql.jdbc.Driver";
-    //private static String url="jdbc:mysql://200.207.224.87:3306/clientev1";
     private static String url="jdbc:mysql://192.168.0.202:3306/clientev1";
     private static String user = "prolink";
     private static String password = "77i#EU&K"; 
