@@ -19,6 +19,9 @@ import javax.swing.table.DefaultTableModel;
 import br.com.prolink.inicio.*;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -36,6 +39,8 @@ public class CadastroClientes extends javax.swing.JFrame {
  
     Conexao con_cliente = new Conexao();
     Conexao con_classificacao= new Conexao();
+    
+    ClientesProlinkView cliPlk;
     
     String codigo_backup, apelido_backup, nome_backup, classificacao_backup, data_backup, datainicio_backup, datafim_backup, backup_situacao;  
     
@@ -213,6 +218,9 @@ public class CadastroClientes extends javax.swing.JFrame {
             }
         });
         txBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txBuscarKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txBuscarKeyReleased(evt);
             }
@@ -809,9 +817,41 @@ public class CadastroClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void btImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImportActionPerformed
-        ClientesProlinkView cliPlk = new ClientesProlinkView(this, false);
+        cliPlk = new ClientesProlinkView(this, false);
         cliPlk.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         cliPlk.setVisible(true);
+        cliPlk.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                con_cliente.conecta();
+                preencher_jtable();
+                con_cliente.desconecta();
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
     }//GEN-LAST:event_btImportActionPerformed
 
     private void txBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txBuscarActionPerformed
@@ -838,7 +878,7 @@ public class CadastroClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_cbCadastradoPorItemStateChanged
 
     private void txBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txBuscarKeyReleased
-        filtrar();    
+        
     }//GEN-LAST:event_txBuscarKeyReleased
 
     private void rbAtivadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbAtivadaMouseClicked
@@ -848,6 +888,12 @@ public class CadastroClientes extends javax.swing.JFrame {
     private void rbFinalizadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbFinalizadaMouseClicked
         filtrar();
     }//GEN-LAST:event_rbFinalizadaMouseClicked
+
+    private void txBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txBuscarKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            filtrar();
+        }
+    }//GEN-LAST:event_txBuscarKeyPressed
 
     /**
      *
@@ -1014,7 +1060,8 @@ catch (SQLException erro){
         con_cliente.executeSQL("select * from cadastrodeprocesso order by codNumerodoprocesso");
         
         DefaultTableModel modelo = (DefaultTableModel)tb_clientes.getModel();
-        //modelo.setNumRows(0);
+        while(modelo.getRowCount()>0)
+            modelo.removeRow(0);
         try
         {
             while (con_cliente.resultset.next())

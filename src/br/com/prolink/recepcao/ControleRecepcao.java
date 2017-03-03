@@ -72,7 +72,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         initComponents();
         criaGraficos();
         
-        Thread();
+        //Thread();
 
         setEditable(jPrincipal, false);
 
@@ -552,7 +552,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
                     .addComponent(jpAux, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addComponent(txtAlerta, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cadastro", jPrincipal);
@@ -991,13 +991,13 @@ public class ControleRecepcao extends javax.swing.JFrame {
                             setEnabledNovo(true);
                             setEditable(jPrincipal, false);
                             JOptionPane.showMessageDialog(null, "Sucesso!");
-                            preencherTabela("select * from documentos_recebidos where Recebido='N' order by cod desc");
                             criaGraficos();
                         }
                         else
                             JOptionPane.showMessageDialog(null, "Não consegui enviar o seu e-mail, talvez por problema no servidor,"
                                     + "\nMas o seu lançamento esta salvo; \naguarde um pouco e tente enviar o alerta mais tarde!");
                         }
+                        preencherTabela("select * from documentos_recebidos where Recebido='N' order by cod desc");
                 }
                 con.close();
             } catch (SQLException | ParseException erro) {
@@ -1041,12 +1041,12 @@ public class ControleRecepcao extends javax.swing.JFrame {
                     int escolha = JOptionPane.showConfirmDialog(null, aviso, "Envio de Alerta!", JOptionPane.YES_NO_OPTION);
                     if(escolha==JOptionPane.YES_OPTION){
                         if(enviarEmail()){
-                            preencherTabela("select * from documentos_recebidos where Recebido='N' order by cod desc");
-                            criaGraficos();
                             Thread.interrupted();
                             Thread();
                         }
                     }
+                    preencherTabela("select * from documentos_recebidos where Recebido='N' order by cod desc");
+                    criaGraficos();        
                 }
                 setEnabledAlterar(true);
                 con.close();
@@ -1056,6 +1056,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         }
         setEnabledNovo(true);
         setEditable(jPrincipal, false);
+        salvarCancelar();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
@@ -1068,10 +1069,9 @@ public class ControleRecepcao extends javax.swing.JFrame {
         limparTela(jPrincipal);
         limparTela(jpAux);
         limparTela(jpObs);
-
         setEnabledNovo(false);
-
         setHora();
+        novoEditar();
     }//GEN-LAST:event_bt_novoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -1079,6 +1079,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         setEditable(jPrincipal, false);
         setEnabledAlterar(true);
         setEnabledNovo(true);
+        salvarCancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
@@ -1115,6 +1116,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         if (!txt_codigo.getText().equals("")) {
             setEditable(jPrincipal, true);
             setEnabledAlterar(false);
+            novoEditar();
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um registro para alteração!");
         }
@@ -1566,15 +1568,16 @@ public class ControleRecepcao extends javax.swing.JFrame {
     }
     
     private void preencherTabela(String sql) {
-        DefaultTableModel tb = (DefaultTableModel) jTable.getModel();
-        limpar_tabela();
+        DefaultTableModel tb = (DefaultTableModel)jTable.getModel();
+        while(tb.getRowCount()>0)
+            tb.removeRow(0);
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if (rs != null) {
                 int j = 0;
                 while (rs.next()) {
-                    tb.addRow(new String[1]);
+                    tb.addRow(new Object[1]);
                     tb.setValueAt(rs.getString("cod"), j, 0);
                     tb.setValueAt(tratamento(rs.getString("Data_Recebimento")), j, 1);
                     tb.setValueAt(rs.getString("Hora"), j, 2);
@@ -1584,7 +1587,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
                     tb.setValueAt(rs.getString("Para_Quem"), j, 6);
                     tb.setValueAt(rs.getString("Departamento"), j, 7);
                     tb.setValueAt(rs.getString("Observacao"), j, 8);
-                    String foiRecebido = "";
+                    String foiRecebido;
                     if("N".equals(rs.getString("Recebido")))
                         foiRecebido="Não";
                     else
@@ -1940,7 +1943,6 @@ public class ControleRecepcao extends javax.swing.JFrame {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setInt(1, codigo);
             if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
                 limparTela(jPrincipal);
                 limparTela(jpAux);
                 limparTela(jpObs);
@@ -1958,7 +1960,7 @@ public class ControleRecepcao extends javax.swing.JFrame {
         String nomeCliente = html.Converter(txt_nome.getText());
         String mensagem = html.Converter(txt_resumo.getText());
         String a = (String) cb_para.getSelectedItem();
-        String aux = "Foi lançado na recep&ccedil;&atilde;o,";
+        String aux = "Foi lan&ccedil;ado na recep&ccedil;&atilde;o,";
         String novoemail = (buscarEmail(a));
         try{
             if(aviso.enviaAlerta(aux, txt_hora.getText(), nomeCliente, txt_idempresa.getText(), novoemail, a, mensagem)==true)
@@ -2009,34 +2011,51 @@ public class ControleRecepcao extends javax.swing.JFrame {
             return false;
         }
     }
+    public void salvarCancelar(){
+        btnSalvar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        if(!txt_codigo.getText().equals("")){    
+            btExcluir.setEnabled(true);
+            btEnviarAlerta.setEnabled(true);
+        }
+    }
+    public void novoEditar(){
+        btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btEnviarAlerta.setEnabled(false);
+    }
+
 }
 class ColorirJTable extends JLabel implements TableCellRenderer{
     public ColorirJTable(){
         this.setOpaque(true);
     }
-  
+    @Override
     public Component getTableCellRendererComponent(
         JTable table, 
         Object value, boolean isSelected, boolean hasFocus,
            int row, int column){
 
-        if(value.toString().equals("Não")){
+        if(value!=null && value.toString().equalsIgnoreCase("Não")){
           setBackground(Color.RED);	
         }
         else{
           setBackground(Color.GREEN);		
         }
         setForeground(Color.WHITE);
-        setText(value.toString());
+        setText(value!=null?value.toString():"");
         return this;   	
     }
   
+    @Override
   public void validate() {}
+    @Override
   public void revalidate() {}
+    @Override
   protected void firePropertyChange(String propertyName,
      Object oldValue, Object newValue) {}
+    @Override
   public void firePropertyChange(String propertyName,
      boolean oldValue, boolean newValue) {}
-
 }
 

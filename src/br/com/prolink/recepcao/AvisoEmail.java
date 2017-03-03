@@ -22,11 +22,11 @@ public class AvisoEmail {
 //    email.setStartTLSRequired(true);
 //    email.setSSLOnConnect(true);
     
-    email.setAuthenticator( new DefaultAuthenticator( "documentos@grupoprolink.com.br" ,  "l!nk2016Cont" ) );
+    email.setAuthenticator( new DefaultAuthenticator( "documentos@prolinkcontabil.com.br" ,  "l!nk2016Cont" ) );
     
     try {
-        email.setFrom( "documentos@grupoprolink.com.br" , "Documentos");
-        email.setDebug(true); 
+        email.setFrom( "documentos@prolinkcontabil.com.br" , "Documentos");
+        //email.setDebug(true); 
         email.setSubject( idCliente+" - Oi "+user+", Tem um Novo Documento Aguardando Sua Atenção" );
 
         String idArquivo = email.embed(new File("robot.png"));

@@ -6,7 +6,7 @@ package br.com.prolink.inicio;
  */
 public class VersaoSistema {
     
-    private final String versaoSistema="2.1.44";
+    private final String versaoSistema="2.1.45";
     private final String baseDados= "2.0.5";
     /*
     Historico de versões
@@ -34,7 +34,7 @@ public class VersaoSistema {
     2.1.42 - Trocando Calendario com.toedter.calendar.JCalendar para com.towel.swing.calendar.CalendarView;
     2.1.43 - Inserido filtros na tela de cadastro de processos, executar listagem ao abrir menu,melhorado design das tabelas Listagem e Recepção
     2.1.44 - com.towel.swing.calendar.CalendarView deu problema, retomando para com.toedter.calendar.JCalendar
-    
+    2.1.45 - Corrigido bug na tela ControleRecepcao
     Relatorios em Documentos e Documentos Enviados (array de objetos)
     
     Orientação a objetos em telas internas de Documentos e Documentos Enviados

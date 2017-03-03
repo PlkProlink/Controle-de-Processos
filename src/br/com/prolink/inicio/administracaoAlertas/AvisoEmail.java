@@ -3,18 +3,13 @@ package br.com.prolink.inicio.administracaoAlertas;
 
 import br.com.prolink.login.Login;
 import java.io.UnsupportedEncodingException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
-import sun.nio.cs.ext.ISO_8859_11;
 
 public class AvisoEmail {
 
-    public static void main(String[] args){
-    }
     public boolean enviaAlerta(String conta, String usuario, String departamento, String tabelaContador, String tabelaDepartamento, String tabelaDocumentos, int total){
     
     HtmlEmail email = new HtmlEmail();
@@ -27,11 +22,11 @@ public class AvisoEmail {
 //    email.setStartTLSRequired(true);
 //    email.setSSLOnConnect(true);
     
-    email.setAuthenticator( new DefaultAuthenticator( "documentos@grupoprolink.com.br" ,  "l!nk2016Cont" ) );
+    email.setAuthenticator( new DefaultAuthenticator( "documentos@prolinkcontabil.com.br" ,  "l!nk2016Cont" ) );
     
     try {
-        email.setFrom( "documentos@grupoprolink.com.br" , "Controle de Processsos - Implantação");
-        email.setDebug(true); 
+        email.setFrom( "documentos@prolinkcontabil.com.br" , "Controle de Processsos - Implantação");
+        //email.setDebug(true); 
         
         String subject = new String(("Prolink - Implantação de Cliente - "+usuario+", estamos aguardando sua interação").getBytes(), "UTF-8");
         
@@ -77,14 +72,16 @@ public class AvisoEmail {
 "		<p><span style=\"color: rgb(169, 169, 169);\">***Todos os direitos reservados a Prolink***</span></p></body>");
         
         email.setHtmlMsg( builder.toString()+"");
-        
         email.addTo(conta);
         email.send();
         
         System.out.println("Sucesso!");
         return true;
     } catch (EmailException e) {
-        JOptionPane.showMessageDialog(null, "Falha ao enviar o email!"+e);
+        JOptionPane.showMessageDialog(null, "Falha ao enviar o email!\n"
+                + "Esse problema ocorre quando a conta de e-mail documentos@prolinkcontabil.com.br esta fora do ar\n "
+                + "nesse caso não há necessidade de chamar o suporte,\n"
+                + "Apenas aguarde alguns minutos e tente novamente mais tarde.\n\n\nDetalhes do erro:"+e);
         return false;
     } catch (UnsupportedEncodingException ex) { 
         JOptionPane.showMessageDialog(null,"Falha ao criar o assunto da mensagem"+ex);
