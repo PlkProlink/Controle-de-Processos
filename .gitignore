@@ -5,6 +5,8 @@ ConnectionFactory.java
 Conexao.java
 ConexaoStatement.java
 SendEmail.java
+EmailView.java
+AvisoEmail.java
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
