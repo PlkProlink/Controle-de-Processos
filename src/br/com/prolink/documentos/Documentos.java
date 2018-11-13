@@ -4,7 +4,7 @@ import br.com.prolink.documentos.internas.*;
 import br.com.prolink.factory.ConexaoStatement;
 import br.com.prolink.model.Processo;
 import br.com.prolink.model.ProcessoLogado;
-import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.config.init.UsuarioLogado;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

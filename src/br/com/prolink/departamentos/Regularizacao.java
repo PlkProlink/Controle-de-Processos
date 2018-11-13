@@ -3,7 +3,7 @@ package br.com.prolink.departamentos;
 import br.com.prolink.factory.Conexao;
 import br.com.prolink.model.Processo;
 import br.com.prolink.model.ProcessoLogado;
-import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.config.init.UsuarioLogado;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.SQLException;

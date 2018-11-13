@@ -15,7 +15,7 @@ import javax.swing.text.MaskFormatter;
 import br.com.prolink.inicio.*;
 import br.com.prolink.model.Processo;
 import br.com.prolink.model.ProcessoLogado;
-import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.config.init.UsuarioLogado;
 
 public class Contratos extends javax.swing.JFrame {
 

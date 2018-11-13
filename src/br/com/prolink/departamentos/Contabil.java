@@ -14,7 +14,7 @@ import javax.swing.text.MaskFormatter;
 
 import br.com.prolink.model.Processo;
 import br.com.prolink.model.ProcessoLogado;
-import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.config.init.UsuarioLogado;
 
 /**
  *

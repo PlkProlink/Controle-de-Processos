@@ -10,18 +10,15 @@ import br.com.prolink.departamentos.Financeiro;
 import br.com.prolink.departamentos.Fiscal;
 import br.com.prolink.departamentos.Regularizacao;
 import br.com.prolink.documentos.Documentos;
-import br.com.prolink.enviodocumentos.DocumentosEnviados;
-import br.com.prolink.inicio.Sobre;
+import br.com.prolink.view.Sobre;
 import br.com.prolink.inicio.administracaoAlertas.AdministradorDePendencias;
-import br.com.prolink.login.TrocadeSenha;
 import br.com.prolink.model.ProcessoLogado;
-import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.config.init.UsuarioLogado;
 import br.com.prolink.protocolos.ProtocoloView;
-import br.com.prolink.recepcao.Listagem;
 import br.com.prolink.relatorios.RelatCadastro;
-import br.com.prolink.usuario.CadastroDepartamento;
-import br.com.prolink.usuario.RelatorioAcessos;
-import br.com.prolink.usuario.CadastroUsuarios;
+import br.com.prolink.view.swings.CadastroDepartamento;
+import br.com.prolink.view.swings.RelatorioAcessos;
+import br.com.prolink.view.swings.CadastroUsuarios;
 import br.com.prolink.view.Ativador;
 import br.com.prolink.view.ProtocoloEntrada;
 import br.com.prolink.view.ProtocoloRecebimento;
@@ -52,6 +49,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.swing.JOptionPane;
 import javax.swing.event.HyperlinkEvent;
 
 public class ControllerMenu implements Initializable {
@@ -65,10 +63,7 @@ public class ControllerMenu implements Initializable {
     CadastroUsuarios cadUsuario;
     CadastroClientes cadClientes;
     CadastroClassificacao classificacao;
-    TrocadeSenha ts;
     CadastroDepartamento cd;
-    Listagem listaDocumentos;
-    DocumentosEnviados docEnv;
     Documentos documentos;
     Sobre sobre;
     RelatCadastro relCliente;
@@ -279,17 +274,7 @@ public class ControllerMenu implements Initializable {
 
     @FXML
     private void documentosEnviados(ActionEvent e) {
-        if (verificaAtivacao()) {
-            if (docEnv != null) {
-                docEnv.dispose();
-            }
-            docEnv = new DocumentosEnviados();
-            docEnv.txtCodigo.setText(txProcesso.getText());
-            docEnv.txtNome.setText(txProcessoNome.getText());
-            docEnv.txtID.setText(txApelido.getText());
-            docEnv.txtUsuario.setText(UsuarioLogado.getInstance().getUsuario().getUsuario());
-            docEnv.setVisible(true);
-        }
+        JOptionPane.showMessageDialog(null, "Esse ambiente foi desativado");
     }
 
     @FXML

@@ -5,7 +5,7 @@
  */
 package br.com.prolink.cadastros;
 
-import br.com.prolink.model.LogUsuarioDao;
+import br.com.prolink.modeldao.LogUsuarioDao;
 import java.awt.Component;  
 import javax.swing.table.*;
 import java.sql.*;

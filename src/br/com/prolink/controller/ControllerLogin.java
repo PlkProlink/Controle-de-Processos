@@ -5,11 +5,11 @@
  */
 package br.com.prolink.controller;
 
-import br.com.prolink.model.JavaVersion;
+import br.com.prolink.modeldao.JavaVersion;
 import br.com.prolink.model.StageList;
 import br.com.prolink.model.Usuario;
-import br.com.prolink.model.UsuarioDao;
-import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.modeldao.UsuarioDao;
+import br.com.prolink.config.init.UsuarioLogado;
 import br.com.prolink.model.VersaoSistema;
 import br.com.prolink.view.Login;
 import br.com.prolink.view.Menu;

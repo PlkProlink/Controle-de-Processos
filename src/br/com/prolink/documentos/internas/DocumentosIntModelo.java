@@ -1,12 +1,12 @@
 package br.com.prolink.documentos.internas;
 
 import br.com.prolink.model.LogUsuarioBean;
-import br.com.prolink.model.LogUsuarioDao;
+import br.com.prolink.modeldao.LogUsuarioDao;
 import br.com.prolink.documentos.*;
 import br.com.prolink.factory.ConexaoStatement;
 import br.com.prolink.model.Processo;
 import br.com.prolink.model.ProcessoLogado;
-import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.config.init.UsuarioLogado;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.*;
@@ -1167,7 +1167,6 @@ public void atualizar_acompanhamento_exclusao(Connection con){
     }
 }
 public void atualizaExclusao(){
-    doc.ato();
 }
 public void inicializacao(String campoDocumentos,String tabela, String tela){
     this.campoDocumentos = campoDocumentos; //campo da tabela documentos

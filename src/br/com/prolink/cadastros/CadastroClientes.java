@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
-import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.config.init.UsuarioLogado;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyEvent;

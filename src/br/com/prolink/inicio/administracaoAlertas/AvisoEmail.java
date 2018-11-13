@@ -1,6 +1,6 @@
 package br.com.prolink.inicio.administracaoAlertas;
 
-import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.config.init.UsuarioLogado;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

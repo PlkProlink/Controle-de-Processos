@@ -5,7 +5,7 @@
 package br.com.prolink.inicio.administracaoAlertas;
 
 import br.com.prolink.factory.ConexaoStatement;
-import br.com.prolink.model.HtmlEntities;
+import br.com.prolink.util.HtmlEntities;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

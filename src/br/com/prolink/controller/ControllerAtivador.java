@@ -7,7 +7,7 @@ package br.com.prolink.controller;
 
 import br.com.prolink.factory.ConfigTables;
 import br.com.prolink.model.Processo;
-import br.com.prolink.model.ProcessoDao;
+import br.com.prolink.modeldao.ProcessoDao;
 import br.com.prolink.model.ProcessoLogado;
 import br.com.prolink.model.StageList;
 import br.com.prolink.view.Ativador;

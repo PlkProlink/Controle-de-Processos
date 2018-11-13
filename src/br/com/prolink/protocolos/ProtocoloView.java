@@ -5,7 +5,7 @@ import br.com.prolink.model.ProtocoloItem;
 import br.com.prolink.model.FTPDownload;
 import br.com.prolink.model.FTPUpload;
 import br.com.prolink.factory.ConexaoStatement;
-import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.config.init.UsuarioLogado;
 import br.com.prolink.view.Login;
 import java.awt.Component;
 import java.awt.Desktop;
