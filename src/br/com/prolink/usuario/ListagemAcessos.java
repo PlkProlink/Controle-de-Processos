@@ -7,6 +7,7 @@ package br.com.prolink.usuario;
  */
 
 
+import br.com.prolink.factory.ConexaoStatement;
 import javax.swing.table.*;
 import javax.swing.JOptionPane;
 import java.sql.Connection;

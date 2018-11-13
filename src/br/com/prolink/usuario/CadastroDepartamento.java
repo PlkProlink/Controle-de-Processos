@@ -2,8 +2,10 @@ package br.com.prolink.usuario;
 
 
 
-import br.com.prolink.inicio.Conexao;
-import br.com.prolink.login.Login;
+import br.com.prolink.factory.Conexao;
+import br.com.prolink.factory.ConfigTables;
+import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.view.Login;
 import java.awt.Component;
 import javax.swing.table.*;
 import java.sql.*;
@@ -13,12 +15,13 @@ import javax.swing.JOptionPane;
  *
  * @author Tiago Dias
  */
-public class CadastroDepartamento extends javax.swing.JFrame {
+public class CadastroDepartamento extends javax.swing.JFrame implements ConfigTables {
    
     Conexao con = new Conexao();
     
     String codigo_backup, nome_backup;
-    String nivel=Login.nivel, departamento=Login.departamento;
+    int nivel=UsuarioLogado.getInstance().getUsuario().getNivel();
+    String departamento=UsuarioLogado.getInstance().getUsuario().getDepartamento();
     /**
      *
      */

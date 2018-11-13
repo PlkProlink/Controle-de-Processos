@@ -1,6 +1,6 @@
 package br.com.prolink.departamentos;
 
-import br.com.prolink.login.Login;
+import br.com.prolink.factory.Conexao;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
@@ -12,7 +12,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-import br.com.prolink.inicio.*;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
+import br.com.prolink.model.UsuarioLogado;
 
 /**
  *
@@ -26,9 +28,11 @@ public class Contabil extends javax.swing.JFrame {
     MaskFormatter formatoTodos;
     //Formatador para data
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
-    String todos, processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), 
-            id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario, codigo_backup, obs_backup, data_backup, tipo_backup;
+    Processo p = ProcessoLogado.getInstance().getProcesso();
+    String todos, processo=p.getId()+"",
+            nome=p.getCliente(), 
+            id=p.getApelido(), usuario=UsuarioLogado.getInstance().getUsuario().getUsuario(), 
+            codigo_backup, obs_backup, data_backup, tipo_backup;
     /**
      *
      */
@@ -56,7 +60,7 @@ public class Contabil extends javax.swing.JFrame {
         txt_id.setText(id);
         txt_usuario.setText(usuario);
         
-        if(!Login.nivel.equals("1") && !Login.departamento.equalsIgnoreCase("Contabil")){
+        if(UsuarioLogado.getInstance().getUsuario().getNivel()!=1 && !UsuarioLogado.getInstance().getUsuario().getDepartamento().equalsIgnoreCase("Contabil")){
             
             btnExcluir.setEnabled(false);
             btnSalvar.setEnabled(false);

@@ -7,9 +7,10 @@ package br.com.prolink.inicio.administracaoAlertas;
 import br.com.prolink.departamentos.Contabil;
 import br.com.prolink.documentos.Documentos;
 import br.com.prolink.inicio.Ativador;
-import br.com.prolink.inicio.ConexaoStatement;
-import br.com.prolink.inicio.TelaPrincipal;
-import br.com.prolink.login.Login;
+import br.com.prolink.factory.ConexaoStatement;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
+import br.com.prolink.view.Login;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,10 +41,10 @@ public class InternoContabil extends javax.swing.JInternalFrame {
         initComponents();
         btRelatorio.setVisible(false);
         carregaCombo();
-        String value = TelaPrincipal.txt_codigo.getText();
-        if(value!=null && value!=""){
-            contabil(TelaPrincipal.txt_codigo.getText());
-            add(TelaPrincipal.txt_codigo.getText());
+        Processo p = ProcessoLogado.getInstance().getProcesso();
+        if(p!=null){
+            contabil(p.getId()+"");
+            add(p.getId()+"");
         }
     }
 
@@ -282,7 +283,7 @@ public class InternoContabil extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if(!controle && documento==0){
-            JOptionPane.showMessageDialog(null,"Não existem pendências do cliente "+TelaPrincipal.txt_nome+" \npara serem validadas para esse departamento!");
+            JOptionPane.showMessageDialog(null,"Não existem pendências do cliente "+ProcessoLogado.getInstance().getProcesso().getCliente()+" \npara serem validadas para esse departamento!");
         }
         else{
             List <String> nova = new ArrayList<>();
@@ -303,8 +304,8 @@ public class InternoContabil extends javax.swing.JInternalFrame {
         if(!jComboBox1.getSelectedItem().equals("Clique aqui para Ativar!")  &&
                 !jComboBox1.getSelectedItem().equals(null)){
                             combo((String)jComboBox1.getSelectedItem());
-                            contabil(TelaPrincipal.txt_codigo.getText());
-                            add(TelaPrincipal.txt_codigo.getText());
+                            contabil(ProcessoLogado.getInstance().getProcesso()+"");
+                            add(ProcessoLogado.getInstance().getProcesso()+"");
             
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
@@ -349,9 +350,9 @@ public class InternoContabil extends javax.swing.JInternalFrame {
                 while(rs.next()){
                     jComboBox1.addItem(rs.getString("Cliente"));
                 }
-                String valor = TelaPrincipal.txt_nome.getText();
-                if(!valor.equals(null) && !valor.equals(""))
-                    jComboBox1.setSelectedItem(valor);
+                Processo p = ProcessoLogado.getInstance().getProcesso();
+                if(p!=null)
+                    jComboBox1.setSelectedItem(p.getCliente());
                 else
                     jComboBox1.setSelectedItem("Clique aqui para Ativar!");
             }
@@ -359,7 +360,8 @@ public class InternoContabil extends javax.swing.JInternalFrame {
         }finally{try{if(con!=null)con.close();}catch(Exception e){}}
     }
     private void abrirDocumentos(){
-        if(TelaPrincipal.txt_codigo.getText().equals("")){
+        Processo p = ProcessoLogado.getInstance().getProcesso();
+        if(p==null){
             JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ativador = new Ativador();
             ativador.setVisible(true);
@@ -372,7 +374,8 @@ public class InternoContabil extends javax.swing.JInternalFrame {
     }
     
     private void abrirContabil(){
-        if(TelaPrincipal.txt_codigo.getText().equals("")){
+        Processo p = ProcessoLogado.getInstance().getProcesso();
+        if(p==null){
             JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ma = new Ativador();
             ma.setVisible(true);
@@ -391,12 +394,11 @@ public class InternoContabil extends javax.swing.JInternalFrame {
             
             if(rs!=null){
                 if(rs.next()){
-                    TelaPrincipal.txt_codigo.setText(rs.getString("codNumerodoprocesso"));
-                    TelaPrincipal.txt_nome.setText(rs.getString("Cliente"));
-                    TelaPrincipal.txt_id.setText(rs.getString("Apelido"));
-                    TelaPrincipal.txt_classificacao.setText(rs.getString("Classificacao"));
-                    TelaPrincipal.txt_ativada.setText("");
-                    TelaPrincipal.txt_finalizada.setText("");
+                    ProcessoLogado p = ProcessoLogado.getInstance();
+                    p.setAtributos(new String[]{
+                    rs.getString("codNumerodoprocesso"),rs.getString("Apelido"),
+                    rs.getString("Cliente"),rs.getString("Classificacao"),rs.getInt("Situacao")==1?"Ativo":"Finalizado"
+                    });
                 }
             }
             

@@ -40,7 +40,7 @@ public class AlertaExclusao {
                                    return new PasswordAuthentication("prolinkcontabil@gmail.com", "prolink10");
                              }
                         });
-public static void main(String[] args){
+    public static void main(String[] args){
             /** Parâmetros de conexão com servidor Gmail */
             props.put("mail.smtp.host", "smtp.gmail.com"); 
             props.put("mail.smtp.auth", "true"); 

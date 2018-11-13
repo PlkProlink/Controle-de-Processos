@@ -5,18 +5,20 @@
  */
 package br.com.prolink.cadastros;
 
+import br.com.prolink.model.LogUsuarioDao;
 import java.awt.Component;  
 import javax.swing.table.*;
 import java.sql.*;
 import java.util.*;
 import javax.swing.JOptionPane;
-import br.com.prolink.inicio.Conexao;
-import br.com.prolink.controle.*;
+import br.com.prolink.factory.Conexao;
+import br.com.prolink.factory.ConfigTables;
+import br.com.prolink.model.LogUsuarioBean;
 /**
  *
  * @author Tiago Dias
  */
-public class CadastroClassificacao extends javax.swing.JFrame {
+public class CadastroClassificacao extends javax.swing.JFrame implements ConfigTables{
     
     Conexao con_classificacao = new Conexao();;
     //variavel para recuperar valores do campo
@@ -271,7 +273,7 @@ public class CadastroClassificacao extends javax.swing.JFrame {
         else if(txt_codigo.getText().equals("")){
         
              try{
-                String gry = "insert into classificacao (Status) values ('"+
+                String gry = "insert into "+CLASSIFICACAO+" ("+CLASSIFICACAO_Status+") values ('"+
                                // txt_data.setDate(2, new java.sql.Date(data.getTime()));
                                 txt_nome.getText()+"')";
                                 con_classificacao.exeQuery(gry);
@@ -281,7 +283,7 @@ public class CadastroClassificacao extends javax.swing.JFrame {
                     logbean.setAcao("Inclusão");
                     logbean.setDescricao("Incluido a classificação: "+txt_nome.getText());
   
-                    logdao.inserir(logbean);
+//                    logdao.inserir(logbean);
                     
                     limpar_tabela();
                     limpar_campos();
@@ -295,9 +297,9 @@ public class CadastroClassificacao extends javax.swing.JFrame {
         else if(!txt_codigo.getText().equals("")){
             
                 try{
-                String sql ="UPDATE classificacao SET Status ='" 
+                String sql ="UPDATE "+CLASSIFICACAO+" SET "+CLASSIFICACAO_Status+" ='" 
                                         +txt_nome.getText()+
-                            "' where cod = "+txt_codigo.getText();
+                            "' where "+CLASSIFICACAO_cod+" = "+txt_codigo.getText();
                 con_classificacao.statement.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null,"Alteração realizado com sucesso!");
                 
@@ -305,7 +307,7 @@ public class CadastroClassificacao extends javax.swing.JFrame {
                     logbean.setAcao("Alteração");
                     logbean.setDescricao("Atualizado de : "+nome_backup+"para: "+txt_nome.getText());
   
-                    logdao.inserir(logbean);
+//                    logdao.inserir(logbean);
                     
                 bloqueia_campos();
                 limpar_tabela();
@@ -332,14 +334,14 @@ public class CadastroClassificacao extends javax.swing.JFrame {
         else{
             
             try{
-                String sql = "select * from classificacao where cod=" +txt_codigo.getText();
+                String sql = "select * from "+CLASSIFICACAO+" where "+CLASSIFICACAO_cod+"=" +txt_codigo.getText();
                 con_classificacao.executeSQL(sql);
                 con_classificacao.resultset.first();
                 String nome = "Tem certeza que deseja excluir o cadastro da classificacao " +con_classificacao.resultset.getString("Status")+"?";
                 int opcao_escolhida = JOptionPane.showConfirmDialog(null,nome,"Exclusão ",JOptionPane.YES_NO_OPTION);
                 if (opcao_escolhida == JOptionPane.YES_OPTION)
                 {
-                sql = "DELETE FROM classificacao Where cod ="+txt_codigo.getText();
+                sql = "DELETE FROM "+CLASSIFICACAO+" Where "+CLASSIFICACAO_cod+" ="+txt_codigo.getText();
                     int conseguiu_excluir = con_classificacao.statement.executeUpdate(sql);
                     if (conseguiu_excluir == 1){
                     JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
@@ -347,7 +349,7 @@ public class CadastroClassificacao extends javax.swing.JFrame {
                     logbean.setTela("Cadastro de Classificacao");
                     logbean.setAcao("Exclusao");
                     logbean.setDescricao("Excluido o registro: "+txt_nome.getText());
-                    logdao.inserir(logbean);
+                    //logdao.inserir(logbean);
 
                         //*chamando tres metodos, um que limpa a tabela, campo, e o outro que atualiza
                     limpar_campos();
@@ -444,7 +446,7 @@ public class CadastroClassificacao extends javax.swing.JFrame {
         tb_classificacao.getColumnModel().getColumn(0);
         tb_classificacao.getColumnModel().getColumn(1);
         
-        con_classificacao.executeSQL("select * from classificacao order by cod");
+        con_classificacao.executeSQL("select * from "+CLASSIFICACAO+" order by "+CLASSIFICACAO_cod+"");
         
         DefaultTableModel modelo = (DefaultTableModel)tb_classificacao.getModel();
         //modelo.setNumRows(0);

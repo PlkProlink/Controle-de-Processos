@@ -5,6 +5,10 @@
  */
 package br.com.prolink.inicio;
 
+import br.com.prolink.factory.ConexaoStatement;
+import br.com.prolink.factory.Conexao;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
@@ -26,13 +30,13 @@ public class Ativador extends javax.swing.JFrame {
     
     Conexao con_cliente = new Conexao();
     
-    public static String id;
-    public static String nome;
-    public static String processo;
-    public static String classificacao;
-    public static String dataativacao;
-    public static String datafinalizacao;
-    
+    private static String id;
+    private static String nome;
+    private static String processo;
+    private static String classificacao;
+    private static String dataativacao;
+    private static String datafinalizacao;
+    private static int status;
     String codigo, pesquisa, comando, ativada, desativada;
     
     boolean ativo=true, inativo=false;
@@ -405,11 +409,12 @@ public class Ativador extends javax.swing.JFrame {
                 if(rs!=null){
                     while(rs.next()){
                         processo = rs.getString("codNumerodoprocesso");
-                        id = rs.getString("Apelido");
+                        id = rs.getString("Apelido")==null?"":rs.getString("Apelido");
                         nome = rs.getString("Cliente");
                         classificacao = rs.getString("Classificacao");
                         dataativacao = rs.getString("DatadeAtivacao");
                         datafinalizacao = rs.getString("DataDeArquivamentodoProcesso");
+                        status = rs.getInt("Situacao");
                     }
                 }
                 con.close();
@@ -568,29 +573,16 @@ public class Ativador extends javax.swing.JFrame {
     public void envia_para_menu(){
         String datafim, datainicio;
         try{
-            TelaPrincipal.txt_codigo.setText(processo);
-            TelaPrincipal.txt_id.setText(id);
-            TelaPrincipal.txt_nome.setText(nome);
-            TelaPrincipal.txt_classificacao.setText(classificacao);
-        
-            if(dataativacao.trim().length()==10 && !"0000-00-00".equals(dataativacao)
-                    && !"1111-11-11".equals(dataativacao)){
-                String ano = dataativacao.substring(0, 4);
-                String mes = dataativacao.substring(5, 7);
-                String dia = dataativacao.substring(8);
-                datainicio = dia+"/"+mes+"/"+ano;
-                dataativacao = datainicio;
-                TelaPrincipal.txt_ativada.setText(dataativacao);
-            }
-            if(datafinalizacao.trim().length()==10 && !"0000-00-00".equals(datafinalizacao)
-                    && !"1111-11-11".equals(datafinalizacao)){
-                String ano = datafinalizacao.substring(0, 4);
-                String mes = datafinalizacao.substring(5, 7);
-                String dia = datafinalizacao.substring(8);
-                datafim = dia+"/"+mes+"/"+ano;
-                datafinalizacao = datafim;
-                TelaPrincipal.txt_finalizada.setText(datafinalizacao);
-            }
+            ProcessoLogado p = ProcessoLogado.getInstance();
+            Processo novoProcesso = new Processo();
+            novoProcesso.setId(Integer.parseInt(processo));
+            novoProcesso.setCliente(nome);
+            novoProcesso.setApelido(id);
+            novoProcesso.setClassificacao(classificacao);
+            novoProcesso.setSituacao(status);
+            p.setAtributos(new String[]{processo,id,nome,classificacao,
+                String.valueOf(status)});
+            p.setProcesso(novoProcesso);
         }catch(Exception erro){
         }
     }

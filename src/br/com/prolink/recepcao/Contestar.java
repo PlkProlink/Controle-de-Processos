@@ -1,8 +1,9 @@
 package br.com.prolink.recepcao;
 
 
-import br.com.prolink.inicio.ConexaoStatement;
-import br.com.prolink.login.Login;
+import br.com.prolink.factory.ConexaoStatement;
+import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.view.Login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ public class Contestar extends javax.swing.JInternalFrame {
     Connection con;
     
     public Connection getCon(){
-        this.con= new ConexaoStatement().getConnetion();
+        this.con= ConexaoStatement.getInstance().getConnetion();
         return this.con;
     }
     /**
@@ -123,7 +124,7 @@ public class Contestar extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String registro = "Usa-se essa opção"
         + " somente quando você não era o destino correto ou não chegou.\n"
-        + "Se é para você poderia aguardar um pouco, deseja prosseguir e Constestar?";
+        + "Talvez seja melhor aguardar um pouco, deseja prosseguir e Constestar clique em Sim?";
         int escolha = JOptionPane.showConfirmDialog(null, registro, "Atenção", JOptionPane.YES_NO_OPTION);
         if(escolha==JOptionPane.YES_OPTION){
             contestar();
@@ -151,7 +152,7 @@ private void contestar(){
     String sql = "update documentos_recebidos set Recebido='C', Observacao=? where cod=?";
     try{
     PreparedStatement ps = getCon().prepareStatement(sql);
-    ps.setString(1, txtMensagem.getText()+"\n\n"+Login.usuario);
+    ps.setString(1, txtMensagem.getText()+"\n\n"+UsuarioLogado.getInstance().getUsuario().getUsuario());
     ps.setInt(2, Integer.parseInt(Listagem.txtCodigo.getText()));
     if(ps.executeUpdate()>0){
         JOptionPane.showMessageDialog(null, "Contestação realizada, "

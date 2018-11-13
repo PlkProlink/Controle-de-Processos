@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.prolink.controller.ControllerCertidoesCND">
+   <children>
+      <JFXTabPane layoutX="-1.0" layoutY="1.0" prefHeight="609.0" prefWidth="1093.0">
+         <tabs>
+            <Tab text="Pesquisa">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="4.0" layoutY="278.0" prefHeight="290.0" prefWidth="1085.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="ID" />
+                            <TableColumn prefWidth="75.0" text="Nome" />
+                              <TableColumn prefWidth="75.0" text="CNPJ" />
+                              <TableColumn prefWidth="75.0" text="Status RFB" />
+                              <TableColumn prefWidth="75.0" text="Data RFB" />
+                              <TableColumn prefWidth="75.0" text="Status PMSP" />
+                              <TableColumn prefWidth="75.0" text="Data PMSP" />
+                              <TableColumn prefWidth="75.0" text="Status CRF" />
+                              <TableColumn prefWidth="75.0" text="Data CRF" />
+                              <TableColumn prefWidth="75.0" />
+                          </columns>
+                        </TableView>
+                        <JFXComboBox fx:id="cbStatusPesquisa" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="91.0" />
+                        <JFXTextField fx:id="txBuscarPesquisa" layoutX="14.0" layoutY="70.0" promptText="Buscar cliente" />
+                        <JFXComboBox fx:id="cbFiltroPesquisa" layoutX="157.0" layoutY="70.0" prefHeight="25.0" prefWidth="91.0" />
+                        <TableView fx:id="tbRelacaoPesquisa" layoutX="768.0" layoutY="9.0" prefHeight="123.0" prefWidth="322.0" />
+                        <JFXComboBox fx:id="cbTipoPesquisa" layoutX="267.0" layoutY="14.0" prefHeight="25.0" prefWidth="153.0" />
+                        <JFXDatePicker fx:id="dtInicioPesquisa" layoutX="267.0" layoutY="46.0" />
+                        <JFXDatePicker fx:id="dtFimPesquisa" layoutX="267.0" layoutY="83.0" />
+                        <JFXComboBox layoutX="134.0" layoutY="14.0" prefHeight="25.0" prefWidth="91.0" />
+                        <TableView fx:id="tbVencimentosPesquisa" layoutX="768.0" layoutY="146.0" prefHeight="123.0" prefWidth="322.0" />
+                        <JFXButton fx:id="btNovo" layoutX="14.0" layoutY="244.0" onAction="#novo" text="Novo Lançamento" />
+                        <JFXListView fx:id="lvStatusClientePesquisa" layoutX="450.0" layoutY="16.0" prefHeight="109.0" prefWidth="151.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Lançamento">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="825.0">
+                     <children>
+                        <JFXTextField fx:id="txCodigo" disable="true" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="85.0" />
+                        <JFXComboBox fx:id="cbStatus" layoutX="135.0" layoutY="115.0" prefHeight="25.0" prefWidth="156.0" />
+                        <Label layoutX="14.0" layoutY="115.0" prefHeight="25.0" prefWidth="80.0" text="Status:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="txCriadoPor" disable="true" layoutX="603.0" layoutY="14.0" prefHeight="25.0" prefWidth="210.0" />
+                        <JFXTextField fx:id="txCliente" layoutX="135.0" layoutY="83.0" />
+                        <Label layoutX="14.0" layoutY="83.0" prefHeight="17.0" prefWidth="110.0" text="Cliente:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <JFXDatePicker fx:id="dataValidade" layoutX="135.0" layoutY="185.0" prefHeight="25.0" prefWidth="157.0" />
+                        <Label layoutX="14.0" layoutY="185.0" prefHeight="25.0" prefWidth="116.0" text="Valido até:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <JFXDatePicker fx:id="dataPesquisa" layoutX="135.0" layoutY="150.0" prefHeight="25.0" prefWidth="157.0" />
+                        <Label layoutX="14.0" layoutY="150.0" prefHeight="25.0" prefWidth="118.0" text="Pesquisado em:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <JFXButton layoutX="444.0" layoutY="225.0" text="Novo" />
+                        <JFXButton layoutX="496.0" layoutY="225.0" text="Alterar" />
+                        <JFXButton layoutX="548.0" layoutY="225.0" text="Salvar" />
+                        <JFXButton layoutX="600.0" layoutY="225.0" text="Excluir" />
+                        <JFXTextField fx:id="txClienteNome" disable="true" layoutX="301.0" layoutY="83.0" prefHeight="25.0" prefWidth="344.0" />
+                        <TableView layoutX="14.0" layoutY="303.0" prefHeight="264.0" prefWidth="1019.0">
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="ID" />
+                              <TableColumn prefWidth="75.0" text="Nome" />
+                              <TableColumn prefWidth="75.0" text="CNPJ" />
+                              <TableColumn prefWidth="75.0" text="Status RFB" />
+                              <TableColumn prefWidth="75.0" text="Data RFB" />
+                              <TableColumn prefWidth="75.0" text="Status PMSP" />
+                              <TableColumn prefWidth="75.0" text="Data PMSP" />
+                              <TableColumn prefWidth="75.0" text="Status CRF" />
+                              <TableColumn prefWidth="75.0" text="Data CRF" />
+                              <TableColumn prefWidth="75.0" />
+                           </columns>
+                        </TableView>
+                        <Label alignment="CENTER" layoutX="14.0" layoutY="275.0" prefHeight="25.0" prefWidth="1019.0" text="Ultimos lançamentos">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Historico">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="4.0" layoutY="278.0" prefHeight="290.0" prefWidth="1085.0">
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="ID" />
+                              <TableColumn prefWidth="75.0" text="Nome" />
+                              <TableColumn prefWidth="75.0" text="CNPJ" />
+                              <TableColumn prefWidth="75.0" text="Status RFB" />
+                              <TableColumn prefWidth="75.0" text="Data RFB" />
+                              <TableColumn prefWidth="75.0" text="Status PMSP" />
+                              <TableColumn prefWidth="75.0" text="Data PMSP" />
+                              <TableColumn prefWidth="75.0" text="Status CRF" />
+                              <TableColumn prefWidth="75.0" text="Data CRF" />
+                              <TableColumn prefWidth="75.0" />
+                           </columns>
+                        </TableView>
+                        <JFXComboBox layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="91.0" />
+                        <JFXTextField layoutX="14.0" layoutY="70.0" promptText="Buscar cliente" />
+                        <JFXComboBox layoutX="157.0" layoutY="70.0" prefHeight="25.0" prefWidth="91.0" />
+                        <JFXComboBox layoutX="267.0" layoutY="14.0" prefHeight="25.0" prefWidth="153.0" />
+                        <JFXDatePicker layoutX="267.0" layoutY="46.0" />
+                        <JFXDatePicker layoutX="267.0" layoutY="83.0" />
+                        <JFXComboBox layoutX="134.0" layoutY="14.0" prefHeight="25.0" prefWidth="91.0" />
+                        <JFXListView layoutX="462.0" layoutY="14.0" prefHeight="109.0" prefWidth="151.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
+   </children>
+</AnchorPane>

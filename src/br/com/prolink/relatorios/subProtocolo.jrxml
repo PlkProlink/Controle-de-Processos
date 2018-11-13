@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Protocolo" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fe9d1868-dfc4-4bf0-9e34-f15adf50b304">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#F3F6F8"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0FFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFFFFF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(1)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+ P.PROT_ID,
+ (SELECT NOME FROM LOGIN WHERE COD=P.PROT_USUARIO_ID) AS PROT_USUARIO,
+ P.PROT_SETOR_PARA,
+ (SELECT DEPARTAMENTO FROM LOGIN WHERE COD=P.PROT_USUARIO_ID) AS PROT_SETOR_DE,
+ (SELECT EMAIL FROM LOGIN WHERE COD=P.PROT_USUARIO_ID) AS PROT_USUARIO_EMAIL,
+ case P.PROT_CLIENTE
+  when '1' then (select CLIENTE.NOME FROM CLIENTE WHERE CLIENTE.ID=P.PROT_EMPRESA_NOME)
+  ELSE P.PROT_EMPRESA_NOME
+ end
+AS PROT_EMPRESA_NOME,
+ P.PROT_FUNCIONARIO_PARA,
+ P.PROT_SETOR_PARA,
+ P.PROT_OBSERVACAO,
+ I.ITEM_NOME,
+ I.ITEM_QUANTIDADE,
+ I.ITEM_DETALHE,
+ I.ITEM_DATA_ENTRADA
+from
+ PROTOCOLO_SAIDA AS P
+ INNER JOIN
+ PROTOCOLO_ITEM AS I
+ ON P.PROT_ID=I.ITEM_PROT_SAIDA_ID
+where P.PROT_ID=$P{CODIGO}]]>
+	</queryString>
+	<field name="PROT_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROT_USUARIO" class="java.lang.String"/>
+	<field name="PROT_SETOR_PARA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROT_SETOR_DE" class="java.lang.String"/>
+	<field name="PROT_USUARIO_EMAIL" class="java.lang.String"/>
+	<field name="PROT_EMPRESA_NOME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROT_FUNCIONARIO_PARA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROT_OBSERVACAO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEM_NOME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEM_QUANTIDADE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEM_DETALHE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEM_DATA_ENTRADA" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="107">
+			<line>
+				<reportElement mode="Transparent" x="14" y="91" width="527" height="1" forecolor="#000000" backcolor="#FFFFFF" uuid="2bc49a73-e8ea-4448-9512-1f09771d6ce1"/>
+			</line>
+			<line>
+				<reportElement mode="Transparent" x="14" y="29" width="527" height="1" forecolor="#000000" backcolor="#FFFFFF" uuid="150ef4bb-38bc-4ea1-8aca-62a30ceec252"/>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="14" y="10" width="228" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="36d8c643-3cf9-4692-a06a-80b464b40f65"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remetente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="242" y="10" width="299" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="de227e56-33b4-44c8-9c51-b4b2c3e06af7"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Destinatário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="14" y="29" width="93" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0fcbd95e-adca-42b7-9898-aea8c7f2ccdd"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Responsavel:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="107" y="29" width="186" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="b738a64e-ec6e-467d-8d90-5ba574c8c077"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROT_USUARIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="14" y="49" width="93" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="c9425454-1f01-453b-9e6e-07a37cbf81e2"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="107" y="49" width="186" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="3990bb2d-5bad-4087-8cad-a1fe23bdcc59"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROT_SETOR_DE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="293" y="48" width="69" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0731e869-a921-4421-ada1-2dbf7e670edc"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Responsável:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="293" y="68" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="c7ed2bc1-1831-4ed2-af12-6ddc31ef53f4"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="378" y="69" width="163" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="3ac416b0-ebe4-4514-862b-195fb2cb52fb"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROT_SETOR_PARA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="293" y="28" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="35192842-ae97-406c-a4d1-289d0b596b6d"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Destino:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="378" y="49" width="163" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="7caf3b47-a47b-40e8-a9c4-02352ad57797"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROT_FUNCIONARIO_PARA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="14" y="92" width="193" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="9d8c9589-bb6d-4298-83bd-d267870a327f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="207" y="92" width="35" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="9f835f23-960b-47c4-bd9e-e6a9c97b6097"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qtde]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="242" y="92" width="236" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="df887759-97c4-4974-8ede-eee12ef84844"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="478" y="92" width="63" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="c99baef6-51e9-4974-aa09-7a3d2e4dec74"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<line>
+				<reportElement mode="Transparent" x="14" y="106" width="527" height="1" forecolor="#000000" backcolor="#FFFFFF" uuid="17001d3c-3cce-45b6-b5b5-e7ebc0c36255"/>
+			</line>
+			<textField>
+				<reportElement x="378" y="29" width="163" height="20" uuid="5ac08614-ba30-432c-a8c4-c5f9203db04b"/>
+				<textFieldExpression><![CDATA[$F{PROT_EMPRESA_NOME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="14" y="68" width="93" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="ea469b77-95c9-44e3-a3be-e3723c8cf8e5"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[E-Mail:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="107" y="68" width="186" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="f35b3ceb-1a93-48e5-93b8-cf38eb3dc060"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROT_USUARIO_EMAIL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="207" y="0" width="35" height="20" uuid="3a0bb7f6-f1f3-4a51-9052-761b1e549ad8"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ITEM_QUANTIDADE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="242" y="0" width="236" height="20" uuid="3dc9bb64-986f-4ab4-bbf6-eb1108098efd"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ITEM_DETALHE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="478" y="0" width="63" height="20" uuid="69fc3c45-172c-45e0-94e2-12407a79b56b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ITEM_DATA_ENTRADA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="0" width="193" height="20" uuid="f21b59ee-07ff-45d6-95f8-d1bdabc00c3c"/>
+				<textFieldExpression><![CDATA[$F{ITEM_NOME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="129">
+			<staticText>
+				<reportElement mode="Transparent" x="293" y="54" width="194" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="3b8f0f68-3be2-423b-b8aa-0c6c0d20b53e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="55" y="74" width="102" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="caa6ebeb-a58d-496a-996a-d2d6c7211998"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="55" y="54" width="102" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="3a91bed3-dc73-4cd3-a0cb-066622062830"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[_____/_____/_____]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="293" y="74" width="194" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="968e573c-08db-48bb-afa8-0491ee034454"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Recebido por(Assinatura Legível)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="203" y="54" width="70" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="d5794ff6-6ed3-4b2e-9630-a72d227d8cc4"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[_____:_____]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="203" y="74" width="70" height="20" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="00196d4d-be5e-4c44-b63e-34cd179cec01"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Hora]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="14" y="10" width="527" height="38" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="bd1dc556-de9a-4514-a256-5ac2cae265bd"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROT_OBSERVACAO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement mode="Transparent" x="14" y="0" width="527" height="1" forecolor="#000000" backcolor="#FFFFFF" uuid="66429e82-120b-4e60-bca5-c603cecc5f75"/>
+			</line>
+		</band>
+	</columnFooter>
+</jasperReport>

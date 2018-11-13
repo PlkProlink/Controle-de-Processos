@@ -1,6 +1,6 @@
 package br.com.prolink.departamentos;
 
-import br.com.prolink.login.Login;
+import br.com.prolink.factory.Conexao;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
@@ -12,8 +12,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-import br.com.prolink.controle.*;
 import br.com.prolink.inicio.*;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
+import br.com.prolink.model.UsuarioLogado;
 
 public class Contratos extends javax.swing.JFrame {
 
@@ -33,7 +35,10 @@ public class Contratos extends javax.swing.JFrame {
             codAtivar_backup, dataAtivar_backup, obsAtivar_backup, tipoAtivar_backup,
             codPerfil_backup, dataPerfil_backup, obsPerfil_backup, tipoPerfil_backup;
 
-    String processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario;
+     Processo p = ProcessoLogado.getInstance().getProcesso();
+        String processo=p.getId()+"",
+            nome=p.getCliente(), 
+            id=p.getApelido(), usuario=UsuarioLogado.getInstance().getUsuario().getUsuario();
 
     public Contratos() {
         initComponents();
@@ -83,7 +88,7 @@ public class Contratos extends javax.swing.JFrame {
         txtId.setText(id);
         txtUsuario.setText(usuario);
 
-        if (!Login.nivel.equals("1") && !Login.departamento.equalsIgnoreCase("Contratos")) {
+        if (UsuarioLogado.getInstance().getUsuario().getNivel()!=1 && !UsuarioLogado.getInstance().getUsuario().getDepartamento().equalsIgnoreCase("Contratos")) {
 
             btnExcluirId.setEnabled(false);
             btnSalvarId.setEnabled(false);
@@ -2524,8 +2529,7 @@ public class Contratos extends javax.swing.JFrame {
                         con.statement.executeUpdate("update cadastrodeprocesso set Apelido='" + apelido + "' where codNumerodoprocesso=" + processo);
 
                         txtId.setText(apelido);
-                        TelaPrincipal.txt_id.setText(apelido);
-                        Ativador.id = apelido;
+                        ProcessoLogado.getInstance().getProcesso().setApelido(apelido);
 
                     } catch (SQLException erro) {
                         JOptionPane.showMessageDialog(null, "Erro ao atualizar o apelido do cliente!\n" + erro);
@@ -2580,8 +2584,7 @@ public class Contratos extends javax.swing.JFrame {
                         con.statement.executeUpdate("update cadastrodeprocesso set Apelido='" + apelido + "' where codNumerodoprocesso=" + processo);
 
                         txtId.setText(apelido);
-                        TelaPrincipal.txt_id.setText(apelido);
-                        Ativador.id = apelido;
+                        ProcessoLogado.getInstance().getProcesso().setApelido(apelido);
 
                     } catch (SQLException erro) {
                         JOptionPane.showMessageDialog(null, "Erro ao atualizar o apelido do cliente!\n" + erro);

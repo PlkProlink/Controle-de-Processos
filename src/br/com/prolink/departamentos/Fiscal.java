@@ -1,6 +1,6 @@
 package br.com.prolink.departamentos;
 
-import br.com.prolink.login.Login;
+import br.com.prolink.factory.Conexao;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
@@ -12,7 +12,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-import br.com.prolink.inicio.*;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
+import br.com.prolink.model.UsuarioLogado;
 /**
  *
  * @author Tiago Dias
@@ -25,9 +27,11 @@ public class Fiscal extends javax.swing.JFrame {
     MaskFormatter formatoPerfil, formatoDistribuir;
     //Formatador para data
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-    String perfil, distribuir, processo=TelaPrincipal.txt_codigo.getText(), 
-            nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario,
+    Processo p = ProcessoLogado.getInstance().getProcesso();
+    String processo=p.getId()+"",
+            nome=p.getCliente(), 
+            id=p.getApelido(), perfil, distribuir, 
+            usuario=UsuarioLogado.getInstance().getUsuario().getUsuario(),
            codPerfil_backup, codDist_backup, dataDist_backup, dataPerfil_backup,
            obsPerfil_backup, obsDist_backup, tipoPerfil_backup, tipoDist_backup;
     
@@ -61,7 +65,7 @@ public class Fiscal extends javax.swing.JFrame {
         tb_perfil.setAutoCreateRowSorter(true);
         tb_distribuir.setAutoCreateRowSorter(true);
 
-        if(!Login.nivel.equals("1") && !Login.departamento.equalsIgnoreCase("Fiscal")){
+        if(UsuarioLogado.getInstance().getUsuario().getNivel()!=1 && !UsuarioLogado.getInstance().getUsuario().getDepartamento().equalsIgnoreCase("Fiscal")){
             
             bt_excluir_distribuir.setEnabled(false);
             btnSalvarDistribuir.setEnabled(false);

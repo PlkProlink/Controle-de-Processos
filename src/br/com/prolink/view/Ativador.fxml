@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="600.0" stylesheets="@css/estilo.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.prolink.controller.ControllerAtivador">
+   <children>
+      <JFXButton fx:id="btAtivar" layoutX="514.0" layoutY="129.0" mnemonicParsing="false" onAction="#ativar" prefHeight="25.0" prefWidth="74.0" styleClass="btJFXDefault" text="Ativar" />
+      <JFXCheckBox fx:id="ckConcluida" layoutX="217.0" layoutY="90.0" mnemonicParsing="false" onAction="#invocarPesquisa" text="Concluida" />
+      <JFXCheckBox fx:id="ckEmAberto" layoutX="306.0" layoutY="90.0" mnemonicParsing="false" onAction="#invocarPesquisa" text="Em Aberto" />
+      <TableView fx:id="tbProcesso" layoutX="14.0" layoutY="188.0" onMouseClicked="#cliqueTabela" prefHeight="276.0" prefWidth="580.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <JFXTextField fx:id="txCodigo" disable="true" layoutX="12.0" layoutY="129.0" prefHeight="25.0" prefWidth="60.0" promptText="Codigo" />
+      <JFXTextField fx:id="txNome" disable="true" layoutX="146.0" layoutY="129.0" prefHeight="25.0" prefWidth="170.0" promptText="Nome" />
+      <JFXTextField fx:id="txApelido" disable="true" layoutX="78.0" layoutY="129.0" prefHeight="25.0" prefWidth="60.0" promptText="Apelido" />
+      <Accordion layoutX="14.0" layoutY="14.0" />
+      <JFXComboBox fx:id="cbFiltro" layoutX="103.0" layoutY="86.0" prefHeight="25.0" prefWidth="100.0" />
+      <JFXTextField fx:id="txPesquisa" layoutX="14.0" layoutY="86.0" onKeyPressed="#invocarPesquisaTexto" prefHeight="25.0" prefWidth="85.0" promptText="Pesquisar" />
+      <Label alignment="CENTER" layoutY="1.0" minWidth="60.0" prefHeight="40.0" prefWidth="600.0" style="&#10;" text="Protocolo" textAlignment="CENTER" wrapText="false">
+         <font>
+            <Font size="18.0" fx:id="x1" />
+         </font>
+         <textFill>
+            <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
+         </textFill>
+      </Label>
+   </children>
+</AnchorPane>

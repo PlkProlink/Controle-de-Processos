@@ -1,6 +1,7 @@
 package br.com.prolink.departamentos;
 
-import br.com.prolink.login.Login;
+import br.com.prolink.factory.Conexao;
+import br.com.prolink.view.Login;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
@@ -12,8 +13,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-import br.com.prolink.controle.*;
 import br.com.prolink.inicio.*;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
+import br.com.prolink.model.UsuarioLogado;
 
 
 public class Comercial extends javax.swing.JFrame {
@@ -39,8 +42,12 @@ public class Comercial extends javax.swing.JFrame {
             codTermo_backup, dataTermo_backup, obsTermo_backup, tipoTermo_backup,
             codSenhas_backup, dataSenhas_backup, obsSenhas_backup, tipoSenhas_backup;
     
-    String processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario;
-
+    Processo p = ProcessoLogado.getInstance().getProcesso();
+    String processo=p.getId()+"",
+            nome=p.getCliente(), 
+            id=p.getApelido(), 
+            usuario=UsuarioLogado.getInstance().getUsuario().getUsuario();
+    
     public Comercial() {
         initComponents();
         //instanciando as conexoes e executando o metodo conecta
@@ -100,7 +107,7 @@ public class Comercial extends javax.swing.JFrame {
         txtId.setText(id);
         txtUsuario.setText(usuario);
         
-        if(!Login.nivel.equals("1") && !Login.departamento.equalsIgnoreCase("Comercial")){
+        if(UsuarioLogado.getInstance().getUsuario().getNivel()!=1 && !UsuarioLogado.getInstance().getUsuario().getDepartamento().equalsIgnoreCase("Comercial")){
             
             btnExcluirDiagnose.setEnabled(false);
             btnSalvarDiagnose.setEnabled(false);

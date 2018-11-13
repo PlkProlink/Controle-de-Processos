@@ -5,8 +5,12 @@
  */
 package br.com.prolink.enviodocumentos.internas;
 
-import br.com.prolink.inicio.Conexao;
-import br.com.prolink.inicio.TelaPrincipal;
+import br.com.prolink.factory.Conexao;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,89 +21,45 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class AtualizacaoEnviados {
- 
     Conexao conexao;
-    
     List<String> lista = new ArrayList<>();
-    
-    boolean atualizar_acompanhamento1(String campo, String tela){
+    Processo processo = ProcessoLogado.getInstance().getProcesso();
+    //1º Envio Realizado,2º Envio Realizado,Finalizado
+    boolean atualizar_acompanhamento(String tela, String campo, String status, Connection con){
         try{
-            conexao = new Conexao();
-            conexao.conecta();
-            conexao.executeSQL("select * from acompanhamentodeenvios where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
-            if(conexao.resultset.first()){
-            
-            conexao.statement.executeUpdate("update acompanhamentodeenvios set "
-                                            +campo+"='1º Envio Realizado' where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
-            }
-            atualizar_status();
+            String sql = "update acompanhamentodeenvios set "+campo+"=? where Numerodoprocesso=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, status);
+            ps.setInt(2, processo.getId());
+            ps.executeUpdate();
+            atualizar_status(processo, con);
             return true;
         }catch(SQLException erro){
-            JOptionPane.showMessageDialog(null, "Erro ao atualizar acompanhamento: tela>" +tela);
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar acompanhamento: tela>" +tela+"\n"+erro);
             return false;
-        }finally{
-            conexao.desconecta();
-        }
-        
-    }
-    boolean atualizar_acompanhamento2(String campo, String tela){
-        try{
-            conexao = new Conexao();
-            conexao.conecta();
-            conexao.executeSQL("select * from acompanhamentodeenvios where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
-            if(conexao.resultset.first()){
-            conexao.statement.executeUpdate("update acompanhamentodeenvios set "
-                                                + campo+"='2º Envio Realizado' where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
-            }
-            atualizar_status();
-            return true;
-        }catch(SQLException erro){
-            JOptionPane.showMessageDialog(null, "Erro ao atualizar acompanhamento: tela>" +tela);
-            return false;
-        }finally{
-            conexao.desconecta();
         }
     }
-    boolean atualizar_acompanhamento3(String campo, String tela){
+
+    private void atualizar_status(Processo p,Connection con){
         try{
-            conexao = new Conexao();
-            conexao.conecta();
-            conexao.executeSQL("select * from acompanhamentodeenvios where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
-            if(conexao.resultset.first()){
-            conexao.statement.executeUpdate("update acompanhamentodeenvios set "
-                                            + campo+"='Finalizado' where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
-            }
-            atualizar_status();
-            return true;
-        }catch(SQLException erro){
-            JOptionPane.showMessageDialog(null, "Erro ao atualizar acompanhamento: tela>" +tela);
-            return false;
-        }finally{
-            conexao.desconecta();
-        }
-    }
-    public void atualizar_status(){
-        conexao = new Conexao();
-        conexao.conecta();
-        
-        try{
-            conexao.executeSQL("select * from acompanhamentodeenvios where Numerodoprocesso='"+TelaPrincipal.txt_codigo.getText()+"'");
-            if(conexao.resultset.first()){
-               lista.add(conexao.resultset.getString("PISacompanhamento"));
-               lista.add(conexao.resultset.getString("COFIISacompanhamento"));
-               lista.add(conexao.resultset.getString("IRPJacompanhamento"));
-               lista.add(conexao.resultset.getString("CSLLacompanhamento"));
-               lista.add(conexao.resultset.getString("ISSacompanhamento"));
-               lista.add(conexao.resultset.getString("GPSacompanhamento"));
-               lista.add(conexao.resultset.getString("BoletoPLKacompanhamento"));
-               lista.add(conexao.resultset.getString("IRPFsobreSalarioacompanhamento"));
-               lista.add(conexao.resultset.getString("IRPFsobreServicoTomadoacompanhamento"));
-               lista.add(conexao.resultset.getString("FGTSacompanhamento"));
-               lista.add(conexao.resultset.getString("ICMSacompanhamento"));
-               lista.add(conexao.resultset.getString("DASacompanhamento"));
-               lista.add(conexao.resultset.getString("IPIacompanhamento"));
-               lista.add(conexao.resultset.getString("ICMSServTomacompanhamento"));
-               
+            PreparedStatement ps = con.prepareStatement("select * from acompanhamentodeenvios where Numerodoprocesso=?");
+            ps.setInt(1, p.getId());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                lista.add(rs.getString("PISacompanhamento"));
+                lista.add(rs.getString("COFIISacompanhamento"));
+                lista.add(rs.getString("IRPJacompanhamento"));
+                lista.add(rs.getString("CSLLacompanhamento"));
+                lista.add(rs.getString("ISSacompanhamento"));
+                lista.add(rs.getString("GPSacompanhamento"));
+                lista.add(rs.getString("BoletoPLKacompanhamento"));
+                lista.add(rs.getString("IRPFsobreSalarioacompanhamento"));
+                lista.add(rs.getString("IRPFsobreServicoTomadoacompanhamento"));
+                lista.add(rs.getString("FGTSacompanhamento"));
+                lista.add(rs.getString("ICMSacompanhamento"));
+                lista.add(rs.getString("DASacompanhamento"));
+                lista.add(rs.getString("IPIacompanhamento"));
+                lista.add(rs.getString("ICMSServTomacompanhamento"));
             }
             String situacao="Em Aberto";
             for(int i =0 ; i<lista.size(); i++){
@@ -110,26 +70,21 @@ public class AtualizacaoEnviados {
                 else
                     situacao="Concluido";
             }
-            atualiza_cadastro(Integer.parseInt(TelaPrincipal.txt_codigo.getText()),situacao);
-            
+            atualiza_cadastro(p,situacao, con);
         }catch(SQLException erro){
-            System.out.println(""+erro);
-        }finally{conexao.desconecta();}
-        
+            JOptionPane.showMessageDialog(null,"Erro Atualizador Enviados:\n"+ erro);
+        }
     }
-    
-    public void atualiza_cadastro(int processo, String situacao){
-        conexao = new Conexao();
-        conexao.conecta();
-        
+    private void atualiza_cadastro(Processo p, String situacao,Connection con){
         try{
-            conexao.executeSQL("select * from cadastrodeprocesso where codNumerodoprocesso="+processo);
-            if(conexao.resultset.first()){
-                conexao.statement.executeUpdate("update cadastrodeprocesso set AcompanhamentodeEnvios='"+situacao+"' where codNumerodoprocesso="+processo);
-            }
+            PreparedStatement ps = con.prepareStatement(
+                    "update cadastrodeprocesso set AcompanhamentodeEnvios=? where codNumerodoprocesso=?");
+            ps.setString(1, situacao);
+            ps.setInt(2, p.getId());
+            ps.executeUpdate();
         }catch(SQLException e){
-            System.out.println(e);
-        }finally{conexao.desconecta();}
+            JOptionPane.showMessageDialog(null,"Erro ao atualizar o cadastro\n"+e);
+        }
     }
 }
 

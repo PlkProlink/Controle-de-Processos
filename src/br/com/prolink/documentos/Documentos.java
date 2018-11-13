@@ -1,40 +1,50 @@
 package br.com.prolink.documentos;
 
-import br.com.prolink.login.Login;
 import br.com.prolink.documentos.internas.*;
-import br.com.prolink.inicio.*;
+import br.com.prolink.factory.ConexaoStatement;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
+import br.com.prolink.model.UsuarioLogado;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class Documentos extends javax.swing.JFrame {
 
-    String processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario;
-    //String nome="", id="", processo="48", usuario="Tiago";
+    Processo p = ProcessoLogado.getInstance().getProcesso();
+    String processo = p.getId() + "",
+            nome = p.getCliente(),
+            id = p.getApelido(),
+            usuario = UsuarioLogado.getInstance().getUsuario().getUsuario();
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
-    Conexao con;
-    
+    Connection con;
+
+    public Connection getConnection() {
+        this.con = ConexaoStatement.getInstance().getConnetion();
+        return this.con;
+    }
+    //Conexao con;
+
     DocumentosDao docDao = new DocumentosDao();
- /**
- *
- * @author Tiago Dias
- */
+
+    /**
+     *
+     * @author Tiago Dias
+     */
     public Documentos() {
         initComponents();
-        
+
         //lookandfeel();
-        
-        con = new Conexao();
-        con.conecta();
-        
         txtCodigo.setText(processo);
         txtNome.setText(nome);
         txtID.setText(id);
-        
+
         //docDao.tudo();
-        
         afastamentos();
         ato();
         balancete();
@@ -56,10 +66,8 @@ public class Documentos extends javax.swing.JFrame {
         simples();
         termo();
         folha();
-        
-        con.desconecta();
-        
-   }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -224,7 +232,7 @@ public class Documentos extends javax.swing.JFrame {
         lbatoconstitutivo.setToolTipText("Ato constitutivo e todas alterações registradas");
 
         lbdocumentossocio.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lbdocumentossocio.setText("DOCUMETOS DOS SOCIOS");
+        lbdocumentossocio.setText("DOCUMENTOS DOS SOCIOS");
         lbdocumentossocio.setToolTipText("Rg e cpf dos socios da empresa");
 
         lbcomprovantessocios.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -1347,7 +1355,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnAtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtoActionPerformed
         jDesktopPane.removeAll();
-        if(atoconstitutivo==null){
+        if (atoconstitutivo == null) {
             atoconstitutivo = new DocumentosIntAtoConstitutivo();
         }
         jDesktopPane.add(atoconstitutivo);
@@ -1356,7 +1364,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnDocSociosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocSociosActionPerformed
         jDesktopPane.removeAll();
-        if(docsocios==null){
+        if (docsocios == null) {
             docsocios = new DocumentosIntDocumentosSocios();
         }
         jDesktopPane.add(docsocios);
@@ -1365,7 +1373,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnComSociosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComSociosActionPerformed
         jDesktopPane.removeAll();
-        if(comsocios==null){
+        if (comsocios == null) {
             comsocios = new DocumentosIntComprovantesSocios();
         }
         jDesktopPane.add(comsocios);
@@ -1374,16 +1382,16 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnPisSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPisSocioActionPerformed
         jDesktopPane.removeAll();
-        if(npis==null){
+        if (npis == null) {
             npis = new DocumentosIntNumeroPis();
         }
         jDesktopPane.add(npis);
         npis.setVisible(true);
     }//GEN-LAST:event_btnPisSocioActionPerformed
-    
+
     private void btnHabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabActionPerformed
         jDesktopPane.removeAll();
-        if(habnfe==null){
+        if (habnfe == null) {
             habnfe = new DocumentosIntHabilitacaoNFE();
         }
         jDesktopPane.add(habnfe);
@@ -1391,8 +1399,8 @@ public class Documentos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHabActionPerformed
 
     private void btnPostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostoActionPerformed
-       jDesktopPane.removeAll();
-        if(sposto==null){
+        jDesktopPane.removeAll();
+        if (sposto == null) {
             sposto = new DocumentosIntSenhaPosto();
         }
         jDesktopPane.add(sposto);
@@ -1401,7 +1409,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnSimplesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimplesActionPerformed
         jDesktopPane.removeAll();
-        if(ssimples==null){
+        if (ssimples == null) {
             ssimples = new DocumentosIntSenhaSimples();
         }
         jDesktopPane.add(ssimples);
@@ -1410,7 +1418,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnBalancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBalancoActionPerformed
         jDesktopPane.removeAll();
-        if(balanco==null){
+        if (balanco == null) {
             balanco = new DocumentosIntBalanco();
         }
         jDesktopPane.add(balanco);
@@ -1419,7 +1427,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnContasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContasActionPerformed
         jDesktopPane.removeAll();
-        if(contas==null){
+        if (contas == null) {
             contas = new DocumentosIntContas();
         }
         jDesktopPane.add(contas);
@@ -1428,7 +1436,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnPlanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanoActionPerformed
         jDesktopPane.removeAll();
-        if(pcontas==null){
+        if (pcontas == null) {
             pcontas = new DocumentosIntPlanodeContas();
         }
         jDesktopPane.add(pcontas);
@@ -1437,7 +1445,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnBalanceteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBalanceteActionPerformed
         jDesktopPane.removeAll();
-        if(balancete==null){
+        if (balancete == null) {
             balancete = new DocumentosIntBalancete();
         }
         jDesktopPane.add(balancete);
@@ -1446,7 +1454,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFuncionariosActionPerformed
         jDesktopPane.removeAll();
-        if(fichas==null){
+        if (fichas == null) {
             fichas = new DocumentosIntFichas();
         }
         jDesktopPane.add(fichas);
@@ -1455,7 +1463,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnCagedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCagedActionPerformed
         jDesktopPane.removeAll();
-        if(caged==null){
+        if (caged == null) {
             caged = new DocumentosIntCaged();
         }
         jDesktopPane.add(caged);
@@ -1464,7 +1472,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnRecisoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecisoesActionPerformed
         jDesktopPane.removeAll();
-        if(recisoes==null){
+        if (recisoes == null) {
             recisoes = new DocumentosIntRecisoes();
         }
         jDesktopPane.add(recisoes);
@@ -1473,7 +1481,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnFeriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFeriasActionPerformed
         jDesktopPane.removeAll();
-        if(ferias==null){
+        if (ferias == null) {
             ferias = new DocumentosIntFerias();
         }
         jDesktopPane.add(ferias);
@@ -1482,7 +1490,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnAfastamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAfastamentosActionPerformed
         jDesktopPane.removeAll();
-        if(afastamento==null){
+        if (afastamento == null) {
             afastamento = new DocumentosIntAfastamento();
         }
         jDesktopPane.add(afastamento);
@@ -1491,7 +1499,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReceitaActionPerformed
         jDesktopPane.removeAll();
-        if(outorgar==null){
+        if (outorgar == null) {
             outorgar = new DocumentosIntOutorgar();
         }
         jDesktopPane.add(outorgar);
@@ -1500,7 +1508,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnPrefeituraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrefeituraActionPerformed
         jDesktopPane.removeAll();
-        if(perfil==null){
+        if (perfil == null) {
             perfil = new DocumentosIntPerfil();
         }
         jDesktopPane.add(perfil);
@@ -1509,7 +1517,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnTermoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTermoActionPerformed
         jDesktopPane.removeAll();
-        if(termo==null){
+        if (termo == null) {
             termo = new DocumentosIntTermo();
         }
         jDesktopPane.add(termo);
@@ -1518,7 +1526,7 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnInssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInssActionPerformed
         jDesktopPane.removeAll();
-        if(sinss==null){
+        if (sinss == null) {
             sinss = new DocumentosIntSenhaInss();
         }
         jDesktopPane.add(sinss);
@@ -1527,20 +1535,19 @@ public class Documentos extends javax.swing.JFrame {
 
     private void btnFolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFolhaActionPerformed
         jDesktopPane.removeAll();
-        if(folha==null){
+        if (folha == null) {
             folha = new DocumentosIntFolha();
         }
         jDesktopPane.add(folha);
         folha.setVisible(true);
     }//GEN-LAST:event_btnFolhaActionPerformed
 
-
     public static void main(String args[]) {
-        
-         java.awt.EventQueue.invokeLater(new Runnable() {
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Documentos().setVisible(true);
-                
+
             }
         });
     }
@@ -1669,7 +1676,7 @@ public class Documentos extends javax.swing.JFrame {
     public static javax.swing.JLabel txtID;
     public static javax.swing.JLabel txtNome;
     // End of variables declaration//GEN-END:variables
-    
+
     DocumentosIntAfastamento afastamento;
     DocumentosIntAtoConstitutivo atoconstitutivo;
     DocumentosIntDocumentosSocios docsocios;
@@ -1691,980 +1698,1154 @@ public class Documentos extends javax.swing.JFrame {
     DocumentosIntPerfil perfil;
     DocumentosIntTermo termo;
     DocumentosIntSenhaInss sinss;
-    
-    public void lookandfeel(){
-        try{
-            String lookandfeel ="com.birosoft.liquid.LiquidLookAndFeel";
+
+    public void lookandfeel() {
+        try {
+            String lookandfeel = "com.birosoft.liquid.LiquidLookAndFeel";
             UIManager.setLookAndFeel(lookandfeel);
             SwingUtilities.updateComponentTreeUI(this);
-        }catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e){
-            System.out.println("Documentos: \n"+e);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            System.out.println("Documentos: \n" + e);
         }
     }
-    public void afastamentos(){
-    
-    lbAfastamentos1.setText("");
-    lbAfastamentos2.setText("");
-    lbAfastamentos3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from afastamento where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbAfastamentos1.setText(ndata1);
+
+    private void afastamentos() {
+
+        lbAfastamentos1.setText("");
+        lbAfastamentos2.setText("");
+        lbAfastamentos3.setText("");
+
+        try {
+            PreparedStatement ps = getConnection().prepareStatement("select * from afastamento where NumeroProcesso='" + processo + "'");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbAfastamentos1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbAfastamentos2.setText(ndata2);
+                }
+
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+
+                    lbAfastamentos3.setText(ndata3);
+                }
             }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbAfastamentos2.setText(ndata2);
             }
-            
-            
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-            
-                lbAfastamentos3.setText(ndata3);
+        } catch (Exception erro) {
+        } finally {
+            try {
+                this.con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
     }
-}
 
     private void ato() {
-    lbAto1.setText("");
-    lbAto2.setText("");
-    lbAto3.setText("");
-    
-    try{
-        con.executeSQL("select * from atoconstitutivo where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbAto1.setText(ndata1);
+        lbAto1.setText("");
+        lbAto2.setText("");
+        lbAto3.setText("");
+
+        try {
+            PreparedStatement ps = getConnection().prepareStatement("select * from atoconstitutivo where NumeroProcesso='" + processo + "'");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbAto1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbAto2.setText(ndata2);
+                }
+
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+
+                    lbAto3.setText(ndata3);
+                }
             }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbAto2.setText(ndata2);
             }
-            
-            
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-            
-                lbAto3.setText(ndata3);
+        } catch (Exception erro) {
+        } finally {
+            try {
+                this.con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }
     }
 
     private void balancete() {
-    lbBalancete1.setText("");
-    lbBalancete2.setText("");
-    lbBalancete3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from balanceteexercicio where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbBalancete1.setText(ndata1);
-            }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbBalancete2.setText(ndata2);
-            }
-            
-            
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-            
-                lbBalancete3.setText(ndata3);
+        lbBalancete1.setText("");
+        lbBalancete2.setText("");
+        lbBalancete3.setText("");
+        try {
+            PreparedStatement ps = getConnection().prepareStatement("select * from balanceteexercicio where NumeroProcesso='" + processo + "'");
+            ResultSet rs = ps.executeQuery();
+while(rs.next()){
+            if (rs.last()) {
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbBalancete1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbBalancete2.setText(ndata2);
+                }
+
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+
+                    lbBalancete3.setText(ndata3);
+                }
+            }}
+        } catch (Exception erro) {
+        } finally {
+            try {
+                this.con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
     private void balanco() {
-    lbBalanco1.setText("");
-    lbBalanco2.setText("");
-    lbBalanco3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from balancodre where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbBalanco1.setText(ndata1);
-            }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbBalanco2.setText(ndata2);
-            }
-            
-            
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-            
-                lbBalanco3.setText(ndata3);
+        lbBalanco1.setText("");
+        lbBalanco2.setText("");
+        lbBalanco3.setText("");
+        try {
+            PreparedStatement ps = getConnection().prepareStatement("select * from balancodre where NumeroProcesso='" + processo + "'");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbBalanco1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbBalanco2.setText(ndata2);
+                }
+
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+
+                    lbBalanco3.setText(ndata3);
+                }
+            }}
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
     private void caged() {
-    lbCaged1.setText("");
-    lbCaged2.setText("");
-    lbCaged3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from caged where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbCaged1.setText(ndata1);
+        lbCaged1.setText("");
+        lbCaged2.setText("");
+        lbCaged3.setText("");
+
+        try {
+            String sql = ("select * from caged where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbCaged1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbCaged2.setText(ndata2);
+                }
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+
+                    lbCaged3.setText(ndata3);
+                }
             }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbCaged2.setText(ndata2);
-            }
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-            
-                lbCaged3.setText(ndata3);
+}
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
     private void comSocios() {
-    lbComp1.setText("");
-    lbComp2.setText("");
-    lbComp3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from comprovanteresidencia where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbComp1.setText(ndata1);
+        lbComp1.setText("");
+        lbComp2.setText("");
+        lbComp3.setText("");
+        try {
+            String sql = ("select * from comprovanteresidencia where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbComp1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbComp2.setText(ndata2);
+                }
+
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+
+                    lbComp3.setText(ndata3);
+                }
             }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbComp2.setText(ndata2);
             }
-            
-            
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-            
-                lbComp3.setText(ndata3);
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
     private void contas() {
-    lbContas1.setText("");
-    lbContas2.setText("");
-    lbContas3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from composicaodecontaspatrimoniais where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbContas1.setText(ndata1);
+        lbContas1.setText("");
+        lbContas2.setText("");
+        lbContas3.setText("");
+
+        try {
+            String sql = ("select * from composicaodecontaspatrimoniais where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbContas1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbContas2.setText(ndata2);
+                }
+
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+
+                    lbContas3.setText(ndata3);
+                }
             }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbContas2.setText(ndata2);
             }
-            
-            
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-            
-                lbContas3.setText(ndata3);
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
     private void docSocios() {
-    lbDoc1.setText("");
-    lbDoc2.setText("");
-    lbDoc3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from rgecpfsocio where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbDoc1.setText(ndata1);
+        lbDoc1.setText("");
+        lbDoc2.setText("");
+        lbDoc3.setText("");
+
+        try {
+            String sql = ("select * from rgecpfsocio where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbDoc1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbDoc2.setText(ndata2);
+                }
+
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+
+                    lbDoc3.setText(ndata3);
+                }
             }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbDoc2.setText(ndata2);
             }
-            
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-            
-                lbDoc3.setText(ndata3);
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
     private void ferias() {
-    lbFerias1.setText("");
-    lbFerias2.setText("");
-    lbFerias3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from ferias where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbFerias1.setText(ndata1);
-            }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbFerias2.setText(ndata2);
-            }
-            
-            
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-            
-                lbFerias3.setText(ndata3);
+        lbFerias1.setText("");
+        lbFerias2.setText("");
+        lbFerias3.setText("");
+
+        try {
+            String sql = ("select * from ferias where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbFerias1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbFerias2.setText(ndata2);
+                }
+
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+
+                    lbFerias3.setText(ndata3);
+                }
+            }}
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
     private void funcionarios() {
-    lbFuncionarios1.setText("");
-    lbFuncionarios2.setText("");
-    lbFuncionarios3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from livrooufichaderegistrofuncionario where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbFuncionarios1.setText(ndata1);
+        lbFuncionarios1.setText("");
+        lbFuncionarios2.setText("");
+        lbFuncionarios3.setText("");
+
+        try {
+            String sql = ("select * from livrooufichaderegistrofuncionario where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbFuncionarios1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbFuncionarios2.setText(ndata2);
+                }
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+                    lbFuncionarios3.setText(ndata3);
+                }}
             }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbFuncionarios2.setText(ndata2);
-            }
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-                lbFuncionarios3.setText(ndata3);
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
     private void hab() {
-    lbHab1.setText("");
-    lbHab2.setText("");
-    lbHab3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from autorizacaonotafiscaleletronica where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbHab1.setText(ndata1);
-            }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbHab2.setText(ndata2);
-            }
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-                lbHab3.setText(ndata3);
-            }
-        }
-    }catch(Exception erro){
-    }    
-    }    
-    
-    private void inss() {
-    lbInss1.setText("");
-    lbInss2.setText("");
-    lbInss3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from senhainss where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbInss1.setText(ndata1);
-            }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbInss2.setText(ndata2);
-            }
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-                lbInss3.setText(ndata3);
+        lbHab1.setText("");
+        lbHab2.setText("");
+        lbHab3.setText("");
+
+        try {
+            String sql = ("select * from autorizacaonotafiscaleletronica where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbHab1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbHab2.setText(ndata2);
+                }
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+                    lbHab3.setText(ndata3);
+                }
+            }}
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
-    
-    private void pisSocio() {
-    lbPis1.setText("");
-    lbPis2.setText("");
-    lbPis3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from numeropis where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbPis1.setText(ndata1);
-            }
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbPis2.setText(ndata2);
-            }
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-                lbPis3.setText(ndata3);
+
+    private void inss() {
+        lbInss1.setText("");
+        lbInss2.setText("");
+        lbInss3.setText("");
+
+        try {
+            String sql = ("select * from senhainss where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbInss1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbInss2.setText(ndata2);
+                }
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+                    lbInss3.setText(ndata3);
+                }
+            }}
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
+    }
+
+    private void pisSocio() {
+        lbPis1.setText("");
+        lbPis2.setText("");
+        lbPis3.setText("");
+
+        try {
+            String sql = ("select * from numeropis where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbPis1.setText(ndata1);
+                }
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbPis2.setText(ndata2);
+                }
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+                    lbPis3.setText(ndata3);
+                }
+            }}
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+            }
+        }
     }
 
     private void plano() {
-    lbPlano1.setText("");
-    lbPlano2.setText("");
-    lbPlano3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from planodecontas where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbPlano1.setText(ndata1);
-            }
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbPlano2.setText(ndata2);
-            }
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-                lbPlano3.setText(ndata3);
+        lbPlano1.setText("");
+        lbPlano2.setText("");
+        lbPlano3.setText("");
+
+        try {
+            String sql = ("select * from planodecontas where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbPlano1.setText(ndata1);
+                }
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbPlano2.setText(ndata2);
+                }
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+                    lbPlano3.setText(ndata3);
+                }
+            }}
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
     private void posto() {
-    lbPosto1.setText("");
-    lbPosto2.setText("");
-    lbPosto3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from senhapostofiscal where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbPosto1.setText(ndata1);
+        lbPosto1.setText("");
+        lbPosto2.setText("");
+        lbPosto3.setText("");
+
+        try {
+            String sql = ("select * from senhapostofiscal where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbPosto1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbPosto2.setText(ndata2);
+                }
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+                    lbPosto3.setText(ndata3);
+                }}
             }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbPosto2.setText(ndata2);
-            }
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-                lbPosto3.setText(ndata3);
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
     private void prefeitura() {
-    lbPrefeitura1.setText("");
-    lbPrefeitura2.setText("");
-    lbPrefeitura3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from configurarperfilfiscalnositeprefeituradocumento where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbPrefeitura1.setText(ndata1);
-            }
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbPrefeitura2.setText(ndata2);
-            }
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-               lbPrefeitura3.setText(ndata3);
+        lbPrefeitura1.setText("");
+        lbPrefeitura2.setText("");
+        lbPrefeitura3.setText("");
+
+        try {
+            String sql = ("select * from configurarperfilfiscalnositeprefeituradocumento where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbPrefeitura1.setText(ndata1);
+                }
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbPrefeitura2.setText(ndata2);
+                }
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+                    lbPrefeitura3.setText(ndata3);
+                }
+            }}
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
     private void receita() {
-    lbReceita1.setText("");
-    lbReceita2.setText("");
-    lbReceita3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from outorgasenhaeletronicareceita where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbReceita1.setText(ndata1);
-            }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbReceita2.setText(ndata2);
-            }
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-                lbReceita3.setText(ndata3);
+        lbReceita1.setText("");
+        lbReceita2.setText("");
+        lbReceita3.setText("");
+
+        try {
+            String sql = ("select * from outorgasenhaeletronicareceita where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbReceita1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbReceita2.setText(ndata2);
+                }
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+                    lbReceita3.setText(ndata3);
+                }
+            }}
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
     private void recisoes() {
-    lbRecisoes1.setText("");
-    lbRecisoes2.setText("");
-    lbRecisoes3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from recisao where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbRecisoes1.setText(ndata1);
-            }
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbRecisoes2.setText(ndata2);
-            }
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-                lbRecisoes3.setText(ndata3);
+        lbRecisoes1.setText("");
+        lbRecisoes2.setText("");
+        lbRecisoes3.setText("");
+
+        try {
+            String sql = ("select * from recisao where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbRecisoes1.setText(ndata1);
+                }
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbRecisoes2.setText(ndata2);
+                }
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+                    lbRecisoes3.setText(ndata3);
+                }
+            }}
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
-    }    
     }
 
-    
     private void simples() {
-    lbSimples1.setText("");
-    lbSimples2.setText("");
-    lbSimples3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from senhasimplesnacional where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbSimples1.setText(ndata1);
-            }
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbSimples2.setText(ndata2);
-            }
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-                lbSimples3.setText(ndata3);
+        lbSimples1.setText("");
+        lbSimples2.setText("");
+        lbSimples3.setText("");
+
+        try {
+            String sql = ("select * from senhasimplesnacional where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbSimples1.setText(ndata1);
+                }
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbSimples2.setText(ndata2);
+                }
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+                    lbSimples3.setText(ndata3);
+                }
             }
         }
-    }catch(Exception erro){
-    }    
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+            }
+        }
     }
-    
+
     private void termo() {
-    lbTermo1.setText("");
-    lbTermo2.setText("");
-    lbTermo3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from termoderesponsabilidadedocumento where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbTermo1.setText(ndata1);
+        lbTermo1.setText("");
+        lbTermo2.setText("");
+        lbTermo3.setText("");
+
+        try {
+            String sql = ("select * from termoderesponsabilidadedocumento where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbTermo1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbTermo2.setText(ndata2);
+                }
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+                    lbTermo3.setText(ndata3);
+                }}
             }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbTermo2.setText(ndata2);
-            }
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-                lbTermo3.setText(ndata3);
-            }
-        }
-    }catch(Exception erro){
-    }    
-    }
-    
-    public void folha(){
-    lbFolha1.setText("");
-    lbFolha2.setText("");
-    lbFolha3.setText("");
-    
-    
-    try{
-        con.executeSQL("select * from folhadepagamentodocumento where NumeroProcesso='"+processo+"'");
-        if(con.resultset.last()){
-            
-            String data1, data2, data3;
-            
-            data1 = con.resultset.getString("DatadeCadastroAndamento");
-            data2 = con.resultset.getString("DataDevulucaoCliente");
-            data3 = con.resultset.getString("DataFinalAndamento");
-            
-            String  ndata1, ndata2, ndata3;
-            
-            if(data1.trim().length()==10 && !data1.equals("1111-11-11")){
-                String ano = data1.substring(0, 4);
-                String mes = data1.substring(5, 7);
-                String dia = data1.substring(8);
-                ndata1 = dia+"/"+mes+"/"+ano;
-                lbFolha1.setText(ndata1);
-            }
-            
-            if(data2.trim().length()==10 && !data2.equals("1111-11-11")){
-                String ano = data2.substring(0, 4);
-                String mes = data2.substring(5, 7);
-                String dia = data2.substring(8);
-                ndata2 = dia+"/"+mes+"/"+ano;
-                lbFolha2.setText(ndata2);
-            }
-            
-            
-            if(data3.trim().length()==10 && !data3.equals("1111-11-11")){
-                String ano = data3.substring(0, 4);
-                String mes = data3.substring(5, 7);
-                String dia = data3.substring(8);
-                ndata3 = dia+"/"+mes+"/"+ano;
-                lbFolha3.setText(ndata3);
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
             }
         }
-    }catch(Exception erro){
     }
-    }    
+
+    private void folha() {
+        lbFolha1.setText("");
+        lbFolha2.setText("");
+        lbFolha3.setText("");
+        try {
+            String sql = ("select * from folhadepagamentodocumento where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            if (rs.last()) {
+
+                String data1, data2, data3;
+
+                data1 = rs.getString("DatadeCadastroAndamento");
+                data2 = rs.getString("DataDevulucaoCliente");
+                data3 = rs.getString("DataFinalAndamento");
+
+                String ndata1, ndata2, ndata3;
+
+                if (data1.trim().length() == 10 && !data1.equals("1111-11-11")) {
+                    String ano = data1.substring(0, 4);
+                    String mes = data1.substring(5, 7);
+                    String dia = data1.substring(8);
+                    ndata1 = dia + "/" + mes + "/" + ano;
+                    lbFolha1.setText(ndata1);
+                }
+
+                if (data2.trim().length() == 10 && !data2.equals("1111-11-11")) {
+                    String ano = data2.substring(0, 4);
+                    String mes = data2.substring(5, 7);
+                    String dia = data2.substring(8);
+                    ndata2 = dia + "/" + mes + "/" + ano;
+                    lbFolha2.setText(ndata2);
+                }
+
+                if (data3.trim().length() == 10 && !data3.equals("1111-11-11")) {
+                    String ano = data3.substring(0, 4);
+                    String mes = data3.substring(5, 7);
+                    String dia = data3.substring(8);
+                    ndata3 = dia + "/" + mes + "/" + ano;
+                    lbFolha3.setText(ndata3);
+                }
+            }
+            }
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+    
+    private void preencher(JLabel[] labels, String tableName){
+        for (JLabel label : labels) {
+            label.setText("");
+        }
+        try {
+            String sql = ("select * from " + tableName + " where NumeroProcesso='" + processo + "'");
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (rs.last()) {
+                    String[] data = new String[3];
+                    data[0] = rs.getString("DatadeCadastroAndamento");
+                    data[2] = rs.getString("DataDevulucaoCliente");
+                    data[3] = rs.getString("DataFinalAndamento");
+                    String[] ndata = new String[3];
+                    for (int i = 0; i < data.length; i++) {
+                        if (data[i].trim().length() == 10 && !data[i].equals("1111-11-11")) {
+                            String ano = data[i].substring(0, 4);
+                            String mes = data[i].substring(5, 7);
+                            String dia = data[i].substring(8);
+                            ndata[i] = dia + "/" + mes + "/" + ano;
+                            labels[i].setText(ndata[i]);
+                        }
+                    }
+                }
+            }
+        } catch (Exception erro) {
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+            }
+        }
+    }
 }

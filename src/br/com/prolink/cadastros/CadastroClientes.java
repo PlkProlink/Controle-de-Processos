@@ -6,7 +6,7 @@
 package br.com.prolink.cadastros;
 
 
-import br.com.prolink.login.Login;
+import br.com.prolink.factory.ConexaoStatement;
 import java.awt.HeadlessException;
 import java.sql.*;
 import java.text.ParseException;
@@ -16,18 +16,15 @@ import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
-import br.com.prolink.inicio.*;
+import br.com.prolink.model.UsuarioLogado;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
-import javax.swing.WindowConstants;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -36,12 +33,13 @@ import javax.swing.table.TableCellRenderer;
  */
 public class CadastroClientes extends javax.swing.JFrame {
     MaskFormatter formatoData, formatoAtivada, formatoFim;
- 
-    Conexao con_cliente = new Conexao();
-    Conexao con_classificacao= new Conexao();
+    Connection con;
+    public Connection getConnection(){
+        this.con = ConexaoStatement.getInstance().getConnetion();
+        return this.con;
+    };
     
     ClientesProlinkView cliPlk;
-    
     String codigo_backup, apelido_backup, nome_backup, classificacao_backup, data_backup, datainicio_backup, datafim_backup, backup_situacao;  
     
     SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy" );
@@ -57,8 +55,6 @@ public class CadastroClientes extends javax.swing.JFrame {
         rbAtivada.setSelected(true);
         rbFinalizada.setSelected(true);
         
-        con_cliente.conecta();
-        
         atualiza_combo_box_classificacao();
         
         txt_codigo.setEditable(false);
@@ -66,7 +62,7 @@ public class CadastroClientes extends javax.swing.JFrame {
         txt_data.setEditable(false);
         //verificar_acesso();
         
-        preencher_jtable();
+        preencher_jtable("select * from cadastrodeprocesso order by codNumerodoprocesso");
         
         data_agora();
         tb_clientes.setAutoCreateRowSorter(true);
@@ -212,17 +208,9 @@ public class CadastroClientes extends javax.swing.JFrame {
             }
         });
 
-        txBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txBuscarActionPerformed(evt);
-            }
-        });
         txBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txBuscarKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txBuscarKeyReleased(evt);
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txBuscarKeyTyped(evt);
             }
         });
 
@@ -333,7 +321,7 @@ public class CadastroClientes extends javax.swing.JFrame {
                     .addComponent(rbAtivada)
                     .addComponent(cbCadastradoPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbClassificacaoMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -618,11 +606,13 @@ public class CadastroClientes extends javax.swing.JFrame {
         if(!txt_codigo.getText().equals("")){
             
             try{
-                con_cliente.executeSQL("select * from cadastrodeprocesso where codNumerodoprocesso="+txt_codigo.getText());   
-                if(con_cliente.resultset.first()){
+                PreparedStatement ps = getConnection().prepareStatement("select * from cadastrodeprocesso where codNumerodoprocesso="+txt_codigo.getText());
+                ResultSet resultset = ps.executeQuery();
+                
+                if(resultset.next()){
 
-                    datainicio_backup = con_cliente.resultset.getString("DatadeAtivacao");
-                    datafim_backup = con_cliente.resultset.getString("DataDeArquivamentodoProcesso");
+                    datainicio_backup = resultset.getDate("DatadeAtivacao")==null?"":resultset.getString("DatadeAtivacao");
+                    datafim_backup = resultset.getDate("DataDeArquivamentodoProcesso")==null?"":resultset.getString("DataDeArquivamentodoProcesso");
 
                     if(datainicio_backup.length()==10 && !"1111-11-11".equals(datainicio_backup)){
                         String anoi = datainicio_backup.substring(0, 4);
@@ -640,10 +630,13 @@ public class CadastroClientes extends javax.swing.JFrame {
                         String recebef = diaf+"/"+mesf+"/"+anof;
 
                         txt_datafim.setText(recebef);
-
                     }
                 }
             }catch(Exception erro){
+            }finally{
+                try{
+                    con.close();
+                }catch(SQLException e){}
             }
         
     }
@@ -674,7 +667,6 @@ public class CadastroClientes extends javax.swing.JFrame {
         try{
             
             int status;
-            
             if(chStatus.isSelected())
                 status=0;
             else
@@ -688,26 +680,25 @@ public class CadastroClientes extends javax.swing.JFrame {
                     "Datadecadastro = '" +new java.sql.Date(data.getTime())+"',"+
                     "Classificacao = '" +cb_classificacao.getSelectedItem()+"',"+
                     "Situacao='"+status+"',"+
-                    "Usuario = '" +Login.usuario+
+                    "Usuario = '" +UsuarioLogado.getInstance().getUsuario().getUsuario()+
                     "' where codNumerodoprocesso = "+txt_codigo.getText();
-            con_cliente.statement.executeUpdate(sql);
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.executeUpdate();
             JOptionPane.showMessageDialog(null,"Alteração realizado com sucesso!");
-            
             enviar_data1();
             enviar_data2();
-            
-            limpar_tabela();
-            preencher_jtable();
-            
         }catch (SQLException erro){
             JOptionPane.showMessageDialog(null,"Erro a tentar Alterar o registro..."+erro);
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(null, "Problema na tentativa de conversão de data, contate o suporte!" +ex);
+        }finally{
+                try{
+                    con.close();
+                }catch(SQLException e){}
         }
         
     }
     else if (txt_codigo.getText().equals("")){ 
-        
         try{
             int status;
             
@@ -718,7 +709,7 @@ public class CadastroClientes extends javax.swing.JFrame {
             
             String str = txt_data.getText();  
             Date data = sdf.parse(str);
-            String gry = "insert into cadastrodeprocesso (Apelido, Datadecadastro,"
+            String sql = "insert into cadastrodeprocesso (Apelido, Datadecadastro,"
                     + " Cliente, Classificacao, Usuario, "
                     + "AndamentoComercial, AndamentoFinanceiro, AndamentoContratos,"
                     + "AndamentoDP,AndamentoContabil, AndamentoFiscal, AndamentoRegularizacao, Situacao) values ('"+
@@ -726,24 +717,26 @@ public class CadastroClientes extends javax.swing.JFrame {
                             new java.sql.Date(data.getTime())+"','"+
                             txt_nome.getText()+"','"+
                             cb_classificacao.getSelectedItem()+"','"+
-                            Login.usuario+"','"
+                            UsuarioLogado.getInstance().getUsuario().getUsuario()+"','"
                     + "Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', 'Em Aberto', '"+status+"')";
-                                
-                con_cliente.exeQuery(gry);
-                expandir_cadastro();
-                enviar_data1();
-                enviar_data2();
-                
-                limpar_tabela();
-                //atualizando tabela
-                preencher_jtable();
-            
-                JOptionPane.showMessageDialog(null,"Gravado com sucesso!");
-                }catch(ParseException | HeadlessException add){
-                         JOptionPane.showMessageDialog(null,"Falha ao gravar o registro: " +add);
+                PreparedStatement ps = getConnection().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                if(ps.executeUpdate()>0){
+                    ResultSet rs = ps.getGeneratedKeys();
+                    ps.clearParameters();
+                    if (rs != null && rs.next()) {
+                        long key = rs.getLong(1);
+                        expandir_cadastro(key);
+                        enviar_data1();
+                        enviar_data2();
+                        JOptionPane.showMessageDialog(null,"Gravado com sucesso!");
+                    }
+                    
                 }
-        
+           }catch(ParseException | HeadlessException | SQLException add){
+            JOptionPane.showMessageDialog(null,"Falha ao gravar o registro: " +add);
+           }
     }
+    filtrar();
     trava_campos();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -770,43 +763,44 @@ public class CadastroClientes extends javax.swing.JFrame {
             
             try{
                 String sql = "select * from cadastrodeprocesso where codNumerodoprocesso=" +txt_codigo.getText();
-                con_cliente.executeSQL(sql);
-                con_cliente.resultset.first();
-                String nome = "Tem certeza que deseja excluir o cadastro do cliente " +con_cliente.resultset.getString("Cliente")+"?";
-                int opcao_escolhida = JOptionPane.showConfirmDialog(null,nome,"Exclusão ",JOptionPane.YES_NO_OPTION);
-                if (opcao_escolhida == JOptionPane.YES_OPTION)
-                {
-                    String aviso = "Ao excluir esse registro, irá afetar todo os processos desse cliente, \n"
-                            +"essa exclusão será irreparável  e um registro dessa tentativa será salvo!\n"
-                            +"Mesmo assim você deseja continuar?";
-                    int opcao_aviso = JOptionPane.showConfirmDialog(null, aviso, "Atenção!", JOptionPane.OK_CANCEL_OPTION);
-                    
-                    if(opcao_aviso == JOptionPane.YES_OPTION){
-                        sql = "DELETE FROM cadastrodeprocesso Where codNumerodoprocesso ="+txt_codigo.getText();
-                            int conseguiu_excluir = con_cliente.statement.executeUpdate(sql);
-                            if (conseguiu_excluir == 1)
-                            {
-                            JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
-                            //disparar e-mail para administradores alertando exclusão
-//                            AlertaExclusao alerta = new AlertaExclusao();
-//                            alerta.destino = "tiago.dias@prolinkcontabil.com.br";
-//                            alerta.assunto = "Controle de Processos - Cadastro Excluido";
-//                            alerta.mensagem = "Olá,\n Se você recebeu essa mensagem significa que "+Login.usuario+" realizou uma tentativa de exclusão"+
-//                                    " no cliente abaixo \n Nome:"+nome+" \nProcesso: "+txt_codigo.getText()+
-//                                    "\n Todos os registros desse cliente foram perdidos!";
-                            
-                            limpar_tabela();
-                            preencher_jtable();
-                            limpar_tela();
-                            data_agora();
-                            }
+                PreparedStatement ps = getConnection().prepareStatement(sql);
+                ResultSet resultset = ps.executeQuery();
+                if(resultset.next()){
+                    String nome = "Tem certeza que deseja excluir o cadastro do cliente " +resultset.getString("Cliente")+"?";
+                    int opcao_escolhida = JOptionPane.showConfirmDialog(null,nome,"Exclusão ",JOptionPane.YES_NO_OPTION);
+                    if (opcao_escolhida == JOptionPane.YES_OPTION)
+                    {
+                        String aviso = "Ao excluir esse registro, irá afetar todo os processos desse cliente, \n"
+                                +"essa exclusão será irreparável  e um registro dessa tentativa será salvo!\n"
+                                +"Mesmo assim você deseja continuar?";
+                        int opcao_aviso = JOptionPane.showConfirmDialog(null, aviso, "Atenção!", JOptionPane.OK_CANCEL_OPTION);
+
+                        if(opcao_aviso == JOptionPane.YES_OPTION){
+                            sql = "DELETE FROM cadastrodeprocesso Where codNumerodoprocesso ="+txt_codigo.getText();
+                                ps.clearParameters();
+                                int conseguiu_excluir = ps.executeUpdate(sql);
+                                if (conseguiu_excluir == 1)
+                                {
+                                JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
+                                //disparar e-mail para administradores alertando exclusão
+    //                            AlertaExclusao alerta = new AlertaExclusao();
+    //                            alerta.destino = "tiago.dias@prolinkcontabil.com.br";
+    //                            alerta.assunto = "Controle de Processos - Cadastro Excluido";
+    //                            alerta.mensagem = "Olá,\n Se você recebeu essa mensagem significa que "+Login.usuario+" realizou uma tentativa de exclusão"+
+    //                                    " no cliente abaixo \n Nome:"+nome+" \nProcesso: "+txt_codigo.getText()+
+    //                                    "\n Todos os registros desse cliente foram perdidos!";
+                                limpar_tela();
+                                data_agora();
+                                }
+                        }
                     }
                 }
             }
-            catch (SQLException erro)
-            {
+            catch (SQLException erro){
                     JOptionPane.showMessageDialog(null,"Erro a tentar excluir o registro..."+erro);
-            }
+            }finally{try{con.close();}catch(SQLException e){}}
+            limpar_tabela();
+            preencher_jtable("select * from cadastrodeprocesso order by codNumerodoprocesso");
             
         }
     }//GEN-LAST:event_bt_excluirActionPerformed
@@ -831,9 +825,7 @@ public class CadastroClientes extends javax.swing.JFrame {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                con_cliente.conecta();
-                preencher_jtable();
-                con_cliente.desconecta();
+                preencher_jtable("select * from cadastrodeprocesso order by codNumerodoprocesso");
             }
 
             @Override
@@ -854,10 +846,6 @@ public class CadastroClientes extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_btImportActionPerformed
 
-    private void txBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txBuscarActionPerformed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if(telaEmEdicao){
             int v = JOptionPane.showConfirmDialog(null, "Existe um registro em edição, salve antes de sair\n"
@@ -877,10 +865,6 @@ public class CadastroClientes extends javax.swing.JFrame {
         filtrar();
     }//GEN-LAST:event_cbCadastradoPorItemStateChanged
 
-    private void txBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txBuscarKeyReleased
-        
-    }//GEN-LAST:event_txBuscarKeyReleased
-
     private void rbAtivadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbAtivadaMouseClicked
         filtrar();
     }//GEN-LAST:event_rbAtivadaMouseClicked
@@ -889,11 +873,11 @@ public class CadastroClientes extends javax.swing.JFrame {
         filtrar();
     }//GEN-LAST:event_rbFinalizadaMouseClicked
 
-    private void txBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txBuscarKeyPressed
+    private void txBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txBuscarKeyTyped
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             filtrar();
         }
-    }//GEN-LAST:event_txBuscarKeyPressed
+    }//GEN-LAST:event_txBuscarKeyTyped
 
     /**
      *
@@ -985,39 +969,37 @@ public class CadastroClientes extends javax.swing.JFrame {
             rbAtivada.setSelected(true);
             status="and Situacao=1";
         }
-            limpar_tabela();
-            con_cliente.conecta();
-            String sql = "select * from cadastrodeprocesso "+text+" "+classificado+" "+cadastradoPor+" "+status;
-            con_cliente.executeSQL(sql);
-            preencher_jtable_custom();
-            con_cliente.desconecta();
-        
+        limpar_tabela();
+        String sql = "select * from cadastrodeprocesso "+text+" "+classificado+" "+cadastradoPor+" "+status;
+        preencher_jtable(sql);
     }
     public void atualiza_combo_box_classificacao()
     {
-        con_classificacao.conecta();
         try
         {
             cb_classificacao.removeAllItems();
-            con_classificacao.executeSQL("select * from classificacao order by Status");
-            while(con_classificacao.resultset.next()){
-                String status = con_classificacao.resultset.getString("Status");
+            PreparedStatement ps = getConnection().prepareStatement("select * from classificacao order by Status");
+            ResultSet resultset = ps.executeQuery();
+            while(resultset.next()){
+                String status = resultset.getString("Status");
                 cb_classificacao.addItem(status);
             }
         }
         catch(SQLException erro)
         {
             JOptionPane.showMessageDialog(null,"Não localizou dados na tabela classificacao!"+erro);
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){}
         }
-        con_classificacao.desconecta();
         
     }
 
     /**
      *
      */
-    public void preencher_jtable_custom()
-{
+    public void preencher_jtable(String sql){
         tb_clientes.getColumnModel().getColumn(0);
         tb_clientes.getColumnModel().getColumn(1);
         tb_clientes.getColumnModel().getColumn(2);
@@ -1028,57 +1010,24 @@ public class CadastroClientes extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel)tb_clientes.getModel();
         //modelo.setNumRows(0);
         try
-        {
-        while (con_cliente.resultset.next())
+        {   
+        //con_cliente.executeSQL("select * from cadastrodeprocesso order by codNumerodoprocesso");    
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+        ResultSet resultset = ps.executeQuery();    
+        while (resultset.next())
                 modelo.addRow(new Object [] {
-                    con_cliente.resultset.getString("codNumerodoprocesso"),
-                    con_cliente.resultset.getString("Apelido"),
-                    con_cliente.resultset.getString("Cliente"),
-                    sdf.format(con_cliente.resultset.getDate("Datadecadastro")),
-                    con_cliente.resultset.getString("Classificacao"),                    
-                    con_cliente.resultset.getString("Usuario"),
-                    converter(con_cliente.resultset.getString("Situacao"))});
-            con_cliente.resultset.first();
+                    resultset.getString("codNumerodoprocesso"),
+                    resultset.getString("Apelido"),
+                    resultset.getString("Cliente"),
+                    sdf.format(resultset.getDate("Datadecadastro")),
+                    resultset.getString("Classificacao"),                    
+                    resultset.getString("Usuario"),
+                    converter(resultset.getString("Situacao"))});
+            resultset.first();
         }
-catch (SQLException erro){
-    JOptionPane.showMessageDialog(null,"Erro ao listar no JTable "+erro);
-}
-}
-    /**
-     *
-     */
-    public void preencher_jtable()
-{
-        tb_clientes.getColumnModel().getColumn(0);
-        tb_clientes.getColumnModel().getColumn(1);
-        tb_clientes.getColumnModel().getColumn(2);
-        tb_clientes.getColumnModel().getColumn(3);
-        tb_clientes.getColumnModel().getColumn(4);
-        tb_clientes.getColumnModel().getColumn(5);
-        tb_clientes.getColumnModel().getColumn(6);
-
-        con_cliente.executeSQL("select * from cadastrodeprocesso order by codNumerodoprocesso");
-        
-        DefaultTableModel modelo = (DefaultTableModel)tb_clientes.getModel();
-        while(modelo.getRowCount()>0)
-            modelo.removeRow(0);
-        try
-        {
-            while (con_cliente.resultset.next())
-                modelo.addRow(new Object [] {
-                    con_cliente.resultset.getString("codNumerodoprocesso"),
-                    con_cliente.resultset.getString("Apelido"),
-                    con_cliente.resultset.getString("Cliente"),
-                    sdf.format(con_cliente.resultset.getDate("Datadecadastro")),
-                    con_cliente.resultset.getString("Classificacao"),                    
-                    con_cliente.resultset.getString("Usuario"),
-                    converter(con_cliente.resultset.getString("Situacao"))});
-           
-            con_cliente.resultset.first();
-        }
-catch (SQLException erro){
-    JOptionPane.showMessageDialog(null,"Erro ao listar na tabela! "+erro);
-}
+        catch (SQLException erro){
+            JOptionPane.showMessageDialog(null,"Erro ao listar no JTable "+erro);
+        }finally{try{con.close();}catch(SQLException e){}}
 }
 
     /**
@@ -1187,7 +1136,7 @@ catch (SQLException erro){
     txt_data.setText(datatela);
 }
     public void verificar_acesso(){
-        if(!Login.nivel.equals("1") && !Login.departamento.equalsIgnoreCase("Comercial")){
+        if(UsuarioLogado.getInstance().getUsuario().getNivel()!=1 && !UsuarioLogado.getInstance().getUsuario().getDepartamento().equalsIgnoreCase("Comercial")){
             btnAlterar.setEnabled(false);
             btnSalvar.setEnabled(false);
             bt_excluir.setEnabled(false);
@@ -1195,17 +1144,15 @@ catch (SQLException erro){
                                                 +"Essa tela é reservada ao setor Comercial e Coordenação!");
         }
     }
-    public void expandir_cadastro(){
+    
+    public void expandir_cadastro(long key) throws SQLException {
     try{
-        
         String str = txt_data.getText();
         Date data = sdf.parse(str);
         
-        con_cliente.executeSQL("select * from cadastrodeprocesso order by codNumerodoprocesso desc limit 1");
-            if(con_cliente.resultset.first()){
-                    txt_codigo.setText(con_cliente.resultset.getString("codNumerodoprocesso"));
+        txt_codigo.setText(""+key);
                     //Inserir o codigo do cliente nas tabelas
-                    con_cliente.exeQuery("insert into comercial (AndamentoTaxaDeImplantacaoEFormaDePagamento,AndamentoGravarSenhasFiscais,"
+        String sql = ("insert into comercial (AndamentoTaxaDeImplantacaoEFormaDePagamento,AndamentoGravarSenhasFiscais,"
                                     + "AndamentoGerarOS,AndamentoEnviarTermoResponsaparacliente,AndamentoPropastaComercial,"
                                     + "AndamentoEnvioDiagnose,AndamentoChekList,AndamentoPesquisaFiscal,AndamentoRequisicaoDocumentos,"
                                     + "AndamentoConfirmarRecebimentoDeposito,Numerodoprocesso, DataCadastroProcesso) "
@@ -1213,67 +1160,76 @@ catch (SQLException erro){
                                     + "'Em Aberto','Em Aberto','Em Aberto','Em Aberto','Em Aberto','Em Aberto',"
                                     + txt_codigo.getText()+",'"
                                     + new java.sql.Date(data.getTime())+"')");
-                                        
-                    con_cliente.exeQuery("insert into contabil (AndamentoGerarPlanoDeContas,Numerodoprocesso,DataCadastroProcesso)"
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.executeUpdate();
+        
+        ps.clearParameters();
+        ps.executeUpdate("insert into contabil (AndamentoGerarPlanoDeContas,Numerodoprocesso,DataCadastroProcesso)"
                                     + " values ('Em aberto',"
                                     + txt_codigo.getText()+",'"
                                     + new java.sql.Date(data.getTime())+"')");
-                    con_cliente.exeQuery("insert into contratos (AndamentoElaborarContratoPrestacaoDeServico, AndamentoCadastrarControlEContmatic, "
+        ps.clearParameters();
+        ps.executeUpdate("insert into contratos (AndamentoElaborarContratoPrestacaoDeServico, AndamentoCadastrarControlEContmatic, "
                                     + "AndamentoAtivarCliente, AndamentoElaborarPrefilFiscal, AndamentoReceberContratoAssCliente, "
                                     + "AndamentoGerarIDPlanCadastro, Numerodoprocesso, DataCadastroProcesso)"
                                     + " values ('Em Aberto','Em Aberto','Em Aberto','Em Aberto','Em Aberto','Em Aberto',"
                                     + txt_codigo.getText()+",'"
                                     + new java.sql.Date(data.getTime())+"')");
-                    con_cliente.exeQuery("insert into fiscal (AndamenoDistribuirFuncionarioInterno,AndamentoValidarPerfilFiscal,Numerodoprocesso,"
+        ps.clearParameters();
+        ps.executeUpdate("insert into fiscal (AndamenoDistribuirFuncionarioInterno,AndamentoValidarPerfilFiscal,Numerodoprocesso,"
                                     + "DataCadastroProcesso) values ('Em Aberto','Em Aberto',"
                                     + txt_codigo.getText()+",'"
                                     + new java.sql.Date(data.getTime())+"')");
-                    con_cliente.exeQuery("insert into financeiro (AndamentoLancamentodeDadosPlanCobranca,AndamentoEmissaoBoleto,"
+        ps.clearParameters();
+        ps.executeUpdate("insert into financeiro (AndamentoLancamentodeDadosPlanCobranca,AndamentoEmissaoBoleto,"
                                     + "AndamentoEntrarNoControlControleDoOs,Numerodoprocesso,DataCadastroProcesso) "
                                     + "values ('Em Aberto','Em Aberto','Em Aberto',"
                                     + txt_codigo.getText()+",'"
                                     + new java.sql.Date(data.getTime())+"')");
-                    con_cliente.exeQuery("insert into regularizacao (AndamentoEnviarTernoReponsaParaComercial,AndamentoArquivarProcesso,"
+        ps.clearParameters();
+        ps.executeUpdate("insert into regularizacao (AndamentoEnviarTernoReponsaParaComercial,AndamentoArquivarProcesso,"
                                     + "Numerodoprocesso,DataCadastroProcesso) values ('Em Aberto', 'Em Aberto',"
                                     + txt_codigo.getText()+",'"
                                     + new java.sql.Date(data.getTime())+"')");
-                    con_cliente.exeQuery("insert into dp (AndamentoCadastroDoSocioNoControl,AndamentoCadastroDependentesdoSocioADM,"
+        ps.clearParameters();
+        ps.executeUpdate("insert into dp (AndamentoCadastroDoSocioNoControl,AndamentoCadastroDependentesdoSocioADM,"
                                     + "AndamentoIplantacaodadosFolhaPg,Numerodoprocesso,DataCadastroProcesso) "
                                     + "values ('Em Aberto','Em Aberto','Em Aberto',"
                                     + txt_codigo.getText()+",'"
                                     + new java.sql.Date(data.getTime())+"')");
-                    con_cliente.exeQuery("insert into acompanhamentodeenvios (Numerodoprocesso) values ("
+        ps.clearParameters();
+        ps.executeUpdate("insert into acompanhamentodeenvios (Numerodoprocesso) values ("
                                     +txt_codigo.getText()+")");
-                    con_cliente.exeQuery("insert into documentos (Numerodoprocesso) values ("+txt_codigo.getText()+")");
-                        }
-    }catch(ParseException | SQLException add){
-    JOptionPane.showMessageDialog(null, "Erro ao distribuir cadastro, chame o suporte :\n");   
+        ps.clearParameters();
+        ps.executeUpdate("insert into documentos (Numerodoprocesso) values ("+txt_codigo.getText()+")");
+    }catch(ParseException e){
+        JOptionPane.showMessageDialog(null, "Erro ao distribuir cadastro, chame o suporte :\n");   
     }
+    
     }
+
     public void enviar_data1(){
         if(txt_datainicio.getText().trim().length()==10){
             try{
                 String st = txt_datainicio.getText();
                 Date data1 = sdf.parse(st);
-                
-                con_cliente.statement.executeUpdate("update cadastrodeprocesso "
+                PreparedStatement ps = con.prepareStatement("update cadastrodeprocesso "
                         + "set DatadeAtivacao='"+ new java.sql.Date(data1.getTime())+
                         "' where codNumerodoprocesso="+txt_codigo.getText());
+                ps.executeUpdate();
             }catch(Exception erro){
             }  
         }
     }
     public void enviar_data2(){
         if(txt_datafim.getText().trim().length()==10){
-            
-            
             try{
                 String st = txt_datafim.getText();
                 Date data1 = sdf.parse(st);
-                
-                con_cliente.statement.executeUpdate("update cadastrodeprocesso "
+                PreparedStatement ps = con.prepareStatement("update cadastrodeprocesso "
                         + "set DataDeArquivamentodoProcesso='"+ new java.sql.Date(data1.getTime())+
                         "' where codNumerodoprocesso="+txt_codigo.getText());
+                ps.executeUpdate();
             }catch(Exception erro){
             }  
         }
@@ -1288,32 +1244,9 @@ catch (SQLException erro){
         }else
             return "Ativada";
     }
-
-//    private void buscar() {
-//        if(txt_pesquisa.getText().trim().length()<1){
-//            JOptionPane.showMessageDialog(null, "Campo de busca não pode ficar em branco!");
-//        }
-//        else{
-//            limpar_tabela();
-//            try{
-//            con_cliente.executeSQL("select * from cadastrodeprocesso "+pesquisa);
-//                if(con_cliente.resultset.first()){
-//                    preencher_jtable_custom();
-//                }
-//                else{
-//                    JOptionPane.showMessageDialog(null, "Não encontrado registro com: "+txt_pesquisa.getText().toUpperCase());
-//                }
-//            }catch(SQLException | HeadlessException erro){
-//                JOptionPane.showMessageDialog(null,"Não foi possivel localizar os dados via digitação..."+erro);
-//            }
-//        }
-//    }
-
     private void carregarComboClassificacao() {
-        Connection con = new ConexaoStatement().getConnetion();
-        
         try{
-            PreparedStatement ps = con.prepareStatement("select * from classificacao order by Status");
+            PreparedStatement ps = getConnection().prepareStatement("select * from classificacao order by Status");
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 cbClassificacaoMenu.addItem(rs.getString("Status"));
@@ -1332,10 +1265,8 @@ catch (SQLException erro){
     }
 
     private void carregarComboAtendentes() {
-        Connection con = new ConexaoStatement().getConnetion();
-        
         try{
-            PreparedStatement ps = con.prepareStatement("select * from login order by Usuario");
+            PreparedStatement ps = getConnection().prepareStatement("select * from login order by Usuario");
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 cbCadastradoPor.addItem(rs.getString("Usuario"));

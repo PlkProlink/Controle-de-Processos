@@ -1,9 +1,12 @@
 package br.com.prolink.enviodocumentos.internas;
 
+import br.com.prolink.model.LogUsuarioBean;
+import br.com.prolink.model.LogUsuarioDao;
 import br.com.prolink.enviodocumentos.*;
-import br.com.prolink.controle.*;
-import br.com.prolink.inicio.Conexao;
-import br.com.prolink.inicio.TelaPrincipal;
+import br.com.prolink.factory.ConexaoStatement;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
+import br.com.prolink.model.UsuarioLogado;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -18,29 +21,34 @@ import javax.swing.text.MaskFormatter;
  * @author Tiago Dias
  */
 public class EnviadosIntModelo extends javax.swing.JInternalFrame {
-    
-    Conexao conexao;
-    
     MaskFormatter formatoData1, formatoData2, formatoData3;
-    
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
-    Date novadata1, novadata2, novadata3;
-    String acao, descricao, datahoje, data1, data2, data3, 
-            data1_backup, data2_backup, data3_backup, obs_backup, codigo_backup;
-    
+    SimpleDateFormat sdb = new SimpleDateFormat("yyyy/MM/dd");
+    String acao, descricao,data1,data2,data3;
     String campoDocumentos; //campo da tabela documentos
     String tabela; //tabela do formulario
     String tela;
+    Date dataConvertida;
     
-    String nome=TelaPrincipal.txt_nome.getText(), processo=TelaPrincipal.txt_codigo.getText(), usuario=TelaPrincipal.txt_usuario.getText();
-    
+    Processo p = ProcessoLogado.getInstance().getProcesso();
+    String processo=p.getId()+"",
+            nome=p.getCliente(), 
+            id=p.getApelido(), 
+            usuario=UsuarioLogado.getInstance().getUsuario().getUsuario();
     AtualizacaoEnviados atualizaDoc;
     
     DocumentosEnviadosDao doc;
     LogUsuarioDao log;
     LogUsuarioBean logb;
     
+    Connection con;
+    private Connection getConnection(){
+        this.con = ConexaoStatement.getInstance().getConnetion();
+        return con;
+    }
+    private void closeConnection(){
+        try{con.close();}catch(SQLException e){}
+    }    
     public EnviadosIntModelo() {
         initComponents();
         
@@ -55,13 +63,13 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
 //        preencher_tabela();
 //        
 //        pegar_ultimo_registro();
-        doc = new DocumentosEnviadosDao();
-        log = new LogUsuarioDao();
-        logb = new LogUsuarioBean();
-        logb.setCliente(nome);
-        logb.setApelido(TelaPrincipal.txt_id.getText());
-        logb.setProcesso(processo);
-        logb.setTela(tela);
+//        doc = new DocumentosEnviadosDao();
+//        log = new LogUsuarioDao();
+//        logb = new LogUsuarioBean();
+//        logb.setCliente(nome);
+//        logb.setApelido(ProcessoLogado.getInstance().getProcesso().getApelido());
+//        logb.setProcesso(processo);
+//        logb.setTela(tela);
        
     }
 
@@ -373,14 +381,11 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formComponentMoved
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        criar_backup();
         limpar_campos();
-        desbloquear_campos();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        criar_backup();
-        desbloquear_campos();
+        
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
@@ -391,268 +396,106 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
         setTela();
         setCampoDocumentos();
         setTabela();
-        
-        if(data1.trim().length()<10){
+        String texto;
+        if(data1.trim().length()<10 && !converter_data(data1)){
             JOptionPane.showMessageDialog(null, "1º data de envio não informado ou incorreto!");
+            return;
         }
-        else if(data2.trim().length()==10 && data1.trim().length()<10){
-            JOptionPane.showMessageDialog(null, "2º data de envio não é permitido se a 1º não for informada");
+        else{
+            texto =  "1º Envio Realizado";
         }
-        else if(data3.trim().length()==10 && data1.trim().length()<10 || data2.trim().length()<10 && data3.trim().length()==10){
+        if(data2.trim().length()==10 && !converter_data(data2) || !converter_data(data1) && !converter_data(data2)){
+            JOptionPane.showMessageDialog(null, "2º data de envio incorreto ou não é permitido se a 1º não for informada");
+            return;
+        }
+        else{
+            texto =  "1º e 2º Envio Realizado";
+        }
+        if(data3.trim().length()==10 && data2.trim().length()<10){
             JOptionPane.showMessageDialog(null, "3º data de envio não é permitido se a 1º e 2º não forem informadas");
+            return;
         }
-        
-        else if(txtCodigo.getText().equals("")){
-            
-                if(data1.trim().length()==10 
-                        && data2.trim().length()==10 
-                        && data3.trim().length()==10){
-                    try{
-                        
-                        converter_data1();
-                        converter_data2();
-                        converter_data3();
-                        
-                        String gry = "insert into "+tabela
-                                + "(DataAndamento, NumeroProcesso, Usuario, "
-                                + "Observacao, Data1Envio, Data2Envio, "
-                                + "Data3Envio, Andamento) values ('"
-                                + datahoje+"','"
-                                + processo+"','"
-                                + usuario+"','"
-                                + txtObservacao.getText()+"','"
-                                + new java.sql.Date(novadata1.getTime())+"','"
-                                + new java.sql.Date(novadata2.getTime())+"','"
-                                + new java.sql.Date(novadata3.getTime())+"','"
-                                + "Finalizado')";
-                                
-                        conexao.exeQuery(gry);
-                        //
-                        
-                        atualizaDoc = new AtualizacaoEnviados();
-                        atualizaDoc.atualizar_acompanhamento1(tela, campoDocumentos);
-                        
-                        String mensagem = "Atualizado com sucesso!";
-                        lbMensagem.setText(mensagem);
-                        descricao = "1º, 2º e 3º Envio de "+tela+" informado";
-                        acao = "Inserir";
-                        
-                        gravar_log();
-                        
-                        enviar_label1();
-                        enviar_label2();
-                        enviar_label3();
-                        
-                        //bloquear_campos();
-                        limpar_tabela();
-                        preencher_tabela();
-                        
-                    }catch(Exception erro){
-                        JOptionPane.showMessageDialog(null, "Erro ao inserir o registro\n"+erro);
-                    }   
-                }
-                else if(data1.trim().length()==10
-                    && data2.trim().length()==10
-                    && data3.trim().length()<10){
-                    try{
-                        
-                        converter_data1();
-                        converter_data2();
-                        
-                        String gry = "insert into "+tabela
-                                + "(DataAndamento, NumeroProcesso, Usuario, "
-                                + "Observacao, Data1Envio, Data2Envio, "
-                                + "Andamento) values ('"
-                                + datahoje+"','"
-                                + processo+"','"
-                                + usuario+"','"
-                                + txtObservacao.getText()+"','"
-                                + new java.sql.Date(novadata1.getTime())+"','"
-                                + new java.sql.Date(novadata2.getTime())+"','"
-                                + "1º e 2º Envio Realizado')";
-                                
-                        conexao.exeQuery(gry);
-                        
-                        atualizaDoc = new AtualizacaoEnviados();
-                        atualizaDoc.atualizar_acompanhamento1(tela, campoDocumentos);
-                        
-                        String mensagem = "Atualizado com sucesso!";
-                        lbMensagem.setText(mensagem);
-                        descricao = "1º, 2º Envio de "+tela+" informado";
-                        acao = "Inserir";
-                        gravar_log();
-                        
-                        enviar_label1();
-                        enviar_label2();
-                        
-                        //bloquear_campos();
-                        limpar_tabela();
-                        preencher_tabela();
-                        
-                    }catch(Exception erro){
-                        JOptionPane.showMessageDialog(null, "Erro ao inserir o registro\n"+erro);
-                    }
-                }
-                else if(data1.trim().length()==10
-                    && data2.trim().length()<10
-                    && data3.trim().length()<10){
-                    try{
-                        converter_data1();
-                        
-                        String gry = "insert into "+tabela
-                                + "(DataAndamento, NumeroProcesso, Usuario, "
-                                + "Observacao, Data1Envio, "
-                                + "Andamento) values ('"
-                                + datahoje+"','"
-                                + processo+"','"
-                                + usuario+"','"
-                                + txtObservacao.getText()+"','"
-                                + new java.sql.Date(novadata1.getTime())+"','"
-                                + "1º Envio Realizado')";
-                                
-                        conexao.exeQuery(gry);
-                        atualizaDoc = new AtualizacaoEnviados();
-                        atualizaDoc.atualizar_acompanhamento1(tela, campoDocumentos);
-                        
-                        String mensagem = "Atualizado com sucesso!";
-                        lbMensagem.setText(mensagem);
-                        
-                        acao = "Atualização";
-                        
-                        descricao = "1º envio de "+tela+" informado";
-                        
-                        gravar_log();
-                        
-                        enviar_label1();
-                        
-                        //bloquear_campos();
-                        limpar_tabela();
-                        preencher_tabela();
-                    }catch(Exception erro){
-                        JOptionPane.showMessageDialog(null, "Erro ao inserir o registro\n"+erro);
-                    }
-                }
+        else{
+            texto =  "1º,2º e 3º Envio Realizado";
         }
-        else if (!txtCodigo.getText().equals("")){
-            if(data1.trim().length()==10
-                && data2.trim().length()==10
-                && data3.trim().length()==10){
-                    try{
-                        converter_data1();
-                        converter_data2();
-                        converter_data3();
-                        
-                        String sql = "update "+tabela+" set "
-                                +"DataAndamento='" +datahoje+"',"
-                                +"Usuario='" +usuario+"',"
-                                +"Observacao='" +txtObservacao.getText()+"',"
-                                +"Data1Envio='" +new java.sql.Date(novadata1.getTime())+"',"
-                                +"Data2Envio='" +new java.sql.Date(novadata2.getTime())+"',"
-                                +"Data3Envio='" +new java.sql.Date(novadata3.getTime())+"',"
-                                +"Andamento='Finalizado' where Cod="+txtCodigo.getText();
-                        conexao.statement.executeUpdate(sql);
-                        
-                        atualizaDoc = new AtualizacaoEnviados();
-                        atualizaDoc.atualizar_acompanhamento1(tela, campoDocumentos);
-                        
-                        String mensagem = "Atualizado com sucesso!";
-                        lbMensagem.setText(mensagem);
-                        
-                        acao = "Inserir";
-                        descricao = "1º, 2º e 3º Envio de "+tela+" informado";
-                        gravar_log();
-                        
-                        enviar_label1();
-                        enviar_label2();
-                        enviar_label3();
-                        
-                        //bloquear_campos();
-                        limpar_tabela();
-                        preencher_tabela();
-                        
-                    }catch(Exception erro){
-                        JOptionPane.showMessageDialog(null, "Erro ao inserir o registro\n"+erro);
-                    }   
-                }
-                else if(data1.trim().length()==10
-                    && data2.trim().length()==10
-                    && data3.trim().length()<10){
-                    try{
-                        converter_data1();
-                        converter_data2();
-                        
-                        String sql = "update "+tabela+" set "
-                                +"DataAndamento='" +datahoje+"',"
-                                +"Usuario='" +usuario+"',"
-                                +"Observacao='" +txtObservacao.getText()+"',"
-                                +"Data1Envio='" +new java.sql.Date(novadata1.getTime())+"',"
-                                +"Data2Envio='" +new java.sql.Date(novadata2.getTime())+"',"
-                                +"Andamento='1º e 2º Envio realizado' where Cod="+txtCodigo.getText();
-                        conexao.statement.executeUpdate(sql);
-                        
-                        atualizaDoc = new AtualizacaoEnviados();
-                        atualizaDoc.atualizar_acompanhamento1(tela, campoDocumentos);
-                        
-                        String mensagem = "Atualizado com sucesso!";
-                        lbMensagem.setText(mensagem);
-                        
-                        acao = "Atualização";
-                        descricao = "1º e 2º envio de "+tela+" informado";
-                        gravar_log();
-                        
-                        enviar_label1();
-                        enviar_label2();
-                        
-                        //bloquear_campos();
-                        limpar_tabela();
-                        preencher_tabela();
-                        
-                    }catch(Exception erro){
-                        JOptionPane.showMessageDialog(null, "Erro ao inserir o registro\n"+erro);
-                    }
-                }
-                else if(data1.trim().length()==10
-                    && data2.trim().length()<10
-                    && data3.trim().length()<10){
-                    try{
-                        converter_data1();
-                        
-                        String sql = "update "+tabela+" set "
-                                +"DataAndamento='" +datahoje+"',"
-                                +"Usuario='" +usuario+"',"
-                                +"Observacao='" +txtObservacao.getText()+"',"
-                                +"Data1Envio='" +new java.sql.Date(novadata1.getTime())+"',"
-                                +"Andamento='1º Envio realizado' where Cod="+txtCodigo.getText();
-                        conexao.statement.executeUpdate(sql);
-                        
-                        atualizaDoc = new AtualizacaoEnviados();
-                        atualizaDoc.atualizar_acompanhamento1(tela, campoDocumentos);
-                        
-                        String mensagem = "Atualizado com sucesso!";
-                        lbMensagem.setText(mensagem);
-                        descricao = "1º envio de "+tela+" informado";
-                        acao = "Atualização";
-                        gravar_log();
-                        
-                        enviar_label1();
-                        
-                        //bloquear_campos();
-                        limpar_tabela();
-                        preencher_tabela();
-                        
-                    }catch(Exception erro){
-                        JOptionPane.showMessageDialog(null, "Erro ao atualizar o registro\n"+erro);
-                    }
-                }
+        if(txtCodigo.getText().equals("")){
+            try {
+                String gry = "insert into " + tabela
+                        + "(DataAndamento, NumeroProcesso, Usuario, "
+                        + "Observacao, Data1Envio, Data2Envio, "
+                        + "Data3Envio, Andamento) values (?,?,?,?,?,?,?,?)";
+                PreparedStatement ps = getConnection().prepareStatement(gry);
+                ps.setDate(1, new java.sql.Date(new Date().getTime()));
+                ps.setString(2, processo);
+                ps.setString(3, usuario);
+                ps.setString(4, txtObservacao.getText().trim());
+                ps.setDate(5, converter_data(txtData1.getText())?new java.sql.Date(sdf.parse(txtData1.getText()).getTime()):null);
+                ps.setDate(6, converter_data(txtData2.getText())?new java.sql.Date(sdf.parse(txtData2.getText()).getTime()):null);
+                ps.setDate(7, converter_data(txtData3.getText())?new java.sql.Date(sdf.parse(txtData3.getText()).getTime()):null);
+                ps.setString(8, texto);
+                ps.executeUpdate();
+                //
+                atualizaDoc = new AtualizacaoEnviados();
+                atualizaDoc.atualizar_acompanhamento(tela, campoDocumentos,texto,con);
+
+                String mensagem = "Atualizado com sucesso!";
+                lbMensagem.setText(mensagem);
+                descricao = texto;
+                acao = "Inserir";
+                gravar_log(con);
+            } catch (SQLException | ParseException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o registro\n" + erro);
+                return;
+            } finally{
+                closeConnection();
+            }
         }
-        
+        else if (!txtCodigo.getText().equals("")) {
+             try {
+                String sql = "update " + tabela + " set "
+                        + "DataAndamento=?,"
+                        + "Usuario=?,"
+                        + "Observacao=?,"
+                        + "Data1Envio=?,"
+                        + "Data2Envio=?,"
+                        + "Data3Envio=?,"
+                        + "Andamento=? where Cod=?";
+                PreparedStatement ps = getConnection().prepareStatement(sql);
+                ps.setDate(1, new java.sql.Date(new Date().getTime()));
+                ps.setString(2, usuario);
+                ps.setString(3, txtObservacao.getText().trim());
+                ps.setDate(4, converter_data(txtData1.getText())?new java.sql.Date(sdf.parse(txtData1.getText()).getTime()):null);
+                ps.setDate(5, converter_data(txtData2.getText())?new java.sql.Date(sdf.parse(txtData2.getText()).getTime()):null);
+                ps.setDate(6, converter_data(txtData3.getText())?new java.sql.Date(sdf.parse(txtData3.getText()).getTime()):null);
+                ps.setString(7, texto);
+                ps.setInt(8, p.getId());
+                ps.executeUpdate();
+                atualizaDoc = new AtualizacaoEnviados();
+                atualizaDoc.atualizar_acompanhamento(tela, campoDocumentos, texto, con);
+
+                String mensagem = "Atualizado com sucesso!";
+                lbMensagem.setText(mensagem);
+
+                acao = "Inserir";
+                descricao = texto;
+                gravar_log(con);
+            } catch (SQLException | ParseException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o registro\n" + erro);
+                return;
+            }finally{
+                closeConnection();
+            }
+        }
+        preencher_tabela();
         pegar_ultimo_registro();
-        
+        enviar_label1();
+        enviar_label2();
+        enviar_label3();
+
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        restaurar_backup();
-        //bloquear_campos();
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -668,101 +511,49 @@ public class EnviadosIntModelo extends javax.swing.JInternalFrame {
             int escolha = JOptionPane.showConfirmDialog(null, cliente, "Exclusão", JOptionPane.YES_NO_OPTION);
             if(escolha==JOptionPane.YES_OPTION){
                 try{
-                    
-                    
-                    int excluiu = conexao.statement.executeUpdate("delete from "+tabela+" where Cod="+txtCodigo.getText());
-                    if(excluiu == 1){
+                    PreparedStatement ps = getConnection().prepareStatement("delete from "+tabela+" where Cod="+txtCodigo.getText());
+                    if(ps.executeUpdate()>0){
                         String mensagem = "Removido com sucesso!";
                         lbMensagem.setText(mensagem);
-                        
-                        atualizar_acompanhamento_exclusao();
-                        
+                        atualizar_acompanhamento_exclusao(con);
                         acao = "Exclusão";
                         descricao = "Registro removido";
-                        
-                        gravar_log();
-                        
-                        atualizaExclusao();
-                        
-                        //bloquear_campos
-                        limpar_campos();
-                        limpar_tabela();
-                        preencher_tabela();
-                        
-                        pegar_ultimo_registro();
-                        
+                        gravar_log(con);
+                        atualizaExclusao(con);
                     }
                 }catch(SQLException erro){
                     JOptionPane.showMessageDialog(null, "Erro na exclusão! \n"+erro);
+                    return;
+                }finally{
+                    closeConnection();
                 }
+                limpar_campos();
+                preencher_tabela();
+                pegar_ultimo_registro();        
             }
         
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
-        txtData1.setText("");
-        txtData2.setText("");
-        txtData3.setText("");
-        
-        Integer linha = table.getSelectedRow();
-        String codigo = (String)table.getValueAt(linha, 0);
-        String tdata1 = (String)table.getValueAt(linha, 1);
-        String tdata2 = (String)table.getValueAt(linha, 2);
-        String tdata3 = (String)table.getValueAt(linha, 3);
-        String obs = (String)table.getValueAt(linha, 4);
-        
+        String codigo = String.valueOf(table.getValueAt(table.getSelectedRow(), 0));
+        String tdata1 = String.valueOf(table.getValueAt(table.getSelectedRow(), 1));
+        String tdata2 = String.valueOf(table.getValueAt(table.getSelectedRow(), 2));
+        String tdata3 = String.valueOf(table.getValueAt(table.getSelectedRow(), 3));
+        String obs = (String)table.getValueAt(table.getSelectedRow(), 4);
         txtCodigo.setText(codigo);
-        txtObservacao.setText(obs);
-     
-        
-        try{
-            if(tdata1.length()==10 && !tdata1.equals("1111-11-11")){
-                String ano = tdata1.substring(0, 4);
-                String mes = tdata1.substring(5, 7);
-                String dia = tdata1.substring(8);
-                data1 = dia+"/"+mes+"/"+ano;
-
-                txtData1.setText(data1);
-            }
-            else data1="";
-        }catch(Exception erro){
-            
-        }
-        try{
-            if(tdata2.length()==10 && !tdata2.equals("1111-11-11")){
-                String ano = tdata2.substring(0, 4);
-                String mes = tdata2.substring(5, 7);
-                String dia = tdata2.substring(8);
-                data2 = dia+"/"+mes+"/"+ano;
-
-                txtData2.setText(data2);
-            }
-            else data2="";
-        }catch(Exception erro){
-            
-        }
-        try{
-            if(tdata3.length()==10 && !tdata3.equals("1111-11-11")){
-                String ano = tdata3.substring(0, 4);
-                String mes = tdata3.substring(5, 7);
-                String dia = tdata3.substring(8);
-                data3 = dia+"/"+mes+"/"+ano;
-
-                txtData3.setText(data3);
-            }
-            else data3="";
-        }catch(Exception erro){
-        }
-        
+        txtData1.setText(tdata1);
+        txtData2.setText(tdata2);
+        txtData3.setText(tdata3);
+        txtObservacao.setText(obs);        
     }//GEN-LAST:event_tableMouseClicked
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
-        conexao.desconecta();
+        
     }//GEN-LAST:event_formInternalFrameClosing
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
-        conexao.desconecta();
+
     }//GEN-LAST:event_formInternalFrameClosed
     
     
@@ -820,125 +611,57 @@ public void pegar_ultimo_registro(){
         setTela();
         setCampoDocumentos();
         setTabela();
-        if(conexao == null){
-            conexao.conecta();
-        }
-        conexao.executeSQL("select * from "+tabela+" where NumeroProcesso='"+processo+"'");
         try {
-            if(conexao.resultset.last()){
-                String novocodigo , ndata1, ndata2, ndata3;
-                
-                novocodigo = conexao.resultset.getString("Cod");
-                
-                data1 = conexao.resultset.getString("DatadeCadastroAndamento");
-                data2 = conexao.resultset.getString("DataDevulucaoCliente");
-                data3 = conexao.resultset.getString("DataFinalAndamento");
-                
-                if(!"".equals(novocodigo) || novocodigo != null){
-                    
-                    txtCodigo.setText(novocodigo);
-                    txtObservacao.setText(conexao.resultset.getString("Obsevacao"));
-                    
-                    if(data1.trim().length()==10 && !data1.equals("1111-11-11") ){
-                        
-                        String ano = data1.substring(0, 4);
-                        String mes = data1.substring(5, 7);
-                        String dia = data1.substring(8);
-                        ndata1 = dia+"/"+mes+"/"+ano;
-                        txtData1.setText(ndata1);
-                    }
-                    
-                    if(data2.length()==10 && !data2.equals("1111-11-11") ){
-                        String ano = data2.substring(0, 4);
-                        String mes = data2.substring(5, 7);
-                        String dia = data2.substring(8);
-                        ndata2 = dia+"/"+mes+"/"+ano;
-                        txtData2.setText(ndata2);
-                    }
-                    if(data3.length()==10 && !data3.equals("1111-11-11") ){
-                        String ano = data3.substring(0, 4);
-                        String mes = data3.substring(5, 7);
-                        String dia = data3.substring(8);
-                        ndata3 = dia+"/"+mes+"/"+ano;
-                        txtData3.setText(ndata3);
-                    }
-                   
+            PreparedStatement ps = getConnection().prepareCall("select * from "+tabela+" where NumeroProcesso=?");
+            ps.setString(1,processo);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                if(rs.last()){
+                    txtCodigo.setText(rs.getString("Cod"));
+                    txtData1.setText(rs.getDate("Data1Envio")==null?"":(sdf.format(rs.getDate("Data1Envio")).equals("11/11/1111")?"":sdf.format(rs.getDate("Data1Envio"))));
+                    txtData2.setText(rs.getDate("Data2Envio")==null?"":(sdf.format(rs.getDate("Data2Envio")).equals("11/11/1111")?"":sdf.format(rs.getDate("Data2Envio"))));
+                    txtData3.setText(rs.getDate("Data3Envio")==null?"":(sdf.format(rs.getDate("Data3Envio")).equals("11/11/1111")?"":sdf.format(rs.getDate("Data3Envio"))));
+                    txtObservacao.setText(rs.getString("Obsevacao"));
                 }
             }
-        } catch (Exception ex) {
+        }catch(SQLException ex) {
+        }finally{
+            closeConnection();
         }
         
 }
 public void preencher_tabela(){
-    table.getColumnModel().getColumn(0);
-    table.getColumnModel().getColumn(1);
-    table.getColumnModel().getColumn(2);
-    table.getColumnModel().getColumn(3);
-    table.getColumnModel().getColumn(4);
-    table.getColumnModel().getColumn(5);
     setTela();
     setCampoDocumentos();
     setTabela();
-    if(conexao == null){
-            conexao.conecta();
-        }
-    conexao.executeSQL("select * from "+tabela+" where NumeroProcesso='"+processo+"'");
-    
+    limpar_tabela();
     DefaultTableModel modelo =(DefaultTableModel)table.getModel();
-    
     try{
-        while(conexao.resultset.next())
-            modelo.addRow(new Object []{
-                conexao.resultset.getString("Cod"),
-                conexao.resultset.getString("Data1Envio"),
-                limparData(conexao.resultset.getString("Data2Envio")),
-                limparData(conexao.resultset.getString("Data3Envio")),
-                conexao.resultset.getString("Observacao"),
-                conexao.resultset.getString("Usuario")});
-                conexao.resultset.first();
-    }catch(Exception erro){
+        PreparedStatement ps = getConnection().prepareStatement("select * from "+tabela+" where NumeroProcesso=?");
+        ps.setString(1, processo);
+        ResultSet rs  = ps.executeQuery();
+        while(rs.next()){
+            Object[] o = new Object[6];
+            o[0]=rs.getInt("Cod");
+            o[1]=rs.getDate("Data1Envio")==null?"":(sdf.format(rs.getDate("Data1Envio")).equals("11/11/1111")?"":sdf.format(rs.getDate("Data1Envio")));
+            o[2]=rs.getDate("Data2Envio")==null?"":(sdf.format(rs.getDate("Data2Envio")).equals("11/11/1111")?"":sdf.format(rs.getDate("Data2Envio")));
+            o[3]=rs.getDate("Data3Envio")==null?"":(sdf.format(rs.getDate("Data3Envio")).equals("11/11/1111")?"":sdf.format(rs.getDate("Data3Envio")));
+            o[4]=rs.getString("Observacao");
+            o[5]=rs.getString("Usuario");
+            modelo.addRow(o);
+        }
+    }catch(SQLException erro){
         JOptionPane.showMessageDialog(null, "Erro ao preencher tabela da tela" +logb.getTela()+" !\n"+erro);
+    }finally{
+        closeConnection();
     }
             
-}
-private String limparData(String valor){
-    if( valor!=null && !valor.equals("1111-11-11")) 
-        return valor;
-    else 
-        return "";
 }
 public void limpar_tabela(){
     DefaultTableModel tbm = (DefaultTableModel)table.getModel();
     for(int i=tbm.getRowCount()-1; i>=0; i--){
         tbm.removeRow(i);
     }
-}
-public void criar_backup(){
-    codigo_backup = txtCodigo.getText();
-    data1_backup = txtData1.getText();
-    data2_backup = txtData2.getText();
-    data3_backup = txtData3.getText();
-    obs_backup = txtObservacao.getText();
-}
-public void restaurar_backup(){
-    txtCodigo.setText(codigo_backup);
-    txtData1.setText(data1_backup);
-    txtData2.setText(data2_backup);
-    txtData3.setText(data3_backup);
-    txtObservacao.setText(obs_backup);
-}
-public void bloquear_campos(){
-    txtData1.setEditable(false);
-    txtData2.setEditable(false);
-    txtData3.setEditable(false);
-    txtObservacao.setEditable(false);
-}
-public void desbloquear_campos(){
-    txtData1.setEditable(true);
-    txtData2.setEditable(true);
-    txtData3.setEditable(true);
-    txtObservacao.setEditable(true);
-    lbMensagem.setText("");
 }
 public void limpar_campos(){
     txtCodigo.setText("");
@@ -947,112 +670,63 @@ public void limpar_campos(){
     txtData3.setText("");
     txtObservacao.setText("");
 }
-public void converter_data_atual(){
-    Date data = new Date();
-    String dataatual = sdf.format(data);
-    
-    String dia = dataatual.substring(0, 2);
-    String mes = dataatual.substring(3, 5);
-    String ano = dataatual.substring(6);
-    datahoje = ano+"-"+mes+"-"+dia;
-
-}
-public void converter_data1(){
+public boolean converter_data(String data){
     try{
-        novadata1 = sdf.parse(data1);
-   }catch(ParseException e){
-        JOptionPane.showMessageDialog(null, "1ª data informada esta incorreta!");
-    }
-    /*
-    String dia1 = data1.substring(0, 2);
-    String mes1 = data1.substring(3, 5);
-    String ano1 = data1.substring(6);
-    novadata1 = ano1+"-"+mes1+"-"+dia1;
-            */
-}
-public void converter_data2(){
-    try{
-        novadata2 = sdf.parse(data2);
+        dataConvertida = sdf.parse(data);
+        return true;
     }catch(ParseException e){
-        JOptionPane.showMessageDialog(null, "2ª data informada esta incorreta!");
+        return false;
     }
-    /*
-    String dia2 = data2.substring(0, 2);
-    String mes2 = data2.substring(3, 5);
-    String ano2 = data2.substring(6);
-    novadata2 = ano2+"-"+mes2+"-"+dia2;
-    */
-}
-public void converter_data3(){
-    try{
-        novadata3 = sdf.parse(data3);
-    }catch(ParseException e){
-        JOptionPane.showMessageDialog(null, "3ª data informada esta incorreta");
-    }
-    /*
-    String dia3 = data3.substring(0, 2);
-    String mes3 = data3.substring(3, 5);
-    String ano3 = data3.substring(6);
-    novadata3 = ano3+"-"+mes3+"-"+dia3;
-            */
 }
 public void enviar_label1(){
-    DocumentosEnviados.lbBol1.setText(data1);
+    DocumentosEnviados.lbBol1.setText(txtData1.getText().trim().length()==10?txtData1.getText():"");
 }
 public void enviar_label2(){
-    DocumentosEnviados.lbBol1.setText(data2);
+    DocumentosEnviados.lbBol1.setText(txtData2.getText().trim().length()==10?txtData2.getText():"");
 }
 public void enviar_label3(){
-    DocumentosEnviados.lbBol1.setText(data3);
+    DocumentosEnviados.lbBol1.setText(txtData3.getText().trim().length()==10?txtData3.getText():"");
 }
-public void gravar_log(){
+public void gravar_log(Connection con){
     logb.setAcao(acao);
     logb.setDescricao(descricao);
     logb.setMenu("Acompanhamento de Envios");
-    log.inserir(logb);
+    log.inserir(logb,con);
 }
-
-        
-
-public void atualizar_acompanhamento_exclusao(){
+public void atualizar_acompanhamento_exclusao(Connection con){
     setTela();
     setCampoDocumentos();
     setTabela();
-    
+     //1º Envio Realizado,2º Envio Realizado,Finalizado
+    String status = "";
+    atualizaDoc = new AtualizacaoEnviados();
     if(txtData1.getText().trim().length()==10 &&
             txtData2.getText().trim().length()==10 &&
             txtData3.getText().trim().length()==10){
-        atualizaDoc = new AtualizacaoEnviados();
-        atualizaDoc.atualizar_acompanhamento3(tela, campoDocumentos);
+        status = "Finalizado";
     }
     else if(txtData1.getText().trim().length()==10 &&
             txtData2.getText().trim().length()==10 &&
             txtData3.getText().trim().length()<10){
-        atualizaDoc = new AtualizacaoEnviados();
-        atualizaDoc.atualizar_acompanhamento2(tela, campoDocumentos);
+        status = "2º Envio Realizado";
     }
     else if(txtData1.getText().trim().length()==10 &&
             txtData2.getText().trim().length()<10 &&
             txtData3.getText().trim().length()<10){
-        atualizaDoc = new AtualizacaoEnviados();
-        atualizaDoc.atualizar_acompanhamento1(tela, campoDocumentos);
+        status = "1º Envio Realizado";
     }
+    atualizaDoc.atualizar_acompanhamento(tela, campoDocumentos,status,con);
+    
 }
-public void atualizaExclusao(){
-    doc.boleto();
+public void atualizaExclusao(Connection con){
+    //doc.boleto();
 }
 public void inicializacao(String campoDocumentos,String tabela, String tela){
     this.campoDocumentos = campoDocumentos; //campo da tabela documentos
     this.tabela = tabela; //tabela do formulario
     this.tela = tela; //nome da tela
 }
-public void setTabela(){
-    this.tabela="";
-}
-public void setCampoDocumentos(){
-    this.campoDocumentos="";
-}
-public void setTela(){
-    this.tela="";
-}
+public void setTabela(){}
+public void setCampoDocumentos(){}
+public void setTela(){}
 }

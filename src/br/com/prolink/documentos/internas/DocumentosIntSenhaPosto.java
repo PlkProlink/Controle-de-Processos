@@ -5,12 +5,13 @@
  */
 package br.com.prolink.documentos.internas;
 
-import br.com.prolink.controle.LogUsuarioBean;
-import br.com.prolink.controle.LogUsuarioDao;
+import br.com.prolink.model.LogUsuarioBean;
+import br.com.prolink.model.LogUsuarioDao;
 import br.com.prolink.documentos.Documentos;
 import br.com.prolink.documentos.DocumentosDao;
-import br.com.prolink.inicio.Conexao;
-import br.com.prolink.inicio.TelaPrincipal;
+import br.com.prolink.factory.Conexao;
+import br.com.prolink.model.ProcessoLogado;
+
 
 /**
  *
@@ -25,8 +26,6 @@ public class DocumentosIntSenhaPosto extends DocumentosIntModelo{
         
         super.inicializacao("SenhaPostoFiscal","senhapostofiscal", "Senha do Posto Fiscal");
         
-        conexao = new Conexao(); 
-        conexao.conecta();
         preencher_tabela();
         pegar_ultimo_registro();
         
@@ -35,7 +34,7 @@ public class DocumentosIntSenhaPosto extends DocumentosIntModelo{
         logb = new LogUsuarioBean();
         
         logb.setCliente(nome);
-        logb.setApelido(TelaPrincipal.txt_id.getText());
+        logb.setApelido(ProcessoLogado.getInstance().getProcesso().getApelido());
         logb.setProcesso(processo);
         logb.setTela(tela);
     }

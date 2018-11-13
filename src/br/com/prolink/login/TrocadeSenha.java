@@ -1,6 +1,8 @@
 package br.com.prolink.login;
 
-import br.com.prolink.inicio.Conexao;
+import br.com.prolink.view.Login;
+import br.com.prolink.factory.Conexao;
+import br.com.prolink.model.UsuarioLogado;
 import com.sun.glass.events.KeyEvent;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -153,28 +155,27 @@ public class TrocadeSenha extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtSenhaConfirmaKeyPressed
     private void salvar(){
-        if(txtSenha.getText().trim().equals("") || txtSenhaConfirma.getText().trim().equals("")
-                || txtSenhaNova.getText().trim().equals("")){
+        if(new String(txtSenha.getPassword()).trim().equals("") || new String(txtSenhaConfirma.getPassword()).trim().equals("")
+                || new String(txtSenhaNova.getPassword()).trim().equals("")){
             JOptionPane.showMessageDialog(null,"Nenhum campo pode ficar em branco!");
         }
-        else if(txtSenhaNova.getText().trim().length()<6){
+        else if(new String(txtSenhaNova.getPassword()).trim().length()<6){
             JOptionPane.showMessageDialog(null,"Nova senha não pode ser menor que 6 digitos!");
         }
-        else if(!txtSenhaNova.getText().trim().equals(txtSenhaConfirma.getText().trim())){
+        else if(!new String(txtSenhaNova.getPassword()).equals(new String(txtSenhaConfirma.getPassword()).trim())){
             JOptionPane.showMessageDialog(null, "Confirmação de senha não confere com a primeira informada!");
         }
-        else if(txtSenha.getText().trim().equals(txtSenhaNova.getText().trim())){
+        else if(new String(txtSenha.getPassword()).trim().equals(new String(txtSenhaNova.getPassword()).trim())){
             JOptionPane.showMessageDialog(null, "Nova senha não pode ser igual a anterior!");
         }
         else{
-            if(txtSenha.getText().trim().equalsIgnoreCase(Login.senha)){
+            if(new String(txtSenha.getPassword()).trim().equalsIgnoreCase(UsuarioLogado.getInstance().getUsuario().getSenha())){
                 try{
-                    con_senha.executeSQL("select * from login where Usuario like '"+Login.usuario+"'");
+                    con_senha.executeSQL("select * from login where Usuario like '"+UsuarioLogado.getInstance().getUsuario().getUsuario()+"'");
                     if(con_senha.resultset.first()){
-                        con_senha.statement.executeUpdate("update login set Senha='"+txtSenhaNova.getText()+"' where Usuario='"+Login.usuario+"'");
+                        con_senha.statement.executeUpdate("update login set Senha='"+new String(txtSenhaNova.getPassword())+"' where Usuario='"+UsuarioLogado.getInstance().getUsuario().getUsuario()+"'");
                         JOptionPane.showMessageDialog(null, "Senha atualizada com sucesso");
-                        
-                        Login.senha = txtSenhaNova.getText();
+                        UsuarioLogado.getInstance().getUsuario().setSenha(new String(txtSenhaNova.getPassword()));
                         limpar_campos();
                         this.dispose();
                         

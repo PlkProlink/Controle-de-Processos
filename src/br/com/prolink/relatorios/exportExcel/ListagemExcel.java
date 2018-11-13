@@ -1,7 +1,7 @@
 package br.com.prolink.relatorios.exportExcel;
 
 
-import br.com.prolink.inicio.Conexao;
+import br.com.prolink.factory.Conexao;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -87,8 +87,6 @@ public class ListagemExcel {
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.setDialogTitle("Criando Planilha de Seleção");
         chooser.addChoosableFileFilter(new FileNameExtensionFilter("Planilha do Excel (*.xls)", ".xls"));
-        
-        
         int retorno = chooser.showSaveDialog(null);
         if(retorno==JFileChooser.APPROVE_OPTION){
             caminho = chooser.getSelectedFile().getAbsolutePath(); //

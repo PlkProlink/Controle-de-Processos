@@ -1,7 +1,8 @@
 package br.com.prolink.relatorios;
 
 import br.com.prolink.inicio.Ativador;
-import br.com.prolink.inicio.Conexao;
+import br.com.prolink.factory.Conexao;
+import br.com.prolink.model.ProcessoLogado;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
@@ -13,7 +14,7 @@ import net.sf.jasperreports.view.JasperViewer;
 public class RelatCadastro {
 
     Conexao con = new Conexao();
-    String processo = Ativador.processo;
+    String processo = ""+ProcessoLogado.getInstance().getProcesso().getId();
 
     private String comando;
 
@@ -27,7 +28,6 @@ public class RelatCadastro {
 
     public void relatorioResumidoUm() {
         try {
-
             con.conecta();
             con.executeSQL("SELECT  Apelido, Cliente, Classificacao, Observacao, "
                     + "Datadecadastro, DatadeAtivacao,DataDeArquivamentodoProcesso "

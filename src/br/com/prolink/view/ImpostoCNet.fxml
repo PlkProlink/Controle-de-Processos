@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.prolink.controller.ControllerImpostoCNet">
+   <children>
+      <TableView fx:id="tbImpostos" layoutX="12.0" layoutY="300.0" prefHeight="285.0" prefWidth="1057.0" />
+      <ComboBox fx:id="cbMes" layoutX="100.0" layoutY="103.0" prefHeight="25.0" prefWidth="68.0" />
+      <PieChart layoutX="706.0" layoutY="22.0" prefHeight="250.0" prefWidth="360.0" />
+      <RadioButton fx:id="rbAnexado" layoutX="100.0" layoutY="220.0" mnemonicParsing="false" text="Anexado" />
+      <RadioButton fx:id="rbNaoAnexado" layoutX="181.0" layoutY="220.0" mnemonicParsing="false" text="Não Anexado" />
+      <PieChart layoutX="340.0" layoutY="22.0" prefHeight="250.0" prefWidth="360.0" />
+      <TextField fx:id="txPesquisar" layoutX="101.0" layoutY="22.0" prefHeight="25.0" prefWidth="111.0" promptText="Entre com o ID" />
+      <Button fx:id="btOk" layoutX="224.0" layoutY="22.0" mnemonicParsing="false" onAction="#pesquisar" prefHeight="25.0" prefWidth="50.0" text="OK" />
+      <ComboBox fx:id="cbAno" layoutX="173.0" layoutY="103.0" prefHeight="25.0" prefWidth="101.0" />
+      <Label layoutX="14.0" layoutY="26.0" text="Pesquisar:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="107.0" text="Apuração:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="16.0" layoutY="148.0" text="Vencimento:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dtInicial" layoutX="103.0" layoutY="144.0" prefHeight="25.0" prefWidth="120.0" promptText="Data Inicial" />
+      <DatePicker fx:id="dtFinal" layoutX="103.0" layoutY="181.0" prefHeight="25.0" prefWidth="120.0" promptText="Data Final" />
+      <Label layoutX="16.0" layoutY="67.0" text="Imposto:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cbImposto" layoutX="102.0" layoutY="63.0" prefHeight="25.0" prefWidth="68.0" />
+   </children>
+</AnchorPane>

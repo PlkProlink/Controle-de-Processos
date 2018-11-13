@@ -1,6 +1,6 @@
 package br.com.prolink.departamentos;
 
-import br.com.prolink.login.Login;
+import br.com.prolink.factory.Conexao;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
@@ -12,14 +12,17 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-import br.com.prolink.controle.*;
-import br.com.prolink.inicio.*;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
+import br.com.prolink.model.UsuarioLogado;
+
 /**
  *
  * @author Tiago Dias
  */
 
 public class DepPessoal extends javax.swing.JFrame {
+
     //conexão com as tabelas necessarias
     Conexao con = new Conexao();
     Conexao con_geral = new Conexao();
@@ -31,12 +34,16 @@ public class DepPessoal extends javax.swing.JFrame {
     String socio, dependentes, folha, codSocio_backup, dataSocio_backup, obsSocio_backup, tipoSocio_backup,
             codDep_backup, dataDep_backup, obsDep_backup, tipoDep_backup,
             codFolha_backup, dataFolha_backup, obsFolha_backup, tipoFolha_backup;
-    
-    String processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario;
-    
+
+    Processo p = ProcessoLogado.getInstance().getProcesso();
+    String processo = p.getId() + "",
+            nome = p.getCliente(),
+            id = p.getApelido(),
+            usuario = UsuarioLogado.getInstance().getUsuario().getUsuario();
+
     public DepPessoal() {
         initComponents();
-        
+
         con.conecta();
         con_geral.conecta();
 //chamando metodo que preencha as tabelas
@@ -45,42 +52,43 @@ public class DepPessoal extends javax.swing.JFrame {
         preencher_tabela_folha();
         //chamando metodo que preencha tela de status
         preencher_status();
-        
+
         atualizar_cadastro_cliente();
-        
+
         bloquear_tela_socio();
         bloquear_tela_dependentes();
         bloquear_tela_folha();
-        
+
         limpar_tela_socio();
         limpar_tela_dependentes();
         limpar_tela_folha();
-        
+
         tbSocio.setAutoCreateRowSorter(true);
         tbDependentes.setAutoCreateRowSorter(true);
         tbFolha.setAutoCreateRowSorter(true);
-        
+
         txtCodigo.setText(processo);
         txtNome.setText(nome);
         txtId.setText(id);
         txtUsuario.setText(usuario);
-        
-        if(!Login.nivel.equals("1") && !Login.departamento.equalsIgnoreCase("Folha")){
-            
+
+        if (UsuarioLogado.getInstance().getUsuario().getNivel() != 1 && !UsuarioLogado.getInstance().getUsuario().getDepartamento().equalsIgnoreCase("Folha")) {
+
             btnExcluirSocio.setEnabled(false);
             btnSalvarSocio.setEnabled(false);
-            
+
             btnExcluirDependentes.setEnabled(false);
             btnSalvarDependentes.setEnabled(false);
-            
+
             btnExcluirFolha.setEnabled(false);
             btnSalvarFolha.setEnabled(false);
-            
+
             JOptionPane.showMessageDialog(null, "Você não tem permissão para editar os registros dessa tela!");
         }
         //chamando metodo que busca a data atual e envia para os campos de datas
     }
-@SuppressWarnings("unchecked")
+
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -901,138 +909,132 @@ public class DepPessoal extends javax.swing.JFrame {
 
     private void btnExcluirDependentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirDependentesActionPerformed
         //se não selecionado nenhum cadastro, exclusão não será permitida
-        if(txtCodDependentes.getText().equals("")){
+        if (txtCodDependentes.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Primeiro selecione um registro para exclusão!");
-        }
-        else{
-            
-            try{
+        } else {
+
+            try {
                 //busca cadastro de acordo com o codigo
-                String sql = "select * from cadastrodosdependentesdosociaadm where CodCadastroDependentesSocioADM= "+txtCodDependentes.getText();
+                String sql = "select * from cadastrodosdependentesdosociaadm where CodCadastroDependentesSocioADM= " + txtCodDependentes.getText();
                 con.executeSQL(sql);
-                if(con.resultset.first()){
-                    String cliente = "Tem certeza que deseja excluir um registro do cliente : "+nome+"?";
+                if (con.resultset.first()) {
+                    String cliente = "Tem certeza que deseja excluir um registro do cliente : " + nome + "?";
                     String operacao = con.resultset.getString("AndamentoCadastroDependentesSocioADM");
-                    int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
-                    if(opcao_escolhida == JOptionPane.YES_OPTION){
-                        sql = "DELETE FROM cadastrodosdependentesdosociaadm Where CodCadastroDependentesSocioADM="+txtCodDependentes.getText();
+                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão ", JOptionPane.YES_NO_OPTION);
+                    if (opcao_escolhida == JOptionPane.YES_OPTION) {
+                        sql = "DELETE FROM cadastrodosdependentesdosociaadm Where CodCadastroDependentesSocioADM=" + txtCodDependentes.getText();
                         int conseguiu_excluir = con.statement.executeUpdate(sql);
-                        if (conseguiu_excluir == 1){
-                            JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
-                            
+                        if (conseguiu_excluir == 1) {
+                            JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso");
+
                             limpar_tabela_dependentes();
                             preencher_tabela_dependentes();
                             limpar_tela_dependentes();
-                            
-                            if("Finalizado".equals(operacao)){
-                               con.executeSQL("select * from cadastrodosdependentesdosociaadm where NumeroProcesso='"+processo+"' and AndamentoCadastroDependentesSocioADM='Finalizado'");
-                               if(!con.resultset.first()){
-                                    try{
-                                        con.statement.executeUpdate("update dp AndamentoCadastroDependentesdoSocioADM='Em Aberto' where Numerodoprocesso='"+processo+"'");
-                                    
+
+                            if ("Finalizado".equals(operacao)) {
+                                con.executeSQL("select * from cadastrodosdependentesdosociaadm where NumeroProcesso='" + processo + "' and AndamentoCadastroDependentesSocioADM='Finalizado'");
+                                if (!con.resultset.first()) {
+                                    try {
+                                        con.statement.executeUpdate("update dp AndamentoCadastroDependentesdoSocioADM='Em Aberto' where Numerodoprocesso='" + processo + "'");
+
                                         preencher_status();
                                         atualizar_cadastro_cliente();
 
-                                    }catch(SQLException erro){
-                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar\n"+erro);
+                                    } catch (SQLException erro) {
+                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar\n" + erro);
                                     }
-                               }
+                                }
                             }
                         }
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro\n"+erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro\n" + erro);
             }
-            
+
         }
     }//GEN-LAST:event_btnExcluirDependentesActionPerformed
 
     private void btnCancelarDependentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarDependentesActionPerformed
-       restaurar_backup_dependentes();
-       bloquear_tela_dependentes();
+        restaurar_backup_dependentes();
+        bloquear_tela_dependentes();
     }//GEN-LAST:event_btnCancelarDependentesActionPerformed
 
     private void btnSalvarDependentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarDependentesActionPerformed
         //nao permitir que a primeira data fique vazia
-        if(txtDataDependentes.getText().equals("  /  /    ") || txtDataDependentes.getText().trim().length()<10){
+        if (txtDataDependentes.getText().equals("  /  /    ") || txtDataDependentes.getText().trim().length() < 10) {
             JOptionPane.showMessageDialog(null, "Digite uma data valida no campo novo andamento!");
-        }
-        else if(cbTipoDependentes.getSelectedItem().equals("")){
-            JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");        }
-        //evitando erros com cadastro ja salvo antes
-        else if(txtCodDependentes.getText().equals("")){
-            
-            try{
+        } else if (cbTipoDependentes.getSelectedItem().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo Tipo não pode ficar em branco");
+        } //evitando erros com cadastro ja salvo antes
+        else if (txtCodDependentes.getText().equals("")) {
+
+            try {
                 String dataandamento = txtDataDependentes.getText();
                 Date data = sdf.parse(dataandamento);
-                
+
                 String andamentoboleto;
-                if(cbTipoDependentes.getSelectedItem().equals("Finalizado")){
+                if (cbTipoDependentes.getSelectedItem().equals("Finalizado")) {
                     andamentoboleto = "Finalizado";
-                }
-                else{
+                } else {
                     andamentoboleto = "Em Aberto";
-                    }
-                String gry = "insert into cadastrodosdependentesdosociaadm ("+
-                "NumeroProcesso, DatadeCadastroAndamento, Obsevacao, "+
-                "Usuario, AndamentoCadastroDependentesSocioADM) values ('" +processo+"','"+
-                new java.sql.Date(data.getTime())+"','"+
-                txtObsDependentes.getText()+"','"+
-                usuario+"','"+
-                andamentoboleto+"')";
+                }
+                String gry = "insert into cadastrodosdependentesdosociaadm ("
+                        + "NumeroProcesso, DatadeCadastroAndamento, Obsevacao, "
+                        + "Usuario, AndamentoCadastroDependentesSocioADM) values ('" + processo + "','"
+                        + new java.sql.Date(data.getTime()) + "','"
+                        + txtObsDependentes.getText() + "','"
+                        + usuario + "','"
+                        + andamentoboleto + "')";
 
                 con.exeQuery(gry);
                 JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
-                
-                
+
                 atualizar_dependentes();
                 preencher_status();
                 atualizar_cadastro_cliente();
                 limpar_tabela_dependentes();
                 preencher_tabela_dependentes();
-                
-            }catch(ParseException | HeadlessException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Dependentes: "+erro);
+
+            } catch (ParseException | HeadlessException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Dependentes: " + erro);
             }
-            
-        }
-        else if(!txtCodDependentes.getText().equals("")){
-            
-            try{
-               
+
+        } else if (!txtCodDependentes.getText().equals("")) {
+
+            try {
+
                 String dataandamento = txtDataDependentes.getText();
                 Date data = sdf.parse(dataandamento);
-                
+
                 String andamento;
-                if(cbTipoDependentes.getSelectedItem().equals("Finalizado")){
+                if (cbTipoDependentes.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }else{
+                } else {
                     andamento = "Em Aberto";
                 }
-                String sql = "UPDATE cadastrodosdependentesdosociaadm set DatadeCadastroAndamento='"+
-                new java.sql.Date(data.getTime())+"',"+
-                "Obsevacao='"+txtObsDependentes.getText()+"',"+
-                "Usuario= '"+usuario+"',"+
-                "AndamentoCadastroDependentesSocioADM='"+andamento+"' "+
-                "where CodCadastroDependentesSocioADM = "+txtCodDependentes.getText();
+                String sql = "UPDATE cadastrodosdependentesdosociaadm set DatadeCadastroAndamento='"
+                        + new java.sql.Date(data.getTime()) + "',"
+                        + "Obsevacao='" + txtObsDependentes.getText() + "',"
+                        + "Usuario= '" + usuario + "',"
+                        + "AndamentoCadastroDependentesSocioADM='" + andamento + "' "
+                        + "where CodCadastroDependentesSocioADM = " + txtCodDependentes.getText();
 
                 con.statement.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
-                
+
                 atualizar_dependentes();
                 preencher_status();
                 limpar_tabela_dependentes();
                 preencher_tabela_dependentes();
                 atualizar_cadastro_cliente();
-                
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao atualizar os dados da tabela Dependentes: \n " +erro);
+
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar os dados da tabela Dependentes: \n " + erro);
             } catch (ParseException ex) {
-                JOptionPane.showMessageDialog(null, "Você digitou uma data não valida!\n"+ex);
+                JOptionPane.showMessageDialog(null, "Você digitou uma data não valida!\n" + ex);
             }
-            
-        
+
         }
     }//GEN-LAST:event_btnSalvarDependentesActionPerformed
 
@@ -1042,50 +1044,49 @@ public class DepPessoal extends javax.swing.JFrame {
 
     private void btnExcluirSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirSocioActionPerformed
         //se não selecionado nenhum cadastro, exclusão não será permitida
-        if(txtCodSocio.getText().equals("")){
+        if (txtCodSocio.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Primeiro selecione um registro para exclusão!");
-        }
-        else{
-            
-            try{
+        } else {
+
+            try {
                 String sql = "select * from cadastrosocioadmcontrol  "
-                        + "where CodCadastroSocioADMControl="+txtCodSocio.getText();
+                        + "where CodCadastroSocioADMControl=" + txtCodSocio.getText();
                 con.executeSQL(sql);
                 con.resultset.first();
-                String cliente = "Tem certeza que deseja excluir um registro do cliente : "+nome+"?";
+                String cliente = "Tem certeza que deseja excluir um registro do cliente : " + nome + "?";
                 String operacao = con.resultset.getString("AndamentoCadastroSocioADMControl");
-                int opcao_escolhida = JOptionPane.showConfirmDialog(null,cliente,"Exclusão ",JOptionPane.YES_NO_OPTION);
-                if(opcao_escolhida == JOptionPane.YES_OPTION){
-                    sql = "DELETE FROM cadastrosocioadmcontrol Where CodCadastroSocioADMControl = "+txtCodSocio.getText();
+                int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão ", JOptionPane.YES_NO_OPTION);
+                if (opcao_escolhida == JOptionPane.YES_OPTION) {
+                    sql = "DELETE FROM cadastrosocioadmcontrol Where CodCadastroSocioADMControl = " + txtCodSocio.getText();
                     int conseguiu_excluir = con.statement.executeUpdate(sql);
-                    if (conseguiu_excluir == 1){
-                        JOptionPane.showMessageDialog(null,"Exclusão realizada com sucesso");
-                        
+                    if (conseguiu_excluir == 1) {
+                        JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso");
+
                         limpar_tela_socio();
                         limpar_tabela_socio();
                         preencher_tabela_socio();
                         //verificar se não existe outro registro com o status finalizado nesse cliente
-                        if("Finalizado".equals(operacao)){
-                            con.executeSQL("select * from cadastrosocioadmcontrol where NumeroProcesso='"+processo+"' and AndamentoCadastroSocioADMControl='Finalizado'");
-                            if(!con.resultset.first()){
-                                try{
+                        if ("Finalizado".equals(operacao)) {
+                            con.executeSQL("select * from cadastrosocioadmcontrol where NumeroProcesso='" + processo + "' and AndamentoCadastroSocioADMControl='Finalizado'");
+                            if (!con.resultset.first()) {
+                                try {
                                     con.statement.executeUpdate("update dp set AndamentoCadastroDoSocioNoControl='Em Aberto' where"
-                                    +"Numerodoprocesso='"+processo+"'");
-                                   
+                                            + "Numerodoprocesso='" + processo + "'");
+
                                     preencher_status();
                                     atualizar_cadastro_cliente();
-                                    
-                                }catch(SQLException erro){
-                                    JOptionPane.showMessageDialog(null,"Falha ao atualizar a tabela Financeiro\n" +erro);
+
+                                } catch (SQLException erro) {
+                                    JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Financeiro\n" + erro);
                                 }
                             }
                         }
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro\n"+erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro\n" + erro);
             }
-            
+
         }
     }//GEN-LAST:event_btnExcluirSocioActionPerformed
 
@@ -1096,92 +1097,87 @@ public class DepPessoal extends javax.swing.JFrame {
 
     private void btnSalvarSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarSocioActionPerformed
         //nao permitir que a primeira data fique vazia
-        if(txtDataSocio.getText().equals("  /  /    ") || txtDataSocio.getText().trim().length()<10){
+        if (txtDataSocio.getText().equals("  /  /    ") || txtDataSocio.getText().trim().length() < 10) {
             JOptionPane.showMessageDialog(null, "Digite uma data valida no campo novo andamento!");
-        }
-        else if(cbTipoSocio.getSelectedItem().equals("")){
-            JOptionPane.showMessageDialog(null,"Campo Tipo não pode ficar em branco");
-        }
-        //evitando erros com cadastro ja salvo antes
-        else if(txtCodSocio.getText().equals("")){
-            
-            try{
+        } else if (cbTipoSocio.getSelectedItem().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo Tipo não pode ficar em branco");
+        } //evitando erros com cadastro ja salvo antes
+        else if (txtCodSocio.getText().equals("")) {
+
+            try {
                 //convertendo a primeira data
                 String dataandamento = txtDataSocio.getText();
                 Date data = sdf.parse(dataandamento);
 
                 String andamento;
-                
-                if(cbTipoSocio.getSelectedItem().equals("Finalizado")){
+
+                if (cbTipoSocio.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
 
-                    String gry = "insert into cadastrosocioadmcontrol("
-                    +"NumeroProcesso, DatadeCadastroAndamento, Obsevacao,"
-                    +"Usuario, AndamentoCadastroSocioADMControl) "
-                    +"values ('"+processo+"','"
-                    +new java.sql.Date(data.getTime())+"','"
-                    +txtObsSocio.getText()+"','"
-                    +usuario+"','"
-                    +andamento+"')";
+                String gry = "insert into cadastrosocioadmcontrol("
+                        + "NumeroProcesso, DatadeCadastroAndamento, Obsevacao,"
+                        + "Usuario, AndamentoCadastroSocioADMControl) "
+                        + "values ('" + processo + "','"
+                        + new java.sql.Date(data.getTime()) + "','"
+                        + txtObsSocio.getText() + "','"
+                        + usuario + "','"
+                        + andamento + "')";
 
-                    con.exeQuery(gry);
-                    
-                    JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
-                    
-                    atualizar_socios();
-                    preencher_status();
-                    atualizar_cadastro_cliente();
-                    limpar_tabela_socio();
-                    preencher_tabela_socio();
-                    
-            }catch(ParseException | HeadlessException add){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Socios: "+add);
-            }
-            
-        }
-        else if(!txtCodSocio.getText().equals("")){
-            
-            try{
-               
-                String dataandamento = txtDataSocio.getText();
-                Date datatermo = sdf.parse(dataandamento);
+                con.exeQuery(gry);
 
-                String andamento;
-                
-                if(cbTipoSocio.getSelectedItem().equals("Finalizado")){
-                    andamento = "Finalizado";
-                }
-                else{
-                    andamento = "Em Aberto";
-                }
-                
-                String sql = "UPDATE cadastrosocioadmcontrol set DatadeCadastroAndamento='"+
-                new java.sql.Date(datatermo.getTime())+"',"+
-                "Obsevacao='"+txtObsSocio.getText()+"',"+
-                "Usuario = '"+usuario+"',"+
-                "AndamentoCadastroSocioADMControl='"+andamento+"' "+
-                "where CodCadastroSocioADMControl = "+txtCodSocio.getText();
-
-                con.statement.executeUpdate(sql);
-                
                 JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
-                
+
                 atualizar_socios();
                 preencher_status();
                 atualizar_cadastro_cliente();
                 limpar_tabela_socio();
                 preencher_tabela_socio();
-                
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao atualizar os dados da tabela Socios: " +erro);
-            }catch (ParseException ex) {
-                JOptionPane.showMessageDialog(null, "Erro na conversão da data ou valor incorreto!\n"+ex);
+
+            } catch (ParseException | HeadlessException add) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir os dados na tabela Socios: " + add);
             }
-            
+
+        } else if (!txtCodSocio.getText().equals("")) {
+
+            try {
+
+                String dataandamento = txtDataSocio.getText();
+                Date datatermo = sdf.parse(dataandamento);
+
+                String andamento;
+
+                if (cbTipoSocio.getSelectedItem().equals("Finalizado")) {
+                    andamento = "Finalizado";
+                } else {
+                    andamento = "Em Aberto";
+                }
+
+                String sql = "UPDATE cadastrosocioadmcontrol set DatadeCadastroAndamento='"
+                        + new java.sql.Date(datatermo.getTime()) + "',"
+                        + "Obsevacao='" + txtObsSocio.getText() + "',"
+                        + "Usuario = '" + usuario + "',"
+                        + "AndamentoCadastroSocioADMControl='" + andamento + "' "
+                        + "where CodCadastroSocioADMControl = " + txtCodSocio.getText();
+
+                con.statement.executeUpdate(sql);
+
+                JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!");
+
+                atualizar_socios();
+                preencher_status();
+                atualizar_cadastro_cliente();
+                limpar_tabela_socio();
+                preencher_tabela_socio();
+
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar os dados da tabela Socios: " + erro);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "Erro na conversão da data ou valor incorreto!\n" + ex);
+            }
+
         }
     }//GEN-LAST:event_btnSalvarSocioActionPerformed
 
@@ -1193,51 +1189,51 @@ public class DepPessoal extends javax.swing.JFrame {
 
     private void tbSocioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSocioMouseClicked
         Integer linha = tbSocio.getSelectedRow();
-        String codigo = (String)tbSocio.getValueAt(linha, 0);
-        String data = (String)tbSocio.getValueAt(linha, 1);
-        String observacao = (String)tbSocio.getValueAt(linha, 3);
-        String tipo = (String)tbSocio.getValueAt(linha, 4);
-        
+        String codigo = (String) tbSocio.getValueAt(linha, 0);
+        String data = (String) tbSocio.getValueAt(linha, 1);
+        String observacao = (String) tbSocio.getValueAt(linha, 3);
+        String tipo = (String) tbSocio.getValueAt(linha, 4);
+
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
         String ano = data.substring(6);
-        String recebedataTabela = dia+mes+ano;
-        
+        String recebedataTabela = dia + mes + ano;
+
         txtDataSocio.setText(recebedataTabela);
-        
+
         txtCodSocio.setText(codigo);
         txtObsSocio.setText(observacao);
-        
-        if(tipo.equalsIgnoreCase("Finalizado")){
+
+        if (tipo.equalsIgnoreCase("Finalizado")) {
             cbTipoSocio.setSelectedItem("Finalizado");
-        }
-        else
+        } else {
             cbTipoSocio.setSelectedItem("Novo Andamento");
-        
+        }
+
     }//GEN-LAST:event_tbSocioMouseClicked
 
     private void tbDependentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbDependentesMouseClicked
         Integer linha = tbDependentes.getSelectedRow();
-        String codigo = (String)tbDependentes.getValueAt(linha, 0);
-        String data = (String)tbDependentes.getValueAt(linha, 1);
-        String observacao = (String)tbDependentes.getValueAt(linha, 3);
-        String tipo = (String)tbDependentes.getValueAt(linha, 4);
-        
+        String codigo = (String) tbDependentes.getValueAt(linha, 0);
+        String data = (String) tbDependentes.getValueAt(linha, 1);
+        String observacao = (String) tbDependentes.getValueAt(linha, 3);
+        String tipo = (String) tbDependentes.getValueAt(linha, 4);
+
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
         String ano = data.substring(6);
-        String recebedataTabela = dia+mes+ano;
-        
+        String recebedataTabela = dia + mes + ano;
+
         txtDataDependentes.setText(recebedataTabela);
-        
+
         txtCodDependentes.setText(codigo);
         txtObsDependentes.setText(observacao);
-        
-        if(tipo.equalsIgnoreCase("Finalizado")){
+
+        if (tipo.equalsIgnoreCase("Finalizado")) {
             cbTipoDependentes.setSelectedItem("Finalizado");
-        }
-        else
+        } else {
             cbTipoDependentes.setSelectedItem("Novo Andamento");
+        }
     }//GEN-LAST:event_tbDependentesMouseClicked
 
     private void btnNovoFolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoFolhaActionPerformed
@@ -1247,87 +1243,83 @@ public class DepPessoal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoFolhaActionPerformed
 
     private void btnSalvarFolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarFolhaActionPerformed
-        if(txtDataFolha.getText().equals("  /  /    ") || txtDataFolha.getText().trim().length()<10){
+        if (txtDataFolha.getText().equals("  /  /    ") || txtDataFolha.getText().trim().length() < 10) {
             JOptionPane.showMessageDialog(null, "Data informada é invalida!");
-        }
-        else if(txtCodFolha.getText().equals("")){
-            
-            try{
+        } else if (txtCodFolha.getText().equals("")) {
+
+            try {
                 String novadata = txtDataFolha.getText();
                 Date data = sdf.parse(novadata);
-                
+
                 String andamento;
-                
-                if(cbTipoFolha.getSelectedItem().equals("Finalizado")){
+
+                if (cbTipoFolha.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
-                
+
                 String gry = "insert into implantardadosfolhapg (DatadeCadastroAndamento, NumeroProcesso,"
-                        +"Usuario, Obsevacao, AndamentoImplantarDadosFolhaPG)"
-                        +"values ('"+new java.sql.Date(data.getTime())+"','"
-                        +processo+"','"
-                        +usuario+"','"
-                        +txtObsFolha.getText()+"','"
-                        +andamento+"')";
+                        + "Usuario, Obsevacao, AndamentoImplantarDadosFolhaPG)"
+                        + "values ('" + new java.sql.Date(data.getTime()) + "','"
+                        + processo + "','"
+                        + usuario + "','"
+                        + txtObsFolha.getText() + "','"
+                        + andamento + "')";
                 con.exeQuery(gry);
-                
+
                 JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
-                
+
                 atualizar_folha();
                 preencher_status();
                 atualizar_cadastro_cliente();
                 limpar_tabela_folha();
                 preencher_tabela_folha();
-                
-            }catch(ParseException | HeadlessException add){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro!\n" +add);
+
+            } catch (ParseException | HeadlessException add) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro!\n" + add);
             }
-            
-        }
-        else if(!txtCodFolha.getText().equals("")){
-            
-            try{
+
+        } else if (!txtCodFolha.getText().equals("")) {
+
+            try {
                 String novadata = txtDataFolha.getText();
                 Date data = sdf.parse(novadata);
-                
+
                 String andamento;
-                
-                if(cbTipoFolha.getSelectedItem().equals("Finalizado")){
+
+                if (cbTipoFolha.getSelectedItem().equals("Finalizado")) {
                     andamento = "Finalizado";
-                }
-                else{
+                } else {
                     andamento = "Em Aberto";
                 }
-                
+
                 String sql = "update implantardadosfolhapg set "
-                        +"DatadeCadastroAndamento='"+new java.sql.Date(data.getTime())+"',"
-                        +"Usuario='"+usuario+"',"
-                        +"Obsevacao='"+txtObsFolha.getText()+"',"
-                        +"AndamentoImplantarDadosFolhaPG='"+andamento+"' "
-                        +" where CodImplantarDadosFolhaPG="+txtCodFolha.getText();
-                
+                        + "DatadeCadastroAndamento='" + new java.sql.Date(data.getTime()) + "',"
+                        + "Usuario='" + usuario + "',"
+                        + "Obsevacao='" + txtObsFolha.getText() + "',"
+                        + "AndamentoImplantarDadosFolhaPG='" + andamento + "' "
+                        + " where CodImplantarDadosFolhaPG=" + txtCodFolha.getText();
+
                 con.statement.executeUpdate(sql);
-                
+
                 JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
-                
+
                 atualizar_folha();
                 preencher_status();
                 atualizar_cadastro_cliente();
                 limpar_tabela_folha();
                 preencher_tabela_folha();
-            
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao alterar o registro\n"+erro);
-            }catch(ParseException ex){
-                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro!\n" +ex);
+
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao alterar o registro\n" + erro);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao inserir o novo registro!\n" + ex);
             }
-            
+
         }
-        
-        
+
+
     }//GEN-LAST:event_btnSalvarFolhaActionPerformed
 
     private void btnCancelarFolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarFolhaActionPerformed
@@ -1336,75 +1328,73 @@ public class DepPessoal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarFolhaActionPerformed
 
     private void btnExcluirFolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirFolhaActionPerformed
-        if(txtCodFolha.getText().equals("")){
+        if (txtCodFolha.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Selecione um cliente para exclusão!");
-        }
-        else{
-            
-            try{
-                con.executeSQL(("select * from implantardadosfolhapg where CodImplantarDadosFolhaPG="+txtCodFolha.getText()));
-                if(con.resultset.first()){
-                    String cliente = "Tem certeza que deseja excluir o registro do cliente " +nome+"?";
+        } else {
+
+            try {
+                con.executeSQL(("select * from implantardadosfolhapg where CodImplantarDadosFolhaPG=" + txtCodFolha.getText()));
+                if (con.resultset.first()) {
+                    String cliente = "Tem certeza que deseja excluir o registro do cliente " + nome + "?";
                     String andamento = con.resultset.getString("AndamentoImplantarDadosFolhaPG");
-                    
-                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão",JOptionPane.YES_NO_OPTION);
-                    if(opcao_escolhida == JOptionPane.YES_OPTION){
-                        String sql = "delete from implantardadosfolhapg where CodImplantarDadosFolhaPG="+txtCodFolha.getText();
+
+                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, cliente, "Exclusão", JOptionPane.YES_NO_OPTION);
+                    if (opcao_escolhida == JOptionPane.YES_OPTION) {
+                        String sql = "delete from implantardadosfolhapg where CodImplantarDadosFolhaPG=" + txtCodFolha.getText();
                         int conseguiu_excluir = con.statement.executeUpdate(sql);
-                        if(conseguiu_excluir==1){
+                        if (conseguiu_excluir == 1) {
                             JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
                             preencher_status();
                             atualizar_cadastro_cliente();
                             limpar_tabela_folha();
-                            
-                            if("Finalizado".equals(andamento)){
-                                con.executeSQL("select * from implantardadosfolhapg where NumeroProcesso="+processo+" and AndamentoImplantarDadosFolhaPG='Finalizado'");
-                                
-                                if(!con.resultset.first()){
-                                    try{
-                                        con.statement.executeUpdate("update dp set AndamentoIplantacaodadosFolhaPg='Em Aberto' where Numerodoprocesso='"+processo+"'");
+
+                            if ("Finalizado".equals(andamento)) {
+                                con.executeSQL("select * from implantardadosfolhapg where NumeroProcesso=" + processo + " and AndamentoImplantarDadosFolhaPG='Finalizado'");
+
+                                if (!con.resultset.first()) {
+                                    try {
+                                        con.statement.executeUpdate("update dp set AndamentoIplantacaodadosFolhaPg='Em Aberto' where Numerodoprocesso='" + processo + "'");
 
                                         preencher_tabela_folha();
                                         limpar_tela_folha();
-                                    }catch(SQLException erro){
-                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar tabela dp!\n"+erro);
+                                    } catch (SQLException erro) {
+                                        JOptionPane.showMessageDialog(null, "Falha ao atualizar tabela dp!\n" + erro);
                                     }
                                 }
                             }
                         }
                     }
                 }
-                
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro da tabela Controle!\n"+erro);
+
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao excluir o registro da tabela Controle!\n" + erro);
             }
-            
-            
+
         }
     }//GEN-LAST:event_btnExcluirFolhaActionPerformed
 
     private void tbFolhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbFolhaMouseClicked
         Integer linha = tbFolha.getSelectedRow();
-        String codigo = (String)tbFolha.getValueAt(linha, 0);
-        String data = (String)tbFolha.getValueAt(linha, 1);
-        String observacao = (String)tbFolha.getValueAt(linha, 3);
-        String tipo = (String)tbFolha.getValueAt(linha, 4);
-        
+        String codigo = (String) tbFolha.getValueAt(linha, 0);
+        String data = (String) tbFolha.getValueAt(linha, 1);
+        String observacao = (String) tbFolha.getValueAt(linha, 3);
+        String tipo = (String) tbFolha.getValueAt(linha, 4);
+
         String dia = data.substring(0, 2);
         String mes = data.substring(3, 5);
         String ano = data.substring(6);
-        String recebedataTabela = dia+mes+ano;
-        
+        String recebedataTabela = dia + mes + ano;
+
         txtDataFolha.setText(recebedataTabela);
-        
+
         txtCodFolha.setText(codigo);
         txtObsFolha.setText(observacao);
-        
-        if(tipo.equalsIgnoreCase("Finalizado")){
+
+        if (tipo.equalsIgnoreCase("Finalizado")) {
             cbTipoFolha.setSelectedItem("Finalizado");
-        }
-        else
+        } else {
             cbTipoFolha.setSelectedItem("Novo Andamento");
+        }
     }//GEN-LAST:event_tbFolhaMouseClicked
 
     private void btnAlterarSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarSocioActionPerformed
@@ -1427,14 +1417,14 @@ public class DepPessoal extends javax.swing.JFrame {
         con.desconecta();
         con_geral.desconecta();
     }//GEN-LAST:event_formWindowClosing
-    public static void main(String args[]){
+    public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run(){
-            DepPessoal reg = new DepPessoal();
-            reg.setVisible(true);
+            public void run() {
+                DepPessoal reg = new DepPessoal();
+                reg.setVisible(true);
             }
         });
-}
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterarDependentes;
     private javax.swing.JButton btnAlterarFolha;
@@ -1508,196 +1498,199 @@ public class DepPessoal extends javax.swing.JFrame {
     public static javax.swing.JLabel txtStatusSocio;
     public static javax.swing.JLabel txtUsuario;
     // End of variables declaration//GEN-END:variables
-    public void preencher_tabela_socio(){
+    public void preencher_tabela_socio() {
         tbSocio.getColumnModel().getColumn(0);
         tbSocio.getColumnModel().getColumn(1);
         tbSocio.getColumnModel().getColumn(2);
         tbSocio.getColumnModel().getColumn(3);
         tbSocio.getColumnModel().getColumn(4);
         tbSocio.getColumnModel().getColumn(5);
-        con.executeSQL("select * from cadastrosocioadmcontrol WHERE NumeroProcesso='"+processo+"'");
-        
-        DefaultTableModel modelo = (DefaultTableModel)tbSocio.getModel();
+        con.executeSQL("select * from cadastrosocioadmcontrol WHERE NumeroProcesso='" + processo + "'");
+
+        DefaultTableModel modelo = (DefaultTableModel) tbSocio.getModel();
         //modelo.setNumRows(0);
-        
-        try
-        {
-            
-            while (con.resultset.next())
-                modelo.addRow(new Object [] {
+
+        try {
+
+            while (con.resultset.next()) {
+                modelo.addRow(new Object[]{
                     con.resultset.getString("CodCadastroSocioADMControl"),
                     sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                     con.resultset.getString("NumeroProcesso"),
                     con.resultset.getString("Obsevacao"),
                     con.resultset.getString("AndamentoCadastroSocioADMControl"),
                     con.resultset.getString("Usuario")});
+            }
             con.resultset.first();
-        }   catch (SQLException erro){
-    JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Socio " +erro);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar na tabela Socio " + erro);
+        }
     }
-}
-    public void preencher_tabela_dependentes(){
+
+    public void preencher_tabela_dependentes() {
         tbDependentes.getColumnModel().getColumn(0);
         tbDependentes.getColumnModel().getColumn(1);
         tbDependentes.getColumnModel().getColumn(2);
         tbDependentes.getColumnModel().getColumn(3);
         tbDependentes.getColumnModel().getColumn(4);
         tbDependentes.getColumnModel().getColumn(5);
-        con.executeSQL("select * from cadastrodosdependentesdosociaadm WHERE NumeroProcesso='"+processo+"'");
+        con.executeSQL("select * from cadastrodosdependentesdosociaadm WHERE NumeroProcesso='" + processo + "'");
         //
-        DefaultTableModel modelo = (DefaultTableModel)tbDependentes.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) tbDependentes.getModel();
         //modelo.setNumRows(0);
-        try
-        {
-            while (con.resultset.next())
-                modelo.addRow(new Object [] {
+        try {
+            while (con.resultset.next()) {
+                modelo.addRow(new Object[]{
                     con.resultset.getString("CodCadastroDependentesSocioADM"),
                     sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                     con.resultset.getString("NumeroProcesso"),
                     con.resultset.getString("Obsevacao"),
                     con.resultset.getString("AndamentoCadastroDependentesSocioADM"),
                     con.resultset.getString("Usuario")});
+            }
             con.resultset.first();
-        }catch(SQLException erro){
-          JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Dependentes "+erro);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar na tabela Dependentes " + erro);
         }
     }
-    public void preencher_tabela_folha(){
+
+    public void preencher_tabela_folha() {
         tbFolha.getColumnModel().getColumn(0);
         tbFolha.getColumnModel().getColumn(1);
         tbFolha.getColumnModel().getColumn(2);
         tbFolha.getColumnModel().getColumn(3);
         tbFolha.getColumnModel().getColumn(4);
         tbFolha.getColumnModel().getColumn(5);
-        con.executeSQL("select * from implantardadosfolhapg where NumeroProcesso='"+processo+"'");
-        
-        DefaultTableModel modelo = (DefaultTableModel)tbFolha.getModel();
-        
-        try{
-            while(con.resultset.next())
-                modelo.addRow(new Object [] {
+        con.executeSQL("select * from implantardadosfolhapg where NumeroProcesso='" + processo + "'");
+
+        DefaultTableModel modelo = (DefaultTableModel) tbFolha.getModel();
+
+        try {
+            while (con.resultset.next()) {
+                modelo.addRow(new Object[]{
                     con.resultset.getString("CodImplantarDadosFolhaPG"),
                     sdf.format(con.resultset.getDate("DatadeCadastroAndamento")),
                     con.resultset.getString("NumeroProcesso"),
                     con.resultset.getString("Obsevacao"),
                     con.resultset.getString("AndamentoImplantarDadosFolhaPG"),
                     con.resultset.getString("Usuario")});
+            }
             con.resultset.first();
-        }catch(SQLException erro){
-          JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Folha " +erro);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar na tabela Folha " + erro);
         }
     }
-    public void limpar_tabela_socio(){
-        DefaultTableModel tbm = (DefaultTableModel)tbSocio.getModel();
-            for(int i = tbm.getRowCount()-1; i>=0; i--){
-                tbm.removeRow(i);
-            }
+
+    public void limpar_tabela_socio() {
+        DefaultTableModel tbm = (DefaultTableModel) tbSocio.getModel();
+        for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
+            tbm.removeRow(i);
+        }
     }
-    public void limpar_tabela_dependentes(){
-        DefaultTableModel tbm = (DefaultTableModel)tbDependentes.getModel();
-            for(int i = tbm.getRowCount()-1; i>=0; i--){
-                tbm.removeRow(i);
-            }
+
+    public void limpar_tabela_dependentes() {
+        DefaultTableModel tbm = (DefaultTableModel) tbDependentes.getModel();
+        for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
+            tbm.removeRow(i);
+        }
     }
-    public void limpar_tabela_folha(){
-        DefaultTableModel tbm = (DefaultTableModel)tbFolha.getModel();
-            for(int i = tbm.getRowCount()-1; i>=0; i--){
-                tbm.removeRow(i);
-            }
+
+    public void limpar_tabela_folha() {
+        DefaultTableModel tbm = (DefaultTableModel) tbFolha.getModel();
+        for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
+            tbm.removeRow(i);
+        }
     }
-    public void preencher_status(){
-        try{
-            String sql = "select * from dp WHERE Numerodoprocesso='"+processo+"'";
+
+    public void preencher_status() {
+        try {
+            String sql = "select * from dp WHERE Numerodoprocesso='" + processo + "'";
             con_geral.executeSQL(sql);
             con_geral.resultset.first();
-            
+
             socio = con_geral.resultset.getString("AndamentoCadastroDoSocioNoControl");
             dependentes = con_geral.resultset.getString("AndamentoCadastroDependentesdoSocioADM");
             folha = con_geral.resultset.getString("AndamentoIplantacaodadosFolhaPg");
-            
+
             txtStatusSocio.setText(socio);
             txtStatusDependentes.setText(dependentes);
             txtStatusFolha.setText(folha);
-            
-        }catch(SQLException erro){
-            JOptionPane.showMessageDialog(null, "Falha ao preencher status!" +erro);
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Falha ao preencher status!" + erro);
         }
     }
-    public void atualizar_cadastro_cliente(){
-        
-        if(txtStatusSocio.getText().equalsIgnoreCase("Em Aberto") &&
-                txtStatusDependentes.getText().equalsIgnoreCase("Em Aberto") &&
-                txtStatusFolha.getText().equalsIgnoreCase("Em Aberto")){
-       
-                try{
-                    String sql = "UPDATE cadastrodeprocesso set AndamentoDP='Em Aberto' where codNumerodoprocesso=" +processo;
-                    con_geral.statement.executeUpdate(sql);
 
-                    String andamento = "Não Iniciado";
-                    txtAndamentoDP.setText(andamento);
-                }catch(SQLException erro){
-                    JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" +erro);
-                }
-        }
-        else if(txtStatusSocio.getText().equalsIgnoreCase("Em Aberto") ||
-                txtStatusDependentes.getText().equalsIgnoreCase("Em Aberto") ||
-                txtStatusFolha.getText().equalsIgnoreCase("Em Aberto")){
-                try{
-                    String sql = "UPDATE cadastrodeprocesso set AndamentoDP='Em Aberto' where codNumerodoprocesso=" +processo;
-                    con_geral.statement.executeUpdate(sql);
+    public void atualizar_cadastro_cliente() {
 
-                    String andamento = "Em Andamento";
-                    txtAndamentoDP.setText(andamento);
-                }catch(SQLException erro){
-                    JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" +erro);
-                }
-        }
-        else if(txtStatusSocio.getText().equalsIgnoreCase("Finalizado") &&
-                txtStatusDependentes.getText().equalsIgnoreCase("Finalizado") &&
-                txtStatusFolha.getText().equalsIgnoreCase("Finalizado")){
-       
-                try{
-                    String sql = "UPDATE cadastrodeprocesso set AndamentoDP='Concluido' where codNumerodoprocesso="+processo;
-                    con_geral.statement.executeUpdate(sql);
+        if (txtStatusSocio.getText().equalsIgnoreCase("Em Aberto")
+                && txtStatusDependentes.getText().equalsIgnoreCase("Em Aberto")
+                && txtStatusFolha.getText().equalsIgnoreCase("Em Aberto")) {
 
-                    String andamento = "Concluido";
-                    txtAndamentoDP.setText(andamento);
-                }catch(SQLException erro){
-                    JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" +erro);
-                }
+            try {
+                String sql = "UPDATE cadastrodeprocesso set AndamentoDP='Em Aberto' where codNumerodoprocesso=" + processo;
+                con_geral.statement.executeUpdate(sql);
+
+                String andamento = "Não Iniciado";
+                txtAndamentoDP.setText(andamento);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" + erro);
+            }
+        } else if (txtStatusSocio.getText().equalsIgnoreCase("Em Aberto")
+                || txtStatusDependentes.getText().equalsIgnoreCase("Em Aberto")
+                || txtStatusFolha.getText().equalsIgnoreCase("Em Aberto")) {
+            try {
+                String sql = "UPDATE cadastrodeprocesso set AndamentoDP='Em Aberto' where codNumerodoprocesso=" + processo;
+                con_geral.statement.executeUpdate(sql);
+
+                String andamento = "Em Andamento";
+                txtAndamentoDP.setText(andamento);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" + erro);
+            }
+        } else if (txtStatusSocio.getText().equalsIgnoreCase("Finalizado")
+                && txtStatusDependentes.getText().equalsIgnoreCase("Finalizado")
+                && txtStatusFolha.getText().equalsIgnoreCase("Finalizado")) {
+
+            try {
+                String sql = "UPDATE cadastrodeprocesso set AndamentoDP='Concluido' where codNumerodoprocesso=" + processo;
+                con_geral.statement.executeUpdate(sql);
+
+                String andamento = "Concluido";
+                txtAndamentoDP.setText(andamento);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar status final!\n" + erro);
+            }
         }
         distribuir_cores();
     }
-    public void distribuir_cores(){
-        if(txtStatusSocio.getText().equalsIgnoreCase("Em Aberto")){
+
+    public void distribuir_cores() {
+        if (txtStatusSocio.getText().equalsIgnoreCase("Em Aberto")) {
             txtStatusSocio.setBackground(Color.red);
-        }
-        else{
+        } else {
             txtStatusSocio.setBackground(Color.green);
         }
-        if(txtStatusDependentes.getText().equalsIgnoreCase("Em Aberto")){
+        if (txtStatusDependentes.getText().equalsIgnoreCase("Em Aberto")) {
             txtStatusDependentes.setBackground(Color.red);
-        }
-        else{
+        } else {
             txtStatusDependentes.setBackground(Color.green);
         }
-        if(txtStatusFolha.getText().equalsIgnoreCase("Em Aberto")){
+        if (txtStatusFolha.getText().equalsIgnoreCase("Em Aberto")) {
             txtStatusFolha.setBackground(Color.red);
+        } else {
+            txtStatusFolha.setBackground(Color.green);
         }
-        else{
-            txtStatusFolha.setBackground(Color.green);    
-            }
-        if(txtAndamentoDP.getText().equalsIgnoreCase("Concluido")){
+        if (txtAndamentoDP.getText().equalsIgnoreCase("Concluido")) {
             txtAndamentoDP.setBackground(Color.green);
-        }
-        else if(txtAndamentoDP.getText().equalsIgnoreCase("Em Andamento")){
+        } else if (txtAndamentoDP.getText().equalsIgnoreCase("Em Andamento")) {
             txtAndamentoDP.setBackground(Color.orange);
-        }
-        else{
+        } else {
             txtAndamentoDP.setBackground(Color.red);
         }
     }
-    public void limpar_tela_socio(){
+
+    public void limpar_tela_socio() {
         txtCodSocio.setText("");
         txtObsSocio.setText("");
         txtCodSocio.setEditable(false);
@@ -1705,9 +1698,10 @@ public class DepPessoal extends javax.swing.JFrame {
         Date data = new Date();
         String datahoje = sdf.format(data);
         txtDataSocio.setText(datahoje);
-        
+
     }
-    public void limpar_tela_dependentes(){
+
+    public void limpar_tela_dependentes() {
         txtCodDependentes.setEditable(false);
         txtCodDependentes.setText("");
         cbTipoDependentes.setSelectedItem("");
@@ -1716,7 +1710,8 @@ public class DepPessoal extends javax.swing.JFrame {
         String datahoje = sdf.format(data);
         txtDataDependentes.setText(datahoje);
     }
-    public void limpar_tela_folha(){
+
+    public void limpar_tela_folha() {
         txtCodFolha.setEditable(false);
         txtCodFolha.setText("");
         cbTipoFolha.setSelectedItem("");
@@ -1726,208 +1721,213 @@ public class DepPessoal extends javax.swing.JFrame {
         txtDataFolha.setText(datahoje);
     }
 
-    public void atualizar_socios(){
-        if(cbTipoSocio.getSelectedItem().equals("Finalizado")){
-                    try{
-                        String sql = "UPDATE dp set AndamentoCadastroDoSocioNoControl='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Planilha\n" +erro);
-                    }
-        }
-        else{
-            try{
-                con_geral.executeSQL("select * from dp where Numerodoprocesso='" +processo+"' and AndamentoCadastroDoSocioNoControl ='Finalizado'");
-                if(con_geral.resultset.next()){
+    public void atualizar_socios() {
+        if (cbTipoSocio.getSelectedItem().equals("Finalizado")) {
+            try {
+                String sql = "UPDATE dp set AndamentoCadastroDoSocioNoControl='Finalizado' where Numerodoprocesso='" + processo + "'";
+                con_geral.statement.executeUpdate(sql);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Planilha\n" + erro);
+            }
+        } else {
+            try {
+                con_geral.executeSQL("select * from dp where Numerodoprocesso='" + processo + "' and AndamentoCadastroDoSocioNoControl ='Finalizado'");
+                if (con_geral.resultset.next()) {
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua ou altere todos os registros finalizados nesse painel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-     
-                    con_geral.executeSQL("select * from cadastrosocioadmcontrol  where NumeroProcesso='"+processo+"'and AndamentoCadastroSocioADMControl='Finalizado'");
-                    
-                    if(!con_geral.resultset.first()){
-                        try{
-                
-                        String sql = "UPDATE dp set AndamentoCadastroDoSocioNoControl='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                        }catch(SQLException erro){
-                            JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Planilha\n" +erro);
+
+                    con_geral.executeSQL("select * from cadastrosocioadmcontrol  where NumeroProcesso='" + processo + "'and AndamentoCadastroSocioADMControl='Finalizado'");
+
+                    if (!con_geral.resultset.first()) {
+                        try {
+
+                            String sql = "UPDATE dp set AndamentoCadastroDoSocioNoControl='Em Aberto' where Numerodoprocesso='" + processo + "'";
+                            con_geral.statement.executeUpdate(sql);
+                        } catch (SQLException erro) {
+                            JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Planilha\n" + erro);
                         }
-                        
+
                     }
-                }
-                else{
-                    try{
-                        String sql = "UPDATE dp set AndamentoCadastroDoSocioNoControl ='Em Aberto' where Numerodoprocesso='" +txtCodigo.getText()+"'";
+                } else {
+                    try {
+                        String sql = "UPDATE dp set AndamentoCadastroDoSocioNoControl ='Em Aberto' where Numerodoprocesso='" + txtCodigo.getText() + "'";
                         con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Planilha:\n" +erro);
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Financeiro>Planilha:\n" + erro);
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Financeiro>Planilha: \n" +erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Financeiro>Planilha: \n" + erro);
             }
-                    
+
         }
     }
-    public void atualizar_dependentes(){
-        if(cbTipoDependentes.getSelectedItem().equals("Finalizado")){
-                    try{
-                        String sql = "UPDATE dp set AndamentoCadastroDependentesdoSocioADM='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Pessoal>Dependentes\n" +erro);
-                    }
-        }
-        else{
-            try{
-                con_geral.executeSQL("select * from dp where Numerodoprocesso='" +processo+"' and AndamentoCadastroDependentesdoSocioADM ='Finalizado'");
-                if(con_geral.resultset.next()){
+
+    public void atualizar_dependentes() {
+        if (cbTipoDependentes.getSelectedItem().equals("Finalizado")) {
+            try {
+                String sql = "UPDATE dp set AndamentoCadastroDependentesdoSocioADM='Finalizado' where Numerodoprocesso='" + processo + "'";
+                con_geral.statement.executeUpdate(sql);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Pessoal>Dependentes\n" + erro);
+            }
+        } else {
+            try {
+                con_geral.executeSQL("select * from dp where Numerodoprocesso='" + processo + "' and AndamentoCadastroDependentesdoSocioADM ='Finalizado'");
+                if (con_geral.resultset.next()) {
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua ou altere todos os registros finalizados nesse painel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-     
-                    con_geral.executeSQL("select * from cadastrodosdependentesdosociaadm where NumeroProcesso='"+processo+"'and AndamentoCadastroDependentesSocioADM='Finalizado'");
-                    
-                    if(!con_geral.resultset.first()){
-                        try{
-                
-                        String sql = "UPDATE dp set AndamentoCadastroDependentesdoSocioADM='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                        }catch(SQLException erro){
-                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Pessoal>Dependentes\n" +erro);
+
+                    con_geral.executeSQL("select * from cadastrodosdependentesdosociaadm where NumeroProcesso='" + processo + "'and AndamentoCadastroDependentesSocioADM='Finalizado'");
+
+                    if (!con_geral.resultset.first()) {
+                        try {
+
+                            String sql = "UPDATE dp set AndamentoCadastroDependentesdoSocioADM='Em Aberto' where Numerodoprocesso='" + processo + "'";
+                            con_geral.statement.executeUpdate(sql);
+                        } catch (SQLException erro) {
+                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Pessoal>Dependentes\n" + erro);
                         }
-                        
+
                     }
-                }
-                else{
-                    try{
-                        String sql = "UPDATE dp set AndamentoCadastroDependentesdoSocioADM ='Em Aberto' where Numerodoprocesso='" +txtCodigo.getText()+"'";
+                } else {
+                    try {
+                        String sql = "UPDATE dp set AndamentoCadastroDependentesdoSocioADM ='Em Aberto' where Numerodoprocesso='" + txtCodigo.getText() + "'";
                         con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Pessoal>Dependentes\n" +erro);
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Pessoal>Dependentes\n" + erro);
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Pessoal>Dependentes\n" +erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Pessoal>Dependentes\n" + erro);
             }
-                    
+
         }
     }
-    public void atualizar_folha(){
-        if(cbTipoFolha.getSelectedItem().equals("Finalizado")){
-                    try{
-                        String sql = "UPDATE dp set AndamentoIplantacaodadosFolhaPg='Finalizado' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Pessoal>Folha\n" +erro);
-                    }
-        }
-        else{
-            try{
-                con_geral.executeSQL("select * from dp where Numerodoprocesso='" +processo+"' and AndamentoIplantacaodadosFolhaPg ='Finalizado'");
-                if(con_geral.resultset.next()){
+
+    public void atualizar_folha() {
+        if (cbTipoFolha.getSelectedItem().equals("Finalizado")) {
+            try {
+                String sql = "UPDATE dp set AndamentoIplantacaodadosFolhaPg='Finalizado' where Numerodoprocesso='" + processo + "'";
+                con_geral.statement.executeUpdate(sql);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Pessoal>Folha\n" + erro);
+            }
+        } else {
+            try {
+                con_geral.executeSQL("select * from dp where Numerodoprocesso='" + processo + "' and AndamentoIplantacaodadosFolhaPg ='Finalizado'");
+                if (con_geral.resultset.next()) {
                     JOptionPane.showMessageDialog(null, "O status desse processo ja foi finalizado! Mesmo com novo andamento cadastrado, \n"
                             + "para retomar o Status para 'Aberto' exclua ou altere todos os registros finalizados nesse painel\n"
                             + " ou assegure que não exista nenhum outro registro com situação 'Finalizado'");
                     //consulta se existe algum registro finalizado
-     
-                    con_geral.executeSQL("select * from implantardadosfolhapg where NumeroProcesso='"+processo+"'and AndamentoImplantarDadosFolhaPG='Finalizado'");
-                    
-                    if(!con_geral.resultset.first()){
-                        try{
-                
-                        String sql = "UPDATE dp set AndamentoIplantacaodadosFolhaPg='Em Aberto' where Numerodoprocesso='" +processo+"'";
-                        con_geral.statement.executeUpdate(sql);
-                        }catch(SQLException erro){
-                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Pessoal>Folha\n" +erro);
+
+                    con_geral.executeSQL("select * from implantardadosfolhapg where NumeroProcesso='" + processo + "'and AndamentoImplantarDadosFolhaPG='Finalizado'");
+
+                    if (!con_geral.resultset.first()) {
+                        try {
+
+                            String sql = "UPDATE dp set AndamentoIplantacaodadosFolhaPg='Em Aberto' where Numerodoprocesso='" + processo + "'";
+                            con_geral.statement.executeUpdate(sql);
+                        } catch (SQLException erro) {
+                            JOptionPane.showMessageDialog(null, "Falha ao atualizar a tabela Pessoal>Folha\n" + erro);
                         }
-                        
+
                     }
-                }
-                else{
-                    try{
-                        String sql = "UPDATE dp set AndamentoIplantacaodadosFolhaPg ='Em Aberto' where Numerodoprocesso='" +txtCodigo.getText()+"'";
+                } else {
+                    try {
+                        String sql = "UPDATE dp set AndamentoIplantacaodadosFolhaPg ='Em Aberto' where Numerodoprocesso='" + txtCodigo.getText() + "'";
                         con_geral.statement.executeUpdate(sql);
-                    }catch(SQLException erro){
-                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Pessoal>Folha\n" +erro);
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(null, "Falha ao atualizar  a tabela Pessoal>Folha\n" + erro);
                     }
                 }
-            }catch(SQLException erro){
-                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Pessoal>Folha\n" +erro);
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar status na tabela Pessoal>Folha\n" + erro);
             }
-                    
+
         }
     }
-    public void bloquear_tela_dependentes(){
+
+    public void bloquear_tela_dependentes() {
         txtCodDependentes.setEditable(false);
         txtDataDependentes.setEditable(false);
         cbTipoDependentes.setEditable(false);
         txtObsDependentes.setEditable(false);
     }
 
-    public void desbloquear_tela_dependentes(){
+    public void desbloquear_tela_dependentes() {
         txtDataDependentes.setEditable(true);
         cbTipoDependentes.setEditable(true);
         txtObsDependentes.setEditable(true);
     }
-    public void bloquear_tela_socio(){
+
+    public void bloquear_tela_socio() {
         txtCodSocio.setEditable(false);
         txtDataSocio.setEditable(false);
         cbTipoSocio.setEditable(false);
         txtObsSocio.setEditable(false);
     }
 
-    public void desbloquear_tela_socio(){
+    public void desbloquear_tela_socio() {
         txtDataSocio.setEditable(true);
         cbTipoSocio.setEditable(true);
         txtObsSocio.setEditable(true);
     }
-    public void bloquear_tela_folha(){
+
+    public void bloquear_tela_folha() {
         txtCodFolha.setEditable(false);
         txtDataFolha.setEditable(false);
         cbTipoFolha.setEditable(false);
         txtObsFolha.setEditable(false);
     }
 
-    public void desbloquear_tela_folha(){
+    public void desbloquear_tela_folha() {
         txtDataFolha.setEditable(true);
         cbTipoFolha.setEditable(true);
         txtObsFolha.setEditable(true);
     }
-    public void criar_backup_socio(){
+
+    public void criar_backup_socio() {
         codSocio_backup = txtCodSocio.getText();
-        tipoSocio_backup = (String)cbTipoSocio.getSelectedItem();
+        tipoSocio_backup = (String) cbTipoSocio.getSelectedItem();
         dataSocio_backup = txtDataSocio.getText();
         obsSocio_backup = txtObsSocio.getText();
     }
-    public void restaurar_backup_socio(){
+
+    public void restaurar_backup_socio() {
         txtCodSocio.setText(codSocio_backup);
         cbTipoSocio.setSelectedItem(tipoSocio_backup);
         txtDataSocio.setText(dataSocio_backup);
         txtObsSocio.setText(obsSocio_backup);
     }
-    public void criar_backup_dependentes(){
+
+    public void criar_backup_dependentes() {
         codDep_backup = txtCodDependentes.getText();
-        tipoDep_backup = (String)cbTipoDependentes.getSelectedItem();
+        tipoDep_backup = (String) cbTipoDependentes.getSelectedItem();
         dataDep_backup = txtDataDependentes.getText();
         obsDep_backup = txtObsDependentes.getText();
     }
-    public void restaurar_backup_dependentes(){
+
+    public void restaurar_backup_dependentes() {
         txtCodDependentes.setText(codDep_backup);
         cbTipoDependentes.setSelectedItem(tipoDep_backup);
         txtDataDependentes.setText(dataDep_backup);
         txtObsDependentes.setText(obsDep_backup);
     }
-    public void criar_backup_folha(){
+
+    public void criar_backup_folha() {
         codFolha_backup = txtCodFolha.getText();
-        tipoFolha_backup = (String)cbTipoFolha.getSelectedItem();
+        tipoFolha_backup = (String) cbTipoFolha.getSelectedItem();
         dataFolha_backup = txtDataFolha.getText();
         obsFolha_backup = txtObsFolha.getText();
     }
-    public void restaurar_backup_folha(){
+
+    public void restaurar_backup_folha() {
         txtCodFolha.setText(codFolha_backup);
         cbTipoFolha.setSelectedItem(tipoFolha_backup);
         txtDataFolha.setText(dataFolha_backup);

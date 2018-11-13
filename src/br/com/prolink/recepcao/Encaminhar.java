@@ -1,13 +1,17 @@
 package br.com.prolink.recepcao;
 
-import br.com.prolink.inicio.ConexaoStatement;
-import br.com.prolink.login.Login;
+import br.com.prolink.model.HtmlEntities;
+import br.com.prolink.factory.ConexaoStatement;
+import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.view.Login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 /*
  * Todos direitos reservados a Tiago Dias de Souza
@@ -245,21 +249,40 @@ private void setUsuario(String departamento){
         Date hora = new Date();
         SimpleDateFormat sdh = new SimpleDateFormat("HH:mm");
         String novaHora = sdh.format(hora);
-        HtmlEntities html = new HtmlEntities();
-        String aux = html.Converter("Esse documento chegou para "+Login.usuario+" mas ele encaminhou para você!");
+        
+        String aux = "Esse documento chegou para "+UsuarioLogado.getInstance().getUsuario().getUsuario()+" mas ele encaminhou para você!";
         String contaEmail = buscarEmail((String)cb_para.getSelectedItem());
         JOptionPane.showMessageDialog(null, "Procedimento concluido!");
         
         if(!contaEmail.equals("")){
-            if(email.enviaAlerta(aux, novaHora,""+Listagem.txtEmpresa.getText(),""+Listagem.txtId.getText(), contaEmail, ""+cb_para.getSelectedItem(),""+Listagem.txtHistorico.getText())==true){
+            ps = con.prepareStatement("select * from protocolo_item where item_id=?");
+            ps.setInt(1, Integer.parseInt(Listagem.txtCodigo.getText()));
+            
+            List<String> itemNome = new ArrayList<>();
+            List<String> qtde = new ArrayList<>();
+            List<String> detalhes = new ArrayList<>();
+            HtmlEntities conversorHtml = new HtmlEntities();
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                itemNome.add(conversorHtml.Converter(rs.getString("item_nome")));
+                qtde.add(rs.getString("item_quantidade"));
+                detalhes.add(conversorHtml.Converter(rs.getString("item_detalhe")));
+            }
+            String idEmpresa = Listagem.txtId.getText();
+            String novoId = idEmpresa.length()<4?(
+                idEmpresa.length()==1?"000"+idEmpresa:(
+                    idEmpresa.length()==2?"00"+idEmpresa:"0"+idEmpresa
+                )
+                ):idEmpresa;
+            
+            if(email.enviaAlerta(Listagem.txtCodigo.getText(),novoId,conversorHtml.Converter(Listagem.txtEmpresa.getText()),itemNome.iterator(),qtde.iterator(),detalhes.iterator(),(String)cb_para.getSelectedItem(),contaEmail,aux)){
+            //if(email.enviaAlerta(aux, novaHora,""+Listagem.txtEmpresa.getText(),""+Listagem.txtId.getText(), contaEmail, ""+cb_para.getSelectedItem(),""+Listagem.txtHistorico.getText())==true){
                 atualiza_alerta(codigo);
                 ListagemBean lb = new ListagemBean();
                 lb.carrega_usuario();
-                
                 String comando = lb.getComando();
                 listagem.preencher_tabela(comando);
                 listagem.limpar_tela();
-                
             }
         }
         else

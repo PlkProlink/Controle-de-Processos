@@ -91,7 +91,6 @@ public class ListagemDAO {
             if (rs != null){
                while (rs.next ()){
                     ListagemBean tb = new ListagemBean();
-
                     tb.setCod(rs.getInt(1));
                     tb.setData(rs.getString(2));
                     tb.setEntreguePor(rs.getString(3));
@@ -100,10 +99,14 @@ public class ListagemDAO {
                     tb.setHistorico(rs.getString(6));
                     tb.setPara(rs.getString(7));
                     tb.setQuemrecebeu(rs.getString(8));
+                    tb.setDataFuncionarioRecebeu(rs.getDate(9));
                     tb.setObservacao(rs.getString(10));
                     tb.setDepartamento(rs.getString(11));
                     tb.setHora(rs.getString(12));
                     tb.setRecebido(rs.getString(14));
+                    tb.setPassivelDevolucao(rs.getInt(17));
+                    tb.setDevolvido(rs.getInt(18));
+                    tb.setDataDevolucao(rs.getDate(19));
                     listarTabela.add(tb);
             }
             return listarTabela;

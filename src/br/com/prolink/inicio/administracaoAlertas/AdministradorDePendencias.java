@@ -4,6 +4,7 @@
  */
 package br.com.prolink.inicio.administracaoAlertas;
 
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -11,7 +12,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  *
  * @author User
  */
-public class AdministradorDePendencias extends javax.swing.JInternalFrame {
+public class AdministradorDePendencias extends JFrame {
     
     InternoComercial intComercial;
     InternoGeral intGeral;
@@ -20,13 +21,14 @@ public class AdministradorDePendencias extends javax.swing.JInternalFrame {
     InternoRegularizacao intReg;
     InternoPessoal intPessoal;
     InternoFiscal intFiscal;
-    
+    int valor;
     /**
      * Creates new form AdministradorDePendencias
      */
-    public AdministradorDePendencias() {
+    public AdministradorDePendencias(int valor) {
         initComponents();
-        intGeral = new InternoGeral();
+        this.valor=valor;
+        intGeral = new InternoGeral(valor);
         openInternal(intGeral);
     }
 
@@ -44,13 +46,7 @@ public class AdministradorDePendencias extends javax.swing.JInternalFrame {
         jDkBody = new javax.swing.JDesktopPane();
 
         setBackground(new java.awt.Color(250, 250, 250));
-        setBorder(null);
         setPreferredSize(new java.awt.Dimension(1148, 600));
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentMoved(java.awt.event.ComponentEvent evt) {
-                formComponentMoved(evt);
-            }
-        });
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Processos");
         javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Visão Geral");
@@ -102,20 +98,17 @@ public class AdministradorDePendencias extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jDkBody, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
             .addComponent(jDkBody)
         );
 
-        setBounds(0, 0, 1148, 600);
+        pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
-        this.setLocation(0,0);
-    }//GEN-LAST:event_formComponentMoved
 
     private void trArvoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_trArvoreMouseClicked
         String menu = trArvore.getLastSelectedPathComponent().toString();
@@ -146,7 +139,7 @@ public class AdministradorDePendencias extends javax.swing.JInternalFrame {
                 openInternal(intReg);
                 break;
             default:
-                intGeral = new InternoGeral();
+                intGeral = new InternoGeral(valor);
                 openInternal(intGeral);
                 break;
                 

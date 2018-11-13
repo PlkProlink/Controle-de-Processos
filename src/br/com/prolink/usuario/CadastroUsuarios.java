@@ -1,15 +1,10 @@
 package br.com.prolink.usuario;
 
-import br.com.prolink.inicio.Conexao;
-
-import java.awt.Component;
 import javax.swing.table.*;
 import java.sql.*;
-import java.util.*;
 import javax.swing.JOptionPane;
-import br.com.prolink.inicio.Conexao;
-import br.com.prolink.login.Login;
-import br.com.prolink.inicio.TelaPrincipal;
+import br.com.prolink.factory.Conexao;
+import br.com.prolink.model.UsuarioLogado;
 
 /**
  *
@@ -22,7 +17,9 @@ public class CadastroUsuarios extends javax.swing.JFrame {
    
     String privilegio, nivel_backup, codigo_backup, nome_backup, login_backup, senha_backup, email_backup, departamento_backup;
     
-    String nivel=Login.nivel, usuario=Login.departamento, departamento=Login.departamento;
+    int nivel=UsuarioLogado.getInstance().getUsuario().getNivel();
+    String usuario=UsuarioLogado.getInstance().getUsuario().getUsuario(), 
+            departamento=UsuarioLogado.getInstance().getUsuario().getDepartamento();
     
     /**
      *
@@ -42,7 +39,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
                 
                 preencher_tabela();
                 
-                if(!nivel.equals("1")){
+                if(nivel!=1){
                     btnAlterar.setEnabled(false);
                     btnExcluir.setEnabled(false);
                     JOptionPane.showMessageDialog(null, "Você não tem autorização para alterar informações dos usuarios!"+
@@ -461,13 +458,13 @@ public class CadastroUsuarios extends javax.swing.JFrame {
         else if(txt_login.getText().trim().equals("")){
             JOptionPane.showMessageDialog(null, "Campo login não pode fivar em branco!");
         }
-        else if(txt_senha.getText().trim().equals("")){
+        else if(new String(txt_senha.getPassword()).trim().equals("")){
             JOptionPane.showMessageDialog(null, "Campo senha não pode fivar em branco!");
         }
         else if(!txt_codigo.getText().equals("")){
             
             try{
-                if(!nivel.equals("1") && !departamento.equals("Tecnologia") && txt_login.getText().equals(usuario)){
+                if(nivel!=1 && !departamento.equals("Tecnologia") && txt_login.getText().equals(usuario)){
                     
                     if(cb_grupo.getSelectedItem().equals("Privilegiado")){
                     privilegio = "1";
@@ -499,7 +496,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
         else if(txt_codigo.getText().equals("")){
             
             try{
-                if(txt_senha.getText().equals(txt_senha2.getText())){
+                if(new String(txt_senha.getPassword()).equals(new String(txt_senha2.getPassword()))){
 //                    if(txt_senha.getText().trim().equals("")){
 //                        novasenha = senha_backup;
 //                    }
@@ -515,7 +512,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
                     String gry = "insert into login (Usuario, Nome, Senha, Departamento, Email, Nivel) values ('"+
                                     txt_login.getText()+"','"+
                                     txt_nome.getText()+"','"+
-                                    txt_senha.getText()+"','"+
+                                    new String(txt_senha.getPassword())+"','"+
                                     cb_departamento.getSelectedItem()+"','"+
                                     txt_email.getText()+"','"+
                                     privilegio+"')";
@@ -607,7 +604,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
         String grupo = (String)tb_usuarios.getValueAt(linha, 5);
         
         if(login.equalsIgnoreCase(usuario) && departamento.equalsIgnoreCase(dp)
-                || nivel.equals("1") || dp.equalsIgnoreCase("Tecnologia")){
+                || nivel==1 || dp.equalsIgnoreCase("Tecnologia")){
             txt_codigo.setText(cod);
             txt_login.setText(usuario);
             txt_nome.setText(nome);
@@ -779,7 +776,7 @@ public class CadastroUsuarios extends javax.swing.JFrame {
     codigo_backup = txt_codigo.getText();
     nome_backup = txt_nome.getText();
     login_backup = txt_login.getText();
-    senha_backup = txt_senha.getText();
+    senha_backup = new String(txt_senha.getPassword());
     email_backup = txt_email.getText();
     departamento_backup = (String) cb_departamento.getSelectedItem();
 

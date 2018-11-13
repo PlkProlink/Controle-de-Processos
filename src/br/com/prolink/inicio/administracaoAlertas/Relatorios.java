@@ -4,51 +4,42 @@
  */
 package br.com.prolink.inicio.administracaoAlertas;
 
-import br.com.prolink.inicio.ConexaoStatement;
-import br.com.prolink.inicio.TelaPrincipal;
-import br.com.prolink.login.Login;
-import static br.com.prolink.login.Login.TREE_SECOND;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import br.com.prolink.factory.ConexaoStatement;
+import br.com.prolink.model.ProcessoLogado;
+import br.com.prolink.model.UsuarioLogado;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author User
  */
-public class Relatorios extends javax.swing.JInternalFrame{
+public class Relatorios extends javax.swing.JInternalFrame {
 
-    private String gerar="";
-    private String create="Atual";
-    private String tela="";
-    public final static int TREE_SECOND=3;
-    private Timer tempo;
-    int cont;
-    String valor = TelaPrincipal.txt_codigo.getText();
-    
+    private String gerar = "";
+    private String create = "Atual";
+    private String tela = "";
     List<String> listaNomeGeral = new ArrayList();
-    
+
     /**
      * Creates new form Relatorios
+     *
      * @param gerar
      * @param tela
      * @param nome
      */
     public Relatorios(String gerar, String tela, List nome) {
         initComponents();
-        
-        this.listaNomeGeral=nome;
-        
+
+        this.listaNomeGeral = nome;
         table.setAutoCreateRowSorter(true);
         tbAuxiliar.setAutoCreateRowSorter(true);
         //Alerta=envia alerta com graficos
@@ -56,18 +47,26 @@ public class Relatorios extends javax.swing.JInternalFrame{
         //
         //Alerta, Relatorio
         this.gerar = gerar;
-        this.tela=tela;
-        
+        this.tela = tela;
         recebeValores();
-        
+
         jProgressBar1.setVisible(false);
         lbAviso.setVisible(false);
-        
         rbAtual.setSelected(true);
         jPanel1.setVisible(false);
         jPanel2.setVisible(false);
-        if(tela.equals("Geral")){
+
+        if (tela.equals("Geral")) {
             chEmail.setVisible(false);
+        }
+        if (ProcessoLogado.getInstance().getProcesso() == null) {
+            rbAtual.setEnabled(false);
+            rbSelecao.setSelected(true);
+            jPanel1.setVisible(true);
+            jPanel2.setVisible(true);
+            carregaTodos();
+            create = "Selecao";
+            limparTabela(tbAuxiliar);
         }
     }
 
@@ -337,41 +336,42 @@ public class Relatorios extends javax.swing.JInternalFrame{
     }//GEN-LAST:event_formComponentMoved
 
     private void rbAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAtualActionPerformed
-        if(rbAtual.isSelected()){
+        if (rbAtual.isSelected()) {
             jPanel1.setVisible(false);
             jPanel2.setVisible(false);
-            create="Atual";
+            create = "Atual";
         }
     }//GEN-LAST:event_rbAtualActionPerformed
 
     private void rbSelecaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSelecaoActionPerformed
-        if(rbSelecao.isSelected()){
+        if (rbSelecao.isSelected()) {
             jPanel1.setVisible(true);
             jPanel2.setVisible(true);
             carregaTodos();
-            create="Selecao";
+            create = "Selecao";
             limparTabela(tbAuxiliar);
         }
     }//GEN-LAST:event_rbSelecaoActionPerformed
 
     private void rbTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbTodosActionPerformed
-        if(rbTodos.isSelected()){
+        if (rbTodos.isSelected()) {
             jPanel1.setVisible(true);
             jPanel2.setVisible(false);
-            create="Todos";
+            create = "Todos";
             carregaTodos();
         }
     }//GEN-LAST:event_rbTodosActionPerformed
 
     private void btIniciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIniciaActionPerformed
-        if(rbAtual.isSelected()){
-            if(!TelaPrincipal.txt_codigo.getText().equals(""))
+        if (rbAtual.isSelected()) {
+            if (ProcessoLogado.getInstance().getProcesso() != null) {
+                iniciar();
+            } else {
+                JOptionPane.showMessageDialog(null, "Primeiro ative um cliente!");
+            }
+        } else {
             iniciar();
-        else
-            JOptionPane.showMessageDialog(null, "Primeiro ative um cliente!");
         }
-        else
-            iniciar();
     }//GEN-LAST:event_btIniciaActionPerformed
 
     private void btRmAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRmAllActionPerformed
@@ -389,7 +389,7 @@ public class Relatorios extends javax.swing.JInternalFrame{
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         addUmOrRemoveUm(table, tbAuxiliar, "adicionar", "tabela a esquerda");
     }//GEN-LAST:event_btAddActionPerformed
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
     private javax.swing.JButton btAddAll;
@@ -413,278 +413,291 @@ public class Relatorios extends javax.swing.JInternalFrame{
     private javax.swing.JTable table;
     private javax.swing.JTable tbAuxiliar;
     // End of variables declaration//GEN-END:variables
-class TimerListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e) {
-        cont++;
-        jProgressBar1.setValue(cont);
-        if(cont==100){
-            tempo.stop();
-            jProgressBar1.setVisible(false);
-            lbAviso.setText("");
-        }
-        }
-    }
-    
-    
-private void carregaTodos(){
-    table.getColumnModel().getColumn(0);
-    table.getColumnModel().getColumn(1);
-    table.getColumnModel().getColumn(2);
-    DefaultTableModel tbm = (DefaultTableModel)table.getModel();
-    
-    limparTabela(table);
-    Connection con  = new ConexaoStatement().getConnetion();
-    
-    
-    try{
-        String sql = "select codNumerodoprocesso, Apelido, Cliente from cadastrodeprocesso where Situacao=1";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        int i=0;
-        if(rs!=null){
-            while(rs.next()){
-                tbm.addRow(new String[1]);
-                tbm.setValueAt(rs.getString(1), i , 0);
-                tbm.setValueAt(rs.getString(2), i , 1);
-                tbm.setValueAt(rs.getString(3), i , 2);
-                i++;
-            }
-        }
-    }catch(SQLException e){
-        
-    }finally{if(con!=null)try {con.close();} catch (SQLException ex) {}}
-}
-private void limparTabela(JTable table){
-    DefaultTableModel tbm = (DefaultTableModel)table.getModel();
-    for(int i=tbm.getRowCount()-1; i>=0; i--){
-        tbm.removeRow(i);
-    }
-}
-private void addTudoOrRemoveTudo(JTable tabela1, JTable tabela2){
-    DefaultTableModel tb1 = (DefaultTableModel)tabela1.getModel();
-    DefaultTableModel tb2 = (DefaultTableModel)tabela2.getModel();
-   
-    while(tb1.getRowCount()>0){
-        int linha = tb2.getRowCount();
+    private void carregaTodos() {
+        table.getColumnModel().getColumn(0);
+        table.getColumnModel().getColumn(1);
+        table.getColumnModel().getColumn(2);
+        DefaultTableModel tbm = (DefaultTableModel) table.getModel();
 
-        for(int i=0; i<tb1.getRowCount(); i++){
-            String codigo = (String) tb1.getValueAt(i, 0);
-            String apelido = (String) tb1.getValueAt(i, 1);
-            String nome = (String) tb1.getValueAt(i, 2);
-
-            tb2.addRow(new Object[1]);
-            tb2.setValueAt(codigo, linha, 0);
-            tb2.setValueAt(apelido, linha, 1);
-            tb2.setValueAt(nome, linha, 2);
-            linha++;
-
-            tb1.removeRow(i);
-        }
-    }
-}
-private void addUmOrRemoveUm(JTable tabela1, JTable tabela2, String action, String tabela){
-    DefaultTableModel tb1 = (DefaultTableModel)tabela1.getModel();
-    DefaultTableModel tb2 = (DefaultTableModel)tabela2.getModel();
-    
-    if(tb1.getRowCount()>0){
-        int linha = tabela1.getSelectedRow();
-        if(linha!=-1){
-            String codigo = (String) tabela1.getValueAt(linha, 0);
-            String apelido = (String) tabela1.getValueAt(linha, 1);
-            String nome = (String) tb1.getValueAt(linha, 2);
-            
-            int linhaAux = tabela2.getRowCount();
-            tb2.addRow(new Object[1]);
-            tb2.setValueAt(codigo, linhaAux, 0);
-            tb2.setValueAt(apelido, linhaAux, 1);
-            tb2.setValueAt(nome, linhaAux, 2);
-            tb1.removeRow(linha);
-        }
-        else
-            JOptionPane.showMessageDialog(null, "Selecione um valor da "+tabela+" para "+action+"!");
-    }
-    else
-        JOptionPane.showMessageDialog(null, "Não há valores na tabela para "+action+"!");
-}
-
-private void recebeValores(){
-    switch(tela){
-        case "Comercial":
-            preencherCombo("comercial");
-            break;
-        case "Contabil":
-            preencherCombo("contabil");
-        break;
-        case "Contratos":
-            preencherCombo("contratos");
-        break;
-        case "Fiscal":
-            preencherCombo("fiscal");
-        break;
-        case "Pessoal":
-            preencherCombo("pessoal");
-        break;
-        case "Regularizacao":
-            preencherCombo("regularizacao");
-        break;
-        case "Geral":
-            lbDestinoEmail.setVisible(false);
-            cbDestino.setVisible(false);
-            break;
-        default:
-            break;
-    }
-}
-
-
-private void preencherCombo(String valor){
-    String sql = "select Nome from login where Departamento=?";
-    
-    try{
+        limparTabela(table);
         Connection con = new ConexaoStatement().getConnetion();
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, valor);
-        ResultSet rs = ps.executeQuery();
-        cbDestino.removeAll();
-        if(rs!=null){
-            while(rs.next()){
-                cbDestino.addItem(rs.getString(1));
+
+        try {
+            String sql = "select codNumerodoprocesso, Apelido, Cliente from cadastrodeprocesso where Situacao=1";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            int i = 0;
+            if (rs != null) {
+                while (rs.next()) {
+                    tbm.addRow(new String[1]);
+                    tbm.setValueAt(rs.getString(1), i, 0);
+                    tbm.setValueAt(rs.getString(2), i, 1);
+                    tbm.setValueAt(rs.getString(3), i, 2);
+                    i++;
+                }
+            }
+        } catch (SQLException e) {
+
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                }
             }
         }
-        con.close();
-    }catch(SQLException e){
-        e.printStackTrace();
     }
-}
-private void iniciar(){
-    List<String> lista = new ArrayList<>();
-    boolean aproved =false;
-    switch(create){
-        case "Atual":
-            if(TelaPrincipal.txt_codigo.getText().equals("")){
-                aproved=false;
-            }
-            else
-                aproved=true;
-                lista.add(valor);
-        break;
-        case "Selecao":
-            //passando valores para a lista
-            DefaultTableModel tb2 = (DefaultTableModel)tbAuxiliar.getModel();
-            if(tb2.getRowCount()==0){
-                JOptionPane.showMessageDialog(null, "Você deve selecionar os valores para poder continuar!");
-            };
-            while(tb2.getRowCount()>0){
-                aproved=true;
-                for(int i = 0;i<tb2.getRowCount();i++){
-                    String codigo = (String) tb2.getValueAt(i,0);
-                    lista.add(codigo);
-                    tb2.removeRow(i);
-                }
-            }
-        break;
-        case "Todos":
-            DefaultTableModel tb1 = (DefaultTableModel)table.getModel();
-            while(tb1.getRowCount()>0){
-                aproved=true;
-                for(int i = 0;i<tb1.getRowCount();i++){
-                    String codigo = (String) tb1.getValueAt(i,0);
-                    lista.add(codigo);
-                    tb1.removeRow(i);
-                }
-            }
-        break;
-        default:
-        break;
+
+    private void limparTabela(JTable table) {
+        DefaultTableModel tbm = (DefaultTableModel) table.getModel();
+        for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
+            tbm.removeRow(i);
+        }
     }
-    if(aproved==true){
-        switch(gerar){
-            case "Alerta":
-                iniciarEmail(lista);
-            break;
-            case "Relatorio":
-                //iniciarRelatorio();
+
+    private void addTudoOrRemoveTudo(JTable tabela1, JTable tabela2) {
+        DefaultTableModel tb1 = (DefaultTableModel) tabela1.getModel();
+        DefaultTableModel tb2 = (DefaultTableModel) tabela2.getModel();
+
+        while (tb1.getRowCount() > 0) {
+            int linha = tb2.getRowCount();
+
+            for (int i = 0; i < tb1.getRowCount(); i++) {
+                String codigo = (String) tb1.getValueAt(i, 0);
+                String apelido = (String) tb1.getValueAt(i, 1);
+                String nome = (String) tb1.getValueAt(i, 2);
+
+                tb2.addRow(new Object[1]);
+                tb2.setValueAt(codigo, linha, 0);
+                tb2.setValueAt(apelido, linha, 1);
+                tb2.setValueAt(nome, linha, 2);
+                linha++;
+
+                tb1.removeRow(i);
+            }
+        }
+    }
+
+    private void addUmOrRemoveUm(JTable tabela1, JTable tabela2, String action, String tabela) {
+        DefaultTableModel tb1 = (DefaultTableModel) tabela1.getModel();
+        DefaultTableModel tb2 = (DefaultTableModel) tabela2.getModel();
+
+        if (tb1.getRowCount() > 0) {
+            int linha = tabela1.getSelectedRow();
+            if (linha != -1) {
+                String codigo = (String) tabela1.getValueAt(linha, 0);
+                String apelido = (String) tabela1.getValueAt(linha, 1);
+                String nome = (String) tb1.getValueAt(linha, 2);
+
+                int linhaAux = tabela2.getRowCount();
+                tb2.addRow(new Object[1]);
+                tb2.setValueAt(codigo, linhaAux, 0);
+                tb2.setValueAt(apelido, linhaAux, 1);
+                tb2.setValueAt(nome, linhaAux, 2);
+                tb1.removeRow(linha);
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione um valor da " + tabela + " para " + action + "!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Não há valores na tabela para " + action + "!");
+        }
+    }
+
+    private void recebeValores() {
+        switch (tela) {
+            case "Comercial":
+                preencherCombo("comercial");
+                break;
+            case "Contabil":
+                preencherCombo("contabil");
+                break;
+            case "Contratos":
+                preencherCombo("contratos");
+                break;
+            case "Fiscal":
+                preencherCombo("fiscal");
+                break;
+            case "Pessoal":
+                preencherCombo("pessoal");
+                break;
+            case "Regularizacao":
+                preencherCombo("regularizacao");
+                break;
+            case "Geral":
+                lbDestinoEmail.setVisible(false);
+                cbDestino.setVisible(false);
                 break;
             default:
                 break;
         }
     }
-}
 
-
-private void iniciarEmail(List lista){
-    
-    StringBuilder builderContagem;
-    StringBuilder builderDepartamento;
-    StringBuilder builderDocumentos;
-    
-    if(!tela.equals("Geral")){
-        int tudo=0;
-    
-        builderContagem = new StringBuilder();
-        builderDepartamento = new StringBuilder();
-        builderDocumentos = new StringBuilder();
-        
-        for(int i=0; i<lista.size(); i++){//pegando codigos gerados
-            
-            ColhedoraDeDados dados = new ColhedoraDeDados();
-            dados.conexaoDepartamentos(Integer.parseInt(lista.get(i).toString()), true, tela);
-            dados.conexaoDocumentos(Integer.parseInt(lista.get(i).toString()), true, tela);
-            tudo = dados.getContaTudo(tudo);
-            builderContagem.append(dados.getTabelaContador());
-            builderDepartamento.append(dados.getTabelaDepartamento());
-            builderDocumentos.append(dados.getTabelaDocumentos());
-        }
-        AvisoEmail aviso = new AvisoEmail();
-        if(aviso.enviaAlerta(recuperaEmail((String)cbDestino.getSelectedItem()),(String)cbDestino.getSelectedItem(), tela, builderContagem.toString(), builderDepartamento.toString(), builderDocumentos.toString(), tudo)){
-            if(chEmail.isSelected()){
-                if(aviso.enviaAlerta(recuperaEmail(Login.usuario),Login.usuario, tela, builderContagem.toString(), builderDepartamento.toString(), builderDocumentos.toString(), tudo)){
-                    lbAviso.setText("Enviando...");
+    private void preencherCombo(String valor) {
+        String sql = "select Nome from login where Departamento=? and Ativo=1";
+        try {
+            Connection con = new ConexaoStatement().getConnetion();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, valor);
+            ResultSet rs = ps.executeQuery();
+            cbDestino.removeAll();
+            if (rs != null) {
+                while (rs.next()) {
+                    cbDestino.addItem(rs.getString(1));
                 }
             }
-            lbAviso.setText("Enviando...");
-            jProgressBar1.setVisible(true);
-            cont=-1;
-            jProgressBar1.setValue(0);
-            jProgressBar1.setStringPainted(true);
-            tempo = new Timer(TREE_SECOND,new Relatorios.TimerListener());
-            tempo.start();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
-    else{
-        for(int i = 0; i<listaNomeGeral.size(); i++){//pegando lista de pessoas para receber o comunicado
-            int tudo=0;
-    
-            //um builder para cada pessoa
+
+    private void iniciar() {
+        List<String> lista = new ArrayList<>();
+        boolean aproved = false;
+        switch (create) {
+            case "Atual":
+                if (ProcessoLogado.getInstance().getProcesso() != null) {
+                    aproved = true;
+                    lista.add(ProcessoLogado.getInstance().getProcesso().getId() + "");
+                }
+                break;
+            case "Selecao":
+                //passando valores para a lista
+                DefaultTableModel tb2 = (DefaultTableModel) tbAuxiliar.getModel();
+                if (tb2.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(null, "Você deve selecionar os valores para poder continuar!");
+                }
+                ;
+                while (tb2.getRowCount() > 0) {
+                    aproved = true;
+                    for (int i = 0; i < tb2.getRowCount(); i++) {
+                        String codigo = (String) tb2.getValueAt(i, 0);
+                        lista.add(codigo);
+                        tb2.removeRow(i);
+                    }
+                }
+                break;
+            case "Todos":
+                DefaultTableModel tb1 = (DefaultTableModel) table.getModel();
+                while (tb1.getRowCount() > 0) {
+                    aproved = true;
+                    for (int i = 0; i < tb1.getRowCount(); i++) {
+                        String codigo = (String) tb1.getValueAt(i, 0);
+                        lista.add(codigo);
+                        tb1.removeRow(i);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        if (aproved) {
+            switch (gerar) {
+                case "Alerta":
+                    iniciarEmail(lista);
+                    break;
+                case "Relatorio":
+                    //iniciarRelatorio();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private void iniciarEmail(List listaDeProcessos) {
+        AvisoEmail aviso = new AvisoEmail();
+        StringBuilder builderContagem;
+        StringBuilder builderDepartamento;
+        StringBuilder builderDocumentos;
+        jProgressBar1.setVisible(true);
+        jProgressBar1.setIndeterminate(true);
+        jProgressBar1.setStringPainted(true);
+        String emailAtendente = recuperaEmail(UsuarioLogado.getInstance().getUsuario().getUsuario());
+        String atendente = UsuarioLogado.getInstance().getUsuario().getUsuario();
+
+        if (!tela.equals("Geral")) {
             builderContagem = new StringBuilder();
             builderDepartamento = new StringBuilder();
             builderDocumentos = new StringBuilder();
-            String telaGeral = recuperaDepartamento(listaNomeGeral.get(i));
-            
-            for(int j=0; j<lista.size(); j++){//pegando os codigos para envio
+            int quantidade = 0;
+            for (int i = 0; i < listaDeProcessos.size(); i++) {//pegando codigos dos processos
                 ColhedoraDeDados dados = new ColhedoraDeDados();
-                dados.conexaoDepartamentos(Integer.parseInt(lista.get(j).toString()), true, telaGeral);
-                dados.conexaoDocumentos(Integer.parseInt(lista.get(j).toString()), true, telaGeral);
-                tudo = dados.getContaTudo(tudo);
-                builderContagem.append(dados.getTabelaContador());
-                builderDepartamento.append(dados.getTabelaDepartamento());
-                builderDocumentos.append(dados.getTabelaDocumentos());
+                dados.conexaoDepartamentos(Integer.parseInt(listaDeProcessos.get(i).toString()), true, tela);
+                dados.conexaoDocumentos(Integer.parseInt(listaDeProcessos.get(i).toString()), true, tela);
+                builderContagem.append(dados.getTabelaContador(i));
+                builderDepartamento.append(dados.getTabelaDepartamento(i));
+                builderDocumentos.append(dados.getTabelaDocumentos(i));
+                quantidade += dados.getContaTudo();
             }
-            AvisoEmail aviso = new AvisoEmail();
-            if(aviso.enviaAlerta(recuperaEmail(listaNomeGeral.get(i)),listaNomeGeral.get(i), telaGeral, builderContagem.toString(), builderDepartamento.toString(), builderDocumentos.toString(), tudo)){
-                lbAviso.setVisible(true);
-                lbAviso.setText("Enviando...");
-                jProgressBar1.setVisible(true);
-                cont=-1;
-                jProgressBar1.setValue(0);
-                jProgressBar1.setStringPainted(true);
-                tempo = new Timer(TREE_SECOND,new Relatorios.TimerListener());
-                tempo.start();
+            String code
+                    = "<tr class=\"table-active\">"
+                    + "<td colspan=\"2\" class=\"centralizar\"><strong>Total</strong></td>"
+                    + "<td colspan=\"2\" class=\"centralizar\"><strong>" + quantidade + "</strong></td>"
+                    + "</tr>";
+            builderContagem.append(code);
+
+            String titulo = "Prolink - Implantação de Cliente - " + (String) cbDestino.getSelectedItem() + ", estamos aguardando sua interação";
+            String contaDestino = recuperaEmail((String) cbDestino.getSelectedItem());
+            String htmlTexto = getHtml(tela, atendente, builderContagem.toString(), builderDepartamento.toString(), builderDocumentos.toString());
+
+            Runnable run = () -> {
+                jProgressBar1.setString("Enviando...");
+                aviso.enviaAlerta(contaDestino, chEmail.isSelected() ? new String[]{emailAtendente} : null, titulo, htmlTexto);
+                jProgressBar1.setString("Concluido!");
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException ex) {
+                }
+                jProgressBar1.setVisible(false);
+            };
+            new Thread(run).start();
+        } else {
+            jProgressBar1.setString("Aguarde...");
+            for (int i = 0; i < listaNomeGeral.size(); i++) {//pegando lista de pessoas para receber o comunicado
+                //um builder para cada pessoa
+                builderContagem = new StringBuilder();
+                builderDepartamento = new StringBuilder();
+                builderDocumentos = new StringBuilder();
+                String telaGeral = recuperaDepartamento(listaNomeGeral.get(i));
+                int quantidade = 0;
+                for (int j = 0; j < listaDeProcessos.size(); j++) {//pegando os codigos para envio
+                    ColhedoraDeDados dados = new ColhedoraDeDados();
+                    dados.conexaoDepartamentos(Integer.parseInt(listaDeProcessos.get(j).toString()), true, telaGeral);
+                    dados.conexaoDocumentos(Integer.parseInt(listaDeProcessos.get(j).toString()), true, telaGeral);
+                    builderContagem.append(dados.getTabelaContador(j));
+                    builderDepartamento.append(dados.getTabelaDepartamento(j));
+                    builderDocumentos.append(dados.getTabelaDocumentos(j));
+                    quantidade += dados.getContaTudo();
+                }
+                String code
+                        = "<tr class=\"table-active\">"
+                        + "<td colspan=\"2\" class=\"centralizar\"><strong>Total</strong></td>"
+                        + "<td colspan=\"2\" class=\"centralizar\"><strong>" + quantidade + "</strong></td>"
+                        + "</tr>";
+                builderContagem.append(code);
+                String titulo = "Prolink - Implantação de Cliente - " + listaNomeGeral.get(i) + ", estamos aguardando sua interação";
+                String contaDestino = recuperaEmail(listaNomeGeral.get(i));
+                String htmlTexto = getHtml(telaGeral, atendente, builderContagem.toString(), builderDepartamento.toString(), builderDocumentos.toString());
+
+                final int a = (i + 1);
+                final int l = listaNomeGeral.size();
+                Runnable run = () -> {
+                    jProgressBar1.setString("Enviando " + a + " de " + l);
+                    aviso.enviaAlerta(contaDestino, chEmail.isSelected() ? new String[]{emailAtendente} : null, titulo, htmlTexto);
+                };
+                new Thread(run).start();
             }
-            
+            Runnable run = () -> {
+                jProgressBar1.setString("Concluido!!!");
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException ex) {
+                }
+                jProgressBar1.setVisible(false);
+            };
+            new Thread(run).start();
         }
-    }
 //    else{
 //        for(int i=0; i<lista.size(); i++){
 //            ColhedoraDeDados dados = new ColhedoraDeDados();
@@ -715,44 +728,186 @@ private void iniciarEmail(List lista){
 //            lbAviso.setBackground(Color.red);
 //        }
 //    }
-}
-private String recuperaEmail(String valor){
-    Connection con  = new ConexaoStatement().getConnetion();
-    try{
-        String sql = "select Email from login where Nome like '"+valor+"%'";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        int i=0;
-        String email="";
-        if(rs!=null){
-            while(rs.next()){
-                email= rs.getString("Email");
-            }
-        }
-        return email;
-    }catch(SQLException e){
-    }finally{if(con!=null)try {con.close();} catch (SQLException ex) {}}
-    return "";
-}
-private String recuperaDepartamento(String valor){
-    Connection con  = new ConexaoStatement().getConnetion();
-    try{
-        String sql = "select Departamento from login where Nome like '"+valor+"%'";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        int i=0;
-        String email="";
-        if(rs!=null){
-            while(rs.next()){
-                email= rs.getString("Departamento");
-            }
-        }
-        return email;
-    }catch(SQLException e){
-    }finally{if(con!=null)try {con.close();} catch (SQLException ex) {}}
-    return "";
-}
+    }
 
-private void iniciarRelatorio(){}
+    private String recuperaEmail(String valor) {
+        Connection con = new ConexaoStatement().getConnetion();
+        try {
+            String sql = "select Email from login where Nome like '" + valor + "%'";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            int i = 0;
+            String email = "";
+            if (rs != null) {
+                while (rs.next()) {
+                    email = rs.getString("Email");
+                }
+            }
+            return email;
+        } catch (SQLException e) {
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                }
+            }
+        }
+        return "";
+    }
+
+    private String recuperaDepartamento(String valor) {
+        Connection con = new ConexaoStatement().getConnetion();
+        try {
+            String sql = "select Departamento from login where Nome like '" + valor + "%'";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            int i = 0;
+            String email = "";
+            if (rs != null) {
+                while (rs.next()) {
+                    email = rs.getString("Departamento");
+                }
+            }
+            return email;
+        } catch (SQLException e) {
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                }
+            }
+        }
+        return "";
+    }
+
+    private String getHtml(String departamento, String usuario, String tabelaContador, String tabelaDepartamento, String tabelaDocumentos) {
+        // BuildMyString.com generated code. Please enjoy your string responsibly.
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("<!DOCTYPE html>");
+        builder.append("<html lang=\"pt-br\">");
+        builder.append("	<head>");
+        builder.append("		<title>Controle de Processos</title>");
+        builder.append("		<meta charset=\"UTF-8\">");
+        builder.append("		<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">");
+        builder.append("		<!-- Bootstrap CSS -->");
+        builder.append("		<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">");
+        builder.append("		<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js\" integrity=\"sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1\" crossorigin=\"anonymous\"></script>");
+        builder.append("		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->");
+        builder.append("		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->");
+        builder.append("		<!--[if lt IE 9]>");
+        builder.append("		  <script src=\"https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js\"></script>");
+        builder.append("		  <script src=\"https://oss.maxcdn.com/respond/1.4.2/respond.min.js\"></script>");
+        builder.append("		<![endif]-->");
+        builder.append("		<style type=\"text/css\">");
+        builder.append("			.paragrafo{");
+        builder.append("				font-size: 18px;");
+        builder.append("				font-weight: bolder;");
+        builder.append("			}");
+        builder.append("			th{");
+        builder.append("				text-align: center;");
+        builder.append("			}");
+        builder.append("			.centralizar{");
+        builder.append("				text-align: center;");
+        builder.append("			}");
+        builder.append("			caption{");
+        builder.append("				font-size: 20px;");
+        builder.append("				font-weigth: bold;");
+        builder.append("				text-align: center;");
+        builder.append("				caption-side: top;");
+        builder.append("			}");
+        builder.append("			");
+        builder.append("		</style>");
+        builder.append("	</head>");
+        builder.append("	<body>");
+        builder.append("		<div class=\"container\">	");
+        builder.append("			<div class=\"page-header\">");
+        builder.append("				<p class=\"paragrafo\">Ol&aacute;,<br>");
+        builder.append("				Foi disparado para voc&ecirc; uma cobran&ccedil;a para valida&ccedil;&otilde;es dentro no sistema Controle de Processos.</p>");
+        builder.append("				<p class=\"paragrafo\">Essa opera&ccedil;&atilde;o foi gerado manualmente por {user.name}, ");
+        builder.append("				nesse caso &eacute; necess&aacute;rio que voc&ecirc; logue no sistema e finalize as opera&ccedil;&otilde;es em aberto.</p>");
+        builder.append("				<ul>");
+        builder.append("					<li>Para validar a op&ccedil;&atilde;o <strong>Controle {departamento}</strong> use a guia <strong>Implanta&ccedil;&atilde;o > {departamento}.</strong></li>");
+        builder.append("					<li>Para validar os <strong>Documentos Recebidos para Implanta&ccedil;&atilde;o</strong> use a guia <strong>Implanta&ccedil;&atilde;o > Documentos Recebidos.</strong></li>");
+        builder.append("				</ul>");
+        builder.append("			</div>");
+        builder.append("			<br><br>");
+        builder.append("			<div class=\"col-8 col-sm-12\">");
+        builder.append("				<table class=\"table table-striped table-bordered table-hover table-condensed table-responsive table-sm\">");
+        builder.append("					<caption>Quantidade de Valida&ccedil;&otilde;es Pendentes do Departamento {departamento}</caption>");
+        builder.append("					<thead>");
+        builder.append("						<tr class=\"table-danger\">");
+        builder.append("							<th>ID</th>");
+        builder.append("							<th>Nome</th>");
+        builder.append("							<th>Controle {departamento}</th>");
+        builder.append("							<th>Documentos Recebidos <br>para Implanta&ccedil;&atilde;o</th>");
+        builder.append("						</th>");
+        builder.append("						</tr>");
+        builder.append("					</thead>");
+        builder.append("					<tbody>");
+        builder.append("						{tabelaContador}									");
+        builder.append("					</tbody>");
+        builder.append("				</table>");
+        builder.append("			</div>");
+        builder.append("			<br><br>");
+        builder.append("			<div class=\"col-8 col-sm-12\">");
+        builder.append("				<table class=\"table table-striped table-bordered table-hover table-condensed table-responsive table-sm\">");
+        builder.append("					<caption>Detalhes do Controle do Departamento {departamento}</caption>");
+        builder.append("					");
+        builder.append("					<thead>");
+        builder.append("						<tr class=\"table-danger\">");
+        builder.append("							<th>ID</th>");
+        builder.append("							<th>Nome</th>");
+        builder.append("							<th>Valida&ccedil;&otilde;es Pendentes</th>");
+        builder.append("						</th>");
+        builder.append("						</tr>");
+        builder.append("					</thead>");
+        builder.append("					<tbody>");
+        builder.append("						{tabelaDepartamento}						");
+        builder.append("					</tbody>");
+        builder.append("				</table>");
+        builder.append("			<div>");
+        builder.append("			<br><br>");
+        builder.append("			<div class=\"col-8 col-sm-12\">");
+        builder.append("				<table class=\"table table-striped table-bordered table-hover table-condensed table-responsive table-sm\">");
+        builder.append("					<caption>Detalhes dos Documentos Recebidos - Pend&ecirc;ncias de Valida&ccedil;&atilde;o do Departamento {departamento}</caption>");
+        builder.append("					<thead>");
+        builder.append("						<tr class=\"table-danger\">");
+        builder.append("							<th>ID</th>");
+        builder.append("							<th>Nome</th>");
+        builder.append("							<th>Valida&ccedil;&otilde;es Pendentes</th>");
+        builder.append("						</th>");
+        builder.append("						</tr>");
+        builder.append("					</thead>");
+        builder.append("					<tbody>");
+        builder.append("						{tabelaDocumentos}						");
+        builder.append("					</tbody>");
+        builder.append("				</table>");
+        builder.append("			</div>");
+        builder.append("		</div>");
+        builder.append("		<br><br>");
+        builder.append("		<div class=\"container\">");
+        builder.append("			<div class=\"row\">");
+        builder.append("				<div class=\"col-12\">");
+        builder.append("					<p align=\"center\">Todos os Direitos reservados a Prolink Contabil - 2017</p>");
+        builder.append("				</div>");
+        builder.append("			</div>");
+        builder.append("		</div>");
+        builder.append("	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->");
+        builder.append("    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>");
+        builder.append("	</body>");
+        builder.append("</html>");
+        return builder.toString()
+                .replace("{departamento}", Normalizer
+                        .normalize(departamento, Normalizer.Form.NFD)
+                        .replaceAll("[^\\p{ASCII}]", ""))
+                .replace("{user.name}", usuario)
+                .replace("{tabelaContador}", tabelaContador)
+                .replace("{tabelaDepartamento}", tabelaDepartamento)
+                .replace("{tabelaDocumentos}", tabelaDocumentos);
+    }
 
 }

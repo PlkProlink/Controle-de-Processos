@@ -7,8 +7,9 @@ package br.com.prolink.inicio.administracaoAlertas;
 import br.com.prolink.departamentos.DepPessoal;
 import br.com.prolink.documentos.Documentos;
 import br.com.prolink.inicio.Ativador;
-import br.com.prolink.inicio.ConexaoStatement;
-import br.com.prolink.inicio.TelaPrincipal;
+import br.com.prolink.factory.ConexaoStatement;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,8 +29,10 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class InternoPessoal extends javax.swing.JInternalFrame {
+
     boolean controle = true;
     int documento = 0;
+
     /**
      * Creates new form InternoComercial
      */
@@ -37,10 +40,10 @@ public class InternoPessoal extends javax.swing.JInternalFrame {
         initComponents();
         btRelatorio.setVisible(false);
         carregaCombo();
-        String value = TelaPrincipal.txt_codigo.getText();
-        if(value!=null && value!=""){
-            pessoal(TelaPrincipal.txt_codigo.getText());
-            add(TelaPrincipal.txt_codigo.getText());
+        Processo p = ProcessoLogado.getInstance().getProcesso();
+        if(p!=null){
+            pessoal(p.getId()+"");
+            add(p.getId()+"");
         }
     }
 
@@ -311,35 +314,34 @@ public class InternoPessoal extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
-        this.setLocation(0,0);
+        this.setLocation(0, 0);
     }//GEN-LAST:event_formComponentMoved
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if(!controle && documento==0){
-            JOptionPane.showMessageDialog(null,"Não existem pendências do cliente "+TelaPrincipal.txt_nome+" \npara serem validadas para esse departamento!");
-        }
-        else{
-            List <String> nova = new ArrayList<>();
+        if (!controle && documento == 0) {
+            JOptionPane.showMessageDialog(null, "Não existem pendências do cliente " + ProcessoLogado.getInstance().getProcesso().getCliente() + " \npara serem validadas para esse departamento!");
+        } else {
+            List<String> nova = new ArrayList<>();
             nova.add("");
             Relatorios relatorio = new Relatorios("Alerta", "Pessoal", nova);
             jDesktopPane1.removeAll();
-            ((BasicInternalFrameUI)relatorio.getUI()).setNorthPane(null);
+            ((BasicInternalFrameUI) relatorio.getUI()).setNorthPane(null);
             jDesktopPane1.add(relatorio);
             relatorio.setVisible(true);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusLost
-        
+
     }//GEN-LAST:event_jComboBox1FocusLost
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-        if(!jComboBox1.getSelectedItem().equals("")  &&
-                !jComboBox1.getSelectedItem().equals(null)){
-            combo((String)jComboBox1.getSelectedItem());
-            pessoal(TelaPrincipal.txt_codigo.getText());
-            add(TelaPrincipal.txt_codigo.getText());
-            
+        if (!jComboBox1.getSelectedItem().equals("")
+                && !jComboBox1.getSelectedItem().equals(null)) {
+            combo((String) jComboBox1.getSelectedItem());
+            pessoal(""+ProcessoLogado.getInstance().getProcesso().getId());
+            add(""+ProcessoLogado.getInstance().getProcesso().getId());
+
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
@@ -374,131 +376,156 @@ public class InternoPessoal extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
     Documentos documentos;
     DepPessoal pessoal;
-    public void carregaCombo(){
+
+    public void carregaCombo() {
         Connection con = new ConexaoStatement().getConnetion();
-            
-        try{
-            String sql ="select SUBSTRING_INDEX(SUBSTRING_INDEX(Cliente, ' ', 3), ' ', -3) as Cliente from cadastrodeprocesso where Situacao=1";
+
+        try {
+            String sql = "select SUBSTRING_INDEX(SUBSTRING_INDEX(Cliente, ' ', 3), ' ', -3) as Cliente from cadastrodeprocesso where Situacao=1";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             jComboBox1.removeAll();
             jComboBox1.addItem("Clique aqui para Ativar!");
-            
-            
-            if(rs!=null){
-                while(rs.next()){
+
+            if (rs != null) {
+                while (rs.next()) {
                     jComboBox1.addItem(rs.getString("Cliente"));
                 }
-                String valor = TelaPrincipal.txt_nome.getText();
-                if(!valor.equals(null) && !valor.equals(""))
-                    jComboBox1.setSelectedItem(valor);
-                else
+                Processo p = ProcessoLogado.getInstance().getProcesso();
+                if(p!=null)
+                    jComboBox1.setSelectedItem(p.getCliente());
+                else {
                     jComboBox1.setSelectedItem("Clique aqui para Ativar!");
-            
+                }
+
             }
-            
-            
-        }catch(SQLException e){
-        }finally{try{if(con!=null)con.close();}catch(Exception e){}}
+
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
     }
-    private void abrirDocumentos(){
-        if(TelaPrincipal.txt_codigo.getText().equals("")){
+
+    private void abrirDocumentos() {
+        Processo p = ProcessoLogado.getInstance().getProcesso();
+        if(p==null){
             JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ativador = new Ativador();
             ativador.setVisible(true);
-        }
-        else{
-            documentos = new Documentos();            
+        } else {
+            documentos = new Documentos();
             documentos.setVisible(true);
-            
+
         }
     }
-    
-    private void abrirPessoal(){
-        if(TelaPrincipal.txt_codigo.getText().equals("")){
+
+    private void abrirPessoal() {
+        Processo p = ProcessoLogado.getInstance().getProcesso();
+        if(p==null){
             JOptionPane.showMessageDialog(null, "Para prosseguir ative um cadastro!");
             Ativador ma = new Ativador();
             ma.setVisible(true);
-        }
-        else{   
+        } else {
             pessoal = new DepPessoal();
             pessoal.setVisible(true);
         }
     }
-    public void combo(String valor){
+
+    public void combo(String valor) {
         Connection con = new ConexaoStatement().getConnetion();
-        try{
-            String sql ="select * from cadastrodeprocesso where Cliente like '"+valor+"%'";
+        try {
+            String sql = "select * from cadastrodeprocesso where Cliente like '" + valor + "%'";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            
-            if(rs!=null){
-                if(rs.next()){
-                    TelaPrincipal.txt_codigo.setText(rs.getString("codNumerodoprocesso"));
-                    TelaPrincipal.txt_nome.setText(rs.getString("Cliente"));
-                    TelaPrincipal.txt_id.setText(rs.getString("Apelido"));
-                    TelaPrincipal.txt_classificacao.setText(rs.getString("Classificacao"));
-                    TelaPrincipal.txt_ativada.setText("");
-                    TelaPrincipal.txt_finalizada.setText("");
+
+            if (rs != null) {
+                if (rs.next()) {
+                    ProcessoLogado p = ProcessoLogado.getInstance();
+                    p.setAtributos(new String[]{
+                        rs.getString("codNumerodoprocesso"), rs.getString("Apelido"),
+                        rs.getString("Cliente"), rs.getString("Classificacao"),rs.getInt("Situacao")==1?"Ativo":"Finalizado"
+                    });
                 }
             }
-            
-        }catch(SQLException e){
-        }finally{try{if(con!=null)con.close();}catch(Exception e){}}
+
+        } catch (SQLException e) {
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
     }
-    public void pessoal(String processo){
+
+    public void pessoal(String processo) {
         Connection con = new ConexaoStatement().getConnetion();
-        
-        String sql = "select B.AndamentoDp as GERAL, " +
-                    "A.AndamentoCadastroDoSocioNoControl as SOCIO," +
-                    "A.AndamentoCadastroDependentesdoSocioADM as DEPENDENTES," +
-                    "A.AndamentoIplantacaodadosFolhaPg as IMPLANTACAO " +
-                    "from dp as A " +
-                    "inner join cadastrodeprocesso as B on A.Numerodoprocesso=B.codNumerodoprocesso " +
-                    "where A.Numerodoprocesso='"+processo+"'"; 
-        try{
+
+        String sql = "select B.AndamentoDp as GERAL, "
+                + "A.AndamentoCadastroDoSocioNoControl as SOCIO,"
+                + "A.AndamentoCadastroDependentesdoSocioADM as DEPENDENTES,"
+                + "A.AndamentoIplantacaodadosFolhaPg as IMPLANTACAO "
+                + "from dp as A "
+                + "inner join cadastrodeprocesso as B on A.Numerodoprocesso=B.codNumerodoprocesso "
+                + "where A.Numerodoprocesso='" + processo + "'";
+        try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            if(rs!=null)
-                while(rs.next()){
+            if (rs != null) {
+                while (rs.next()) {
                     lbGeral.setText(rs.getString("GERAL"));
                     lbFolha.setText(rs.getString("IMPLANTACAO"));
                     lbDependentes.setText(rs.getString("DEPENDENTES"));
                     lbSocioCad.setText(rs.getString("SOCIO"));
                 }
+            }
             colorir(jPDepartamento);
-           }catch (SQLException erro){
-            JOptionPane.showMessageDialog(null,"Erro ao listar na tabela Diagnose " +erro);
-            }finally{try{if(con!=null)con.close();}catch(Exception e){}}
-}
-private void colorir(JPanel jpanel){
-    
-    for(int i = 0; i<jpanel.getComponentCount();i++){
-        if(jpanel.getComponent(i) instanceof JLabel){
-            JLabel label =((JLabel)jpanel.getComponent(i));
-            if(label.getText().equals("Concluido") || 
-                label.getText().equals("Finalizado")){
-                    controle=false;    
-                    label.setBackground(Color.GREEN);
-                    label.setForeground(Color.WHITE);
-            }else{
-                label.setBackground(Color.RED);
-                label.setForeground(Color.WHITE);
-                
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar na tabela Diagnose " + erro);
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
             }
         }
     }
-}
 
-private void add(String processo){
-    limpar_tabela(tbSolicitacao);
-    Connection con = new ConexaoStatement().getConnetion();
-    String sql = "select * from documentos where Numerodoprocesso='"+processo+"'";
-    try{
+    private void colorir(JPanel jpanel) {
+
+        for (int i = 0; i < jpanel.getComponentCount(); i++) {
+            if (jpanel.getComponent(i) instanceof JLabel) {
+                JLabel label = ((JLabel) jpanel.getComponent(i));
+                if (label.getText().equals("Concluido")
+                        || label.getText().equals("Finalizado")) {
+                    controle = false;
+                    label.setBackground(Color.GREEN);
+                    label.setForeground(Color.WHITE);
+                } else {
+                    label.setBackground(Color.RED);
+                    label.setForeground(Color.WHITE);
+
+                }
+            }
+        }
+    }
+
+    private void add(String processo) {
+        limpar_tabela(tbSolicitacao);
+        Connection con = new ConexaoStatement().getConnetion();
+        String sql = "select * from documentos where Numerodoprocesso='" + processo + "'";
+        try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            if(rs!=null)
-                while(rs.next()){
+            if (rs != null) {
+                while (rs.next()) {
                     //area contratos
 //                    contexto("Ato Constitutivo",rs.getString("AtoConstitutivo"));
 //                    contexto("Documentos do Socio",rs.getString("RGeCPFSocio"));
@@ -515,43 +542,54 @@ private void add(String processo){
 //                    contexto("Plano de Contas",rs.getString("PlanoDeContas"));
 //                    contexto("Balancete",rs.getString("BalanceteExercicio"));
                     //departamento pessoal
-                    contexto("Folha de Pagamento",rs.getString("FolhadePagamentoDocumento"));
-                    contexto("Fichs de Funcionários",rs.getString("LivroOuFichadeRegistroFuncionario"));
-                    contexto("Caged",rs.getString("CAGED"));
-                    contexto("Recisões",rs.getString("Recisao"));
-                    contexto("Recibo de Férias",rs.getString("Ferias"));
-                    contexto("Afastamentos",rs.getString("Afastamento"));
+                    contexto("Folha de Pagamento", rs.getString("FolhadePagamentoDocumento"));
+                    contexto("Fichs de Funcionários", rs.getString("LivroOuFichadeRegistroFuncionario"));
+                    contexto("Caged", rs.getString("CAGED"));
+                    contexto("Recisões", rs.getString("Recisao"));
+                    contexto("Recibo de Férias", rs.getString("Ferias"));
+                    contexto("Afastamentos", rs.getString("Afastamento"));
                     //regularizaçao senhas
 //                    contexto("Senha Receita Federal",rs.getString("OutorgaSenhaEletronicaReceita"));
 //                    contexto("Termo Resp.Tecnica",rs.getString("TermodeResponsabilidadeDocumento"));
 //                    contexto("Senha do Inss",rs.getString("SenhaINSS"));
-                    
-                    }
+
+                }
+            }
 //            statusTabel(tbRecebimento);
 //            statusTabel(tbSolicitacao);
-           }catch (SQLException erro){
-            JOptionPane.showMessageDialog(null,"Erro ao listar na tabela" +erro);
-            }finally{try{if(con!=null)con.close();}catch(Exception e){}}
-}
-private void contexto(String nomeLabel, String valor){
-    if(valor.trim().equals("Aguardando Validação")){
-        documento+=1;
-        criaLabel(tbSolicitacao, nomeLabel);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar na tabela" + erro);
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
     }
-}
-private void criaLabel(JTable tabela, String text){
-    DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
-    int linha = modelo.getRowCount();
-    modelo.addRow(new String[1]);
+
+    private void contexto(String nomeLabel, String valor) {
+        if (valor.trim().equals("Aguardando Validação")) {
+            documento += 1;
+            criaLabel(tbSolicitacao, nomeLabel);
+        }
+    }
+
+    private void criaLabel(JTable tabela, String text) {
+        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        int linha = modelo.getRowCount();
+        modelo.addRow(new String[1]);
         tabela.setValueAt(text, linha, 0);
-    
-}
-public static void limpar_tabela(JTable jtable){
-  DefaultTableModel tbm = (DefaultTableModel)jtable.getModel();
-            for(int i = tbm.getRowCount()-1; i>=0; i--){
+
+    }
+
+    public static void limpar_tabela(JTable jtable) {
+        DefaultTableModel tbm = (DefaultTableModel) jtable.getModel();
+        for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
             tbm.removeRow(i);
         }
-}
+    }
 //private void statusTabel(JTable tabela){
 //    DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
 //    if(modelo.getRowCount()==0){

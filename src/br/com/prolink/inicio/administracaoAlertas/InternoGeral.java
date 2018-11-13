@@ -4,8 +4,9 @@
  */
 package br.com.prolink.inicio.administracaoAlertas;
 
-import br.com.prolink.inicio.ConexaoStatement;
-import br.com.prolink.inicio.TelaPrincipal;
+import br.com.prolink.factory.ConexaoStatement;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,32 +25,35 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  * @author User
  */
 public class InternoGeral extends javax.swing.JInternalFrame {
-    
+    Connection con;
+    public Connection getConnection(){
+        this.con = new ConexaoStatement().getConnetion();
+        return this.con;
+    }
     
     int departamento=0;
     int documento=0;
     int comercial=0;
     
-    String valor = TelaPrincipal.txt_codigo.getText(), abrir="";
+    String abrir="";
     
     List<String> nomeUser = new ArrayList<>();
     List<String> dep = new ArrayList<>();
     boolean continuar = true;//verificar se existe algum destinatario selecionado sem validação
     StringBuilder builder;
-    
     /**
      * Creates new form InternoComercial
      */
-    public InternoGeral() {
+    public InternoGeral(int valor) {
         initComponents();
         btRelatorio.setVisible(false);
         carregaCombo();
-        preencherDepartamentos(valor);
+        if(valor!=0)
+            preencherDepartamentos(valor+"");
         
         try{
-            Connection con = new ConexaoStatement().getConnetion();
             String sql = "select SUBSTRING_INDEX(SUBSTRING_INDEX(Nome, ' ', 2), ' ', -2) as Nome, Departamento from login where Ativo=1 order by Departamento";
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if(rs!=null){
                 while(rs.next()){
@@ -77,8 +81,6 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                     cbContratos.addItem(nomeUser.get(i));
                 }
                 if(dep.get(i).equals("Fiscal")){
-                    
-                    
                     if(nomeUser.get(i).contains("Robison"))
                     {  
                         nomeUser.set(i, "Robison");
@@ -88,7 +90,7 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                 if(dep.get(i).equals("Pessoal")){
                     cbDP.addItem(nomeUser.get(i));
                 }
-                if(dep.get(i).equals("Regularizacao")){
+                if(dep.get(i).equals("Regularização")){
                     cbReg.addItem(nomeUser.get(i));
                 }
             }
@@ -98,8 +100,9 @@ public class InternoGeral extends javax.swing.JInternalFrame {
             cbDP.setSelectedItem(vazio);
             cbFisc.setSelectedItem(vazio);
             cbReg.setSelectedItem(vazio);
-            con.close();
         }catch(SQLException e){
+        }finally{
+            try{con.close();}catch(SQLException e){}
         }
         jpResp.setVisible(false);
     }
@@ -194,6 +197,11 @@ public class InternoGeral extends javax.swing.JInternalFrame {
         jComboBox1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jComboBox1FocusLost(evt);
+            }
+        });
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
             }
         });
 
@@ -578,9 +586,9 @@ public class InternoGeral extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox1FocusLost
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-        if(!jComboBox1.getSelectedItem().equals("Clique aqui para Ativar!")){
+        if(jComboBox1.getSelectedItem()!=null && !jComboBox1.getSelectedItem().equals("Clique aqui para Ativar!")){
             combo((String)jComboBox1.getSelectedItem());
-            preencherDepartamentos(TelaPrincipal.txt_codigo.getText());
+            preencherDepartamentos(""+ProcessoLogado.getInstance().getProcesso().getId());
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
@@ -605,9 +613,9 @@ public class InternoGeral extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btAlertaActionPerformed
 
     private void btAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAvancarActionPerformed
-        if(TelaPrincipal.txt_codigo.getText()!=null && !TelaPrincipal.txt_codigo.getText().equals("")){
-            if(abrir=="Alerta"){
+            if(abrir.equals("Alerta")){
                 builder = new StringBuilder();
+                continuar = true;
                 verificarPendenciaDestinatario(lbCCom, lbDocCom, cbComercial, "Comercial");
                 verificarPendenciaDestinatario(lbCContabil, lbDocContabil, cbContabil, "Contabil");
                 verificarPendenciaDestinatario(lbCContratos, lbDContratos, cbContratos, "Contratos");
@@ -646,7 +654,7 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                         nome.add((String)cbReg.getSelectedItem());
                         liberar = true;
                     }
-                    if(liberar==true){
+                    if(liberar){
                         Relatorios relatorio = new Relatorios(abrir, "Geral", nome);
                         jDesktopPane1.removeAll();
                         ((BasicInternalFrameUI)relatorio.getUI()).setNorthPane(null);
@@ -668,10 +676,11 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                 jDesktopPane1.add(relatorio);
                 relatorio.setVisible(true);
             }
-        }
-        else
-            JOptionPane.showMessageDialog(null, "Ative um cliente para prosseguir!");
     }//GEN-LAST:event_btAvancarActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAlerta;
@@ -722,15 +731,14 @@ public class InternoGeral extends javax.swing.JInternalFrame {
     public void carregaCombo(){
         try{
             String sql ="select SUBSTRING_INDEX(SUBSTRING_INDEX(Cliente, ' ', 3), ' ', -3) as Cliente from cadastrodeprocesso where Situacao=1";
-            Connection con = new ConexaoStatement().getConnetion();
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             jComboBox1.removeAll();
             jComboBox1.addItem("Clique aqui para Ativar!");
             
-            String vlr = TelaPrincipal.txt_nome.getText();
-            if(!vlr.equals(null) && !vlr.equals(""))
-                jComboBox1.setSelectedItem(vlr);
+            Processo p = ProcessoLogado.getInstance().getProcesso();
+            if(p!=null)
+                jComboBox1.setSelectedItem(p.getCliente());
             else
                 jComboBox1.setSelectedItem("Clique aqui para Ativar!");
             
@@ -739,42 +747,36 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                     jComboBox1.addItem(rs.getString("Cliente"));
                 }
             }
-            
-            
-        }catch(SQLException e){
-        }
+        }catch(Exception e){
+        }finally{try{con.close();}catch(SQLException e){}}
     }
     
     public void combo(String valor){
         if(valor!=null && !valor.equals("")){
-            Connection con = null;
             try{
                 String sql ="select * from cadastrodeprocesso where Cliente like '"+valor+"%'";
-                con = new ConexaoStatement().getConnetion();
-                PreparedStatement ps = con.prepareStatement(sql);
+                PreparedStatement ps = getConnection().prepareStatement(sql);
                 ResultSet rs = ps.executeQuery();
-
                 if(rs!=null){
                     if(rs.next()){
-                        TelaPrincipal.txt_codigo.setText(rs.getString("codNumerodoprocesso"));
-                        TelaPrincipal.txt_nome.setText(rs.getString("Cliente"));
-                        TelaPrincipal.txt_id.setText(rs.getString("Apelido"));
-                        TelaPrincipal.txt_classificacao.setText(rs.getString("Classificacao"));
-                        TelaPrincipal.txt_ativada.setText("");
-                        TelaPrincipal.txt_finalizada.setText("");
+                        ProcessoLogado p = ProcessoLogado.getInstance();
+                        p.setAtributos(new String[]{
+                            rs.getString("codNumerodoprocesso"), rs.getString("Apelido"),
+                            rs.getString("Cliente"), rs.getString("Classificacao"),rs.getInt("Situacao")==1?"Ativo":"Finalizado"
+                        });
                     }
                 }
-
+                jpResp.setVisible(false);
+                jDesktopPane1.removeAll();
             }catch(SQLException e){
                 e.printStackTrace();
             }finally{try{
-                if(con!=null)con.close();}catch(Exception e){}
+                con.close();}catch(Exception e){}
             }
         }
     }
     private void preencherDepartamentos(String valor){//buscar valores apenas no departamento
         if(valor!=null){
-            Connection con=null;
             try{
                 String sql ="select a.AndamentoTaxaDeImplantacaoEFormaDePagamento as COMERCIAL1," +
                             "a.AndamentoGravarSenhasFiscais AS COMERCIAL2," +
@@ -811,12 +813,9 @@ public class InternoGeral extends javax.swing.JInternalFrame {
                             "inner join regularizacao as r " +
                             "on d.Numerodoprocesso= r.Numerodoprocesso " +
                             "where a.Numerodoprocesso=?";
-                con = new ConexaoStatement().getConnetion();
-                
-                PreparedStatement ps = con.prepareStatement(sql);
+                PreparedStatement ps = getConnection().prepareStatement(sql);
                 ps.setString(1, valor);
                 ResultSet rs = ps.executeQuery();
-
                 if(rs!=null){
                     if(rs.next()){
                         departamento=0;
@@ -864,16 +863,15 @@ public class InternoGeral extends javax.swing.JInternalFrame {
             }catch(SQLException e){
                 e.printStackTrace();
             }finally{try{
-                if(con!=null)con.close();}catch(Exception e){}
+                con.close();}catch(Exception e){}
             }
         }
     }
     private void preencherDocumentos(String processo){//buscar valores em documentos
     
-    Connection con = new ConexaoStatement().getConnetion();
     String sql = "select * from documentos where Numerodoprocesso='"+processo+"'";
     try{
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if(rs!=null)
                 while(rs.next()){//ira somar pendencias de cada resultado
@@ -914,7 +912,7 @@ public class InternoGeral extends javax.swing.JInternalFrame {
 //            statusTabel(tbSolicitacao);
             }catch (SQLException erro){
                 erro.printStackTrace();
-            }finally{try{if(con!=null)con.close();}catch(Exception e){}}
+            }finally{try{con.close();}catch(Exception e){}}
 }
     private void contar(JLabel label, String valor){
         int novoValor=0;

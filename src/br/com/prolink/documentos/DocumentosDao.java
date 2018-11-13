@@ -5,16 +5,26 @@
  */
 package br.com.prolink.documentos;
 
-import br.com.prolink.inicio.*;
+import br.com.prolink.factory.Conexao;
+import br.com.prolink.factory.ConexaoStatement;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 /**
  *
  * @author Tiago Dias
  */
 public class DocumentosDao {
-    
-    Conexao conDoc = new Conexao();
-    
-   private String processo=TelaPrincipal.txt_codigo.getText();
+    Connection con;
+    private Connection getConnection(){
+        this.con = ConexaoStatement.getInstance().getConnetion();
+        return this.con;
+    }
+    Processo p = ProcessoLogado.getInstance().getProcesso();
+    String processo=p.getId()+"";
 
     public void tudo(){
         afastamentos();
@@ -46,16 +56,18 @@ public class DocumentosDao {
     Documentos.lbAfastamentos2.setText("");
     Documentos.lbAfastamentos3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from afastamento where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from afastamento where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -86,8 +98,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
 }
 
     public void ato() {
@@ -95,16 +112,18 @@ public class DocumentosDao {
     Documentos.lbAto2.setText("");
     Documentos.lbAto3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from atoconstitutivo where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from atoconstitutivo where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -135,8 +154,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }
 
     public void balancete() {
@@ -144,16 +168,18 @@ public class DocumentosDao {
     Documentos.lbBalancete2.setText("");
     Documentos.lbBalancete3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from balanceteexercicio where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from balanceteexercicio where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -184,8 +210,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }
 
     public void balanco() {
@@ -193,16 +224,18 @@ public class DocumentosDao {
     Documentos.lbBalanco2.setText("");
     Documentos.lbBalanco3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from balancodre where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from balancodre where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -233,8 +266,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }
 
     public void caged() {
@@ -242,16 +280,18 @@ public class DocumentosDao {
     Documentos.lbCaged2.setText("");
     Documentos.lbCaged3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from caged where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from caged where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -280,8 +320,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    } 
-    conDoc.desconecta();
+    } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }
 
     public void comSocios() {
@@ -289,16 +334,18 @@ public class DocumentosDao {
     Documentos.lbComp2.setText("");
     Documentos.lbComp3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from comprovanteresidencia where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from comprovanteresidencia where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -329,8 +376,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }
 
     public void contas() {
@@ -338,16 +390,18 @@ public class DocumentosDao {
     Documentos.lbContas2.setText("");
     Documentos.lbContas3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from composicaodecontaspatrimoniais where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from composicaodecontaspatrimoniais where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -378,8 +432,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }
 
     public void docSocios() {
@@ -387,16 +446,18 @@ public class DocumentosDao {
     Documentos.lbDoc2.setText("");
     Documentos.lbDoc3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from rgecpfsocio where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from rgecpfsocio where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -426,8 +487,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
-    conDoc.desconecta();
+    }  finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }  
+    
     }
 
     public void ferias() {
@@ -435,16 +501,18 @@ public class DocumentosDao {
     Documentos.lbFerias2.setText("");
     Documentos.lbFerias3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from ferias where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from ferias where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -475,8 +543,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }
 
     public void funcionarios() {
@@ -484,16 +557,18 @@ public class DocumentosDao {
     Documentos.lbFuncionarios2.setText("");
     Documentos.lbFuncionarios3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from livrooufichaderegistrofuncionario where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from livrooufichaderegistrofuncionario where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -521,8 +596,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }
 
     public void hab() {
@@ -530,16 +610,18 @@ public class DocumentosDao {
     Documentos.lbHab2.setText("");
     Documentos.lbHab3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from autorizacaonotafiscaleletronica where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from autorizacaonotafiscaleletronica where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -567,8 +649,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }    
     
     public void inss() {
@@ -576,16 +663,18 @@ public class DocumentosDao {
     Documentos.lbInss2.setText("");
     Documentos.lbInss3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from senhainss where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from senhainss where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -613,8 +702,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }
     
     public void pisSocio() {
@@ -622,16 +716,18 @@ public class DocumentosDao {
     Documentos.lbPis2.setText("");
     Documentos.lbPis3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from numeropis where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from numeropis where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -658,8 +754,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }  
-    conDoc.desconecta();
+    }  finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }
 
     public void plano() {
@@ -667,16 +768,18 @@ public class DocumentosDao {
     Documentos.lbPlano2.setText("");
     Documentos.lbPlano3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from planodecontas where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from planodecontas where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -703,8 +806,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
-    conDoc.desconecta();
+    }    finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }
 
     public void posto() {
@@ -712,16 +820,18 @@ public class DocumentosDao {
     Documentos.lbPosto2.setText("");
     Documentos.lbPosto3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from senhapostofiscal where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from senhapostofiscal where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -749,8 +859,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
-    conDoc.desconecta();
+    }   finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        } 
+    
     }
 
     public void prefeitura() {
@@ -758,16 +873,18 @@ public class DocumentosDao {
     Documentos.lbPrefeitura2.setText("");
     Documentos.lbPrefeitura3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from configurarperfilfiscalnositeprefeituradocumento where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from configurarperfilfiscalnositeprefeituradocumento where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -794,8 +911,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }    
+    
     }
 
     public void receita() {
@@ -803,16 +925,18 @@ public class DocumentosDao {
     Documentos.lbReceita2.setText("");
     Documentos.lbReceita3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from outorgasenhaeletronicareceita where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from outorgasenhaeletronicareceita where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -840,8 +964,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }    
+    
     }
 
     public void recisoes() {
@@ -849,16 +978,18 @@ public class DocumentosDao {
     Documentos.lbRecisoes2.setText("");
     Documentos.lbRecisoes3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from recisao where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from recisao where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -885,8 +1016,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }    
+    
     }
 
     public void simples() {
@@ -894,16 +1030,18 @@ public class DocumentosDao {
     Documentos.lbSimples2.setText("");
     Documentos.lbSimples3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from senhasimplesnacional where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from senhasimplesnacional where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -930,8 +1068,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }    
+    
     }
 
     public void termo() {
@@ -939,16 +1082,18 @@ public class DocumentosDao {
     Documentos.lbTermo2.setText("");
     Documentos.lbTermo3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from termoderesponsabilidadedocumento where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from termoderesponsabilidadedocumento where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -976,8 +1121,13 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }    
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }    
+    
     }
     
     public void folha(){
@@ -985,16 +1135,18 @@ public class DocumentosDao {
     Documentos.lbFolha2.setText("");
     Documentos.lbFolha3.setText("");
     
-    conDoc.conecta();
+    
     try{
-        conDoc.executeSQL("select * from folhadepagamentodocumento where NumeroProcesso='"+processo+"'");
-        if(conDoc.resultset.last()){
+        String sql = ("select * from folhadepagamentodocumento where NumeroProcesso='"+processo+"'");
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+ResultSet resultset = ps.executeQuery();
+        if(resultset.last()){
             
             String data1, data2, data3;
             
-            data1 = conDoc.resultset.getString("DatadeCadastroAndamento");
-            data2 = conDoc.resultset.getString("DataDevulucaoCliente");
-            data3 = conDoc.resultset.getString("DataFinalAndamento");
+            data1 = resultset.getString("DatadeCadastroAndamento");
+            data2 = resultset.getString("DataDevulucaoCliente");
+            data3 = resultset.getString("DataFinalAndamento");
             
             String  ndata1, ndata2, ndata3;
             
@@ -1024,7 +1176,12 @@ public class DocumentosDao {
             }
         }
     }catch(Exception erro){
-    }
-    conDoc.desconecta();
+    }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+            }
+        }
+    
     }    
 }

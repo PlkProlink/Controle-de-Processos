@@ -1,10 +1,12 @@
 package br.com.prolink.recepcao;
 
 
-import br.com.prolink.login.Login;
+import br.com.prolink.model.UsuarioLogado;
+import br.com.prolink.view.Login;
 import br.com.prolink.relatorios.RelatorioRecepcao;
 import br.com.prolink.relatorios.exportExcel.ListagemExcel;
 import javax.swing.JOptionPane;
+import java.util.Date;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -30,8 +32,13 @@ public class ListagemBean {
     private String observacao;
     private String dataRecebimento;
     private String recebido;
+    private int passivelDevolucao=0;
+    private int devolvido=0;
+    private Date dataFuncionarioRecebeu;
+    private Date dataDevolucao;
+    
 //essa area é dedica a area de consulta
-    private final String usuario = Login.usuario;
+    private final String usuario = UsuarioLogado.getInstance().getUsuario().getUsuario();
     private String valorPesquisa;
     private String data1,data2;
     private String comando;
@@ -219,6 +226,62 @@ public class ListagemBean {
     public void setRecebido(String recebido) {
         this.recebido = recebido;
     }
+
+    /**
+     * @return the passivelDevolucao
+     */
+    public int getPassivelDevolucao() {
+        return passivelDevolucao;
+    }
+
+    /**
+     * @param passivelDevolucao the passivelDevolucao to set
+     */
+    public void setPassivelDevolucao(int passivelDevolucao) {
+        this.passivelDevolucao = passivelDevolucao;
+    }
+
+    /**
+     * @return the devolvido
+     */
+    public int getDevolvido() {
+        return devolvido;
+    }
+
+    /**
+     * @param devolvido the devolvido to set
+     */
+    public void setDevolvido(int devolvido) {
+        this.devolvido = devolvido;
+    }
+
+    /**
+     * @return the dataFuncionarioRecebeu
+     */
+    public Date getDataFuncionarioRecebeu() {
+        return dataFuncionarioRecebeu;
+    }
+
+    /**
+     * @param dataFuncionarioRecebeu the dataFuncionarioRecebeu to set
+     */
+    public void setDataFuncionarioRecebeu(Date dataFuncionarioRecebeu) {
+        this.dataFuncionarioRecebeu = dataFuncionarioRecebeu;
+    }
+
+    /**
+     * @return the dataDevolucao
+     */
+    public Date getDataDevolucao() {
+        return dataDevolucao;
+    }
+
+    /**
+     * @param dataDevolucao the dataDevolucao to set
+     */
+    public void setDataDevolucao(Date dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
+    }
     /**
      * @return the valorPesquisa
      */
@@ -257,7 +320,12 @@ public class ListagemBean {
     //1ª busca do usuario
 
     public void carrega_usuario() {
-        this.comando=("select * from documentos_recebidos where Para_Quem like '" + this.usuario + "' and Recebido='N' order by cod desc");
+        this.comando=("select * from documentos_recebidos where "
+                + "Para_Quem like '" + this.usuario + "' "
+                + "and Recebido='N' "
+                + "or Para_Quem like '" + this.usuario + "' "
+                + "and passivel_devolucao=1 "
+                + "and devolvido=0 order by cod desc");
         
 //        Listagem.preencher_tabela();
     }

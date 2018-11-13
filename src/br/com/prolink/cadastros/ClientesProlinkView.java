@@ -16,36 +16,31 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import static br.com.prolink.cadastros.CadastroClientes.*;
-import br.com.prolink.inicio.ConexaoStatement;
+import br.com.prolink.factory.ConexaoStatement;
+import br.com.prolink.factory.ConfigTables;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 /**
  *
  * @author Tiago
  */
-public class ClientesProlinkView extends javax.swing.JDialog {
+public class ClientesProlinkView extends javax.swing.JDialog implements ConfigTables{
     /**
      * Creates new form ClientesProlinkView
      */
     public ClientesProlinkView(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        Connection con =  getConnection();
+        Connection con = ConexaoStatement.getInstance().getConnetion();
         try{
-            PreparedStatement ps = con.prepareStatement("select COD,STATUS,EMPRESA from cliente");
+            PreparedStatement ps = con.prepareStatement("select id,status,nome from cliente");
             ResultSet rs = ps.executeQuery();
             preencherTabela(rs);
         }catch(SQLException e){
-            
+        }finally{
+            try{con.close();}catch(SQLException e){}
         }
         
-        if(con!=null){
-            try {
-                con.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ClientesProlinkView.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
     private void preencherTabela(ResultSet rs) throws SQLException{
         DefaultTableModel model = new DefaultTableModel(new Object[]{"CLIENTE ID","STATUS","NOME"},0);
@@ -58,22 +53,6 @@ public class ClientesProlinkView extends javax.swing.JDialog {
             }
             jTable1.setModel(model);
     }
-    
-    
-    private Connection getConnection(){
-        try{
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            return DriverManager.getConnection(
-                    "jdbc:sqlserver://192.168.0.202:1433;databaseName=cadastro",
-                    "sa",
-                    "B0qbxRw9TL3xYTrHXOULROnH1cMu9JRx");
-        }catch(ClassNotFoundException e){
-            e.printStackTrace();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -203,56 +182,45 @@ public class ClientesProlinkView extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        String coluna = "COD";
-        
+        String coluna = "ID";
         boolean validou = validar();
         if(validou){
             if("ID".equals(jComboBox1.getSelectedItem())){
-                coluna="COD";
+                coluna="id";
             }
             else if("Nome".equals(jComboBox1.getSelectedItem())){
-                coluna="EMPRESA";
+                coluna="nome";
             }
             else if("Status".equals(jComboBox1.getSelectedItem())){
-                coluna="STATUS";
+                coluna="status";
             }
-            
-            Connection con = getConnection();
-            
+            Connection con = ConexaoStatement.getInstance().getConnetion();
             try{
-                PreparedStatement ps = con.prepareStatement("select COD,STATUS,EMPRESA from CLIENTE where "+coluna+" like '"+jTextField1.getText()+"%'");
+                PreparedStatement ps = con.prepareStatement("select id,status,nome from cliente where "+coluna+" like '"+jTextField1.getText()+"%'");
                 ResultSet rs  = ps.executeQuery();
                 preencherTabela(rs);
-            }catch(SQLException e){
-                
-            }
+            }catch(SQLException e){}
             if(con!=null){try{con.close();}catch(SQLException e){}}
             
         }
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void btImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImportarActionPerformed
-        
-        
-        
         String[] lista = new String[3];
         int linha = jTable1.getSelectedRow();
         for(int i =0;i<lista.length; i++){
             lista[i]=(String)jTable1.getValueAt(linha, i);
         }
         boolean exists = verificarSeExiste(lista[0]);
-        
         if(!exists){
             txt_apelido.setText(lista[0]);
             txt_data.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
             txt_datainicio.setText("");
             txt_datafim.setText("");
 
-            ConexaoStatement conexao = new ConexaoStatement();
-            Connection con  = conexao.getConnetion();
-
+            Connection con  = ConexaoStatement.getInstance().getConnetion();
             try{
-                PreparedStatement ps = con.prepareStatement("select * from classificacao where Status like '"+lista[1]+"'");
+                PreparedStatement ps = con.prepareStatement("select * from "+CLASSIFICACAO+" where "+CLASSIFICACAO_Status+" like '"+lista[1]+"'");
                 ResultSet rs = ps.executeQuery();
                 if(rs!=null){
                     if(rs.next()){
@@ -260,7 +228,7 @@ public class ClientesProlinkView extends javax.swing.JDialog {
                         cb_classificacao.setSelectedItem(classificacao);
                     }
                     else{
-                        String insert = "insert into classificacao (Status) values ('"+lista[1]+"')";
+                        String insert = "insert into "+CLASSIFICACAO+" ("+CLASSIFICACAO_Status+") values ('"+lista[1]+"')";
                         if(ps.executeUpdate(insert)>0){
                             cb_classificacao.addItem(lista[1]);
                             cbClassificacaoMenu.addItem(lista[1]);
@@ -301,11 +269,13 @@ public class ClientesProlinkView extends javax.swing.JDialog {
    private boolean verificarSeExiste(String valor){
        Connection con = new ConexaoStatement().getConnetion();
        try{
-            PreparedStatement ps = con.prepareStatement("select * from cadastrodeprocesso where Apelido='"+valor+"'");
+            PreparedStatement ps = con.prepareStatement("select * from "+CADASTRODEPROCESSO+" where "+CADASTRODEPROCESSO_Apelido+"='"+valor+"'");
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 return true;
             }
+            else
+                return false;
         }catch(SQLException e){e.printStackTrace();}
        return false;
    }

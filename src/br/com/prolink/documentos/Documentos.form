@@ -447,7 +447,7 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="11" style="1"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="DOCUMETOS DOS SOCIOS"/>
+                        <Property name="text" type="java.lang.String" value="DOCUMENTOS DOS SOCIOS"/>
                         <Property name="toolTipText" type="java.lang.String" value="Rg e cpf dos socios da empresa"/>
                       </Properties>
                     </Component>

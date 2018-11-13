@@ -1,7 +1,9 @@
 package br.com.prolink.departamentos;
 
-import br.com.prolink.login.Login;
-import br.com.prolink.inicio.Ativador;
+import br.com.prolink.factory.Conexao;
+import br.com.prolink.model.Processo;
+import br.com.prolink.model.ProcessoLogado;
+import br.com.prolink.model.UsuarioLogado;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
@@ -12,8 +14,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
-
-import br.com.prolink.inicio.*;
 /**
  *
  * @author Tiago Dias
@@ -28,7 +28,11 @@ public class Regularizacao extends javax.swing.JFrame {
     //Formatador para data
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
-    String processo=TelaPrincipal.txt_codigo.getText(), nome=TelaPrincipal.txt_nome.getText(), id=TelaPrincipal.txt_id.getText(), usuario=Login.usuario,
+    Processo p = ProcessoLogado.getInstance().getProcesso();
+    String processo=p.getId()+"",
+            nome=p.getCliente(), 
+            id=p.getApelido(), 
+            usuario=UsuarioLogado.getInstance().getUsuario().getUsuario(),
            termo, arquivo, codTermo_backup, obsTermo_backup, dataTermo_backup, tipoTermo_backup,
            codArquivo_backup, obsArquivo_backup, dataArquivo_backup, tipoArquivo_backup;
     
@@ -62,7 +66,7 @@ public class Regularizacao extends javax.swing.JFrame {
         txt_id.setText(id);
         txt_usuario.setText(usuario);
         
-        if(!Login.nivel.equals("1") && !Login.departamento.equalsIgnoreCase("Regularização")){
+        if(UsuarioLogado.getInstance().getUsuario().getNivel()!=1 && !UsuarioLogado.getInstance().getUsuario().getDepartamento().equalsIgnoreCase("Regularização")){
             
             btnExcluirTermo.setEnabled(false);
             btnSalvarTermo.setEnabled(false);

@@ -4,12 +4,12 @@
  */
 package br.com.prolink.enviodocumentos.internas;
 
-import br.com.prolink.controle.LogUsuarioBean;
-import br.com.prolink.controle.LogUsuarioDao;
+import br.com.prolink.model.LogUsuarioBean;
+import br.com.prolink.model.LogUsuarioDao;
 import br.com.prolink.enviodocumentos.DocumentosEnviados;
 import br.com.prolink.enviodocumentos.DocumentosEnviadosDao;
-import br.com.prolink.inicio.Conexao;
-import br.com.prolink.inicio.TelaPrincipal;
+import br.com.prolink.model.ProcessoLogado;
+import java.sql.Connection;
 
 /**
  *
@@ -22,8 +22,6 @@ public class EnviadosIntBoletos extends EnviadosIntModelo{
         
         super.inicializacao(campo1, tabela1, tela1);
         
-	conexao = new Conexao(); 
-        conexao.conecta();
         preencher_tabela();
         pegar_ultimo_registro();
         
@@ -32,7 +30,7 @@ public class EnviadosIntBoletos extends EnviadosIntModelo{
         logb = new LogUsuarioBean();
         
         logb.setCliente(nome);
-        logb.setApelido(TelaPrincipal.txt_id.getText());
+        logb.setApelido(ProcessoLogado.getInstance().getProcesso().getApelido());
         logb.setProcesso(processo);
         logb.setTela(tela);
     }
@@ -54,8 +52,8 @@ public class EnviadosIntBoletos extends EnviadosIntModelo{
         DocumentosEnviados.lbBol3.setText(data3);
     }
     @Override
-    public void atualizaExclusao(){
-        doc.boleto();
+    public void atualizaExclusao(Connection con){
+        doc.boleto(con);
     }
     @Override
     public void setTabela(){

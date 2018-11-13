@@ -1,7 +1,8 @@
 package br.com.prolink.relatorios;
 
 import br.com.prolink.inicio.Ativador;
-import br.com.prolink.inicio.Conexao;
+import br.com.prolink.factory.Conexao;
+import br.com.prolink.model.ProcessoLogado;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
@@ -13,7 +14,7 @@ public class RelatorioRecepcao {
 
     
   Conexao con = new Conexao();
-  String processo = Ativador.processo;
+  String processo = ProcessoLogado.getInstance().getProcesso().getId()+"";
   private String comando;
   
   public static void main (String args[]) 

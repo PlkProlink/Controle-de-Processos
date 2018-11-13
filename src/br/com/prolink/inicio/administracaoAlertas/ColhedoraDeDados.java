@@ -4,12 +4,13 @@
  */
 package br.com.prolink.inicio.administracaoAlertas;
 
-import br.com.prolink.inicio.ConexaoStatement;
-import br.com.prolink.recepcao.HtmlEntities;
+import br.com.prolink.factory.ConexaoStatement;
+import br.com.prolink.model.HtmlEntities;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.Normalizer;
 import javax.swing.JOptionPane;
 
 /**
@@ -33,7 +34,7 @@ public class ColhedoraDeDados {
     private String apelidoCliente;
     
     private boolean html=false;
-    
+    int sequencia = 0;//identifica qual posição do array este processo se encontra para as tags <tr> colorindo o background com bootstrap <tr class="bg-warning">
     
     String contador;
     
@@ -45,7 +46,7 @@ public class ColhedoraDeDados {
     
     Connection con = new ConexaoStatement().getConnetion();
     String sql = "select * from documentos as a inner join cadastrodeprocesso as b"
-            + " on b.codNumerodoprocesso = a.Numerodoprocesso where a.Numerodoprocesso=?";
+            + " on b.codNumerodoprocesso = a.Numerodoprocesso where a.Numerodoprocesso=? and b.Situacao=1";
     try{
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, processo);
@@ -97,8 +98,8 @@ public class ColhedoraDeDados {
                             "on f.Numerodoprocesso=d.Numerodoprocesso " +
                             "inner join regularizacao as r " +
                             "on d.Numerodoprocesso= r.Numerodoprocesso " +
-                            "where a.Numerodoprocesso=?";;
-    try{
+                            "where a.Numerodoprocesso=?";
+        try{
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, processo);
             ResultSet rs = ps.executeQuery();
@@ -153,7 +154,6 @@ public class ColhedoraDeDados {
     private void rsTextoDocumentos(int processo, String tela, ResultSet rs) throws SQLException{
         apelidoCliente = rs.getString("Apelido");
         pegaNome(processo);
-        
         if(tela.equals("Comercial")){
             //area contratos
             textoDocumentosComercial("Ato Constitutivo",rs.getString("AtoConstitutivo"));
@@ -232,6 +232,7 @@ public class ColhedoraDeDados {
             JOptionPane.showMessageDialog(null,"Erro ao realizar a consulta!\n" +erro);
             }finally{try{if(con!=null)con.close();}catch(Exception e){}}
     }
+    //TEXTO PARA A TABELA
     private void textoDepartamento(String label, String valor){
         if(valor.trim().equals("Em Aberto") || valor.trim().equals("")){
             if(this.html==true){
@@ -288,52 +289,59 @@ public class ColhedoraDeDados {
         else
             this.textoDocumentos+="";
     }
-    public String getTabelaContador(){
-        if(this.html==true){
-            this.tabelaContagem="<tr><td style=\"text-align: center;\"><strong>"+apelidoCliente+"</strong></td>"+
-                "<td style=\"text-align: center;\"><strong>"+nomeCliente+"</strong></td>"
-                    + "<td style=\"text-align: center;\">"+this.contagemDepartamento+"</td>"
-                    + "<td style=\"text-align: center;\">"+this.contagemDocumentos+"</td></tr>";
+    public String getTabelaContador(int sequencia){
+        if(this.html){
+            String classBootstrap = ((sequencia) % 2 == 1 ? "table-info" : "table-success");
+            this.tabelaContagem = 
+                    "<tr class=\""+classBootstrap+"\">" +
+                        "<td><strong>"+normalize(apelidoCliente)+"</strong></td>" +
+                        "<td><strong>"+normalize(nomeCliente)+"</strong></td>" +
+                        "<td class=\"centralizar\">" + this.contagemDepartamento + "</td>"+
+                        "<td class=\"centralizar\">" + this.contagemDocumentos + "</td>"
+                    + "</tr>";
         }
         else{
             //criar modelo para o relatorio
         }
         return this.tabelaContagem;
     }
-    public String getTabelaDocumentos(){
-        if(this.html==true){
-            String novoTexto="";
-            if(textoDocumentos.equals("")){
-                novoTexto="<p></p>";
-            }
-            else
-                novoTexto="<ul>"+textoDocumentos+"</ul>";
-            this.tabelaDocumentos="<tr>" +
-                                    "<td><strong>"+apelidoCliente+"</strong></td>" +
-                                    "<td><strong>"+nomeCliente+"</strong></td>" +
-                                    "<td>"+novoTexto+"</td>"+
-                                    "</tr>";
-        }
-        return this.tabelaDocumentos;
-    }
-    public String getTabelaDepartamento(){
-        if(this.html==true){
-            String novoTexto="";
-            if(textoDepartamento.equals("")){
-                novoTexto="<p></p>";
-            }
-            else
-                novoTexto="<ul>"+textoDepartamento+"</ul>";
-            this.tabelaDepartamento="<tr>" +
-                                "<td><strong>"+apelidoCliente+"</strong></td>" +
-                                "<td><strong>"+nomeCliente+"</strong></td>"+
-                                "<td>"+novoTexto+"</td>"+
-                                "</tr>";
+    public String getTabelaDepartamento(int sequencia){
+        if(this.html){           
+            String classBootstrap = ((sequencia) % 2 == 1 ? "table-info" : "table-success");
+            this.tabelaDepartamento=
+                    "<tr class=\""+classBootstrap+"\">" +
+                        "<td><strong>"+normalize(apelidoCliente)+"</strong></td>" +
+                        "<td><strong>"+normalize(nomeCliente)+"</strong></td>" +
+                        (textoDepartamento.equals("")?
+                            "<td class=\"centralizar\">Sem pend&ecirc;ncias</td>":
+                            "<td class=\"centralizar\"><ul>"+normalize(textoDepartamento)+"</ul></td>"
+                        )+
+                    "</tr>";
         }
         return this.tabelaDepartamento;
     }
-    public int getContaTudo(int valor){
-        return this.contagemTudo = valor+this.contagemDepartamento+this.contagemDocumentos;
+    public String getTabelaDocumentos(int sequencia){
+        if(this.html){
+            String classBootstrap = ((sequencia) % 2 == 1 ? "table-info" : "table-success");
+            this.tabelaDocumentos=
+                    "<tr class=\""+classBootstrap+"\">" +
+                         "<td><strong>"+normalize(apelidoCliente)+"</strong></td>" +
+                        "<td><strong>"+normalize(nomeCliente)+"</strong></td>" +
+                        (textoDocumentos.equals("")?
+                            "<td class=\"centralizar\">Sem pend&ecirc;ncias</td>":
+                            "<td class=\"centralizar\"><ul>"+normalize(textoDocumentos)+"</ul></td>"
+                        )+
+                    "</tr>";
+        }
+        return this.tabelaDocumentos;
     }
+    public int getContaTudo(){
+        this.contagemTudo = this.contagemDepartamento+this.contagemDocumentos;
+        return this.contagemTudo;
+    }  
+    public String normalize(String s){
+    return Normalizer
+                .normalize(s, Normalizer.Form.NFD);
+}
       
 }

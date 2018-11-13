@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Protocolo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fe9d1868-dfc4-4bf0-9e34-f15adf50b304">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="53"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#F3F6F8"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(1)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT PROT_ID, PROT_EMPRESA_NOME FROM PROTOCOLO_SAIDA WHERE PROT_ID=$P{CODIGO}]]>
+	</queryString>
+	<field name="PROT_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROT_EMPRESA_NOME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="170">
+			<subreport>
+				<reportElement x="1" y="55" width="555" height="100" uuid="7a46b194-4a65-438b-9241-236349f06c47"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO">
+					<subreportParameterExpression><![CDATA[$F{PROT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subProtocolo.jasper"]]></subreportExpression>
+			</subreport>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Transparent" x="178" y="35" width="94" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="7673d890-60f1-473a-9471-fc2f0f613224"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="164" y="35" width="14" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f12d1f66-2398-472f-9550-2fe65c0aca82"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="35" width="47" height="20" uuid="66aede55-8967-46ae-9cca-24ed9f2f69d6"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1ª VIA]]></text>
+			</staticText>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="97" y="35" width="67" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="da470f76-6537-4efe-bde4-ffaed2c5afe6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="16" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["#"+$F{PROT_ID}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement mode="Transparent" x="312" y="35" width="55" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="c972b097-de6a-463a-8cd3-2362fff4cdb9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="272" y="35" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="8c1577e7-7420-41ec-9e9d-2723e274ed7b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="367" y="35" width="27" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="1c8f026e-2e50-4594-964f-8cb0770fb87a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="97" y="0" width="344" height="35" forecolor="#000000" backcolor="#FFFFFF" uuid="82f7268e-cdd3-4cfd-9371-59f0410eaa0b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Protocolo de Saída]]></text>
+			</staticText>
+			<image>
+				<reportElement x="509" y="0" width="46" height="35" uuid="0b53b2e6-9c74-42eb-936f-af3e7e25dc43"/>
+				<imageExpression><![CDATA["C:\\Users\\Tiago\\Dropbox\\psv\\Controle-de-Processos\\relatorios\\logoProlink.gif"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="509" y="35" width="47" height="20" uuid="26b7d10f-772d-465b-a178-9a56a6cce233"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROT_EMPRESA_NOME}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="170">
+			<staticText>
+				<reportElement mode="Transparent" x="97" y="12" width="344" height="35" forecolor="#000000" backcolor="#FFFFFF" uuid="4807e169-430f-4cf8-bd23-8a9d0cfb32c9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Protocolo de Saída]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="67" width="555" height="100" uuid="49ddd0a3-3acf-4396-89e9-ecb181c188e1"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO">
+					<subreportParameterExpression><![CDATA[$F{PROT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subProtocolo.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="4e3b2424-7462-4b68-93ba-fd0e1b6ca179"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="367" y="47" width="27" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="90fef660-de92-4400-afea-2badde4ab2c9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="47" width="47" height="20" uuid="3d83d0e4-1241-4ff5-a32e-0ba74527e8c8"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2ª VIA]]></text>
+			</staticText>
+			<textField pattern="HH:mm">
+				<reportElement mode="Transparent" x="312" y="47" width="55" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="614c49a0-e610-4eee-a421-55834f234b6d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="272" y="47" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="a35e60dd-3dc7-4726-b799-0f3f3da33640"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AS]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Transparent" x="178" y="47" width="94" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f5238dbc-e2f3-46df-b84d-52c07510ce18"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="97" y="47" width="67" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="cdb6f877-0636-4fee-b9bc-70dc30799bbb"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="16" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["#"+$F{PROT_ID}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="164" y="47" width="14" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="6d3128c6-d358-41bf-b573-44850da5d63b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<image>
+				<reportElement x="509" y="11" width="46" height="35" uuid="1858064e-645d-4786-8f30-5a760a7e977c"/>
+				<imageExpression><![CDATA["C:\\Users\\Tiago\\Dropbox\\psv\\Controle-de-Processos\\relatorios\\logoProlink.gif"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="509" y="46" width="46" height="20" uuid="cdaed8ad-6666-485c-bebb-5a051ce4eb22"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROT_EMPRESA_NOME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="44">
+			<staticText>
+				<reportElement x="1" y="0" width="554" height="39" uuid="eba36558-4ce4-4353-8c02-9180d2973d40"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[PLK – PROLINK ASSESSORIA CONTABIL LTDA - EPP
+Rua Maria Paula, 88 - 2º Andar – Centro – São Paulo/SP - CEP. 01319 – 000
+Fone/FAX: 11 - 3107-4505
+]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

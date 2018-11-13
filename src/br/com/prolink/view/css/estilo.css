@@ -1,0 +1,73 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 06/06/2017, 08:28:29
+    Author     : Tiago
+*/
+.pnLogin{
+    -fx-background-color: linear-gradient(rgb(50,137,200) 0%, rgb(250,250,250) 25%, rgb(250,250,250) 99%);
+}
+.btMenu{
+    -fx-cursor: hand;
+}
+.btEntrar{
+    -fx-cursor: hand;
+}
+.btEditar{
+    -fx-cursor: hand;
+}
+.btSair{
+    -fx-cursor: hand;
+}
+.btExcluir{
+    -fx-cursor: hand;
+}
+.btMenu:hover{
+    -fx-background-color: blue;
+    -fx-text-fill: white;
+}
+.btEntrar:hover{
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+.btEditar:hover{
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+.btSair:hover{
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+.btExcluir:hover{
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+.btOrange{
+    -fx-background-color:
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-padding: 5 10 5 10;
+}
+.btJFXDefault{
+    -fx-font-size: 12px;
+    -jfx-button-type: RAISED;
+    -fx-background-color: rgb(77,102,204);
+    -fx-text-fill: WHITE;
+}
+.btJFXDefault:hover{
+    -fx-font-size: 11px;
+    -jfx-button-type: RAISED;
+    -fx-background-color: rgb(255,102,70);
+    -fx-text-fill: WHITE;
+}

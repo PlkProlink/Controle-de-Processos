@@ -4,7 +4,7 @@
  */
 package br.com.prolink.usuario;
 
-import br.com.prolink.inicio.ConexaoStatement;
+import br.com.prolink.factory.ConexaoStatement;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +41,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  * @author User
  */
-public class RelatorioAcessos extends javax.swing.JInternalFrame {
+public class RelatorioAcessos extends javax.swing.JFrame {
     
     private String ordem=" desc";
     private String usuario="", cliente="", menu="", departamento="";
@@ -101,13 +101,7 @@ public class RelatorioAcessos extends javax.swing.JInternalFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
 
         setBackground(new java.awt.Color(250, 250, 250));
-        setBorder(null);
         setPreferredSize(new java.awt.Dimension(1148, 600));
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentMoved(java.awt.event.ComponentEvent evt) {
-                formComponentMoved(evt);
-            }
-        });
 
         jDkBody.setBackground(new java.awt.Color(250, 250, 250));
 
@@ -408,7 +402,7 @@ public class RelatorioAcessos extends javax.swing.JInternalFrame {
                                     .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btExport)))))
-                    .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
+                    .addComponent(jDesktopPane1))
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
@@ -425,12 +419,9 @@ public class RelatorioAcessos extends javax.swing.JInternalFrame {
             .addComponent(jDkBody, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
-        setBounds(0, 0, 1148, 600);
+        pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
-        this.setLocation(0,0);
-    }//GEN-LAST:event_formComponentMoved
 
     private void cbUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbUsuarioActionPerformed
         if(cbUsuario.getSelectedItem().equals("Todos")){
