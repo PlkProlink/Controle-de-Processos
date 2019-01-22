@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.com.prolink.view;
 
 import br.com.prolink.model.StageList;
@@ -9,33 +14,35 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import jfoenix.CustomJFXDecorator;
+import br.com.prolink.util.CustomJFXDecorator;
 
 /**
  *
  * @author Tiago
  */
-public class Ativador extends Application {
+public class ProtocoloRecebimento extends Application {
 
     @Override
     public void start(Stage stage) {
         try {
             Icons estilo = Icons.getInstance();
-            URL url = getClass().getResource("Ativador.fxml");
+            URL url = getClass().getResource("ProtocoloRecebimento.fxml");
             Parent root = FXMLLoader.load(url);
             CustomJFXDecorator decorator = new CustomJFXDecorator(stage, root, false, true, true);
             Scene scene = new Scene(decorator);
             stage.setScene(scene);
-            stage.setTitle("Menu de Ativação");
+            stage.setTitle("Protocolo de Recebimento");
             stage.getIcons().add(new Image(estilo.getIcon().toString()));
+            StageList.getInstance().addScene(ProtocoloRecebimento.class, stage);
             stage.show();
-            StageList.getInstance().addScene(Ativador.class, stage);
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(0);
         }
     }
 
     public static void main(String[] args) {
         launch(args);
     }
+
 }

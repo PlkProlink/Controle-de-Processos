@@ -1,5 +1,5 @@
 
-package jfoenix;
+package br.com.prolink.util;
 
 import javafx.stage.Stage;
 import com.jfoenix.controls.*;
